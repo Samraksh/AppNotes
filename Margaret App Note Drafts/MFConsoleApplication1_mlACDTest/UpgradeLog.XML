@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="MFConsoleApplication1_mlACDTest">
+</Property><Property Name="Solution File" Value="C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.sln">
+</Property><Property Name="User Options File" Value="C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.suo">
+</Property><Property Name="Date" Value="Wednesday, August 29, 2012">
+</Property><Property Name="Time" Value="15:15 PM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="MFConsoleApplication1_mlACDTest.sln" Description="File successfully backed up as C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\Backup\MFConsoleApplication1_mlACDTest.sln">
+</Event><Event ErrorLevel="0" Project="" Source="MFConsoleApplication1_mlACDTest.suo" Description="File successfully backed up as C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\Backup\MFConsoleApplication1_mlACDTest.suo">
+</Event><Event ErrorLevel="0" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.csproj" Description="Project file successfully backed up as C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\Backup\MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.csproj">
+</Event><Event ErrorLevel="0" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.csproj.user" Description="Project user file successfully backed up as C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\Backup\MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.csproj.user">
+</Event><Event ErrorLevel="0" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\Properties\AssemblyInfo.cs" Description="File successfully backed up as C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\Backup\MFConsoleApplication1_mlACDTest\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\ADCTestApp.cs" Description="File successfully backed up as C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\Backup\MFConsoleApplication1_mlACDTest\ADCTestApp.cs">
+</Event><Event ErrorLevel="0" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\Resources.Designer.cs" Description="File successfully backed up as C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\Backup\MFConsoleApplication1_mlACDTest\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\Resources.resx" Description="File successfully backed up as C:\Users\mlyell\Documents\Visual Studio 2008\Projects\MFConsoleApplication1_mlACDTest\Backup\MFConsoleApplication1_mlACDTest\Resources.resx">
+</Event><Event ErrorLevel="0" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="MFConsoleApplication1_mlACDTest.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="MFConsoleApplication1_mlACDTest.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="MFConsoleApplication1_mlACDTest" Source="MFConsoleApplication1_mlACDTest\MFConsoleApplication1_mlACDTest.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

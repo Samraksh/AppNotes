@@ -1,0 +1,12 @@
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\obj\Release\ResolveAssemblyReference.cache
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\obj\Release\TinyCLR_DebugReferences.cache
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\obj\Release\MFConsoleApplication1.Resources.resources
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\obj\Release\MFConsoleApplication1.csproj.GenerateResource.Cache
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\obj\Release\MFConsoleApplication1.Resources.tinyresources
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\obj\Release\TinyResGen.cache
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\bin\Release\MFConsoleApplication1.exe
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\bin\Release\MFConsoleApplication1.pdb
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\bin\Release\MFConsoleApplication1.pe
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\bin\Release\MFConsoleApplication1.pdbx
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\obj\Release\MFConsoleApplication1.exe
+C:\Users\mlyell\AppData\Local\Temporary Projects\MFConsoleApplication1\obj\Release\MFConsoleApplication1.pdb
