@@ -6,37 +6,62 @@ using Samraksh.SPOT.Hardware.EmoteDotNow;
 
 namespace Hello_World {
     public class Program {
+        /// <summary>
+        /// Scroll "Hello World" on the eMote display.
+        /// </summary>
         public static void Main() {
             Debug.Print(Resources.GetString(Resources.StringResources.String1));
+            // Set up the LCD instance
             EmoteLCD lcd = new EmoteLCD();
-            string msg = "Hello World  ";
             lcd.Initialize();
-            lcd.Write(LCD.CHAR_1, LCD.CHAR_2, LCD.CHAR_3, LCD.CHAR_4);
-            Thread.Sleep(3000);
-
+            // Define the string to be displayed
+            string msg = "Hello World  ";
+            // The display can hold 4 characters
             LCD char1, char2, char3, char4;
+            // Scroll loop
             for (int index = 0; index < 10000; index++) {
+                // Get the next four characters based on the message string and an index
                 GetFour(msg, index, out char1, out char2, out char3, out char4);
+                // Write the next four characters
                 lcd.Write(char1, char2, char3, char4);
+                // Pause a bit ... this value can be tweaked, but if it's too small, it will be very jerky
                 Thread.Sleep(500);
             }
 
         }
 
+        /// <summary>
+        /// Get the next four characters from a string
+        /// </summary>
+        /// <param name="msg">Input: The string that has the characters to be displayed</param>
+        /// <param name="index">Input: The index in the string of the first character required. This can be larger than the length of msg; a modulo value will be used.</param>
+        /// <param name="char1">Output: The LCD value of the first character.</param>
+        /// <param name="char2">Output: The LCD value of the second character.</param>
+        /// <param name="char3">Output: The LCD value of the third character.</param>
+        /// <param name="char4">Output: The LCD value of the fourth character.</param>
         static void GetFour(string msg, int index, out LCD char1, out LCD char2, out LCD char3, out LCD char4) {
             int msglen = msg.Length;
+            // If string is empty, return null
             if (msglen == 0) {
-                char1 = char2 = char3 = char4 = LCD.CHAR_0;
+                char1 = char2 = char3 = char4 = LCD.CHAR_NULL;
                 return;
             }
+            // Quadruple the string to make sure we have at least 4 characters
             string msg4 = msg + msg + msg + msg;
+            // Trim the index to the modulo value 
             index = index % msglen;
+            // Get the 4 characters
             char1 = GetChar(msg4.Substring(index + 0, 1));
             char2 = GetChar(msg4.Substring(index + 1, 1));
             char3 = GetChar(msg4.Substring(index + 2, 1));
             char4 = GetChar(msg4.Substring(index + 3, 1));
         }
 
+        /// <summary>
+        /// Converts a char to LCD
+        /// </summary>
+        /// <param name="theChar">The input char</param>
+        /// <returns>The corresponding LCD value</returns>
         static LCD GetChar(string theChar) {
             switch (theChar) {
                 case "A": return LCD.CHAR_A; 
