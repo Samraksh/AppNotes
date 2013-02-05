@@ -1,0 +1,68 @@
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\le\eMotePing.exe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\be\eMotePing.exe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\le\eMotePing.pdb
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\be\eMotePing.pdb
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\eMotePing.exe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\eMotePing.pdb
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\le\eMotePing.pe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\le\eMotePing.pdbx
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\be\eMotePing.pe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\be\eMotePing.pdbx
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\LE\Samraksh_SPOT_Hardware.pe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\LE\Samraksh_SPOT_Net.pe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\BE\Samraksh_SPOT_Hardware.pe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\BE\Samraksh_SPOT_Net.pe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\LE\Samraksh_SPOT_Hardware.pdbx
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\LE\Samraksh_SPOT_Net.pdbx
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\BE\Samraksh_SPOT_Hardware.pdbx
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\BE\Samraksh_SPOT_Net.pdbx
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\Samraksh_SPOT_Hardware.dll
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\Samraksh_SPOT_Net.dll
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\Samraksh_SPOT_Hardware.pdb
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\Samraksh_SPOT_Net.pdb
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\bin\Debug\Samraksh_SPOT_Net.xml
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\eMotePing.csprojResolveAssemblyReference.cache
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\TinyCLR_DebugReferences.cache
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\eMotePing.Resources.resources
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\eMotePing.csproj.GenerateResource.Cache
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\eMotePing.Resources.tinyresources
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\TinyResGen.cache
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\be\eMotePing.pe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\be\eMotePing.pdbx
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\le\eMotePing.pe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\le\eMotePing.pdbx
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\eMotePing.exe
+D:\Main\Work\SOURCE\WORKING\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\eMotePing\eMotePing\obj\Debug\eMotePing.pdb
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\le\eMotePing.exe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\be\eMotePing.exe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\le\eMotePing.pdb
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\be\eMotePing.pdb
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\eMotePing.exe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\eMotePing.pdb
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\le\eMotePing.pe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\le\eMotePing.pdbx
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\be\eMotePing.pe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\be\eMotePing.pdbx
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\LE\Samraksh_SPOT_Hardware.pe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\LE\Samraksh_SPOT_Net.pe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\BE\Samraksh_SPOT_Hardware.pe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\BE\Samraksh_SPOT_Net.pe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\LE\Samraksh_SPOT_Hardware.pdbx
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\LE\Samraksh_SPOT_Net.pdbx
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\BE\Samraksh_SPOT_Hardware.pdbx
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\BE\Samraksh_SPOT_Net.pdbx
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\Samraksh_SPOT_Hardware.pdb
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\Samraksh_SPOT_Net.pdb
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\bin\Debug\Samraksh_SPOT_Net.xml
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\eMotePing.csprojResolveAssemblyReference.cache
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\TinyCLR_DebugReferences.cache
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\eMotePing.Resources.resources
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\eMotePing.csproj.GenerateResource.Cache
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\eMotePing.Resources.tinyresources
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\TinyResGen.cache
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\be\eMotePing.pe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\be\eMotePing.pdbx
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\le\eMotePing.pe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\le\eMotePing.pdbx
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\eMotePing.exe
+C:\syncfiles\Home\Bill\Samraksh\App Notes\GitHub\app-notes\Bill App Note Drafts\eMotePing\eMotePing\obj\Debug\eMotePing.pdb
