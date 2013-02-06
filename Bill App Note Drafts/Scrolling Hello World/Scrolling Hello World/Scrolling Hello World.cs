@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright 2013 The Samraksh Company http://samraksh.com
+
+using System;
 using Microsoft.SPOT;
 using System.Threading;
 
@@ -9,6 +11,12 @@ using Samraksh.SPOT.Hardware.EmoteDotNow;
 // Use extension methods. See the definition at the end of this file.
 using ExtensionMethods;
 
+
+/* ******************************************************
+ * Reminder: before you deploy this app to eMote, be sure to check the deployment properties.
+ * Click on Project > Scrolling Hello World Properties, choose the .NET Micro Framework tab,
+ * and make sure that Transport and Device are set correctly. 
+ * ******************************************************/
 
 namespace Scrolling_Hello_World {
     /// <summary>

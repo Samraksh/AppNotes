@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>eMotePing</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>eMotePing</RootNamespace>
+    <RootNamespace>Samraksh.eMote.AppNote.eMotePing</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -36,6 +36,7 @@
     <MMP_DAT_CreateDatabaseFile>$(SPOCLIENT)\BuildOutput\public\Debug\Client\dat\eMotePing.dat</MMP_DAT_CreateDatabaseFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PingMsg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ping.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -45,6 +46,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Hardware">
       <!--<HintPath>$(BUILD_TREE_DLL)\Microsoft.SPOT.Hardware.dll</HintPath>-->
     </Reference>

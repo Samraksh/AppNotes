@@ -8,91 +8,56 @@ using Samraksh.SPOT.Hardware.EmoteDotNow;
 
 namespace Samraksh.eMote.AppNote.eMotePing {
 
-    /// <summary>
-    /// Defines the message used when sending a ping
-    /// </summary>
-    public class PingMsg {
-        /// <summary>
-        /// True iff a message was received
-        /// </summary>
-        public bool Response;
-        
-        /// <summary>
-        /// 16 bit message id
-        /// </summary>
-        public UInt16 MsgID;
-
-        /// <summary>
-        /// 16 bit sender id
-        /// </summary>
-        public UInt16 Src;
-
-        /// <summary>
-        /// A dummy place holder to fill up the space
-        /// </summary>
-        public UInt16 dummySrc;
-
-        /// <summary>
-        /// Initialize a message for ping
-        /// </summary>
-        public PingMsg() { }
-
-        /// <summary>
-        /// Initialize a message for ping
-        /// </summary>
-        /// <param name="rcv_msg">A 2-byte array containing the message</param>
-        /// <param name="size">Unused; provide any unsigned 16 bit integer</param>
-        public PingMsg(byte[] rcv_msg, UInt16 size) {
-            Response = rcv_msg[0] == 0 ? false : true;
-            MsgID = (UInt16)(rcv_msg[1] << 8);
-            MsgID += (UInt16)rcv_msg[2];
-            Src = (UInt16)(rcv_msg[3] << 8);
-            Src += (UInt16)rcv_msg[4];
-            dummySrc = (UInt16)(0xefef);
-        }
-
-        /// <summary>
-        /// Convert PingMsg class members to a 7-byte array
-        /// </summary>
-        /// <returns>7-byte array containing the class members</returns>
-        public byte[] ToBytes() {
-            byte[] b_msg = new byte[7];
-            b_msg[0] = Response ? (byte)1 : (byte)0;
-            b_msg[1] = (byte)((MsgID >> 8) & 0xFF);
-            b_msg[2] = (byte)(MsgID & 0xFF);
-            b_msg[3] = (byte)((Src >> 8) & 0xFF);
-            b_msg[4] = (byte)(Src & 0xFF);
-            b_msg[5] = (byte)(0xef);
-            b_msg[6] = (byte)(0xef);
-            return b_msg;
-        }
-    }
 
    /// <summary>
    /// Send ping messages to all other motes and listen for pong replies
    /// </summary>
+   /// <remarks>
+   /// The overall structure is as follows.
+   /// 1. The radio is initialized and configured.
+   /// 2. A timer periodically calls a method that broadcasts a ping.
+   /// 3. Incoming ping or pong messages are caught and handled via an interrupt.
+   /// </remarks>
     public class Ping {
+
         UInt16 myAddress;
         UInt16 mySeqNo = 0;
         Timer sendTimer;
         EmoteLCD lcd;
         PingMsg sendMsg = new PingMsg();
-
+        CSMA myCSMA = new CSMA();
+        MacConfiguration macConfig = new MacConfiguration();
+        
+        /// <summary>
+        /// Entry point for the program
+        /// </summary>
+        /// <remarks>
+        /// Initializes the hardware and start the periodic ping timer.
+        /// </remarks>
+        public static void Main() {
+            Debug.Print("Starting eMotePing");
+            Ping p = new Ping();
+            p.Initialize();
+            p.Start();
+            Thread.Sleep(Timeout.Infinite);
+        }
+         
         // Commented code
         //Radio.Radio_802_15_4 my_15_4 = new Radio.Radio_802_15_4();
         //Radio.RadioConfiguration radioConfig = new Radio.RadioConfiguration();
         //int myRadioID;
 
-        CSMA myCSMA = new CSMA();
-        MacConfiguration macConfig = new MacConfiguration();
-        ReceiveCallBack myReceive;
-
         /// <summary>
-        /// Initialize the hardware
+        /// Initialize the hardware.
         /// </summary>
+        /// <remarks>
+        /// <list type="bullet">
+        ///     <item>Initialize the LCD display.</item>
+        ///     <item>Initialize the MAC configuration.</item>
+        /// </list>
+        /// </remarks>
         void Initialize() {
-
-            Debug.Print("Initializing:  EmotePingwLCD");
+            Debug.Print("Initializing:  EmotePing LCD");
             Thread.Sleep(1000);
 
             // Initialize the LCD and display "INI7"
@@ -119,18 +84,15 @@ namespace Samraksh.eMote.AppNote.eMotePing {
 #endregion
 
             // Initialize the MAC configuration
-            macConfig.CCA = true;
-            macConfig.BufferSize = 8;
-            macConfig.NumberOfRetries = 0;
-            //macConfig.RadioID = (byte) myRadioID;
-            macConfig.RadioID = (byte)1;
-            macConfig.CCASenseTime = 140; //Carries sensing time in micro seconds
-
-            myReceive = HandleMessage; //Assign the delegate to a function
+            macConfig.CCA = true; // Check for clear channel
+            macConfig.BufferSize = 8; // Number of packets buffered by MAC layer for send and receive (Send returns false when buffer full)
+            macConfig.NumberOfRetries = 0; // In case of collision
+            macConfig.RadioID = (byte)1; // Specifies 802.15.4 internal radio
+            macConfig.CCASenseTime = 140; //Carrier sensing time in micro seconds
 
             Debug.Print("Initializing:  CSMA...");
             try {
-                myCSMA.Initialize(macConfig, myReceive);
+                myCSMA.Initialize(macConfig, HandleMessage);
             }
             catch (Exception e) {
                 Debug.Print(e.ToString());
@@ -138,77 +100,91 @@ namespace Samraksh.eMote.AppNote.eMotePing {
             Debug.Print("CSMA Init done.");
             myAddress = myCSMA.GetAddress();
             Debug.Print("My default address is :  " + myAddress.ToString());
-
-            /*myCSMA.SetAddress(52);
-            myAddress = myCSMA.GetAddress();
-            Debug.Print("My New address is :  " + myAddress.ToString());
-             */
-
         }
 
+        /// <summary>
+        /// Start the ping timer.
+        /// </summary>
+        /// <remarks>
+        /// After this, program is event-driven. 
+        /// <list type="bullet">
+        ///     <item>When the timer fires, a ping is sent.</item>
+        ///     <item>When a message is received, it is processed.</item>
+        /// </list>
+        /// </remarks>
         void Start() {
             Debug.Print("Starting timer...");
-            sendTimer = new Timer(new TimerCallback(sendTimerCallback), null, 0, 2000);
+            sendTimer = new Timer(new TimerCallback(SendTimerCallback), null, 0, 2000);
             Debug.Print("Timer init done.");
         }
 
-        void sendTimerCallback(Object o) {
+        /// <summary>
+        /// Send a ping message.
+        /// </summary>
+        /// <param name="o"></param>
+        /// <remarks>Called by timer.</remarks>
+        void SendTimerCallback(Object o) {
             //mySeqNo++;
             Debug.Print("Sending broadcast ping msg:  " + mySeqNo.ToString());
             Send_Ping(sendMsg);
         }
 
+
+        /// <summary>
+        /// Process a received message.
+        /// </summary>
+        /// <param name="msg">The received message</param>
+        /// <param name="size">The size of the message</param>
+        /// <remarks>
+        /// The received message can be either pong in response to earlier ping, or a ping from a neighbor.
+        /// <list type="bullet">
+        ///    <item>If it is a pong then AAAis shown on the LCD display.</item>
+        ///    <item>If it is a ping, then a pong is sent and BBBB is shown on the LCD display.</item>
+        /// </list>
+        ///</remarks>
         void HandleMessage(byte[] msg, ushort size) {
             PingMsg rcvMsg = new PingMsg(msg, size);
 
             if (rcvMsg.Response) {
-                //This is a response to my message
+                // This is a pong response to myearlieer  message
                 Debug.Print("Received response from: " + rcvMsg.Src);
                 lcd.Write(LCD.CHAR_A, LCD.CHAR_A, LCD.CHAR_A, LCD.CHAR_A);
             }
             else {
+                // This is a ping from a neighbor
                 Debug.Print("Sending a Pong to SRC: " + rcvMsg.Src);
                 lcd.Write(LCD.CHAR_B, LCD.CHAR_B, LCD.CHAR_B, LCD.CHAR_B);
                 Send_Pong(rcvMsg);
             }
         }
 
-        void Send_Pong(PingMsg ping) {
-            UInt16 sender = ping.Src;
-            ping.Response = true;
+        /// <summary>
+        /// Sent a pong message in response to a received ping
+        /// </summary>
+        /// <param name="pingMsg">The received ping message</param>
+        void Send_Pong(PingMsg pingMsg) {
+            UInt16 sender = pingMsg.Src;
+            pingMsg.Response = true;
 
-            ping.Src = myAddress;
+            pingMsg.Src = myAddress;
 
-            byte[] msg = ping.ToBytes();
+            byte[] msg = pingMsg.ToBytes();
             myCSMA.Send(sender, msg, 0, (ushort)msg.Length);
         }
 
         /// <summary>
-        /// Sent a ping message
+        /// Send a ping message
         /// </summary>
-        /// <param name="ping">The message to send</param>
-        void Send_Ping(PingMsg ping) {
+        /// <param name="pingMsg">The message to send</param>
+        void Send_Ping(PingMsg pingMsg) {
             //UInt16 sender = ping.Src;
-            ping.Response = false;
-            ping.MsgID = mySeqNo++;
-            ping.Src = myAddress;
+            pingMsg.Response = false;
+            pingMsg.MsgID = mySeqNo++;
+            pingMsg.Src = myAddress;
 
-            byte[] msg = ping.ToBytes();
+            byte[] msg = pingMsg.ToBytes();
             myCSMA.Send((UInt16)Addresses.BROADCAST, msg, 0, (ushort)msg.Length);
         }
 
-        /// <summary>
-        /// Entry point for the program
-        /// </summary>
-        /// <remarks>
-        /// Initializes the hardware and then starts the main part of the program
-        /// </remarks>
-        public static void Main() {
-            Debug.Print("Changing app");
-            Ping p = new Ping();
-            p.Initialize();
-            p.Start();
-            Thread.Sleep(Timeout.Infinite);
-        }
     }
 }

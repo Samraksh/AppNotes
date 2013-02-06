@@ -55,6 +55,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Description.html" />
+    <None Include="Description.rtf" />
   </ItemGroup>
 </Project>
