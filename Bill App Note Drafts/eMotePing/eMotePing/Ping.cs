@@ -185,6 +185,8 @@ namespace Samraksh.eMote.AppNote.eMotePing {
             byte[] msg = pingMsg.ToBytes();
             myCSMA.Send((UInt16)Addresses.BROADCAST, msg, 0, (ushort)msg.Length);
         }
+        // *** total msg < 128 bytes; message header consumes 9 bytes
+        // *** 3rd parameter of CSMA.Send is index to first desired byte in message. 4th parameter is number of bytes (< 128-9)
 
     }
 }
