@@ -55,6 +55,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Description.rtf" />
+    <None Include="Scrolling Hello World Description.rtf" />
   </ItemGroup>
 </Project>

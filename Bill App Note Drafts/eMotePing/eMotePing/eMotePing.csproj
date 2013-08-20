@@ -38,7 +38,7 @@
   <ItemGroup>
     <Compile Include="PingMsg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ping.cs" />
+    <Compile Include="eMotePing.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -53,12 +53,13 @@
     <Reference Include="Microsoft.SPOT.Native">
       <!--<HintPath>$(BUILD_TREE_DLL)\Microsoft.SPOT.Native.dll</HintPath>-->
     </Reference>
-    <Reference Include="Samraksh_SPOT_Hardware">
-      <HintPath>..\..\..\Release\Dlls\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
-    </Reference>
-    <Reference Include="Samraksh_SPOT_Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Samraksh_SPOT_Hardware, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Release\Dlls\Samraksh_SPOT_Net\Samraksh_SPOT_Net.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files\Samraksh\eMote.NOW\2013.01.23 eMote.NOW Executables\eMote.NOW Hardware DLL 1.0.0.0\Samraksh_SPOT_Hardware.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh_SPOT_Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files\Samraksh\eMote.NOW\2013.01.23 eMote.NOW Executables\eMote.NOW NET DLL 1.0.0.0\Samraksh_SPOT_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,5 +68,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="eMote Ping Description.rtf" />
   </ItemGroup>
 </Project>

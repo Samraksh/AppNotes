@@ -6,8 +6,13 @@ using Samraksh.SPOT.Net;
 using Samraksh.SPOT.Net.Mac;
 using Samraksh.SPOT.Hardware.EmoteDotNow;
 
-namespace Samraksh.eMote.AppNote.eMotePing {
+/* ******************************************************
+ * Reminder: before you deploy this app to eMote, be sure to check the deployment properties.
+ * Click on Project > Scrolling Hello World Properties, choose the .NET Micro Framework tab,
+ * and make sure that Transport and Device are set correctly. 
+ * ******************************************************/
 
+namespace Samraksh.eMote.AppNote.eMotePing {
 
    /// <summary>
    /// Send ping messages to all other motes and listen for pong replies
@@ -18,7 +23,7 @@ namespace Samraksh.eMote.AppNote.eMotePing {
    /// 2. A timer periodically calls a method that broadcasts a ping.
    /// 3. Incoming ping or pong messages are caught and handled via an interrupt.
    /// </remarks>
-    public class Ping {
+    public class eMotePing {
 
         UInt16 myAddress;
         UInt16 mySeqNo = 0;
@@ -36,17 +41,12 @@ namespace Samraksh.eMote.AppNote.eMotePing {
         /// </remarks>
         public static void Main() {
             Debug.Print("Starting eMotePing");
-            Ping p = new Ping();
+            eMotePing p = new eMotePing();
             p.Initialize();
             p.Start();
             Thread.Sleep(Timeout.Infinite);
         }
-         
-        // Commented code
-        //Radio.Radio_802_15_4 my_15_4 = new Radio.Radio_802_15_4();
-        //Radio.RadioConfiguration radioConfig = new Radio.RadioConfiguration();
-        //int myRadioID;
-
+        
         /// <summary>
         /// Initialize the hardware.
         /// </summary>
@@ -65,30 +65,13 @@ namespace Samraksh.eMote.AppNote.eMotePing {
             lcd.Initialize();
             lcd.Write(LCD.CHAR_I, LCD.CHAR_N, LCD.CHAR_I, LCD.CHAR_7);
 
-#region Commented code ...
-            //Debug.Print("Initializing:  Radio");
-            //try
-            //{
-            //    my_15_4.Initialize(radioConfig, null);
-            //}
-            //catch (Exception e)
-            //{
-            //    Debug.Print(e.ToString());
-            //}
-            //
-            //Debug.Print("Radio init done.");
-            //
-            //myRadioID = my_15_4.GetID();
-            // *
-            //Debug.Print("My radio ID is : " + myRadioID);
-#endregion
-
             // Initialize the MAC configuration
+            //  Note: The assignments here are the default values. For TinyCLR 4.3.0.0, changing these values will have no effect. They are present for illustrative purposes.
             macConfig.CCA = true; // Check for clear channel
+            macConfig.CCASenseTime = 140; //Carrier sensing time in micro seconds
             macConfig.BufferSize = 8; // Number of packets buffered by MAC layer for send and receive (Send returns false when buffer full)
             macConfig.NumberOfRetries = 0; // In case of collision
             macConfig.RadioID = (byte)1; // Specifies 802.15.4 internal radio
-            macConfig.CCASenseTime = 140; //Carrier sensing time in micro seconds
 
             Debug.Print("Initializing:  CSMA...");
             try {
