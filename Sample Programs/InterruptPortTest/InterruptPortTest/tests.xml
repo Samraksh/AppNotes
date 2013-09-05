@@ -1,0 +1,35 @@
+<TestSuite>
+	<Test Name='InterruptPortTest' Type='C#'>
+		<Description>
+			C# GPIO InterruptPort and OutputPort Test
+		</Description>
+		<TestPath>
+			GPIO\Src\C#\InterruptPort\InterruptPortTest\InterruptPortTest
+		</TestPath>
+		<TestProjName>
+			InterruptPortTest_TR.csproj
+		</TestProjName>
+		<TesterName>
+		</TesterName>
+		<TestLocation>
+		</TestLocation>
+		<TestMFVersionNum>
+		</TestMFVersionNum>
+		<TestGitOption>			
+		</TestGitOption>
+		<TestGitBranch>
+		</TestGitBranch>
+		<TestUsePrecompiledBinary>
+		</TestUsePrecompiledBinary>
+		<TestHardware>
+		</TestHardware>
+		<TestSolution>
+		</TestSolution>
+		<TestMemoryType>
+		</TestMemoryType>
+		<TestSolutionType>
+		</TestSolutionType>
+		<TestGCCVersion>
+		</TestGCCVersion>
+	</Test>
+</TestSuite>
