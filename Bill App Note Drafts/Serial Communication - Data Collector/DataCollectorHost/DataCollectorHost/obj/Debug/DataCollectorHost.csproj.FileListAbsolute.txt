@@ -1,0 +1,15 @@
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\DataCollectorHost.exe.config
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\DataCollectorHost.exe
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\DataCollectorHost.pdb
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\Microsoft.SPOT.Debugger.dll
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\WinUsbInvoke.dll
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\Microsoft.SPOT.Tasks.dll
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\Microsoft.SPOT.Debugger.pdb
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\WinUsbInvoke.pdb
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\bin\Debug\Microsoft.SPOT.Tasks.pdb
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\obj\Debug\DataCollectorHost.csprojResolveAssemblyReference.cache
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\obj\Debug\DataCollectorHost.exe
+D:\Main\Work\SOURCE\STABLE\DotNet-MF\MicroFrameworkPK_v4_3\Samraksh\APPS\DataCollectorHost\DataCollectorHost\obj\Debug\DataCollectorHost.pdb
+C:\Samraksh Git\app-notes\Sample Programs\Serial Communication - Data Collector\DataCollectorHost\DataCollectorHost\bin\Debug\DataCollectorHost.exe.config
+C:\Samraksh Git\app-notes\Sample Programs\Serial Communication - Data Collector\DataCollectorHost\DataCollectorHost\obj\Debug\DataCollectorHost.exe
+C:\Samraksh Git\app-notes\Sample Programs\Serial Communication - Data Collector\DataCollectorHost\DataCollectorHost\obj\Debug\DataCollectorHost.pdb
