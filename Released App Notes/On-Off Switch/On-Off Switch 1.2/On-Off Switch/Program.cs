@@ -5,6 +5,7 @@
  * Version history
  *  1.0: initial release
  *  1.1: fix bug: on and off switch responses are reversed
+ *  1.2: changed main thread sleep to Timeout.Infinite; renamed LcdExtensionMethods
 ---------------------------------------------------------------------*/
 
 using System;
@@ -15,8 +16,8 @@ using System.Threading;
 // This makes it easy to reference the eMote hardware class
 using Samraksh.SPOT.Hardware.EmoteDotNow;
 
-// This includes extensions the LCD class with a method that makes it easy to convert a char to LCD. See the file LcdExtensionMethods.cs
-using LcdExtensionMethods;
+// This includes extensions for the LCD class with a method that makes it easy to convert a char to LCD. See the file ExtensionMethods.cs
+using ExtensionMethods;
 
 namespace Switch {
     public class Program {
@@ -61,12 +62,10 @@ namespace Switch {
 
                 inputSwitch.OnInterrupt += inputSwitch_OnInterrupt;
 
-                // Loop forever
+                // Put this thread to sleep and don't wake up
                 //  If this isn't included, the Main program will exit now and nothing else will happen.
 
-                //while (true) {
-                //    Thread.Sleep(int.MaxValue);
-                //}
+                    Thread.Sleep(Timeout.Infinite);
             }
             catch (Exception ex) {
                 Debug.Print("Exception thrown: " + ex.ToString());

@@ -1,0 +1,3 @@
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial Communication - Data Collector\On-Off Switch Controller 1.1\On-Off Switch Controller\bin\Debug\DataCollectorHost.exe.config
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial Communication - Data Collector\On-Off Switch Controller 1.1\On-Off Switch Controller\obj\Debug\DataCollectorHost.exe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial Communication - Data Collector\On-Off Switch Controller 1.1\On-Off Switch Controller\obj\Debug\DataCollectorHost.pdb
