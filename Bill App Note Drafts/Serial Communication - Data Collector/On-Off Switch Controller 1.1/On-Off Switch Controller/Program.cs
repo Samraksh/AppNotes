@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +16,8 @@ namespace DataCollectorHost {
         string port;
         AsyncCallback serialCallback;
         StreamWriter inpFile;
-        StreamWriter OutFile;
         static bool dDone = true;
-        static byte[] buffer = new byte[256];
+        static byte[] buffer = new byte[1];
 
         public DataCollector(string port, string fileName) {
             _DBG.PortDefinition pd = null;
@@ -40,19 +40,42 @@ namespace DataCollectorHost {
 
         }
 
+        public void Write(string strToSend) {
+            byte[] bytesToSend = System.Text.Encoding.UTF8.GetBytes(strToSend);
+            UsartStream.Write(bytesToSend,0,bytesToSend.Length);
+            UsartStream.Flush();
+        }
+
         public void ProcessData(IAsyncResult result) {
             for (int i = 0; i < buffer.Length; i++) {
-                Console.Write(buffer[i].ToString());
                 inpFile.Write(buffer[i]);
             }
 
             inpFile.WriteLine();
-            Console.Write("\n");
+
+            string decoded = System.Text.Encoding.UTF8.GetString(buffer);
+            Console.Write(decoded);
 
             dDone = true;
         }
 
         public void Run() {
+
+            Thread t = new Thread(() => {
+                Debug.Print("Starting thread");
+                while (true) {
+                    byte[] msgBytes = System.Text.Encoding.UTF8.GetBytes("1");
+                    UsartStream.Write(msgBytes,0,msgBytes.Length);
+                    UsartStream.Flush();
+                    Thread.Sleep(10000);
+                    msgBytes = System.Text.Encoding.UTF8.GetBytes("0");
+                    UsartStream.Write(msgBytes,0,msgBytes.Length);
+                    UsartStream.Flush();
+                    Thread.Sleep(10000);
+                }
+            });
+            t.IsBackground = true;
+            t.Start();
 
             serialCallback = new AsyncCallback(ProcessData);
 
@@ -78,14 +101,17 @@ namespace DataCollectorHost {
             string inputFile = "";
 
 
-            Console.WriteLine("Enter the COM Port : ");
-            port = Console.ReadLine();
-            Console.WriteLine("Enter the name of the storage file : ");
-            inputFile = Console.ReadLine();
+            //Console.WriteLine("Enter the COM Port : ");
+            //port = Console.ReadLine();
+            port = "COM1";
+            //Console.WriteLine("Enter the name of the storage file : ");
+            //inputFile = Console.ReadLine();
+            inputFile = @"c:\temp\datacollector.txt";
 
             DataCollector dc = new DataCollector(port, inputFile);
 
             dc.Run();
+
 
         }
     }

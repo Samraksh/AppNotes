@@ -7,87 +7,90 @@
  ---------------------------------------------------------------------*/
 
 using System;
-using Microsoft.SPOT;
 using System.IO.Ports;
-using Microsoft.SPOT;
-using Microsoft.SPOT.Hardware;
 using System.Threading;
 
+using Microsoft.SPOT;
+using Microsoft.SPOT.Hardware;
 using Samraksh.SPOT.Hardware.EmoteDotNow;
+
+using ExtensionMethods;
+using SamrakshAppNoteUtility;
 
 namespace OnOffSwitchExfiltrator {
 
     public class Program {
 
-        public static bool sdSuccessFlag = false;
+        static EmoteLCD lcd = new EmoteLCD();
+        static SerialComm exfilPort;
 
-        public static void mySdCallback(Samraksh.SPOT.Hardware.DeviceStatus status) {
-            Debug.Print("Recieved SD Callback\n");
-
-            sdSuccessFlag = true;
-        }
+        static bool sendSwitchVal = true;
 
         public static void Main() {
+            lcd.Initialize();
+            lcd.Write('1'.ToLCD(), '1'.ToLCD(), '1'.ToLCD(), '1'.ToLCD());
+            Thread.Sleep(1000);
+            lcd.Write(' '.ToLCD(), ' '.ToLCD(), ' '.ToLCD(), ' '.ToLCD());
 
-            UInt16[] m_sendBuffer = new UInt16[256];
-            byte[] m_serialBuffer = new byte[512];
+            SwitchInput onOffSwitch = new SwitchInput(Pins.GPIO_J12_PIN1, Port.ResistorMode.PullUp, SwitchCallback);
 
-            UInt16 counter = 0;
-
-            UInt32 readBytes = 0;
-
-            bool readDone = false;
-
-            SerialPort serialPort = new SerialPort("COM1");
-            serialPort.BaudRate = 115200;
-            serialPort.Parity = System.IO.Ports.Parity.None;
-            serialPort.StopBits = StopBits.One;
-            serialPort.DataBits = 8;
-            serialPort.Handshake = Handshake.None;
-
-            serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialPortHandler);
-
-            serialPort.Open();
-
-            SD.SDCallBackType sdResultCallBack = mySdCallback;
-
-            SD mysd = new SD(sdResultCallBack);
-
-            SD.Initialize();
-
-            while (true) {
-                Debug.Print("Read : " + readBytes.ToString() + "\n");
-
-                SD.Read(m_serialBuffer, 0, 512);
-
-                for (UInt16 i = 0; i < 64; i++) {
-                    if ((m_serialBuffer[i] == 0x0c) && (m_serialBuffer[i + 1] == 0x0c) && (m_serialBuffer[i + 2] == 0x0c) && (m_serialBuffer[i + 3] == 0x0c))
-                        readDone = true;
-                }
-
-                if (readDone == true)
-                    break;
-
-                serialPort.Write(m_serialBuffer, 0, 512);
-
-                readBytes += 512;
-
-                Thread.Sleep(200);
-
+            try {
+                exfilPort = new SerialComm("COM1", ExfiltrationSerialCallback);
+                exfilPort.Open();
+            }
+            catch {
+                lcd.Write('9'.ToLCD(), '9'.ToLCD(), '9'.ToLCD(), '9'.ToLCD());
             }
 
-            Debug.Print("Read is complete \n");
+            Thread.Sleep(Timeout.Infinite);
         }
 
-        static void SerialPortHandler(object sender, SerialDataReceivedEventArgs e) {
-            byte[] m_recvBuffer = new byte[100];
-            SerialPort serialPort = (SerialPort)sender;
+        private static void SwitchCallback(bool switchValue) {
+            if (!sendSwitchVal) {
+                return;
+            }
+            ExfilLCD.SwitchValue((switchValue) ? '0' : '1');
+            exfilPort.Write((switchValue) ? "Off\n" : "On\n");
+        }
 
-            int numBytes = serialPort.BytesToRead;
-            serialPort.Read(m_recvBuffer, 0, numBytes);
-            serialPort.Write(m_recvBuffer, 0, numBytes);
-            serialPort.Flush();
+        private static void ExfiltrationSerialCallback(byte[] readBytes) {
+            char[] readChars = System.Text.Encoding.UTF8.GetChars(readBytes);
+            string readStr = readChars.ToString();
+            if (readChars[0] == '1') {
+                sendSwitchVal = true;
+                ExfilLCD.InputValue('a');
+                return;
+            }
+            if (readChars[0]== '0') {
+                sendSwitchVal = false;
+                ExfilLCD.InputValue('b');
+                return;
+            }
+            for (int i = 0; i<readStr.Length;i++) {
+                ExfilLCD.InputValue(readStr[i]);
+                Thread.Sleep(1000);
+            }
+        }
 
+        static class ExfilLCD {
+            private static char lcd1 = ' ';
+            private static char lcd2 = ' ';
+            private static char lcd3 = ' ';
+            private static char lcd4 = ' ';
+
+            public static void SwitchValue(char swVal) {
+                lcd1 = swVal;
+                WriteLcd();
+            }
+
+            public static void InputValue(char inVal) {
+                lcd3 = inVal;
+                WriteLcd();
+            }
+
+            private static void WriteLcd() {
+                lcd.Write(lcd1.ToLCD(), lcd2.ToLCD(), lcd3.ToLCD(), lcd4.ToLCD());
+            }
         }
 
     }

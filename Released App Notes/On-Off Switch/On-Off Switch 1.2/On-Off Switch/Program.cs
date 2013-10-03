@@ -65,7 +65,7 @@ namespace Switch {
                 // Put this thread to sleep and don't wake up
                 //  If this isn't included, the Main program will exit now and nothing else will happen.
 
-                    Thread.Sleep(Timeout.Infinite);
+                Thread.Sleep(Timeout.Infinite);
             }
             catch (Exception ex) {
                 Debug.Print("Exception thrown: " + ex.ToString());
@@ -82,9 +82,9 @@ namespace Switch {
         /// <summary>
         /// Timer callback
         /// </summary>
-        /// <remarks>Called when tiner expires</remarks>
+        /// <remarks>Called when timer expires</remarks>
         /// <param name="obj"></param>
-        static void callback(object obj) {  
+        static void timerCallback(object obj) {
             interruptDisabled = FALSE;          // Enable interrupt
         }
 
@@ -107,7 +107,7 @@ namespace Switch {
             if (Interlocked.CompareExchange(ref interruptDisabled, TRUE, FALSE) == TRUE) {
                 return;
             }
-                        
+
             // Print out the parameter values. This is optional.
             //  Note that pin is a numeric value. It corresponds to the enum associated with the defined pin.
             //      In this case, J12/1 is number 24.
@@ -119,10 +119,10 @@ namespace Switch {
             // Calculate the time from the last interrupt. This is optional.
             TimeSpan lastInterruptSpan = DateTime.Now - lastInterruptDateTime;
             lastInterruptDateTime = DateTime.Now;
-            
+
             // Count the interrupts. This is optional.
             interruptCnt++;
-            
+
             // Read the button value. True = set (high), false = reset (low)
 
             bool buttonValue = inputSwitch.Read();
@@ -143,10 +143,10 @@ namespace Switch {
             //  Setting the period to 0 means it will run once and stop.
 
             if (interruptTimer == null) {
-                interruptTimer = new Timer(new TimerCallback(callback), interruptDisabled, TIMER_INTERVAL, 0);
-            } 
+                interruptTimer = new Timer(new TimerCallback(timerCallback), interruptDisabled, TIMER_INTERVAL, 0);
+            }
             else {
-                interruptTimer.Change(TIMER_INTERVAL,0);
+                interruptTimer.Change(TIMER_INTERVAL, 0);
             }
 
         }
