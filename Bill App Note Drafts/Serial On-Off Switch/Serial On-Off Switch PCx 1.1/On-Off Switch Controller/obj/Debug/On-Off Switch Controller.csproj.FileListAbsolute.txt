@@ -10,3 +10,6 @@ C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial Communication - Data Colle
 C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial Communication - Data Collector\On-Off Switch Controller 1.1\On-Off Switch Controller\bin\Debug\WinUsbInvoke.pdb
 C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial Communication - Data Collector\On-Off Switch Controller 1.1\On-Off Switch Controller\bin\Debug\Microsoft.SPOT.Tasks.pdb
 C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial Communication - Data Collector\On-Off Switch Controller 1.1\On-Off Switch Controller\obj\Debug\On-Off Switch Controller.csprojResolveAssemblyReference.cache
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial On-Off Switch\Serial On-Off Switch PCx 1.1\On-Off Switch Controller\bin\Debug\DataCollectorHost.exe.config
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial On-Off Switch\Serial On-Off Switch PCx 1.1\On-Off Switch Controller\obj\Debug\DataCollectorHost.exe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Serial On-Off Switch\Serial On-Off Switch PCx 1.1\On-Off Switch Controller\obj\Debug\DataCollectorHost.pdb

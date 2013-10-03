@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "On-Off Switch Exfiltrator", "On-Off Switch Exfiltrator\On-Off Switch Exfiltrator.csproj", "{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}"
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serial On-Off Switch Mote", "Serial On-Off Switch Mote\Serial On-Off Switch Mote.csproj", "{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
