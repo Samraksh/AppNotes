@@ -6,13 +6,16 @@ using Microsoft.SPOT;
 // If so, delete the reference and recreate it where you've stored the Samraksh DLL's.
 using Samraksh.SPOT.Hardware.EmoteDotNow;
 
-namespace ExtensionMethods {
+namespace Samraksh.AppNote.Utility {
     // Extend the char class with a method that converts to LCD
     public static class LcdExtensions {
         /// <summary>
         /// Converts a char to LCD
         /// </summary>
-        /// <param name="charArg">The input character as a char</param>
+        /// <remarks>
+        /// Example: 'a'.ToLCD()
+        /// </remarks>
+        /// <param name="charArg">The input as a char</param>
         /// <returns>The corresponding LCD value</returns>
         public static LCD ToLCD(this char charArg) {
             switch (charArg) {
