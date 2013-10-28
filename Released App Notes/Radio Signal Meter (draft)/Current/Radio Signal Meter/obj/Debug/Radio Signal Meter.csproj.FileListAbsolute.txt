@@ -1,0 +1,35 @@
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\le\SignalMeter.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\be\SignalMeter.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\le\SignalMeter.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\be\SignalMeter.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\SignalMeter.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\SignalMeter.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\le\SignalMeter.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\le\SignalMeter.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\be\SignalMeter.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\be\SignalMeter.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\LE\Samraksh_SPOT_Hardware.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\LE\Samraksh_SPOT_Net.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\BE\Samraksh_SPOT_Hardware.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\BE\Samraksh_SPOT_Net.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\LE\Samraksh_SPOT_Hardware.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\LE\Samraksh_SPOT_Net.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\BE\Samraksh_SPOT_Hardware.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\BE\Samraksh_SPOT_Net.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\Samraksh_SPOT_Hardware.dll
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\Samraksh_SPOT_Net.dll
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\Samraksh_SPOT_Hardware.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\Samraksh_SPOT_Net.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\bin\Debug\Samraksh_SPOT_Net.xml
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\Radio Signal Meter.csprojResolveAssemblyReference.cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\TinyCLR_DebugReferences.cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\Samraksh.AppNote.Resources.resources
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\Radio Signal Meter.csproj.GenerateResource.Cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\Samraksh.AppNote.Resources.tinyresources
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\TinyResGen.cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\be\SignalMeter.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\be\SignalMeter.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\le\SignalMeter.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\le\SignalMeter.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\SignalMeter.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Signal Meter\Current\Radio Signal Meter\obj\Debug\SignalMeter.pdb

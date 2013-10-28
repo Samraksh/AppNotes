@@ -1,0 +1,70 @@
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\le\MFConsoleApplication1.exe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\be\MFConsoleApplication1.exe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\le\MFConsoleApplication1.pdb
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\be\MFConsoleApplication1.pdb
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\MFConsoleApplication1.exe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\MFConsoleApplication1.pdb
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\le\MFConsoleApplication1.pe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\le\MFConsoleApplication1.pdbx
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\be\MFConsoleApplication1.pe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\be\MFConsoleApplication1.pdbx
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\LE\Samraksh_SPOT_Hardware.pe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\LE\Samraksh_SPOT_Net.pe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\BE\Samraksh_SPOT_Hardware.pe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\BE\Samraksh_SPOT_Net.pe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\LE\Samraksh_SPOT_Hardware.pdbx
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\LE\Samraksh_SPOT_Net.pdbx
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\BE\Samraksh_SPOT_Hardware.pdbx
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\BE\Samraksh_SPOT_Net.pdbx
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Hardware.dll
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Net.dll
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Hardware.pdb
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Net.pdb
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Net.xml
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\Samraksh.AppNote.PingPong.Resources.resources
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\Radio Ping-Pong.csproj.GenerateResource.Cache
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\Samraksh.AppNote.PingPong.Resources.tinyresources
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\TinyResGen.cache
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\be\MFConsoleApplication1.pe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\be\MFConsoleApplication1.pdbx
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\le\MFConsoleApplication1.pe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\le\MFConsoleApplication1.pdbx
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\MFConsoleApplication1.exe
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\MFConsoleApplication1.pdb
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\TinyCLR_DebugReferences.cache
+C:\Samraksh Git\app-notes\Bill App Note Drafts\Radio Ping-Pong\Radio Ping-Pong\obj\Debug\Radio Ping-Pong.csprojResolveAssemblyReference.cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\le\MFConsoleApplication1.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\be\MFConsoleApplication1.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\le\MFConsoleApplication1.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\be\MFConsoleApplication1.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\MFConsoleApplication1.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\MFConsoleApplication1.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\le\MFConsoleApplication1.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\le\MFConsoleApplication1.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\be\MFConsoleApplication1.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\be\MFConsoleApplication1.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\LE\Samraksh_SPOT_Hardware.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\LE\Samraksh_SPOT_Net.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\BE\Samraksh_SPOT_Hardware.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\BE\Samraksh_SPOT_Net.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\LE\Samraksh_SPOT_Hardware.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\LE\Samraksh_SPOT_Net.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\BE\Samraksh_SPOT_Hardware.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\BE\Samraksh_SPOT_Net.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Hardware.dll
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Net.dll
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Hardware.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Net.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\bin\Debug\Samraksh_SPOT_Net.xml
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\Radio Ping-Pong.csprojResolveAssemblyReference.cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\TinyCLR_DebugReferences.cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\Samraksh.AppNote.PingPong.Resources.resources
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\Radio Ping-Pong.csproj.GenerateResource.Cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\Samraksh.AppNote.PingPong.Resources.tinyresources
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\TinyResGen.cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\be\MFConsoleApplication1.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\be\MFConsoleApplication1.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\le\MFConsoleApplication1.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\le\MFConsoleApplication1.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\MFConsoleApplication1.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Ping-Pong\Current\Radio Ping-Pong\obj\Debug\MFConsoleApplication1.pdb
