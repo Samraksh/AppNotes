@@ -27,9 +27,9 @@ C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Curren
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\Wireless Data Collector - Sensing.csproj.GenerateResource.Cache
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\Samraksh.AppNote.Resources.tinyresources
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\TinyResGen.cache
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\SignalMeter.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\SignalMeter.pdb
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\be\SignalMeter.pe
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\be\SignalMeter.pdbx
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\le\SignalMeter.pe
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\le\SignalMeter.pdbx
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\SignalMeter.exe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\SignalMeter.pdb

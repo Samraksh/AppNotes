@@ -32,7 +32,7 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="BitConverter.cs" />
-    <Compile Include="EasyTimer.cs" />
+    <Compile Include="SimpleTimer.cs" />
     <Compile Include="SimpleCsmaRadio.cs" />
     <Compile Include="LcdExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

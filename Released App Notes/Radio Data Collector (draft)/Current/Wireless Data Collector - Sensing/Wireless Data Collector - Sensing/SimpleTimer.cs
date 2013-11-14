@@ -6,65 +6,68 @@ namespace Samraksh.AppNote.Utility {
 
     public class SimpleTimer {
 
-        private Timer theTimer; // Can't inherit since the Timer class is sealed
+        public Timer TheTimer; // Can't inherit since the TheTimer class is sealed
 
-        private TimerCallback timerCallback;
-        private object callBackValue;
-        private int dueTime;
-        private int period;
+        private readonly TimerCallback _timerCallback;
+        private readonly object _callBackValue;
+        private readonly int _dueTime;
+        private readonly int _period;
+
+        public bool IsStopped {get { return TheTimer == null; }}
 
         /// <summary>
         /// This creates a one-shot timer since the period is 0
         /// </summary>
-        /// <param name="_timerCallback"></param>
-        /// <param name="_callBackValue"></param>
-        /// <param name="_dueTime"></param>
-        public SimpleTimer(TimerCallback _timerCallback, object _callBackValue, int _dueTime) {
-            timerCallback = _timerCallback;
-            callBackValue = _callBackValue;
-            dueTime = _dueTime;
-            period = 0;
+        /// <param name="timerCallback"></param>
+        /// <param name="callBackValue"></param>
+        /// <param name="dueTime"></param>
+        public SimpleTimer(TimerCallback timerCallback, object callBackValue, int dueTime) {
+            _timerCallback = timerCallback;
+            _callBackValue = callBackValue;
+            _dueTime = dueTime;
+            _period = 0;
         }
 
         /// <summary>
         /// This creates a recurrent timer
         /// </summary>
-        /// <param name="_timerCallback"></param>
-        /// <param name="_callBackValue"></param>
-        /// <param name="_dueTime"></param>
-        /// <param name="_period"></param>
-        public SimpleTimer(TimerCallback _timerCallback, object _callBackValue, int _dueTime, int _period) {
-            timerCallback = _timerCallback;
-            callBackValue = _callBackValue;
-            dueTime = _dueTime;
-            period = _period;
+        /// <param name="timerCallback"></param>
+        /// <param name="callBackValue"></param>
+        /// <param name="dueTime"></param>
+        /// <param name="period"></param>
+        public SimpleTimer(TimerCallback timerCallback, object callBackValue, int dueTime, int period) {
+            _timerCallback = timerCallback;
+            _callBackValue = callBackValue;
+            _dueTime = dueTime;
+            _period = period;
         }
 
         public void StartNew() {
-            theTimer = new Timer(timerCallback, callBackValue, dueTime, period);
+            TheTimer = new Timer(_timerCallback, _callBackValue, _dueTime, _period);
         }
 
         public void Start() {
-            if (theTimer == null) {
-                theTimer = new Timer(timerCallback, callBackValue, dueTime, period);
+            if (TheTimer == null) {
+                TheTimer = new Timer(_timerCallback, _callBackValue, _dueTime, _period);
             }
             else {
-                theTimer.Change(dueTime, period);
+                TheTimer.Change(_dueTime, _period);
             }
         }
 
         public void Stop() {
-            if (theTimer == null) {
+            if (TheTimer == null) {
                 return;
             }
             lock (this) {   // Make sure we're not in the callback before killing the timer
-                theTimer.Dispose();
+                TheTimer.Dispose();
+                TheTimer = null;
             }
         }
 
         private void CallBack(object obj) {
             lock (this) {   // Prevent disposal while in callback method
-                timerCallback(obj);
+                _timerCallback(obj);
             }
         }
     }
