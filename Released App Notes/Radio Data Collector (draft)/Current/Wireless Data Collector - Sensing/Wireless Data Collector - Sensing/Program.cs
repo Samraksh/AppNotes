@@ -24,9 +24,28 @@ namespace Samraksh.AppNote {
     ///     between base and sensing nodes, including clock drift.
     /// </summary>
     public class Program {
+
         // These must be the same in Base and Sensing programs
-        private const string AppIdentifier = "DC";
-        private const byte MessageSequenceSize = sizeof(int);
+        private const string PayloadIdentifier = "DC";
+        private enum MsgTypes : byte { Hello, Reply, Data };
+
+        private static readonly int PayloadIdentifierSize = PayloadIdentifier.Length;
+        private static readonly int PayloadTypeSize = sizeof(MsgTypes);
+        private const int PayloadSequenceSize = sizeof(int);
+        private const int PayloadTimeSize = sizeof(long);
+        private static readonly int PayloadHeaderSize = PayloadIdentifierSize + PayloadTypeSize + PayloadSequenceSize + PayloadTimeSize;
+
+        private const int PayloadIdentifierPos = 0;
+        private static readonly int PayloadTypePos = PayloadIdentifierPos + PayloadIdentifierSize;
+        private static readonly int PayloadSequencePos = PayloadTypePos + PayloadTypeSize;
+        private static readonly int PayloadTimePos = PayloadSequencePos + PayloadSequenceSize;
+
+
+        private const int PayloadDataSize = sizeof(int);
+        private const int PayloadTimeDataSize = PayloadTimeSize + PayloadDataSize;
+        private static byte[] _payloadIdentifierBytes = new byte[PayloadIdentifierSize];
+
+
 
         private const int HelloInterval = 4000;
         private const int SensingInterval = 4000;
@@ -42,12 +61,13 @@ namespace Samraksh.AppNote {
         private static byte _appIdentifierSize;
         private static int _baseStationId = -1;
         private static int _messageSequence;
-        private static readonly byte MsgTypeSize = (byte)sizeof(MsgTypes);
         private static readonly ArrayList MessageTimers = new ArrayList();
         private static byte[] _emptyBytes;
 
         private static States _currState = States.Hello;
         private static readonly Random SensorSurrogate = new Random();
+
+
 
         /// <summary>
         /// </summary>
@@ -58,11 +78,11 @@ namespace Samraksh.AppNote {
 
             // Set up LCD and display a welcome message
             _lcd = new EmoteLCDUtil();
-            _lcd.Display("Hola");
+            _lcd.Display("S");
             Thread.Sleep(4000);
 
             // Convert the app identifier to a byte array
-            _appIdentifierBytes = Encoding.UTF8.GetBytes(AppIdentifier);
+            _appIdentifierBytes = Encoding.UTF8.GetBytes(PayloadIdentifier);
             _appIdentifierSize = (byte)_appIdentifierBytes.Length;
             _emptyBytes = new byte[0];
 
@@ -90,40 +110,42 @@ namespace Samraksh.AppNote {
         /// </remarks>
         /// <param name="csma">A CSMA object that has the message info</param>
         private static void RadioReceive(CSMA csma) {
-            Message rcvMsg = csma.GetNextPacket();
-            byte[] rcvPayloadBytes = rcvMsg.GetMessage();
-            char[] rcvPayloadChar = Encoding.UTF8.GetChars(rcvPayloadBytes);
+            var rcvMsg = csma.GetNextPacket();
+            if (rcvMsg == null) {
+                return;
+            }
+            var rcvPayloadBytes = rcvMsg.GetMessage();
 
             // Print message details
             Debug.Print("Got a " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src +
-                        ", size: " + rcvPayloadBytes + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
-            Debug.Print("   Payload [" + new string(rcvPayloadChar) + "]");
+                        ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
 
-            var rcvPayloadByteStr = new StringBuilder("  Payload [");
-            for (int i = 0; i < rcvPayloadBytes.Length; i++) {
-                rcvPayloadByteStr.Append(rcvPayloadBytes + " ");
-            }
-            rcvPayloadByteStr.Append("]");
-            Debug.Print(rcvPayloadByteStr.ToString());
+            //var rcvPayloadByteStr = new StringBuilder("  Payload [");
+            //for (var i = 0; i < rcvPayloadBytes.Length; i++) {
+            //    rcvPayloadByteStr.Append(rcvPayloadBytes + " ");
+            // }
+            //rcvPayloadByteStr.Append("]");
+            //Debug.Print(rcvPayloadByteStr.ToString());
 
             // Check the app identifier
-            for (int i = 0; i < _appIdentifierSize; i++) {
-                if (rcvPayloadBytes[i] != _appIdentifierBytes[i]) {
+            for (var i = 0; i < _appIdentifierSize; i++) {
+                if (rcvPayloadBytes[PayloadIdentifierPos + i] != _appIdentifierBytes[i]) {
                     return;
                 }
             }
             // Check the message type & cast mode
-            if (rcvPayloadBytes[_appIdentifierSize] != (byte)MsgTypes.Reply || !rcvMsg.Unicast) {
+            if (rcvPayloadBytes[PayloadTypePos] != (byte)MsgTypes.Reply || !rcvMsg.Unicast) {
                 return;
             }
 
             // All is ok ... set the source ID of the base station
             _baseStationId = rcvMsg.Src;
+            var rcvSeq = BitConverter.ToInt32(rcvPayloadBytes, PayloadSequencePos);
 
-            // Stop the message TheTimer
+            // Stop the message timer
             var messageFound = false;
             for (var i = 0; i < MessageTimers.Count; i++) {
-                if (((MessageTimer)MessageTimers[i]).Sequence != _messageSequence) continue;
+                if (((MessageTimer)MessageTimers[i]).Sequence != rcvSeq) continue;
                 ((MessageTimer)MessageTimers[i]).SeqTimer.Stop();
                 messageFound = true;
             }
@@ -146,34 +168,34 @@ namespace Samraksh.AppNote {
                 }
             }
 
-            Debug.Print("Sending " + msgType.ToString() + " message, sequence #: "+_messageSequence);
+            Debug.Print("Sending " + msgType.ToString() + " message, sequence #: " + _messageSequence);
 
             // Create the message
-            var msg = new byte[MsgTypeSize + _appIdentifierSize + MessageSequenceSize + payload.Length];
+            var msg = new byte[_appIdentifierSize + PayloadTypeSize + PayloadSequencePos + payload.Length];
             byte currPos = 0;
-            // Copy message type
-            msg[0] = (byte)msgType;
-            currPos++;
-            ;
+
             // Copy app identifier
-            for (byte i = 0; i < _appIdentifierSize; i++) {
-                msg[i + currPos] = _appIdentifierBytes[i];
+            for (var i = 0; i < _appIdentifierSize; i++) {
+                msg[currPos++] = _appIdentifierBytes[i];
             }
-            currPos += _appIdentifierSize;
+            // Copy message type
+            msg[currPos++] = (byte)msgType;
+
             // Copy message sequence
             var messageSequenceBytes = BitConverter.GetBytes(_messageSequence);
-            for (byte i = 0; i < MessageSequenceSize; i++) {
-                msg[i + currPos] = messageSequenceBytes[i];
+            for (var i = 0; i < PayloadSequenceSize; i++) {
+                msg[currPos++] = messageSequenceBytes[i];
             }
-            currPos += MessageSequenceSize;
+
             // Copy payload
             for (var i = 0; i < payload.Length; i++) {
-                msg[i + currPos] = payload[i];
+                msg[currPos++] = payload[i];
             }
+
             // Send the message
             _csmaRadio.Send(dest, msg);
 
-            // Set a TheTimer for the message
+            // Set a timer for the message
             var messageTimerFound = false;
             var messageTimer = new SimpleTimer(MessageTimeoutCallback, _messageSequence, MessageTimeout);
             // If message timer slot is available, reuse it
@@ -214,13 +236,24 @@ namespace Samraksh.AppNote {
                 return;
             }
             var sensedValue = SensorSurrogate.Next();
-            RadioSend((Addresses)_baseStationId, MsgTypes.Data, BitConverter.GetBytes(DateTime.Now.Ticks.ToString() + sensedValue.ToString()));
+            var sensedTimeBytes = BitConverter.GetBytes(DateTime.Now.Ticks);
+            var sensedValueBytes = BitConverter.GetBytes(sensedValue);
+            var timeValueBytes = new byte[sensedTimeBytes.Length + sensedValueBytes.Length];
+            var currPos = 0;
+            for (var i = 0; i < sensedTimeBytes.Length; i++) {
+                timeValueBytes[currPos++] = sensedTimeBytes[i];
+            }
+            for (var i = 0; i < sensedValueBytes.Length; i++) {
+                timeValueBytes[currPos++] = sensedValueBytes[i];
+            }
+
+            RadioSend((Addresses)_baseStationId, MsgTypes.Data, timeValueBytes);
             SensingTimer.Start();
         }
 
 
         private static void MessageTimeoutCallback(object obj) {
-            Debug.Print("Message timeout: "+(int)obj);
+            Debug.Print("Message timeout: " + (int)obj);
             // Kill all the timers
             foreach (var theMessageTimer in MessageTimers) {
                 ((MessageTimer)theMessageTimer).SeqTimer.Stop();
@@ -238,11 +271,6 @@ namespace Samraksh.AppNote {
             }
         }
 
-        private enum MsgTypes : byte {
-            Hello,
-            Reply,
-            Data
-        };
 
         private enum States {
             Hello,

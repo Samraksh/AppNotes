@@ -23,6 +23,31 @@ using Samraksh.AppNote.Utility;
 
 namespace Samraksh.AppNote {
 
+    /*------------------------------------------------------------------------
+     * Message Formats
+     * 
+     * Hello
+     *      App Identifier (2)
+     *      Message Type (1) : Hello
+     *      Message Sequence Number (4)
+     *      Message Send Time (8)
+     *  Data
+     *      App Identifier (2)
+     *      Message Type (1) : Data
+     *      Message Sequence Number (4)
+     *      Message Send Time (8)
+     *      
+     *      Data Sense Time 1 (8)
+     *      Data Sensed 1 (4)
+     *          ...
+     *      Data Sensed Time N (8)
+     *      Data Sensed N (4)
+     *  Reply
+     *      App Identifier (2)
+     *      Message Type (1) : Reply
+     *      Message Sequence Number (4)
+     * ---------------------------------------------------------------------*/
+
     /// <summary>
     /// This program collects data from sensing nodes, with synchronized time.
     /// The base station listens for sensing node messages and collects the info. It makes adjustments for time differences between base and sensing nodes, including clock drift.
@@ -30,13 +55,24 @@ namespace Samraksh.AppNote {
     public class Program {
 
         // These must be the same in Base and Sensing programs
-        const string APP_IDENTIFIER = "DC";
+        const string PayloadIdentifier = "DC";
         enum MsgTypes : byte { Hello, Reply, Data };
 
-        static SimpleCsmaRadio csmaRadio;
-        static EmoteLCDUtil lcd = new EmoteLCDUtil();
-        static SensingNodes sensingNodes = new SensingNodes();
+        private static readonly int PayloadIdentifierSize = PayloadIdentifier.Length;
+        private static readonly int PayloadTypeSize = sizeof(MsgTypes);
+        private const int PayloadSequenceSize = sizeof(int);
+        private const int PayloadTimeSize = sizeof(long);
+        private static readonly int PayloadHeaderSize = PayloadIdentifierSize + PayloadTypeSize + PayloadSequenceSize + PayloadTimeSize;
+        private static readonly int PayloadSequencePos = PayloadIdentifierSize + PayloadTypeSize;
+        private static readonly int PayloadTimePos = PayloadIdentifierSize + PayloadTypeSize + PayloadSequenceSize;
 
+        private const int PayloadDataSize = sizeof(int);
+        private const int PayloadTimeDataSize = PayloadTimeSize + PayloadDataSize;
+        private static byte[] _payloadIdentifierBytes = new byte[PayloadIdentifierSize];
+
+        static SimpleCsmaRadio _csmaRadio;
+        static EmoteLcdUtil lcd = new EmoteLcdUtil();
+        static SensingNodes _sensingNodes = new SensingNodes();
 
         /// <summary>
         /// 
@@ -47,14 +83,18 @@ namespace Samraksh.AppNote {
 
             Debug.Print(Resources.GetString(Resources.StringResources.ProgramName));
 
+            //var payloadIdentifierChar = PayloadIdentifier.ToCharArray();
+            _payloadIdentifierBytes = System.Text.Encoding.UTF8.GetBytes(PayloadIdentifier);
+
+
             // Set up LCD and display a welcome message
-            lcd.Display("Hola");
+            lcd.Display("B");
             Thread.Sleep(4000);
 
             // Set up the radio for CSMA interaction
             //  The first two arguments are fairly standard but you're free to try changing them
             //  The last argument is the method to call when a message is received
-            csmaRadio = new SimpleCsmaRadio(140, TxPowerValue.Power_0Point7dBm, RadioReceive);
+            _csmaRadio = new SimpleCsmaRadio(140, TxPowerValue.Power_0Point7dBm, RadioReceive);
 
             // As base station node, just listen for incoming messages & respond
             Thread.Sleep(Timeout.Infinite);
@@ -66,61 +106,67 @@ namespace Samraksh.AppNote {
         /// <param name="csma">A CSMA object that has the message info</param>
         static void RadioReceive(CSMA csma) {
             int numPackets = csma.GetPendingPacketCount();
-            for (int packetNum = 0; packetNum < numPackets; packetNum++) {
-                long messageReceiveTime = DateTime.Now.Ticks; // Should get from MAC layer ...
-                Message rcvMsg = csma.GetNextPacket();
-                byte[] rcvPayloadBytes = rcvMsg.GetMessage();
-                char[] rcvPayloadChar = System.Text.Encoding.UTF8.GetChars(rcvPayloadBytes);
+            for (var packetNum = 0; packetNum < numPackets; packetNum++) {
+                var msgReceivedTime = DateTime.Now.Ticks; // Should get from MAC layer ...
+                var rcvMsg = csma.GetNextPacket();
+                var rcvPayloadBytes = rcvMsg.GetMessage();
                 try {
-                    Debug.Print("Got a " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src + ", size: " + rcvPayloadBytes + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
-                    Debug.Print("   Payload [" + new string(rcvPayloadChar) + "]");
-                    if (new string(rcvPayloadChar, 0, 2) != APP_IDENTIFIER) {
+                    var rcvPayloadChar = System.Text.Encoding.UTF8.GetChars(rcvPayloadBytes);
+                    {
+                        Debug.Print("Got a " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " +
+                                    rcvMsg.Src + ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " +
+                                    rcvMsg.LQI);
+                        Debug.Print("   Payload [" + new string(rcvPayloadChar) + "]");
+                    }
+                    if (rcvMsg.Size < PayloadHeaderSize || new string(rcvPayloadChar, 0, 2) != PayloadIdentifier) {
                         // not for us
                         return;
                     }
+                    var msgSentTime = BitConverter.ToInt64(rcvPayloadBytes, PayloadTimePos);
+
                     switch (rcvPayloadBytes[2]) {
                         case (byte)MsgTypes.Hello: {
+                                Debug.Print("\nReceived Hello, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(rcvPayloadBytes, PayloadSequencePos).ToString());
                                 // Send the response
-                                SendResponse(rcvMsg.Src);
-                                // Payload is 8 bytes of time
-                                long sendTime = BitConverter.ToInt64(rcvPayloadBytes, 3);
+                                SendResponse(rcvMsg.Src, rcvPayloadBytes, PayloadSequencePos, PayloadSequenceSize);
                                 // Add or replace the node
-                                sensingNodes.Add(rcvMsg.Src, new InitialTimePair(messageReceiveTime, sendTime));
+                                _sensingNodes[rcvMsg.Src] = new InitialTimePair(msgReceivedTime, msgSentTime);
+                                //_sensingNodes.Add(rcvMsg.Src, new InitialTimePair(messageReceiveTime, msgSentTime));
                                 break;
                             }
                         case (byte)MsgTypes.Data: {
+                                Debug.Print("\nReceived Data, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(rcvPayloadBytes, PayloadSequencePos).ToString());
                                 // If sensing node is not in our list, ignore ... this should never happen
-                                if (!sensingNodes.Contains(rcvMsg.Src)) {
+                                if (!_sensingNodes.Contains(rcvMsg.Src)) {
                                     return;
                                 }
                                 // Send the response
-                                SendResponse(rcvMsg.Src);
+                                SendResponse(rcvMsg.Src, rcvPayloadBytes, PayloadSequencePos, PayloadSequenceSize);
                                 // Payload is 8 bytes of time followed by pairs of [sample time (8 bytes), sample value (4 bytes)]
-                                long sensorSendtime = BitConverter.ToInt64(rcvPayloadBytes, 3);
-                                int numPairs = (rcvPayloadBytes.Length - (3 + 8)) / (8 + 4);
-                                long sampleTime;
-                                int sampleValue;
+                                var sensorSendtime = BitConverter.ToInt64(rcvPayloadBytes, 3);
 
                                 // Get the initial time values
-                                InitialTimePair initialTimePair = sensingNodes[rcvMsg.Src];
-                                long sensorInitialTime = initialTimePair.sensingNodeTime;
-                                long baseInitialTime = initialTimePair.baseTime;
+                                var initialTimePair = _sensingNodes[rcvMsg.Src];
+                                var sensorInitialTime = initialTimePair.SensingNodeTime;
+                                var baseInitialTime = initialTimePair.BaseTime;
                                 Debug.Print("Sample received from " + rcvMsg.Src + ", sensor initial time: " + sensorInitialTime + ", base initial time:" + baseInitialTime);
-                                for (int i = 0; i < numPairs; i++) {
-                                    sampleTime = BitConverter.ToInt64(rcvPayloadBytes, (3 + 8) + (8 + 4) * i);
-                                    sampleValue = BitConverter.ToInt32(rcvPayloadBytes, (3 + 8) + ((8 + 4) * i) + 8);
+                                var currPos = PayloadHeaderSize;
+
+                                while (currPos + PayloadTimeDataSize < rcvMsg.Size) {
+                                    var sampleTime = BitConverter.ToInt64(rcvPayloadBytes, currPos);
+                                    var sampleValue = BitConverter.ToInt32(rcvPayloadBytes, currPos + PayloadTimeSize);
 
                                     // Adjust for time
                                     //  We have initial time and message send time for the sensor mote
                                     //  We have initial time and message receive time for the base mote
                                     //
-                                    //  adjustmentFactor = (sendSensor - initialSensor) / (receiveBase - initialBase)
-                                    //  sampleTimeAdjusted = sampleTime * adjustmentFactor
-                                    double adjustmentFactor = (double)(sampleTime - sensorInitialTime) / (double)(messageReceiveTime - baseInitialTime);
-                                    long adjustedSampleTime = (long)((double)sampleTime * adjustmentFactor);
+                                    var adjustmentFactor = (double)(sampleTime - sensorInitialTime) / (double)(msgReceivedTime - baseInitialTime);
+                                    var adjustedSampleTime = (long)((double)sampleTime * adjustmentFactor);
                                     // Print the sample received
                                     Debug.Print("  Adjustment factor: " + adjustmentFactor + ", adjusted sample time:" + adjustedSampleTime + ", sample: " + sampleValue);
+
                                 }
+
                                 break;
                             }
                         default: {
@@ -134,18 +180,25 @@ namespace Samraksh.AppNote {
             }
         }
 
-        static void SendResponse(int dest) {
-            byte[] payload = new byte[1];
-            payload[0] = (byte)MsgTypes.Reply;
-            csmaRadio.Send((Addresses)dest, payload);
+        static void SendResponse(int dest, byte[] payloadBytes, int payloadPos, int payloadLen) {
+            var payload = new byte[PayloadIdentifierSize + PayloadTypeSize + payloadLen];
+            int currPos = 0;
+            for (var i = 0; i < PayloadIdentifierSize; i++) {
+                payload[currPos++] = _payloadIdentifierBytes[i];
+            }
+            payload[currPos++] = (byte)MsgTypes.Reply;
+            for (var i = 0; i < payloadLen; i++) {
+                payload[currPos++] = payloadBytes[payloadPos + i];
+            }
+            _csmaRadio.Send((Addresses)dest, payload);
         }
 
         internal class InitialTimePair {
-            internal long baseTime { get; private set; }
-            internal long sensingNodeTime { get; private set; }
-            internal InitialTimePair(long _baseTime, long _sensingTime) {
-                baseTime = _baseTime;
-                sensingNodeTime = _sensingTime;
+            internal long BaseTime { get; private set; }
+            internal long SensingNodeTime { get; private set; }
+            internal InitialTimePair(long baseTime, long sensingTime) {
+                BaseTime = baseTime;
+                SensingNodeTime = sensingTime;
             }
         }
 

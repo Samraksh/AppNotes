@@ -7,28 +7,27 @@ namespace Samraksh.AppNote.Utility {
     /// <summary>
     /// Extend EmoteLCD with initialization
     /// </summary>
-    public partial class EmoteLCDUtil : EmoteLCD {
-        //EmoteLCD lcd = new EmoteLCD();
+    public partial class EmoteLcdUtil : EmoteLCD {
+        private LCD[] _currLdcs = new LCD[4];
 
-        public EmoteLCDUtil() {
+        public EmoteLcdUtil() {
             this.Initialize();
         }
     }
-    
+
     /// <summary>
     /// Extend EmoteLCD with Display methods for integer and string
     /// </summary>
-    public partial class EmoteLCDUtil : EmoteLCD {
+    public partial class EmoteLcdUtil : EmoteLCD {
         public void Display(int num) {
             string str = num.ToString();
             str = "0000".Substring(0, System.Math.Max(0, 4 - str.Length)) + str;
             Display(str);
         }
         public void Display(string str) {
-           char[] msgChar = (str + "    ").Substring(0,4).ToCharArray();
-           this.Write(msgChar[0].ToLCD(), msgChar[1].ToLCD(), msgChar[2].ToLCD(), msgChar[3].ToLCD());
+            char[] msgChar = (str + "    ").Substring(0, 4).ToCharArray();
+            Write(msgChar[0].ToLcd(), msgChar[1].ToLcd(), msgChar[2].ToLcd(), msgChar[3].ToLcd());
         }
-
     }
 
     /// <summary>
@@ -43,7 +42,7 @@ namespace Samraksh.AppNote.Utility {
         /// </remarks>
         /// <param name="charArg">The input as a char</param>
         /// <returns>The corresponding LCD value</returns>
-        public static LCD ToLCD(this char charArg) {
+        public static LCD ToLcd(this char charArg) {
             switch (charArg) {
                 case ' ': return LCD.CHAR_NULL;
 

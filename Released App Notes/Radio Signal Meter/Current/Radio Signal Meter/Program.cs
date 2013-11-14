@@ -1,9 +1,10 @@
 ﻿/*--------------------------------------------------------------------
- * Radio Signal Meter: app note for the eMote .NOW 1.0
+ * Radio Signal Meter: app note for the eMote .NOW 1.1
  * (c) 2013 The Samraksh Company
  * 
  * Version history
  *  1.0: initial release
+ *  1.1: Corrected an issue with reporting on the length of the message
 ---------------------------------------------------------------------*/
 
 using System;
@@ -73,7 +74,7 @@ namespace Samraksh.AppNote {
             byte[] rcvPayloadBytes = rcvMsg.GetMessage();
             char[] rcvPayloadChar = System.Text.Encoding.UTF8.GetChars(rcvPayloadBytes);
             try {
-                Debug.Print("Received " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src + ", size: " + rcvPayloadBytes.Length + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
+                Debug.Print("Received " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src + ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
                 Debug.Print("   Payload: [" + new string(rcvPayloadChar) + "]");
             }
             catch (Exception e) {
