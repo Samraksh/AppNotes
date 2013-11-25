@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>SignalMeter</AssemblyName>
+    <AssemblyName>WirelessDataCollector-Sensing</AssemblyName>
     <OutputType>Exe</OutputType>
     <RootNamespace>Samraksh.AppNote</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -31,10 +31,21 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="BitConverter.cs" />
-    <Compile Include="SimpleTimer.cs" />
-    <Compile Include="SimpleCsmaRadio.cs" />
-    <Compile Include="LcdExtension.cs" />
+    <Compile Include="..\..\Wireless Data Collector - Common\BitConverter.cs">
+      <Link>Utility\BitConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Wireless Data Collector - Common\Common.cs">
+      <Link>Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Wireless Data Collector - Common\LcdExtension.cs">
+      <Link>Utility\LcdExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Wireless Data Collector - Common\SimpleCsmaRadio.cs">
+      <Link>Utility\SimpleCsmaRadio.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Wireless Data Collector - Common\SimpleTimer.cs">
+      <Link>Utility\SimpleTimer.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources.Designer.cs">

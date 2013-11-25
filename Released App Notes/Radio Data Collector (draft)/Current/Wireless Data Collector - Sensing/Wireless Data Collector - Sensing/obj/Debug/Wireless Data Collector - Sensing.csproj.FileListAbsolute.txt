@@ -1,13 +1,3 @@
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\le\SignalMeter.exe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\be\SignalMeter.exe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\le\SignalMeter.pdb
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\be\SignalMeter.pdb
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\SignalMeter.exe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\SignalMeter.pdb
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\le\SignalMeter.pe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\le\SignalMeter.pdbx
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\be\SignalMeter.pe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\be\SignalMeter.pdbx
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\LE\Samraksh_SPOT_Hardware.pe
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\LE\Samraksh_SPOT_Net.pe
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\BE\Samraksh_SPOT_Hardware.pe
@@ -21,15 +11,25 @@ C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Curren
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\Samraksh_SPOT_Hardware.pdb
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\Samraksh_SPOT_Net.pdb
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\Samraksh_SPOT_Net.xml
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\Wireless Data Collector - Sensing.csprojResolveAssemblyReference.cache
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\TinyCLR_DebugReferences.cache
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\Samraksh.AppNote.Resources.resources
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\Wireless Data Collector - Sensing.csproj.GenerateResource.Cache
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\Samraksh.AppNote.Resources.tinyresources
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\TinyResGen.cache
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\SignalMeter.exe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\SignalMeter.pdb
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\be\SignalMeter.pe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\be\SignalMeter.pdbx
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\le\SignalMeter.pe
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\le\SignalMeter.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\le\WirelessDataCollector-Sensing.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\be\WirelessDataCollector-Sensing.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\le\WirelessDataCollector-Sensing.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\be\WirelessDataCollector-Sensing.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\WirelessDataCollector-Sensing.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\WirelessDataCollector-Sensing.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\le\WirelessDataCollector-Sensing.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\le\WirelessDataCollector-Sensing.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\be\WirelessDataCollector-Sensing.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\bin\Debug\be\WirelessDataCollector-Sensing.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\be\WirelessDataCollector-Sensing.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\be\WirelessDataCollector-Sensing.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\le\WirelessDataCollector-Sensing.pe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\le\WirelessDataCollector-Sensing.pdbx
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\WirelessDataCollector-Sensing.exe
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\WirelessDataCollector-Sensing.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Sensing\Wireless Data Collector - Sensing\obj\Debug\Wireless Data Collector - Sensing.csprojResolveAssemblyReference.cache
