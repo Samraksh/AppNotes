@@ -32,7 +32,7 @@ namespace Samraksh.AppNote {
 
         static SimpleCsmaRadio _csmaRadio;
         static readonly EmoteLcdUtil Lcd = new EmoteLcdUtil();
-        static readonly Hashtable _sensingNodes = new Hashtable();
+        static readonly Hashtable SensingNodes = new Hashtable();
         //static readonly SensingNodes _sensingNodes = new SensingNodes();
 
         /// <summary>
@@ -68,14 +68,17 @@ namespace Samraksh.AppNote {
         static void RadioReceive(CSMA csma) {
             int numPackets = csma.GetPendingPacketCount();
             for (var packetNum = 0; packetNum < numPackets; packetNum++) {
-                var msgReceivedTime = DateTime.Now.Ticks; // Should get from MAC layer ...
+                var baseReceivedTime = DateTime.Now.Ticks; // Should get from MAC layer ...
                 var rcvMsg = csma.GetNextPacket();
+                if (rcvMsg == null) {
+                    return;
+                }
                 var rcvPayloadBytes = rcvMsg.GetMessage();
 
                 // Give info about the message
                 Debug.Print("Got a " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " +
                             rcvMsg.Src + ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " +
-                            rcvMsg.LQI);
+                            rcvMsg.LQI + "; packet #: " + packetNum + " of " + numPackets);
                 try {
                     var rcvPayloadChar = System.Text.Encoding.UTF8.GetChars(rcvPayloadBytes);
                     Debug.Print("   Payload [" + new string(rcvPayloadChar) + "]");
@@ -96,33 +99,39 @@ namespace Samraksh.AppNote {
                     var msgSentTime = BitConverter.ToInt64(rcvPayloadBytes, MessageTimePos);
 
                     switch (rcvPayloadBytes[2]) {
+                        // Hello message: send response & create or update the initial time pair
                         case (byte)PayloadTypes.Hello: {
                                 Debug.Print("\nReceived Hello, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(rcvPayloadBytes, MessageSequencePos).ToString());
                                 Lcd.WriteN(3, 'H'.ToLcd());
-                                // Send the response
+                                // Send the response, with the sequence number of the received message
                                 SendResponse(rcvMsg.Src, rcvPayloadBytes, MessageSequencePos, MessageSequenceSize);
                                 // Add or replace the node
-                                _sensingNodes[rcvMsg.Src] = new InitialTimePair(msgReceivedTime, msgSentTime);
+                                SensingNodes[rcvMsg.Src] = new InitialTimePair(baseReceivedTime, msgSentTime);
                                 //_sensingNodes.Add(rcvMsg.Src, new InitialTimePair(messageReceiveTime, msgSentTime));
                                 break;
                             }
+                        // 
                         case (byte)PayloadTypes.Data: {
                                 Debug.Print("\nReceived Data, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(rcvPayloadBytes, MessageSequencePos).ToString());
                                 // If sensing node is not in our list, ignore ... this should never happen
-                                if (!_sensingNodes.Contains(rcvMsg.Src)) {
+                                if (!SensingNodes.Contains(rcvMsg.Src)) {
                                     Debug.Print("\n*** Sensing Node not found: " + rcvMsg.Src);
                                     return;
                                 }
-                                // Send the response
+                                // Send the response, with the sequence number of the received message
                                 SendResponse(rcvMsg.Src, rcvPayloadBytes, MessageSequencePos, MessageSequenceSize);
-                                // Payload is 8 bytes of time followed by pairs of [sample time (8 bytes), sample value (4 bytes)]
-                                var sensorSendtime = BitConverter.ToInt64(rcvPayloadBytes, 3);
+
 
                                 // Get the initial time values
-                                var initialTimePair = (InitialTimePair)_sensingNodes[rcvMsg.Src];
+                                var initialTimePair = (InitialTimePair)SensingNodes[rcvMsg.Src];
                                 var sensorInitialTime = initialTimePair.SensingNodeTime;
                                 var baseInitialTime = initialTimePair.BaseTime;
-                                Debug.Print("Sample received from " + rcvMsg.Src + ", sensor initial time: " + sensorInitialTime + ", base initial time:" + baseInitialTime);
+
+                                var sensorSendTime = BitConverter.ToInt64(rcvPayloadBytes, MessageTimePos);
+                                var skew = (double)(sensorSendTime - sensorInitialTime) / (double)(baseReceivedTime - baseInitialTime);
+
+                                Debug.Print("\nSample received from " + rcvMsg.Src + ", sensorSendTime: " + sensorSendTime + ", sensorInitialTime: " + sensorInitialTime +
+                                    ", baseInitialTime:" + baseInitialTime + ", baseReceivedTime " + baseReceivedTime + ", skew: " + skew);
                                 var currPos = PayloadHeaderSize;
 
                                 while (currPos + PayloadTimeDataPos <= rcvMsg.Size) {
@@ -133,10 +142,9 @@ namespace Samraksh.AppNote {
                                     //  We have initial time and message send time for the sensor mote
                                     //  We have initial time and message receive time for the base mote
                                     //
-                                    var adjustmentFactor = (double)(sampleTime - sensorInitialTime) / (double)(msgReceivedTime - baseInitialTime);
-                                    var adjustedSampleTime = (long)((double)sampleTime * adjustmentFactor);
+                                    var adjSampleTime = (long)((double)(sampleTime - sensorInitialTime) * skew + baseInitialTime);
                                     // Print the sample received
-                                    Debug.Print("  Adjustment factor: " + adjustmentFactor + ", adjusted sample time:" + adjustedSampleTime + ", sample: " + sampleValue);
+                                    Debug.Print("\nsampleTime: " + sampleTime + ", adjSampleTime" + adjSampleTime + "sampleValue" + sampleValue);
                                     currPos += (MessageTimeSize + PayloadDataSize);
                                 }
 

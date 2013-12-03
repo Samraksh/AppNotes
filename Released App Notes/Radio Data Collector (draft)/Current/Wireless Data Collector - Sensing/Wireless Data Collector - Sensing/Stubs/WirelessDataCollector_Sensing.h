@@ -23,12 +23,14 @@ struct Library_WirelessDataCollector_Sensing_Samraksh_AppNote_Program
     static const int FIELD_STATIC__HelloTimer = 7;
     static const int FIELD_STATIC__SensingTimer = 8;
     static const int FIELD_STATIC___csmaRadio = 9;
-    static const int FIELD_STATIC___lcd = 10;
+    static const int FIELD_STATIC__Lcd = 10;
     static const int FIELD_STATIC___baseStationId = 11;
     static const int FIELD_STATIC___messageSequence = 12;
     static const int FIELD_STATIC__MessageTimers = 13;
     static const int FIELD_STATIC___currState = 14;
     static const int FIELD_STATIC__SensorSurrogate = 15;
+    static const int FIELD_STATIC___replyMsMin = 16;
+    static const int FIELD_STATIC___replyMsMax = 17;
 
 
     //--//
@@ -58,7 +60,7 @@ struct Library_WirelessDataCollector_Sensing_Samraksh_AppNote_Utility_SimpleCsma
 
 struct Library_WirelessDataCollector_Sensing_Samraksh_AppNote_Resources
 {
-    static const int FIELD_STATIC__manager = 16;
+    static const int FIELD_STATIC__manager = 18;
 
 
     //--//
@@ -67,7 +69,7 @@ struct Library_WirelessDataCollector_Sensing_Samraksh_AppNote_Resources
 
 struct Library_WirelessDataCollector_Sensing_Samraksh_AppNote_Utility_BitConverter
 {
-    static const int FIELD_STATIC__IsLittleEndian = 17;
+    static const int FIELD_STATIC__IsLittleEndian = 19;
 
 
     //--//

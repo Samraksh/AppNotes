@@ -1,5 +1,6 @@
 using System;
 using Microsoft.SPOT;
+using Samraksh.SPOT.Net;
 using Samraksh.SPOT.Net.Mac;
 using Samraksh.SPOT.Net.Radio;
 
@@ -12,6 +13,9 @@ namespace Samraksh.AppNote.Utility {
 
         // Set up for callback to user method to handle incoming packets
         public delegate void RadioReceivedData(CSMA csma);
+
+        // Define radio states
+        public enum RadioStates { On, Off };
 
         readonly RadioReceivedData _userReceivedDataCallback;
 
@@ -43,6 +47,7 @@ namespace Samraksh.AppNote.Utility {
             Debug.Print("CSMA address is :  " + _csma.GetAddress().ToString());
         }
 
+
         /// <summary>
         /// Send a message
         /// </summary>
@@ -51,6 +56,30 @@ namespace Samraksh.AppNote.Utility {
         public void Send(Addresses msgType, byte[] message) {
             _csma.Send((ushort)msgType, message, 0, (ushort)message.Length);
         }
+
+        /// <summary>
+        /// Set radio state
+        /// </summary>
+        /// <param name="radioState">Desired radio state</param>
+        /// <returns>Device status: Success, Fail, Ready, Busy</returns>
+        public DeviceStatus SetRadioState(RadioStates radioState) {
+            DeviceStatus resultStatus;
+            switch (radioState) {
+                case RadioStates.On: {
+                        resultStatus = _csma.GetRadio().TurnOn();
+                        break;
+                    }
+                case RadioStates.Off: {
+                        resultStatus = _csma.GetRadio().Sleep(0);
+                        break;
+                    }
+                default: {
+                        throw new Exception("Undefined RadioState: " + radioState);
+                    }
+            }
+            return resultStatus;
+        }
+
 
         /// <summary>
         /// Callback when neighborhood changes

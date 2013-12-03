@@ -10,10 +10,12 @@ namespace Samraksh.AppNote.Utility {
 
         private readonly TimerCallback _timerCallback;
         private readonly object _callBackValue;
-        private int _initialDueTime;
-        private int _initialPeriod;
+        private readonly int _initialDueTime;
+        private readonly int _initialPeriod;
         private int _currDueTime;
         private int _currPeriod;
+
+        public long StartTime { get; private set; }
 
         /// <summary>
         /// This creates a one-shot timer since the currPeriod is 0
@@ -44,6 +46,7 @@ namespace Samraksh.AppNote.Utility {
 
         public void StartNew() {
             TheTimer = new Timer(_timerCallback, _callBackValue, _initialPeriod, _initialPeriod);
+            StartTime = DateTime.Now.Ticks;
         }
 
         public void Start() {
@@ -53,6 +56,7 @@ namespace Samraksh.AppNote.Utility {
             else {
                 TheTimer.Change(_initialDueTime, _initialPeriod);
             }
+            StartTime = DateTime.Now.Ticks;
         }
 
         public void Stop() {

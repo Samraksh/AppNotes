@@ -83,12 +83,14 @@ static const CLR_RT_MethodHandler method_lookup[] =
     NULL,
     NULL,
     NULL,
+    NULL,
+    NULL,
 };
 
 const CLR_RT_NativeAssemblyData g_CLR_AssemblyNative_WirelessDataCollector-Sensing =
 {
     "WirelessDataCollector-Sensing", 
-    0x0F0A0AA3,
+    0x3E0E627A,
     method_lookup
 };
 

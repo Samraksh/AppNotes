@@ -11,7 +11,6 @@ C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Curren
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\bin\Debug\Samraksh_SPOT_Hardware.pdb
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\bin\Debug\Samraksh_SPOT_Net.pdb
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\bin\Debug\Samraksh_SPOT_Net.xml
-C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\obj\Debug\Wireless Data Collector - Base.csprojResolveAssemblyReference.cache
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\obj\Debug\TinyCLR_DebugReferences.cache
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\obj\Debug\Samraksh.AppNote.Resources.resources
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\obj\Debug\Wireless Data Collector - Base.csproj.GenerateResource.Cache
@@ -33,3 +32,4 @@ C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Curren
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\obj\Debug\le\WirelessDataCollector-Base.pdbx
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\obj\Debug\WirelessDataCollector-Base.exe
 C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\obj\Debug\WirelessDataCollector-Base.pdb
+C:\Samraksh Git\app-notes\Released App Notes\Radio Data Collector (draft)\Current\Wireless Data Collector - Base\Wireless Data Collector - Base\obj\Debug\Wireless Data Collector - Base.csprojResolveAssemblyReference.cache

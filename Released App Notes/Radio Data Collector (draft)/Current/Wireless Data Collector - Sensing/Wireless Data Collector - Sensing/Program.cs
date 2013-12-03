@@ -26,33 +26,46 @@ namespace Samraksh.AppNote {
     public partial class Program {
 
         // Set intervals, in ms
-        private const int HelloInterval = 4000;     // How long till the next Hello message is sent (if in Hello state)
-        private const int SensingInterval = 4000;   // How long till data is sensed and sent (if in Sensing state)
-        private const int MessageTimeout = 1000;    // How long to wait before deciding a message has not received a response
+        // HelloInterval and SensingInterval should be larger than TimeoutInterval
+        //  Otherwise it might happen that two or more messages are sent before the first one's response times out.
+        private const int HelloInterval = 4000; // How long till the next Hello message is sent (if in Hello state)
+        private const int SensingInterval = 4000; // How long till data is sensed and sent (if in Sensing state)
+        private const int TimeoutInterval = 1000; // How long to wait before deciding a message has not received a response
 
         // Timers - all are one-shot (period of 0)
         private static readonly SimpleTimer HelloTimer = new SimpleTimer(HelloTimerCallback, null, HelloInterval);
         private static readonly SimpleTimer SensingTimer = new SimpleTimer(SensingTimerCallback, null, SensingInterval);
+        private static readonly SimpleTimer TimeoutTimer = new SimpleTimer(MessageTimeoutCallback, null, TimeoutInterval);
 
         // Define the radio and LCD
         private static SimpleCsmaRadio _csmaRadio;
-        private static EmoteLcdUtil _lcd = new EmoteLcdUtil();
+        private static readonly EmoteLcdUtil Lcd = new EmoteLcdUtil();
 
         // Misc definitions
-        private static int _baseStationId = -1; // -1 means we haven't heard from the base station; else it contains the base station id
-        private static int _messageSequence;    // Message sequence number
-        private static readonly ArrayList MessageTimers = new ArrayList();  // A list of timers. Entries are populated wrt a particular sent message to check for timeouts.
+        private static int _baseStationId = -1;
+        // -1 means we haven't heard from the base station; else it contains the base station id
+
+        private static int _messageSequence; // Message sequence number
 
         // Define the states and the current state variable
-        private enum States { Hello, Sense };
+        private enum States {
+            Hello,
+            Sense
+        };
         private static States _currState;
 
+        // In place of actual sampling, use a random number generator as a surrogate
         private static readonly Random SensorSurrogate = new Random();
 
-        private static double ReplyIntervalMin = double.MaxValue;
-        private static double ReplyIntervalMax = double.MinValue;
+        // Keep stats on reply time
+        //  This is optional
+        private static double _replyMsMin = double.MaxValue;
+        private static double _replyMsMax = double.MinValue;
+
 
         /// <summary>
+        /// Set up the LCD and the radio, and other initialization.
+        /// Sleeps when done; everything else is event driven.
         /// </summary>
         public static void Main() {
             Debug.EnableGCMessages(false); // We don't want to see garbage collector messages in the Output window
@@ -60,7 +73,7 @@ namespace Samraksh.AppNote {
             Debug.Print(Resources.GetString(Resources.StringResources.ProgramName));
 
             // Set up LCD and display a welcome message
-            _lcd.Display("S");
+            Lcd.Display("S");
             Thread.Sleep(4000);
 
             // Convert the app identifier to a byte array
@@ -108,6 +121,7 @@ namespace Samraksh.AppNote {
                         return;
                     }
                 }
+
                 // Check the message type & cast mode
                 if (rcvPayloadBytes[MessageTypePos] != (byte)PayloadTypes.Reply || !rcvMsg.Unicast) {
                     return;
@@ -115,52 +129,52 @@ namespace Samraksh.AppNote {
 
                 // All is ok ... set the source ID of the base station
                 _baseStationId = rcvMsg.Src;
-                var rcvSeq = BitConverter.ToInt32(rcvPayloadBytes, MessageSequencePos);
 
                 // Stop the message timer
-                var messageFound = false;
-                for (var i = 0; i < MessageTimers.Count; i++) {
-                    var theTimer = (MessageTimer)MessageTimers[i];
-                    // If not the one we're interested in, continue
-                    if (theTimer.Sequence != rcvSeq) continue;
-                    // Stop the timer
-                    theTimer.SeqTimer.Stop();
-                    // Calculate stats on reply time
-                    double replyStopTime = DateTime.Now.Ticks - theTimer.StartTime;
-                    ReplyIntervalMin = System.Math.Min(replyStopTime, ReplyIntervalMin);
-                    ReplyIntervalMax = System.Math.Max(replyStopTime, ReplyIntervalMax);
-                    Debug.Print("Time to receive reply: [" + ReplyIntervalMin + "," + replyStopTime + "," + ReplyIntervalMax + "]; timeout used: " + MessageTimeout);
-                    // Note that the message was found
-                    messageFound = true;
-                }
-                // If we didn't find it, just return ... this should never happen
-                if (!messageFound) {
-                    Debug.Print("\n***MessageTimer not found!");
-                    return;
-                }
+                TimeoutTimer.Stop();
+
+                // Turn the radio off
+                Debug.Print("\nTurn Radio OFF\n");
+                _csmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.Off);
 
                 // Set the current state to Sense & begin sensing
                 if (_currState != States.Sense) {
                     ChangeState(States.Sense);
                 }
+
+                // Calculate stats on reply time
+                var currTicks = DateTime.Now.Ticks;
+                var replyTicks = currTicks - TimeoutTimer.StartTime;
+                double replyMs = TicksToMs(replyTicks);
+                _replyMsMin = System.Math.Min(replyMs, _replyMsMin);
+                _replyMsMax = System.Math.Max(replyMs, _replyMsMax);
+                Debug.Print("Time to receive reply: [" + (long)_replyMsMin + "," + (long)replyMs + "," +
+                            (long)_replyMsMax + "]; timeout value used: " + TimeoutInterval + "; curr time: " + (long)currTicks + "; timer start time: " + TimeoutTimer.StartTime);
+
             }
         }
 
-        private static void RadioSend(Addresses dest, PayloadTypes payloadType, byte[] sensedTimeDataPairs) {
+        /// <summary>
+        /// Send a message and start timeout timer
+        /// </summary>
+        /// <param name="dest">Destination</param>
+        /// <param name="payloadType">Type of payload</param>
+        /// <param name="payloadData">Byte array of payload data</param>
+        private static void RadioSend(Addresses dest, PayloadTypes payloadType, byte[] payloadData) {
             // No sending if unicast and if base station address not known
             if (dest != Addresses.BROADCAST && _baseStationId < 0) return;
 
             Debug.Print("Sending " + payloadType.ToString() + " message, sequence #: " + _messageSequence);
 
             // Create the message
-            var msg = new byte[ApplicationIdSize + MessageTypeSize + MessageSequenceSize + MessageTimeSize + sensedTimeDataPairs.Length];
+            var msg = new byte[ApplicationIdSize + MessageTypeSize + MessageSequenceSize + MessageTimeSize + payloadData.Length];
             byte currPos = 0;
 
             // Copy app identifier
             for (var i = 0; i < ApplicationIdSize; i++) {
                 msg[currPos++] = _applicationIdBytes[i];
             }
-            // Copy sensedTimeDataPairs type
+            // Copy payloadData type
             msg[currPos++] = (byte)payloadType;
 
             // Copy message sequence
@@ -175,45 +189,39 @@ namespace Samraksh.AppNote {
                 msg[currPos++] = payloadTime[i];
             }
 
-            // Copy Time-Data Pairs
-            for (var i = 0; i < sensedTimeDataPairs.Length; i++) {
-                msg[currPos++] = sensedTimeDataPairs[i];
+            // Copy payload data
+            for (var i = 0; i < payloadData.Length; i++) {
+                msg[currPos++] = payloadData[i];
             }
 
-            // Send the message
-            var sendTime = DateTime.Now.Ticks;  // Save the (approx) send time so that we can get an idea of how long it takes to get a reply
-            _csmaRadio.Send(dest, msg);
-
-
-            // Set a timer for the message
-            var messageTimerFound = false;
-            var messageTimer = new SimpleTimer(MessageTimeoutCallback, _messageSequence, MessageTimeout);
-            // If message timer slot is available, reuse it
-            for (byte i = 0; i < (byte)MessageTimers.Count; i++) {
-                if (!(((MessageTimer)MessageTimers[i]).SeqTimer).IsStopped) continue; // If not stopped, keep looking
-                // Reuse the stopped timer
-                MessageTimers[i] = new MessageTimer(_messageSequence, messageTimer, sendTime);
-                messageTimerFound = true;
-                break;
+            // Turn on the radio and send the message
+            //  Lock in order to prevent race conditions
+            lock (_csmaRadio) {
+                Debug.Print("\nTurn Radio ON\n");
+                var result = _csmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+                if (result != DeviceStatus.Success) {
+                    throw new Exception("Could not turn radio on to send");
+                }
+                _csmaRadio.Send(dest, msg);
             }
-            // If available message timer slot not available, create a new one
-            if (!messageTimerFound) {
-                // No null items found, so create new one
-                MessageTimers.Add(new MessageTimer(_messageSequence, messageTimer, sendTime));
-            }
-            // Start the timer
-            messageTimer.Start();
-            Debug.Print("Number of message timers: " + MessageTimers.Count);
+
+            // Start the timeout timer
+            TimeoutTimer.Start();
 
             // Increment the counter
             _messageSequence++;
         }
 
+        /// <summary>
+        /// Callback for Hello message timer
+        /// </summary>
+        /// <param name="obj">(ignored)</param>
         private static void HelloTimerCallback(object obj) {
+            // If not Hello state, ignore
             if (_currState != States.Hello) {
                 return;
             }
-
+            // Otherwise, send Hello message and (re)start the timer
             RadioSend(Addresses.BROADCAST, PayloadTypes.Hello, BitConverter.GetBytes(DateTime.Now.Ticks));
             HelloTimer.Start();
         }
@@ -244,24 +252,19 @@ namespace Samraksh.AppNote {
 
 
         private static void MessageTimeoutCallback(object obj) {
-            Debug.Print("\n### Message timeout: " + (int)obj + "\n");
-            // Stop all the timers
-            foreach (var theMessageTimer in MessageTimers) {
-                ((MessageTimer)theMessageTimer).SeqTimer.Stop();
+            Debug.Print("\n### Message timeout\n");
+
+            // Stop the timer
+            TimeoutTimer.Stop();
+
+            // Turn off the radio
+            lock (_csmaRadio) {
+                Debug.Print("\nTurn Radio OFF\n");
+                _csmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.Off);
             }
+
             // Go back to a Hello state
             ChangeState(States.Hello);
-        }
-
-        internal class MessageTimer {
-            internal int Sequence { get; private set; }
-            internal SimpleTimer SeqTimer { get; private set; }
-            internal long StartTime { get; private set; }
-            internal MessageTimer(int sequence, SimpleTimer seqTimer, long startTime) {
-                Sequence = sequence;
-                SeqTimer = seqTimer;
-                StartTime = startTime;
-            }
         }
 
 
@@ -286,5 +289,12 @@ namespace Samraksh.AppNote {
                     break;
             }
         }
+
+        private static int TicksToMs(long ticks) {
+            var replyTimeSpan = TimeSpan.FromTicks(ticks);
+            return replyTimeSpan.Days * 24 * 60 * 60 + replyTimeSpan.Hours * 60 * 60 * 1000 + replyTimeSpan.Minutes * 60 * 1000 + replyTimeSpan.Seconds * 1000 + replyTimeSpan.Milliseconds;
+        }
+
+
     }
 }
