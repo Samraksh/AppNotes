@@ -1,5 +1,7 @@
 /*------------------------------------------------------------------------
  *      Declarations & constants that are common between Base and Sensing nodes
+ *      
+ *      Changes made here will affect both programs
  * ---------------------------------------------------------------------*/
 
 
@@ -52,7 +54,8 @@ namespace Samraksh.AppNote {
 
         private static readonly int PayloadHeaderSize = ApplicationIdSize + MessageTypeSize + MessageSequenceSize + MessageTimeSize;
 
-        private const int PayloadDataSize = sizeof(int);
-        private const int PayloadTimeDataPos = MessageTimeSize + PayloadDataSize;
+        private const int SampleTimeSize = MessageTimeSize;
+        private const int SampleDataSize = sizeof(int);
+        private const int SampleTimeDataLen = SampleTimeSize + SampleDataSize;
     }
 }

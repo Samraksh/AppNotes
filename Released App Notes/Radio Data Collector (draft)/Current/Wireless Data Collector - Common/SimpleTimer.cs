@@ -44,11 +44,9 @@ namespace Samraksh.AppNote.Utility {
             _currPeriod = currPeriod;
         }
 
-        public void StartNew() {
-            TheTimer = new Timer(_timerCallback, _callBackValue, _initialPeriod, _initialPeriod);
-            StartTime = DateTime.Now.Ticks;
-        }
-
+        /// <summary>
+        /// Start (or restart) the timer
+        /// </summary>
         public void Start() {
             if (TheTimer == null) {
                 TheTimer = new Timer(_timerCallback, _callBackValue, _initialDueTime, _initialDueTime);
@@ -59,6 +57,9 @@ namespace Samraksh.AppNote.Utility {
             StartTime = DateTime.Now.Ticks;
         }
 
+        /// <summary>
+        /// Stop the timer
+        /// </summary>
         public void Stop() {
             if (TheTimer == null) {
                 return;
@@ -69,8 +70,15 @@ namespace Samraksh.AppNote.Utility {
             }
         }
 
+        /// <summary>
+        /// Check if the timer is stopped
+        /// </summary>
         public bool IsStopped { get { return (TheTimer == null || _currDueTime == Timeout.Infinite); } }
 
+        /// <summary>
+        /// Prevent disposal during callback
+        /// </summary>
+        /// <param name="obj"></param>
         private void CallBack(object obj) {
             lock (this) {   // Prevent disposal while in callback method
                 _timerCallback(obj);

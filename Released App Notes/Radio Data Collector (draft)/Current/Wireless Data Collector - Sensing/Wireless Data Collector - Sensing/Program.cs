@@ -6,6 +6,8 @@
  *  1.0: initial release
 ---------------------------------------------------------------------*/
 
+#define Show_Reply_Time
+
 using System;
 using System.Collections;
 using System.Text;
@@ -42,9 +44,7 @@ namespace Samraksh.AppNote {
         private static readonly EmoteLcdUtil Lcd = new EmoteLcdUtil();
 
         // Misc definitions
-        private static int _baseStationId = -1;
-        // -1 means we haven't heard from the base station; else it contains the base station id
-
+        private static int _baseStationId = -1; // -1 means we haven't heard from the base station; else it contains the base station id
         private static int _messageSequence; // Message sequence number
 
         // Define the states and the current state variable
@@ -57,11 +57,12 @@ namespace Samraksh.AppNote {
         // In place of actual sampling, use a random number generator as a surrogate
         private static readonly Random SensorSurrogate = new Random();
 
+#if Show_Reply_Time
         // Keep stats on reply time
-        //  This is optional
+        //  This is optional and can be bypassed by removing the #define at the top
         private static double _replyMsMin = double.MaxValue;
         private static double _replyMsMax = double.MinValue;
-
+#endif
 
         /// <summary>
         /// Set up the LCD and the radio, and other initialization.
@@ -106,25 +107,29 @@ namespace Samraksh.AppNote {
             int numPackets = csma.GetPendingPacketCount();
             for (var packetNum = 0; packetNum < numPackets; packetNum++) {
                 var rcvMsg = csma.GetNextPacket();
+                // Ignore null messages
                 if (rcvMsg == null) {
                     return;
                 }
-                var rcvPayloadBytes = rcvMsg.GetMessage();
+
+                // Get the message
+                var msgBytes = rcvMsg.GetMessage();
 
                 // Print message details
+                //  This is optional
                 Debug.Print("\nGot a " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src +
                             ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
 
-                // Check the app identifier
-                for (var i = 0; i < ApplicationIdSize; i++) {
-                    if (rcvPayloadBytes[ApplicationIdPos + i] != _applicationIdBytes[i]) {
-                        return;
-                    }
+                // Check the message type & cast mode
+                if (msgBytes[MessageTypePos] != (byte)PayloadTypes.Reply || !rcvMsg.Unicast) {
+                    return;
                 }
 
-                // Check the message type & cast mode
-                if (rcvPayloadBytes[MessageTypePos] != (byte)PayloadTypes.Reply || !rcvMsg.Unicast) {
-                    return;
+                // Check the app identifier
+                for (var i = 0; i < ApplicationIdSize; i++) {
+                    if (msgBytes[ApplicationIdPos + i] != _applicationIdBytes[i]) {
+                        return;
+                    }
                 }
 
                 // All is ok ... set the source ID of the base station
@@ -142,7 +147,8 @@ namespace Samraksh.AppNote {
                     ChangeState(States.Sense);
                 }
 
-                // Calculate stats on reply time
+#if Show_Reply_Time
+                // Calculate stats on reply time ... this is optional and can be bypassed by removing the #define at the top
                 var currTicks = DateTime.Now.Ticks;
                 var replyTicks = currTicks - TimeoutTimer.StartTime;
                 double replyMs = TicksToMs(replyTicks);
@@ -150,7 +156,7 @@ namespace Samraksh.AppNote {
                 _replyMsMax = System.Math.Max(replyMs, _replyMsMax);
                 Debug.Print("Time to receive reply: [" + (long)_replyMsMin + "," + (long)replyMs + "," +
                             (long)_replyMsMax + "]; timeout value used: " + TimeoutInterval + "; curr time: " + (long)currTicks + "; timer start time: " + TimeoutTimer.StartTime);
-
+#endif
             }
         }
 
@@ -168,31 +174,23 @@ namespace Samraksh.AppNote {
 
             // Create the message
             var msg = new byte[ApplicationIdSize + MessageTypeSize + MessageSequenceSize + MessageTimeSize + payloadData.Length];
-            byte currPos = 0;
-
+            var currPos = 0;
             // Copy app identifier
-            for (var i = 0; i < ApplicationIdSize; i++) {
-                msg[currPos++] = _applicationIdBytes[i];
-            }
+            _applicationIdBytes.CopyTo(msg, currPos);
+            currPos += _applicationIdBytes.Length;
             // Copy payloadData type
-            msg[currPos++] = (byte)payloadType;
-
+            msg[currPos] = (byte)payloadType;
+            currPos++;
             // Copy message sequence
             var messageSequenceBytes = BitConverter.GetBytes(_messageSequence);
-            for (var i = 0; i < MessageSequenceSize; i++) {
-                msg[currPos++] = messageSequenceBytes[i];
-            }
-
+            messageSequenceBytes.CopyTo(msg, currPos);
+            currPos += messageSequenceBytes.Length;
             // Copy payload time
             var payloadTime = BitConverter.GetBytes(DateTime.Now.Ticks);
-            for (var i = 0; i < MessageTimeSize; i++) {
-                msg[currPos++] = payloadTime[i];
-            }
-
+            payloadTime.CopyTo(msg, currPos);
+            currPos += payloadTime.Length;
             // Copy payload data
-            for (var i = 0; i < payloadData.Length; i++) {
-                msg[currPos++] = payloadData[i];
-            }
+            payloadData.CopyTo(msg, currPos);
 
             // Turn on the radio and send the message
             //  Lock in order to prevent race conditions
@@ -215,42 +213,53 @@ namespace Samraksh.AppNote {
         /// <summary>
         /// Callback for Hello message timer
         /// </summary>
+        /// <remarks>The timer is one-shot, so it has to be restarted if desired.</remarks>
         /// <param name="obj">(ignored)</param>
         private static void HelloTimerCallback(object obj) {
-            // If not Hello state, ignore
+            // Ignore the callback if our current state is not Hello
+            //  Since the timer is one-shot, it won't fire again until we re-enter the Hello state.
             if (_currState != States.Hello) {
                 return;
             }
             // Otherwise, send Hello message and (re)start the timer
-            RadioSend(Addresses.BROADCAST, PayloadTypes.Hello, BitConverter.GetBytes(DateTime.Now.Ticks));
+            RadioSend(Addresses.BROADCAST, PayloadTypes.Hello, new byte[0]);
             HelloTimer.Start();
         }
 
-
+        /// <summary>
+        /// Handle a tick of the sensing timer
+        /// </summary>
+        /// <remarks>The timer is one-shot, so it has to be restarted if desired.</remarks>
+        /// <param name="obj">(ignored)</param>
         private static void SensingTimerCallback(object obj) {
+            // Ignore the callback if our current state is not Sense
+            //  Since the timer is one-shot, it won't fire again until we re-enter the Sense state.
             if (_currState != States.Sense) {
                 return;
             }
+            // Also ignore if we haven't heard yet from the base station.
+            //  This should not occur
             if (_baseStationId < 0) {
                 return;
             }
-            var sensedValue = SensorSurrogate.Next();
-            var sensedTimeBytes = BitConverter.GetBytes(DateTime.Now.Ticks);
-            var sensedValueBytes = BitConverter.GetBytes(sensedValue);
-            var timeValueBytes = new byte[sensedTimeBytes.Length + sensedValueBytes.Length];
-            var currPos = 0;
-            for (var i = 0; i < sensedTimeBytes.Length; i++) {
-                timeValueBytes[currPos++] = sensedTimeBytes[i];
-            }
-            for (var i = 0; i < sensedValueBytes.Length; i++) {
-                timeValueBytes[currPos++] = sensedValueBytes[i];
-            }
-
+            // Get a sensed value and set it up to send
+            var sensedValue = SensorSurrogate.Next();  // Generate a random value. This could be replace with real sensing.
+            var sensedTimeBytes = BitConverter.GetBytes(DateTime.Now.Ticks);  // Get the current time as a byte vector
+            var sensedValueBytes = BitConverter.GetBytes(sensedValue);  // Convert the sensed value to a byte array
+            var timeValueBytes = new byte[sensedTimeBytes.Length + sensedValueBytes.Length];  // Copy the two byte arrays into a composite one to send
+            sensedTimeBytes.CopyTo(timeValueBytes, 0);
+            sensedValueBytes.CopyTo(timeValueBytes, sensedTimeBytes.Length);
+            // Send the sensed value
             RadioSend((Addresses)_baseStationId, PayloadTypes.Data, timeValueBytes);
+            // Restart the sensing timer
             SensingTimer.Start();
         }
 
-
+        /// <summary>
+        /// Handle a message timeout
+        /// </summary>
+        /// <remarks>The timer is one-shot, so it has to be restarted if desired.</remarks>
+        /// <param name="obj">(ignored)</param>
         private static void MessageTimeoutCallback(object obj) {
             Debug.Print("\n### Message timeout\n");
 
@@ -267,29 +276,45 @@ namespace Samraksh.AppNote {
             ChangeState(States.Hello);
         }
 
-
+        /// <summary>
+        /// Change between Hello and Sense states
+        /// </summary>
+        /// <param name="state">New state</param>
         private static void ChangeState(States state) {
             Debug.Print("\nSwitching to state " + state);
             switch (state) {
+                // Hello state
                 case States.Hello:
+                    // Be sure sensing timer is stopped
                     SensingTimer.Stop();
                     Debug.Print("HelloTimer.IsStopped: " + HelloTimer.IsStopped);
+                    // Start the hello timer if it is stopped
                     if (HelloTimer.IsStopped) {
                         HelloTimer.Start();
                     }
+                    // Set the current state
                     _currState = state;
                     break;
+                // Sense state
                 case States.Sense:
+                    // Be sure hello timer is stopped
                     HelloTimer.Stop();
                     Debug.Print("SensingTimer.IsStopped: " + SensingTimer.IsStopped);
+                    // Start the sensing timer if it is stopped
                     if (SensingTimer.IsStopped) {
                         SensingTimer.Start();
                     }
+                    // Set the current state
                     _currState = state;
                     break;
             }
         }
 
+        /// <summary>
+        /// Convert timer ticks to microseconds
+        /// </summary>
+        /// <param name="ticks">Number of ticks</param>
+        /// <returns></returns>
         private static int TicksToMs(long ticks) {
             var replyTimeSpan = TimeSpan.FromTicks(ticks);
             return replyTimeSpan.Days * 24 * 60 * 60 + replyTimeSpan.Hours * 60 * 60 * 1000 + replyTimeSpan.Minutes * 60 * 1000 + replyTimeSpan.Seconds * 1000 + replyTimeSpan.Milliseconds;
