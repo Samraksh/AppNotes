@@ -1,0 +1,19 @@
+
+# Ignore binaries
+MicroFrameworkPK_v4_0/BuildOutput/ARM/
+MicroFrameworkPK_v4_0/BuildOutput/THUMB2/
+MicroFrameworkPK_v4_0/BuildOutput/public/
+MicroFrameworkPK_v4_0/BuildOutput/Windows/
+MicroFrameworkPK_v4_3/BuildOutput/ARM/
+MicroFrameworkPK_v4_3/BuildOutput/THUMB2/
+MicroFrameworkPK_v4_3/BuildOutput/public/
+MicroFrameworkPK_v4_3/BuildOutput/Windows/
+MicroFrameworkPK_v4_3/Samraksh/APPS/SamrakshDataArchive/
+MicroFrameworkPK_v4_3/Samraksh/Interops/Samraksh_SPOT_Hardware/Samraksh_SPOT_Hardware/bin/
+MicroFrameworkPK_v4_3/Samraksh/Interops/Samraksh_SPOT_Net/Samraksh_SPOT_Net/bin/
+MicroFrameworkPK_v4_3/Samraksh/Interops/Samraksh_SPOT_RealTime/RealTimeTimer/bin/
+MicroFrameworkPK_v4_3/Samraksh/Interops/Samraksh_SPOT/Samraksh_SPOT/bin/
+.metadata
+#ignore Eclipse files
+MicroFrameworkPK_v4_0/.cproject
+MicroFrameworkPK_v4_0/.project
