@@ -8,8 +8,11 @@
 
 using System.Threading;
 using Microsoft.SPOT;
+using Microsoft.SPOT.Hardware;
 
-
+using Samraksh.SPOT.Hardware;
+using Samraksh.SPOT.Hardware.EmoteDotNow;
+using AnalogInput = Samraksh.SPOT.Hardware.EmoteDotNow.AnalogInput;
 
 enum PI {
     HALF = 6434,
@@ -30,7 +33,7 @@ enum DETECTOR {
     STOP_TYPE = 1,
 }
 
-namespace Samraksh.AppNote {
+namespace Samraksh.AppNote.RadarMotionDetection {
     public class PDRTracking {
         public struct Comp {
             public int I, Q;
@@ -55,9 +58,11 @@ namespace Samraksh.AppNote {
             }
 
             public static void update(Comp currSample) {
-                if (((prevSample.I * currSample.Q - currSample.I * prevSample.Q) < 0) && (currSample.Q > 0) && (prevSample.Q < 0))
+                if (((prevSample.I * currSample.Q - currSample.I * prevSample.Q) < 0) && (currSample.Q > 0) &&
+                    (prevSample.Q < 0))
                     cumCuts += 1;
-                else if (((prevSample.I * currSample.Q - currSample.I * prevSample.Q) > 0) && (currSample.Q < 0) && (prevSample.Q > 0))
+                else if (((prevSample.I * currSample.Q - currSample.I * prevSample.Q) > 0) && (currSample.Q < 0) &&
+                         (prevSample.Q > 0))
                     cumCuts -= 1;
 
                 prevSample.I = currSample.I;
@@ -65,16 +70,28 @@ namespace Samraksh.AppNote {
             }
         }
 
+        private const uint SamplingTime = 1000;
+        private const uint NumberOfSamples = 1000;
+        private static readonly ushort[] Ibuffer = new ushort[NumberOfSamples];
+        private static readonly ushort[] Qbuffer = new ushort[NumberOfSamples];
+
         // Main function - initialize DC estimator, phase estimator, start Timer for sampling and ADC
         public static void Main() {
             SensorData.initNoise();
             PhaseUnwrapping.init();
             CumulativeCuts.init();
-            MessageHandler.init();
-            ADC.Init(0x04);
+
+            //MessageHandler.init();
+
+            AnalogInput.InitializeADC();
+            AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, NumberOfSamples, SamplingTime, sampleFired);
+
+            //ADC.Init(0x04);
+
             MofNFilter.init();
 
-            Timer sampleTimer = new Timer(sampleFired, null, (int)DETECTOR.INTER_SAMP_TIME, (int)DETECTOR.INTER_SAMP_TIME);
+            //Timer sampleTimer = new Timer(sampleFired, null, (int)DETECTOR.INTER_SAMP_TIME, (int)DETECTOR.INTER_SAMP_TIME);
+
             Debug.Print("Starting");
 
             Thread.Sleep(Timeout.Infinite);
@@ -96,42 +113,42 @@ namespace Samraksh.AppNote {
             }
         }
 
-        public static class MessageHandler {
-            public static byte[] payload = new byte[5];
-            public static ushort seqNum = 0;
+        //public static class MessageHandler {
+        //    public static byte[] payload = new byte[5];
+        //    public static ushort seqNum = 0;
 
-            public static void init() {
-                seqNum = 0;
-                MessageLayer.Init();
-                payload[0] = (byte)((1 >> 8) & 0xff);
-                payload[1] = (byte)(1 & 0xff);
-            }
+        //    public static void init() {
+        //        seqNum = 0;
+        //        MessageLayer.Init();
+        //        payload[0] = (byte)((1 >> 8) & 0xff);
+        //        payload[1] = (byte)(1 & 0xff);
+        //    }
 
-            private static void insertSeqNum() {
-                payload[2] = (byte)((seqNum >> 8) & 0xff);
-                payload[3] = (byte)(seqNum & 0xff);
-                seqNum++;
-            }
+        //    private static void insertSeqNum() {
+        //        payload[2] = (byte)((seqNum >> 8) & 0xff);
+        //        payload[3] = (byte)(seqNum & 0xff);
+        //        seqNum++;
+        //    }
 
-            public static void sendStart() {
-                insertSeqNum();
-                payload[4] = (byte)DETECTOR.START_TYPE;
-                //Messaging.Send(0xffff, payload);
-                MessageLayer.Send(0, 0xffff, payload, 5);
-            }
+        //    public static void sendStart() {
+        //        insertSeqNum();
+        //        payload[4] = (byte)DETECTOR.START_TYPE;
+        //        //Messaging.Send(0xffff, payload);
+        //        MessageLayer.Send(0, 0xffff, payload, 5);
+        //    }
 
-            public static void sendStop() {
-                insertSeqNum();
-                payload[4] = (byte)DETECTOR.STOP_TYPE;
-                //Messaging.Send(0xffff, payload);
-                MessageLayer.Send(0, 0xffff, payload, 5);
-            }
+        //    public static void sendStop() {
+        //        insertSeqNum();
+        //        payload[4] = (byte)DETECTOR.STOP_TYPE;
+        //        //Messaging.Send(0xffff, payload);
+        //        MessageLayer.Send(0, 0xffff, payload, 5);
+        //    }
 
-        }
+        //}
 
         public static class myGPIO {
-            public static OutputPort Gpio0 = new OutputPort((Cpu.Pin)10, false);
-            public static OutputPort Gpio1 = new OutputPort((Cpu.Pin)9, false);
+            public static OutputPort Gpio0 = new OutputPort(Pins.GPIO_J12_PIN1, false);
+            public static OutputPort Gpio1 = new OutputPort(Pins.GPIO_J12_PIN2, false);
         }
 
         public static class MofNFilter {
@@ -175,8 +192,15 @@ namespace Samraksh.AppNote {
         // Read data from ADC
         // If initial data, estimate DC
         // Otherwise, unwrap phase and test whether displacement > threshold
-        static void sampleFired(object o) {
+        private static void sampleFired(long threshold) {
+            for (int i = 0; i < NumberOfSamples; i++) {
+                SensorData.currSample[0] = Ibuffer[i];
+                SensorData.currSample[1] = Qbuffer[i];
+                ProcessSample();
+            }
+        }
 
+        private static void ProcessSample() {
             SensorData.sampNum += 1;
 
             if (SensorData.sampNum % 2 == 0) {
@@ -186,8 +210,7 @@ namespace Samraksh.AppNote {
             else
                 myGPIO.Gpio0.Write(false);
 
-
-            ADC.getData(SensorData.currSample, 0, 2);
+            //ADC.getData(SensorData.currSample, 0, 2);
 
             // for the first DC_EST_SECS * SAMPRATE samples, collect noise data
             if (SensorData.sampNum < (int)DETECTOR.SAMPRATE * (int)DETECTOR.DC_EST_SECS) {
@@ -220,8 +243,8 @@ namespace Samraksh.AppNote {
 
                 MofNFilter.snippetIndex++;
 
-                if (MofNFilter.snippetIndex == (int)DETECTOR.SAMPRATE) // one snippet
-                {
+                // one snippet
+                if (MofNFilter.snippetIndex == (int)DETECTOR.SAMPRATE) {
 
                     //myGPIO.Gpio1.Write(true);
                     //if (MofNFilter.snippetMax - MofNFilter.snippetMin >= MofNFilter.Thresh)
@@ -236,19 +259,19 @@ namespace Samraksh.AppNote {
                     // new detect event started
                     if (MofNFilter.prevstate == 0 && MofNFilter.state == 1) {
                         myGPIO.Gpio1.Write(true);
-                        MessageHandler.sendStart();
+                        //MessageHandler.sendStart();
                     }
 
-                // current detect event ended
+                        // current detect event ended
                     else if (MofNFilter.state == 0 && MofNFilter.prevstate == 1) {
                         myGPIO.Gpio1.Write(false);
-                        MessageHandler.sendStop();
+                        //MessageHandler.sendStop();
                     }
                     //myGPIO.Gpio1.Write(false);
                 }
 
-
             }
+
         }
     }
 }

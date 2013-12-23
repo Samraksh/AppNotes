@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Samraksh.AppNote
+namespace Samraksh.AppNote.RadarMotionDetection
 {
 
     // Class for phase unwrapping
