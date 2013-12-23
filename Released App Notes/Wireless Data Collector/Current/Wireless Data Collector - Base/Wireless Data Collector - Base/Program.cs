@@ -12,6 +12,7 @@ using System.Collections;
 using System.Threading;
 
 using Microsoft.SPOT;
+using Samraksh.AppNote.WirelessDataCollector;
 using Samraksh.SPOT.Net.Radio;
 using Samraksh.SPOT.Net.Mac;
 
@@ -43,7 +44,7 @@ namespace Samraksh.AppNote {
             Debug.Print(Resources.GetString(Resources.StringResources.ProgramName));
 
             //var payloadIdentifierChar = ApplicationId.ToCharArray();
-            _applicationIdBytes = System.Text.Encoding.UTF8.GetBytes(ApplicationId);
+            Common.ApplicationIdBytes = System.Text.Encoding.UTF8.GetBytes(Common.ApplicationId);
 
             // Set up LCD and display a welcome message
             Lcd.Display("B");
@@ -99,23 +100,23 @@ namespace Samraksh.AppNote {
                 try {
                     // Check to be sure the message is for us
                     var rcvHeaderChar = System.Text.Encoding.UTF8.GetChars(msgBytes, 0, 2);
-                    if (rcvMsg.Size < PayloadHeaderSize || new string(rcvHeaderChar, 0, 2) != ApplicationId) {
+                    if (rcvMsg.Size < Common.PayloadHeaderSize || new string(rcvHeaderChar, 0, 2) != Common.ApplicationId) {
                         // not for us
                         Debug.Print("Message is not for us");
                         return;
                     }
 
                     // Get the time the message was sent (sensing node time scale)
-                    var msgSentTime = BitConverter.ToInt64(msgBytes, MessageTimePos);
+                    var msgSentTime = BitConverter.ToInt64(msgBytes, Common.MessageTimePos);
 
                     // Check which kind of message it is
-                    switch (msgBytes[MessageTypePos]) {
+                    switch (msgBytes[Common.PayloadTypeSize]) {
                         // Hello message: send response & create or update the initial time pair
-                        case (byte)PayloadTypes.Hello: {
-                                Debug.Print("\nReceived Hello, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(msgBytes, MessageSequencePos).ToString());
+                        case (byte)Common.PayloadTypes.Hello: {
+                                Debug.Print("\nReceived Hello, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(msgBytes, Common.MessageSequencePos).ToString());
 
                                 // Send the response, with the sequence number of the received message
-                                SendResponse((Addresses)rcvMsg.Src, msgBytes, MessageSequencePos, MessageSequenceSize);
+                                SendResponse((Addresses)rcvMsg.Src, msgBytes, Common.MessageSequencePos, Common.MessageSequenceSize);
 
                                 // Save the time we received the message (base node) & the time the message was sent (sensing node)
                                 //  This adds a node if it's not present and otherwise replaces it
@@ -123,8 +124,8 @@ namespace Samraksh.AppNote {
                                 break;
                             }
                         // 
-                        case (byte)PayloadTypes.Data: {
-                                Debug.Print("\nReceived Data, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(msgBytes, MessageSequencePos).ToString());
+                        case (byte)Common.PayloadTypes.Data: {
+                            Debug.Print("\nReceived Data, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(msgBytes, Common.MessageSequencePos).ToString());
 
                                 // If sensing node is not in our list, ignore
                                 //  This should never happen
@@ -134,7 +135,7 @@ namespace Samraksh.AppNote {
                                 }
 
                                 // Send the response, with the sequence number of the received message
-                                SendResponse((Addresses)rcvMsg.Src, msgBytes, MessageSequencePos, MessageSequenceSize);
+                                SendResponse((Addresses)rcvMsg.Src, msgBytes, Common.MessageSequencePos, Common.MessageSequenceSize);
 
                                 // Adjust for time
 
@@ -149,12 +150,12 @@ namespace Samraksh.AppNote {
                                 Debug.Print("\nSample received from " + rcvMsg.Src + ", sensorSendTime: " + msgSentTime + ", sensorInitialTime: " + sensorInitialTime +
                                     ", baseInitialTime:" + baseInitialTime + ", baseReceivedTime " + baseReceivedTime + ", skew: " + skew);
 
-                                var currPos = PayloadHeaderSize;    // Initialize the current position
-                                while (currPos + SampleTimeDataLen <= rcvMsg.Size) {
+                                var currPos = Common.PayloadHeaderSize;    // Initialize the current position
+                                while (currPos + Common.SampleTimeDataLen <= rcvMsg.Size) {
                                     var sensorSampleTime = BitConverter.ToInt64(msgBytes, currPos);
-                                    currPos += MessageTimeSize;
+                                    currPos += Common.MessageTimeSize;
                                     var sensorSampleValue = BitConverter.ToInt32(msgBytes, currPos);
-                                    currPos += SampleDataSize;
+                                    currPos += Common.SampleDataSize;
 
                                     // Calculate sample time (base station time)
                                     //  We have initial time and message send time for the sensor mote
@@ -185,12 +186,12 @@ namespace Samraksh.AppNote {
         /// <param name="payloadPos">The position of the payload to begin</param>
         /// <param name="payloadLen">The number of bytes in the payload to use</param>
         static void SendResponse(Addresses dest, byte[] payloadBytes, int payloadPos, int payloadLen) {
-            var payload = new byte[ApplicationIdSize + MessageTypeSize + payloadLen];
+            var payload = new byte[Common.ApplicationIdSize + Common.PayloadTypeSize + payloadLen];
             int currPos = 0;
-            for (var i = 0; i < ApplicationIdSize; i++) {
-                payload[currPos++] = _applicationIdBytes[i];
+            for (var i = 0; i < Common.ApplicationIdSize; i++) {
+                payload[currPos++] = Common.ApplicationIdBytes[i];
             }
-            payload[currPos++] = (byte)PayloadTypes.Reply;
+            payload[currPos++] = (byte)Common.PayloadTypes.Reply;
             for (var i = 0; i < payloadLen; i++) {
                 payload[currPos++] = payloadBytes[payloadPos + i];
             }

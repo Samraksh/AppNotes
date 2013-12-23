@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Samraksh.AppNote
+namespace Samraksh
 {
     
     internal partial class Resources
@@ -20,7 +20,7 @@ namespace Samraksh.AppNote
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("Samraksh.AppNote.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("Samraksh.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }

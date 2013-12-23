@@ -30,7 +30,7 @@ enum DETECTOR {
     STOP_TYPE = 1,
 }
 
-namespace Samraksh.AppNotes {
+namespace Samraksh.AppNote {
     public class PDRTracking {
         public struct Comp {
             public int I, Q;

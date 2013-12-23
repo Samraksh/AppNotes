@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Samraksh.AppNotes
+namespace Samraksh.AppNote
 {
 
     // Class for phase unwrapping

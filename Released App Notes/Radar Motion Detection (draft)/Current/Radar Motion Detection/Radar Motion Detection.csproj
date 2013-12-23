@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Radar Motion Detection</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Radar_Motion_Detection</RootNamespace>
+    <RootNamespace>Samraksh.AppNote</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -40,7 +40,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native">
+    </Reference>
+    <Reference Include="Samraksh_SPOT">
+      <HintPath>Samraksh DLLs\Samraksh_SPOT\Samraksh_SPOT.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh_SPOT_Hardware">
+      <HintPath>Samraksh DLLs\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
