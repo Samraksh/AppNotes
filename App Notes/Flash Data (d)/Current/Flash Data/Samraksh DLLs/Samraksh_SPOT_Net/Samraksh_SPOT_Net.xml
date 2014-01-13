@@ -140,10 +140,9 @@
         </member>
         <member name="M:Samraksh.SPOT.Net.MACBase.#ctor(Samraksh.SPOT.Net.MacID)">
             <summary>
-            Constructor to initialize callbacks 
+            Constructor that takes in a macname parameter and initializes the corresponding mac object
             </summary>
-            <param name="drvName">Name of the callback</param>
-            <param name="drvData">Driver data</param>
+            <param name="macname">CSMA or OMAC</param>
         </member>
         <member name="M:Samraksh.SPOT.Net.MACBase.ReleasePacket">
             <summary>
@@ -317,6 +316,27 @@
             <param name="size">The number of bytes to send.</param>
             <returns></returns>
         </member>
+        <member name="M:Samraksh.SPOT.Net.MACBase.SendTimeStamped(System.UInt16,System.Byte[],System.UInt16,System.UInt16)">
+            <summary>
+            This function sends a time stamped message, time stamping is done in the send in native code
+            </summary>
+            <param name="Address">The address of the reciever or broadcast</param>
+            <param name="message">message packet</param>
+            <param name="offset">offset if any in the byte array</param>
+            <param name="size">size of the message</param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.MACBase.SendTimeStamped(System.UInt16,System.Byte[],System.UInt16,System.UInt16,System.UInt32)">
+            <summary>
+            This function allows user to send a timestamped message with a specified event time
+            </summary>
+            <param name="Address">The address of the reciever or broadcast</param>
+            <param name="message">message packet</param>
+            <param name="offset">offset if any in the byte array</param>
+            <param name="size">size of the packet</param>
+            <param name="eventTime">event you wish to inform other nodes about</param>
+            <returns>Result of send operation</returns>
+        </member>
         <member name="M:Samraksh.SPOT.Net.MACBase.UnInitialize">
             <summary>
             Uninitialize the radio.
@@ -334,6 +354,11 @@
         <member name="P:Samraksh.SPOT.Net.Mac.CSMA.Instance">
             <summary>
             Returns the instance of the CSMA object
+            </summary>
+        </member>
+        <member name="T:Samraksh.SPOT.Net.RadioConfigurationMismatchException">
+            <summary>
+            Exception thrown when the radio is configured incorrectly
             </summary>
         </member>
         <member name="T:Samraksh.SPOT.Net.Mac.Addresses">
@@ -474,7 +499,7 @@
             </summary>
             <param name="config">RadioConfiguration</param>
         </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.RadioConfiguration.#ctor(Samraksh.SPOT.Net.Radio.TxPowerValue,Samraksh.SPOT.Net.Radio.Channels)">
+        <member name="M:Samraksh.SPOT.Net.Radio.RadioConfiguration.#ctor(Samraksh.SPOT.Net.Radio.TxPowerValue,Samraksh.SPOT.Net.Radio.Channels,Samraksh.SPOT.Net.Radio.RadioName)">
             <summary>
             Constructor that takes power and channel as input
             </summary>
@@ -505,9 +530,26 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.RadioConfiguration.SetRadioName(Samraksh.SPOT.Net.Radio.RadioName)">
+            <summary>
+            Sets the radio name 
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.RadioConfiguration.GetRadioName">
+            <summary>
+            Returns the radio name 
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Samraksh.SPOT.Net.Radio.IRadio">
             <summary>
             Radio interface
+            </summary>
+        </member>
+        <member name="T:Samraksh.SPOT.Net.Message">
+            <summary>
+            Message class represents the message object being passed to native 
             </summary>
         </member>
         <member name="F:Samraksh.SPOT.Net.Message.MacMessageSize">
@@ -538,6 +580,16 @@
         <member name="F:Samraksh.SPOT.Net.Message.ReceiveMessage">
             <summary>
             Received Message
+            </summary>
+        </member>
+        <member name="F:Samraksh.SPOT.Net.Message.Size">
+            <summary>
+            Represents the size of the payload 
+            </summary>
+        </member>
+        <member name="F:Samraksh.SPOT.Net.Message.senderEventTimeStamp">
+            <summary>
+            Represents the time at which the packet was sent out 
             </summary>
         </member>
         <member name="M:Samraksh.SPOT.Net.Message.#ctor">
@@ -572,6 +624,17 @@
             <param name="LQI">LQI</param>
             <param name="Size">Size of the payload buffer </param>
         </member>
+        <member name="M:Samraksh.SPOT.Net.Message.#ctor(System.Byte[],System.UInt16,System.Boolean,System.Byte,System.Byte,System.UInt16,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="Src"></param>
+            <param name="Unicast"></param>
+            <param name="RSSI"></param>
+            <param name="LQI"></param>
+            <param name="Size"></param>
+        </member>
         <member name="M:Samraksh.SPOT.Net.Message.#ctor(System.Int32)">
             <summary>
             Configurable size of the received message
@@ -584,10 +647,180 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Samraksh.SPOT.Net.OMAC">
+            <summary>
+            Class represents the OMAC object 
+            </summary>
+        </member>
         <member name="P:Samraksh.SPOT.Net.OMAC.Instance">
             <summary>
             Returns the instance of the CSMA object
             </summary>
+        </member>
+        <member name="T:Samraksh.SPOT.Net.Radio.Radio_802_15_4">
+            <summary>
+            Class represents the generic radio object 
+            </summary>
+        </member>
+        <member name="T:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base">
+            <summary>
+            802.15.4 radio configuration
+            </summary>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.#ctor">
+            <summary>
+            Constructor for 802.15.4 radio
+            </summary>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.ReleaseMessage">
+            <summary>
+            This function explicitly releases the message packet and is free to be collected by the gc. If this is not called, the packet is released during the next GetNextPacket call
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.GetNextPacket">
+            <summary>
+            Get the next packet from the radio driver, the radio does not maintain a buffer, the onus is on the application to sample this data as quickly as possible on getting a recieve interrupt
+            Otherwise the packet is overwritten in the radio layer, for buffer support use the mac interface 
+            </summary>
+            <returns>A data packet of message type to the caller</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.Initialize(Samraksh.SPOT.Net.Radio.RadioConfiguration)">
+            <summary>
+            Initialize native radio and interop drivers.
+            </summary>
+            <param name="config">MAC configuration.</param>
+            <param name="callback">Callback method for received messages.</param>
+            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.Configure(Samraksh.SPOT.Net.Radio.RadioConfiguration)">
+            <summary>
+            Set Radio configuration for 802.15.4 radio.
+            </summary>
+            <param name="config">Radio configuration.</param>
+            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
+            <remarks>Used to change the Radio configuration during and after initialization, using this function can change the callback if a different callback is used. Please use reconfigure to change power and channel</remarks>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.SetTxPower(System.Int32)">
+            <summary>
+            Set the transmit power of the 802.15.4 radio.
+            </summary>
+            <param name="TxPower"></param>
+            <returns>DeviceStatus</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.SetChannel(System.Int32)">
+            <summary>
+            Set the channel of the 802.15.4 radio.
+            </summary>
+            <param name="Channel"></param>
+            <returns>DeviceStatus</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.GetTxPowerValue">
+            <summary>
+            Return the output power of the radio 802.15.4
+            </summary>
+            <returns>TxPowerValue</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.GetActiveChannel">
+            <summary>
+            Return the current active channel of the radio 
+            </summary>
+            <returns>Channels</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.ReConfigure(Samraksh.SPOT.Net.Radio.RadioConfiguration)">
+            <summary>
+            Reconfigure the radio object with new channel and power
+            </summary>
+            <param name="config"></param>
+            <returns>DeviceStatus</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.UnInitialize">
+            <summary>
+            Uninitialize native MAC, radio and interop drivers.
+            </summary>
+            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.GetID">
+            <summary>
+            Get the ID of this 802.15.4 radio instance.
+            </summary>
+            <returns>The ID of the instance.</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.GetAddress">
+            <summary>
+            Get the address of the device.
+            </summary>
+            <returns>Address of the device.</returns>
+            <remarks>This is the address by which the device is known to the rest of the world.</remarks>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.SetAddress(System.UInt16)">
+            <summary>
+            Set the address of the device.
+            </summary>
+            <param name="Address">The address of the device.</param>
+            <returns>True iff address successfully set.</returns>
+            <remarks>This is the address by which the device is known to the rest of the world. 
+                A return value of false can occur if another layer locks the address and prevents changes.
+            </remarks>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.TurnOn">
+            <summary>
+            Turn on the radio.
+            </summary>
+            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.Sleep(System.Byte)">
+            <summary>
+            Go to sleep.
+            </summary>
+            <param name="level">The sleep level.</param>
+            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.PreLoad(System.Byte[],System.UInt16)">
+            <summary>
+            Load the message into the transmit buffer of the radio.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="size">The size of the message.</param>
+            <returns>The result of the method: E_RadioInit, E_RadioSync, E_RadioConfig, E_MacInit, E_MacConfig, E_MacSendError, E_MacBufferFull, S_Success</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.SendStrobe">
+            <summary>
+            Sent a message that's already in the transmit buffer.
+            </summary>
+            <returns>The result of the method: E_RadioInit, E_RadioSync, E_RadioConfig, E_MacInit, E_MacConfig, E_MacSendError, E_MacBufferFull, S_Success</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.Send(System.Byte[],System.UInt16)">
+            <summary>
+            Load and send a message.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="size">The size of the message.</param>
+            <returns>The result of the method: E_RadioInit, E_RadioSync, E_RadioConfig, E_MacInit, E_MacConfig, E_MacSendError, E_MacBufferFull, S_Success</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.SendTimeStamped(System.Byte[],System.UInt16,System.UInt32)">
+            <summary>
+            Load and send a message, with radio layer time stamping. 
+            </summary>
+            <param name="message">The message.</param>
+            <param name="size">The size of the message.</param>
+            <param name="eventTime">The time stamp.</param>
+            <returns>The result of the method: E_RadioInit, E_RadioSync, E_RadioConfig, E_MacInit, E_MacConfig, E_MacSendError, E_MacBufferFull, S_Success</returns>
+            <remarks>The offset for the timestamp in the packet is specified by TimeStampOffset  member of the RadioConfiguration structure passed as parameter during radio module initialization.</remarks>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.ClearChannelAssesment">
+            <summary>
+            Assess channel activity.
+            </summary>
+            <returns>True iff channel is free.</returns>
+            <remarks>Default is 140 microseconds.</remarks>
+        </member>
+        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4_Base.ClearChannelAssesment(System.UInt16)">
+            <summary>
+            Assess channel activity.
+            </summary>
+            <param name="numberOfMicroSecond">Number of microsecondsto check.</param>
+            <returns>True iff channel is free.</returns>
         </member>
         <member name="T:Samraksh.SPOT.Net.Radio.TxPowerValue">
             <summary>
@@ -679,172 +912,10 @@
             Channel 26  Frequency 2480 MHz
             </summary>
         </member>
-        <member name="T:Samraksh.SPOT.Net.Radio.Radio_802_15_4">
+        <member name="T:Samraksh.SPOT.Net.Radio.Radio_802_15_4_LR">
             <summary>
-            802.15.4 radio configuration
+            Class represents the long range radio object, maps to the long range instance in native
             </summary>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.#ctor">
-            <summary>
-            Constructor for 802.15.4 radio
-            </summary>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.ReleaseMessage">
-            <summary>
-            This function explicitly releases the message packet and is free to be collected by the gc. If this is not called, the packet is released during the next GetNextPacket call
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.GetShallowInstance(Samraksh.SPOT.Net.Radio.RadioUser)">
-            <summary>
-            Get a shallow instance of the radio object, should only be used by the mac 
-            </summary>
-            <param name="user"></param>
-            <returns>Returns a radio object</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.GetNextPacket">
-            <summary>
-            Get the next packet from the radio driver, the radio does not maintain a buffer, the onus is on the application to sample this data as quickly as possible on getting a recieve interrupt
-            Otherwise the packet is overwritten in the radio layer, for buffer support use the mac interface 
-            </summary>
-            <returns>A data packet of message type to the caller</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.Initialize(Samraksh.SPOT.Net.Radio.RadioConfiguration)">
-            <summary>
-            Initialize native radio and interop drivers.
-            </summary>
-            <param name="config">MAC configuration.</param>
-            <param name="callback">Callback method for received messages.</param>
-            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.Configure(Samraksh.SPOT.Net.Radio.RadioConfiguration)">
-            <summary>
-            Set Radio configuration for 802.15.4 radio.
-            </summary>
-            <param name="config">Radio configuration.</param>
-            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
-            <remarks>Used to change the Radio configuration during and after initialization, using this function can change the callback if a different callback is used. Please use reconfigure to change power and channel</remarks>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.SetTxPower(System.Int32)">
-            <summary>
-            Set the transmit power of the 802.15.4 radio.
-            </summary>
-            <param name="TxPower"></param>
-            <returns>DeviceStatus</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.SetChannel(System.Int32)">
-            <summary>
-            Set the channel of the 802.15.4 radio.
-            </summary>
-            <param name="Channel"></param>
-            <returns>DeviceStatus</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.GetTxPowerValue">
-            <summary>
-            Return the output power of the radio 802.15.4
-            </summary>
-            <returns>TxPowerValue</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.GetActiveChannel">
-            <summary>
-            Return the current active channel of the radio 
-            </summary>
-            <returns>Channels</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.ReConfigure(Samraksh.SPOT.Net.Radio.RadioConfiguration)">
-            <summary>
-            Reconfigure the radio object with new channel and power
-            </summary>
-            <param name="config"></param>
-            <returns>DeviceStatus</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.UnInitialize">
-            <summary>
-            Uninitialize native MAC, radio and interop drivers.
-            </summary>
-            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.GetID">
-            <summary>
-            Get the ID of this 802.15.4 radio instance.
-            </summary>
-            <returns>The ID of the instance.</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.GetAddress">
-            <summary>
-            Get the address of the device.
-            </summary>
-            <returns>Address of the device.</returns>
-            <remarks>This is the address by which the device is known to the rest of the world.</remarks>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.SetAddress(System.UInt16)">
-            <summary>
-            Set the address of the device.
-            </summary>
-            <param name="Address">The address of the device.</param>
-            <returns>True iff address successfully set.</returns>
-            <remarks>This is the address by which the device is known to the rest of the world. 
-                A return value of false can occur if another layer locks the address and prevents changes.
-            </remarks>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.TurnOn">
-            <summary>
-            Turn on the radio.
-            </summary>
-            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.Sleep(System.Byte)">
-            <summary>
-            Go to sleep.
-            </summary>
-            <param name="level">The sleep level.</param>
-            <returns>The status after the method call: Success, Fail, Ready, Busy</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.PreLoad(System.Byte[],System.UInt16)">
-            <summary>
-            Load the message into the transmit buffer of the radio.
-            </summary>
-            <param name="message">The message.</param>
-            <param name="size">The size of the message.</param>
-            <returns>The result of the method: E_RadioInit, E_RadioSync, E_RadioConfig, E_MacInit, E_MacConfig, E_MacSendError, E_MacBufferFull, S_Success</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.SendStrobe">
-            <summary>
-            Sent a message that's already in the transmit buffer.
-            </summary>
-            <returns>The result of the method: E_RadioInit, E_RadioSync, E_RadioConfig, E_MacInit, E_MacConfig, E_MacSendError, E_MacBufferFull, S_Success</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.Send(System.Byte[],System.UInt16)">
-            <summary>
-            Load and send a message.
-            </summary>
-            <param name="message">The message.</param>
-            <param name="size">The size of the message.</param>
-            <returns>The result of the method: E_RadioInit, E_RadioSync, E_RadioConfig, E_MacInit, E_MacConfig, E_MacSendError, E_MacBufferFull, S_Success</returns>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.SendTimeStamped(System.Byte[],System.UInt16,System.UInt32)">
-            <summary>
-            Load and send a message, with radio layer time stamping. 
-            </summary>
-            <param name="message">The message.</param>
-            <param name="size">The size of the message.</param>
-            <param name="eventTime">The time stamp.</param>
-            <returns>The result of the method: E_RadioInit, E_RadioSync, E_RadioConfig, E_MacInit, E_MacConfig, E_MacSendError, E_MacBufferFull, S_Success</returns>
-            <remarks>The offset for the timestamp in the packet is specified by TimeStampOffset  member of the RadioConfiguration structure passed as parameter during radio module initialization.</remarks>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.ClearChannelAssesment">
-            <summary>
-            Assess channel activity.
-            </summary>
-            <returns>True iff channel is free.</returns>
-            <remarks>Default is 140 microseconds.</remarks>
-        </member>
-        <member name="M:Samraksh.SPOT.Net.Radio.Radio_802_15_4.ClearChannelAssesment(System.UInt16)">
-            <summary>
-            Assess channel activity.
-            </summary>
-            <param name="numberOfMicroSecond">Number of microsecondsto check.</param>
-            <returns>True iff channel is free.</returns>
         </member>
     </members>
 </doc>

@@ -1,0 +1,388 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samraksh_SPOT</name>
+    </assembly>
+    <members>
+        <member name="T:Samraksh.SPOT.NonVolatileMemory.DATASTORE_ERROR">
+            <summary>
+            DataStore error values 
+            </summary>
+        </member>
+        <member name="T:Samraksh.SPOT.NonVolatileMemory.DataStatus">
+            <summary>
+            DataStore status types
+            </summary>
+        </member>
+        <member name="T:Samraksh.SPOT.NonVolatileMemory.Data">
+            <summary>
+            Data class. Provides functions to write, read and delete data. 
+            Provides a reference/handle to the data stored in the block storage device to the user.
+            </summary>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.#ctor(Samraksh.SPOT.NonVolatileMemory.DataStore,System.Type)">
+            <summary>
+            Data constructor that takes DataStore and the data type as parameters
+            </summary>
+            <param name="dStore"></param>
+            <param name="dataType"></param>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.#ctor(Samraksh.SPOT.NonVolatileMemory.DataStore,System.UInt32,System.Type)">
+            <summary>
+            Default data class constructor
+            </summary>
+            <param name="dStore">DataStore object</param>
+            <param name="m_Size">Size of the data object to be stored in data store</param>
+            <param name="dataType">Type of data to be stored in data store</param>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.#ctor(Samraksh.SPOT.NonVolatileMemory.DataStore,System.UInt32)">
+            <summary>
+            Returns a data object corresponding to the input parameter dataId.
+            </summary>
+            <param name="dStore">DataStore object</param>
+            <param name="dataId">ID of data for which the user wants a reference/handle</param>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.GetStatus">
+            <summary>
+            Returns the last error status of data store.
+            </summary>
+            <returns>Returns success, failure or error status</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.Write(System.Byte[],System.UInt32,System.UInt32)">
+            <summary>
+            Write a byte array into the data store
+            </summary>
+            <param name="data">Byte array to be written to data store</param>
+            <param name="offset">Offset within the data array from which to write to data store</param>
+            <param name="numBytes">Number of bytes to be written to data store</param>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.Write(System.Byte[],System.UInt32)">
+            <summary>
+            Write a byte array into the data store
+            </summary>
+            <param name="data">Byte array to be written to data store</param>
+            <param name="numBytes">Number of bytes to be written to data store</param>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.Read(System.Byte[])">
+            <summary>
+            Read a byte array from the data store into the array passed as parameter
+            </summary>
+            <param name="data">Byte array to be filled up with data for the corresponding data object</param>
+            <returns>Returns if read was a success or a failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.Delete">
+            <summary>
+            Delete a data/record from the data store
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.LookupData(System.UInt32)">
+            <summary>
+            Get address of dataID from the data store
+            </summary>
+            <param name="dataId">ID of the data/record to be looked up</param>
+            <returns>Returns address/reference to the dataID</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.DeleteData(System.UInt32)">
+            <summary>
+            Delete the data represented by the dataId from data store.
+            </summary>
+            <param name="dataId">ID of the data/record to be deleted</param>
+            <returns>Returns true or false</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.ConstructNativeMemoryPointer(System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="dataId"></param>
+            <param name="bytes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.Data.DisposeNativeMemoryPointer(System.UInt32)">
+            <summary>
+            Native call that destroys record created on the flash
+            </summary>
+            <param name="dataId"></param>
+            <returns>Returns true or false</returns>
+        </member>
+        <member name="T:Samraksh.SPOT.NonVolatileMemory.DataStore">
+            <summary>
+            DataStore class that holds data. 
+            DataStore can be any block storage device (eg. NOR, SD card)
+            </summary>
+        </member>
+        <member name="F:Samraksh.SPOT.NonVolatileMemory.DataStore.storageType">
+            <summary>
+            The block storage device type
+            </summary>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.#ctor(System.Int32)">
+            <summary>
+            DataStore constructor that takes a storageType as parameter and initializes the data store with that storageType.
+            </summary>
+            <param name="storageType">storageType can be NOR, SD card or any other block storage device</param>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.ReadAllDataIds(System.Int32[])">
+            <summary>
+            Fills up the array passed as parameter with all dataIDs
+            </summary>
+            <param name="dataIdArray">Array which is filled up with the dataIDs</param>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.CountOfDataIds">
+            <summary>
+            Returns the count of dataIDs
+            </summary>
+            <returns>Returns count of dataIDs</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.ReadAllDataReferences(Samraksh.SPOT.NonVolatileMemory.Data[],System.UInt16)">
+            <summary>
+            Fills up the array (passed as first parameter) with the dataIDs starting from offset (passed as second parameter)
+            </summary>
+            <param name="dataRefArray"></param>
+            <param name="dataIdOffset"></param>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.DeleteAllData">
+            <summary>
+            Deletes all dataIDs from the data store. Does not actually erase the data, but marks them as inactive.
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GC">
+            <summary>
+            Performs garbage collection on the data store. This is done internally by data store when there is not enough space to add new data.
+            GC rearranges data internally so that all active records are grouped together. Then the inactive records are erased one block at a time.
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.EraseAll">
+            <summary>
+            Erases all data from data store.
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.ReadWriteStatus">
+            <summary>
+            Returns write status 
+            </summary>
+            <returns>Returns write status</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.LastErrorStatus">
+            <summary>
+            Returns the last error status of data store
+            </summary>
+            <returns>Returns last error status of data store</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Write(System.UInt32,System.Byte[])">
+            <summary>
+            Write data array to the data store starting from the address (passed as first parameter)
+            </summary>
+            <param name="address">Starting address from which to start writing the data</param>
+            <param name="data">Data array to be written to data store</param>
+            <returns>Returns 4 (number of bytes written) if successful, returns -1 if operation fails.</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Write(System.UInt32,System.Byte[],System.UInt32)">
+            <summary>
+            Write data array to the data store starting from the address (passed as first parameter). Amount of data to be written is specified by numBytes (third parameter)
+            </summary>
+            <param name="address">Starting address from which to start writing the data</param>
+            <param name="data">Data array to be written to data store</param>
+            <param name="numBytes">Amount of data to be written</param>
+            <returns>Returns the number of bytes written, returns -1 if operation failes</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Read(System.UInt32,System.Byte[])">
+            <summary>
+            Read a byte array from the data store into data array starting from address (first parameter)
+            </summary>
+            <param name="address">Starting address from which to start reading</param>
+            <param name="data">Byte array to be filled up with data from data store</param>
+            <returns>Returns the number of bytes written, returns -1 if operation failes</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Finalize">
+            <summary>
+            Destroys the record in the data store
+            </summary>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetDataID">
+            <summary>
+            Returns the current dataID 
+            </summary>
+            <returns>Current dataID</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.CreateData(System.UInt32)">
+            <summary>
+            Creates data for the specified size in the block storage device. Allocates space, assigns a reference which is returned back to the user
+            </summary>
+            <param name="Size">Size of the data</param>
+            <returns>Reference to the created data</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.CreateDataStore">
+            <summary>
+            Initializes the data store. Performs a scan of the device and builds up the list of active data inside the data store.
+            </summary>
+            <returns>True or false</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetUsedKBytes">
+            <summary>
+            Get amount of used space 
+            </summary>
+            <returns>Amount of used space</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetFreeKBytes">
+            <summary>
+            Get amount of free space
+            </summary>
+            <returns>Amount of free space</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetReadAllDataIds(System.Int32[])">
+            <summary>
+            Returns valid data currently stored in the data store
+            </summary>
+            <returns>Returns array with valid data as unsigned integer</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetCountOfDataIds">
+            <summary>
+            Get the count of valid data currently stored in the data store
+            </summary>
+            <returns>Returns the count of valid data as unsigned integer</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.DeleteAll">
+            <summary>
+            Delete all references to data in the data store
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.EraseAllBlocks">
+            <summary>
+            Erases all data in the data store
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.DataStoreGC">
+            <summary>
+            Garbage collects inactive records in data store
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetReadWriteStatus">
+            <summary>
+            Gets read/write status of the data store
+            </summary>
+            <returns>Returns status of read/write on data store</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetLastErrorStatus">
+            <summary>
+            Gets error status of data Store
+            </summary>
+            <returns>Returns error status of data store</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Read(System.UInt32,System.Byte[],System.Int32)">
+            <summary>
+            Read from data into the buffer starting from address.
+            </summary>
+            <param name="address">Address of data to be read from</param>
+            <param name="buffer">Buffer into which the data will be read</param>
+            <param name="storageType">Block storage type</param>
+            <returns>Returns number of bytes read, returns -1 if operation fails</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Delete(System.UInt32)">
+            <summary>
+            Delete the data represented by the dataID from data store.
+            </summary>
+            <param name="dataID">ID of the data to be deleted</param>
+            <returns>Returns success or failure of operation</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Write(System.UInt32,System.Byte[],System.UInt32,System.Int32)">
+            <summary>
+            Write data present in buffer starting from address and amount equal to numBytes. 
+            </summary>
+            <param name="address">Address from which to start writing data</param>
+            <param name="data">Buffer holding data to be written</param>
+            <param name="numBytes">Amount of data to be written</param>
+            <param name="storageType">Block storage type</param>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="P:Samraksh.SPOT.NonVolatileMemory.DataStore.Size">
+            <summary>
+            Size of the DataStore in Kilo Bytes
+            </summary>
+        </member>
+        <member name="P:Samraksh.SPOT.NonVolatileMemory.DataStore.UsedKBytes">
+            <summary>
+            Number of Kilo Bytes of space already occupied by data
+            </summary>
+        </member>
+        <member name="P:Samraksh.SPOT.NonVolatileMemory.DataStore.FreeKBytes">
+            <summary>
+            Number of Kilo Bytes of space available to store data
+            </summary>
+        </member>
+        <member name="M:Samraksh.SPOT.GC.GetUsedKBytes">
+            <summary>
+            Get amount of used heap space in kilo bytes
+            </summary>
+            <returns>Returns amount of used heap in kilo bytes</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.GC.GetFreeKBytes">
+            <summary>
+            Get amount of free heap space in kilo bytes
+            </summary>
+            <returns>Returns amount of free heap space in kilo bytes</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.GC.IsGCSamExtensionsEnabled">
+            <summary>
+            Check if Samraksh's Garbage Collection Extensions are enabled or not
+            </summary>
+            <returns>Returns true if enabled, false otherwise</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Samraksh.SPOT.GC.EnableIncrementalCleaning" -->
+        <member name="M:Samraksh.SPOT.GC.EnableIncrementalCompaction">
+            <summary>
+            Enable incremental Compaction of heap in GC
+            </summary>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Samraksh.SPOT.GC.DisableIncrementalCleaning" -->
+        <member name="M:Samraksh.SPOT.GC.DisableIncrementalCompaction">
+            <summary>
+            Disable incremental Compaction of heap in GC
+            </summary>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.GC.CleanBeforeSleep(System.UInt32)">
+            <summary>
+            Instruct GC to clean the heap and create the amount of space specified, before putting CPU to sleep
+            </summary>
+            <param name="KBytesToFree">Amount of free space to be created</param>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.GC.CleanNow(System.UInt32)">
+            <summary>
+            Instruct GC to clean the heap now (Suspend managed code execution) and create the amount of space specified
+            </summary>
+            <param name="KBytesToFree">Amount of free space to be created</param>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.GC.CleanNow">
+            <summary>
+            Instruct GC to clean the heap now and create as much space as possible, without compaction
+            </summary>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.GC.AvgTimeForCleaning">
+            <summary>
+            Average time for the Mark and Sweep operation. Implements weighted (0.5 weight) moving average.
+            </summary>
+            <returns>Returns the average time as number of microseconds.</returns>
+        </member>
+        <member name="M:Samraksh.SPOT.GC.AvgTimeForCompaction">
+            <summary>
+            Average time for the Compaction operation. Implements weighted (0.5 weight) moving average.
+            </summary>
+            <returns>Returns the average time as number of microseconds.</returns>
+        </member>
+    </members>
+</doc>

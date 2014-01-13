@@ -2,7 +2,7 @@
 using System.IO.Ports;
 using Microsoft.SPOT;
 using Samraksh.SPOT.Hardware;
-//using Samraksh.SPOT.NonVolatileMemory;
+using Samraksh.SPOT.NonVolatileMemory;
 using Microsoft.SPOT.Hardware;
 
 
