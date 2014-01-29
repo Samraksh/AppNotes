@@ -10,7 +10,7 @@ namespace Samraksh {
             /// Timer with a simplified interface
             /// </summary>
             public class SimpleTimer {
-                private Timer TheTimer; // Can't inherit since the TheTimer class is sealed
+                private Timer TheTimer; // Can't inherit since the timer class is sealed
 
                 private readonly TimerCallback _timerCallback;
                 private readonly object _callBackValue;

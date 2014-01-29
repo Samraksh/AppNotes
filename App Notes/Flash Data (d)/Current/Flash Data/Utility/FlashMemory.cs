@@ -9,37 +9,12 @@ namespace Samraksh {
         namespace Utility {
             namespace FlashMemory {
 
-                ///// <summary>
-                ///// Define the interface for a FlashMemory class
-                ///// </summary>
-                //public abstract class FlashMemory {
-                //    /// <summary>
-                //    /// Write ushort array to flash
-                //    /// </summary>
-                //    /// <param name="data">Data array to write</param>
-                //    /// <param name="length">Number of data items to write</param>
-                //    /// <returns>True iff write was successful</returns>
-                //    public abstract bool Write(ushort[] data, UInt16 length);
-                //    /// <summary>
-                //    /// Write byte array to flash
-                //    /// </summary>
-                //    /// <param name="data">Data array to write</param>
-                //    /// <param name="length">Number of data items to write</param>
-                //    /// <returns>True iff write was successful</returns>
-                //    public abstract bool Write(byte[] data, UInt16 length);
-                //    /// <summary>
-                //    /// Read ushort array from flash
-                //    /// </summary>
-                //    /// <param name="index">Position to read from</param>
-                //    /// <param name="bufferSize">The amount of data to return</param>
-                //    /// <returns></returns>
-                //    public abstract ushort[] Read(int index, int bufferSize);
-                //    public abstract bool WriteEof(uint bufferSize);
-                //}
-
+                /// <summary>
+                /// Manage eMote .NOW on-board NOR flash
+                /// </summary>
                 public class NorStore {
 
-                    public const uint NorSize = 12*1024*1024;
+                    //public const uint NorSize = 12*1024*1024;
 
                     public const bool debugMode = false;
                     public bool flag = true;
