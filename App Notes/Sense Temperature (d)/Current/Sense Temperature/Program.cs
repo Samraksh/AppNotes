@@ -1,7 +1,12 @@
-﻿using System;
+﻿#define MyCode
+
+using System;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+
+using SB = Samraksh.SPOT.Hardware.SensorBoard;
+
 
 using Samraksh.AppNote.Utility;
 
@@ -19,7 +24,6 @@ namespace Samraksh.AppNote.SenseTemperature {
     public class Program {
 
         static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
-        private static TemperatureSensor _temperatureSensor;
 
         /// <summary>
         /// Main program
@@ -28,16 +32,17 @@ namespace Samraksh.AppNote.SenseTemperature {
             Debug.EnableGCMessages(false);
             Debug.Print("\nSense Temperature " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
             Lcd.Display("temp");
+            var otherPower = new OutputPort(Pins.GPIO_J11_PIN4, true);
             Thread.Sleep(4000);
 
+#if MyCodeX
             try {
-                var otherPower = new OutputPort(Pins.GPIO_J11_PIN4, true);
                 Thread.Sleep(500);
-                _temperatureSensor = new TemperatureSensor(Pins.GPIO_J11_PIN3);
+                var temperatureSensor = new TemperatureSensor(Pins.GPIO_J11_PIN3);
                 while (true) {
-                    _temperatureSensor.Sense();
-                    var temperatureC = _temperatureSensor.TemperatureC;
-                    var temperatureF = _temperatureSensor.TemperatureF;
+                    temperatureSensor.Sense();
+                    var temperatureC = temperatureSensor.TemperatureC;
+                    var temperatureF = temperatureSensor.TemperatureF;
                     Debug.Print("Temperature =" + temperatureC + " / " + temperatureF);
                     Thread.Sleep(3000);
                 }
@@ -47,6 +52,22 @@ namespace Samraksh.AppNote.SenseTemperature {
                 Lcd.Display("Err");
                 Thread.Sleep(Timeout.Infinite);
             }
+#else
+            try {
+                var temperatureSensor = new SB.TemperatureSensor(Pins.GPIO_J11_PIN3, 1000);
+                while (true) {
+                    Thread.Sleep(3000);
+                    var currTemp = temperatureSensor.Temperature;
+                    Debug.Print("Temp: " + currTemp);
+
+                }
+            }
+            catch (Exception e) {
+                Debug.Print(e.ToString());
+                Lcd.Display("Err");
+                Thread.Sleep(Timeout.Infinite);
+            }
+#endif
         }
 
     }

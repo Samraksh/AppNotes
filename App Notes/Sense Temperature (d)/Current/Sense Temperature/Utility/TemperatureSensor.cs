@@ -27,6 +27,7 @@ namespace Samraksh.SPOT.AppNote.Utility {
         private enum Ds18S20Commands {
             ConverT = 0x44,
             ReadScratchPad = 0xBE,
+            SkipRom = 0xCC,
             // Unused commands
             //WriteScratchPad = 0x4E,
             //CopyScratchPad = 0x48,
@@ -39,6 +40,9 @@ namespace Samraksh.SPOT.AppNote.Utility {
 
         private readonly OneWire _oneWire;
         private readonly object _temperatureLock = new object();    // Locking is used to avoid race conditions when sensing vs. reading Temp value
+
+        private static readonly bool IsLittleEndian =
+                     Microsoft.SPOT.Hardware.Utility.ExtractValueFromArray(new byte[] { 0xaa, 0xbb }, 0, 2) == 0xbbaa;
 
         private byte DS18x20DeviceFamilyCode;
 
@@ -67,6 +71,7 @@ namespace Samraksh.SPOT.AppNote.Utility {
 
             #region List device codes (for development testing)
 #if Testing
+            Debug.Print("IsLittleEndian: " + IsLittleEndian);
             foreach (var theDevice in devices) {
                 if (!(theDevice is byte[])) {
                     Debug.Print("   " + theDevice.GetType());
@@ -116,29 +121,76 @@ namespace Samraksh.SPOT.AppNote.Utility {
         public void Sense() {
 
             _oneWire.TouchReset();
-            _oneWire.WriteByte(0xCC);
+            _oneWire.WriteByte((int)Ds18S20Commands.SkipRom);
             _oneWire.WriteByte((int)Ds18S20Commands.ConverT);
 
             Thread.Sleep(750);
 
             _oneWire.TouchReset();
-            _oneWire.WriteByte(0xCC);
+            _oneWire.WriteByte((int)Ds18S20Commands.SkipRom);
             _oneWire.WriteByte((int)Ds18S20Commands.ReadScratchPad);
 
-            var tempLo = _oneWire.ReadByte();
-            var tempHi = _oneWire.ReadByte();
+#if Testing
+            var scratchPad = new byte[8];
+            byte calcCrc = 0x00;
+            for (var i = 0; i < 8; i++) {
+                scratchPad[i] = (byte)_oneWire.ReadByte();
+                Debug.Print(" " + i + " " + scratchPad[i]);
+                calcCrc ^= scratchPad[i];
+            }
+            var dsCrc = (byte)_oneWire.ReadByte();
+            Debug.Print(" " + 8 + " " + calcCrc + ", " + dsCrc);
 
-            double temp;
+            var tempLo = scratchPad[0];
+            var tempHi = scratchPad[1];
+#else
+            var tempLo = (byte)_oneWire.ReadByte();
+            var tempHi = (byte)_oneWire.ReadByte();
+#endif
+
+#if Testing
+            Debug.Print("\nRead " + tempHi + " " + tempLo);
+            //// Test conversion to double
+            //int vi1, vi2;
+            //double vd;
+            //byte vh, vl;
+            //var varr = new byte[2];
+            //vl = 0x92;
+            //vh = 0xFF
+            //if (IsLittleEndian) {
+            //    varr[0] = vl;
+            //    varr[1] = vh;
+            //}
+            //else {
+            //    varr[0] = vh;
+            //    varr[1] = vl;
+            //}
+            //vi1 = vh << 8 | vl;
+            //vi2 = unchecked((Int16)Microsoft.SPOT.Hardware.Utility.ExtractValueFromArray(varr, 0, 2));
+            //vd = vl;
+            //Debug.Print("  vh, vl, vi1, vi2, vd: " + vh + ", " + vl + ", " + vi1 + ", " + vi2 + ", " + vd);
+#endif
+            // Convert from pair of bytes to signed double
+            var temperatureBytes = new byte[2];
+            // The order of the bytes depends on whether the processor is little or big endian
+            if (IsLittleEndian) {
+                temperatureBytes[0] = tempLo;
+                temperatureBytes[1] = tempHi;
+            }
+            else {
+                temperatureBytes[0] = tempHi;
+                temperatureBytes[1] = tempLo;
+            }
+            double sensedTemperature = unchecked((Int16)Microsoft.SPOT.Hardware.Utility.ExtractValueFromArray(temperatureBytes, 0, 2));
+            // Adjust for precision
             switch (DS18x20DeviceFamilyCode) {
                 case Ds18B20DeviceFamilyCode:
-                    temp = (tempHi << 8 | tempLo) / 16D;
-                    if ((tempHi & 0xF0) == 0xF0) {
-                        temp *= -1;
-                    }
+                    // Measurement is in 1/16 degrees C
+                    sensedTemperature /= 16;
                     break;
                 case Ds18S20DeviceFamilyCode:
-                    temp = tempHi << 8 | tempLo;
-                    temp /= 2;
+                    // Measurement is in 1/2 degrees C
+                    sensedTemperature /= 2;
                     break;
                 default:
                     // This should never happen
@@ -146,10 +198,9 @@ namespace Samraksh.SPOT.AppNote.Utility {
             }
             // Set the temperature property
             lock (_temperatureLock) {
-                _temperature = temp;
+                _temperature = sensedTemperature;
             }
         }
-
 
     }
 }
