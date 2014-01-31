@@ -35,7 +35,7 @@ namespace Samraksh.AppNote.SenseTemperature {
             var otherPower = new OutputPort(Pins.GPIO_J11_PIN4, true);
             Thread.Sleep(4000);
 
-#if MyCodeX
+#if MyCode
             try {
                 Thread.Sleep(500);
                 var temperatureSensor = new TemperatureSensor(Pins.GPIO_J11_PIN3);
