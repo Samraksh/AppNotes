@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStore", "DataStore\DataStore.csproj", "{517C79E8-4D90-4854-AB70-EAA77C97D5BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistent Object Storage", "Persistent Object Storage\Persistent Object Storage.csproj", "{517C79E8-4D90-4854-AB70-EAA77C97D5BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
