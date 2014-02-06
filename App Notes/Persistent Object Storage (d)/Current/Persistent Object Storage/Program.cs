@@ -21,7 +21,7 @@ namespace Samraksh {
                 private static readonly EasyLcd Lcd = new EasyLcd();
 
                 private const int SampleTimerInterval = 1000;
-                private static SimpleTimer sampleTimer = new SimpleTimer(sampleTimer_Callback,null,SampleTimerInterval, SampleTimerInterval);
+                private static readonly SimpleTimer SampleTimer = new SimpleTimer(SampleTimer_Callback,null,SampleTimerInterval, SampleTimerInterval);
 
                 /// <summary>
                 /// Set things up
@@ -32,12 +32,12 @@ namespace Samraksh {
                     Debug.Print("DataStore " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
                     Thread.Sleep(4000);
 
-                    sampleTimer.Start();
+                    SampleTimer.Start();
 
                     Thread.Sleep(Timeout.Infinite);
                 }
 
-                private static void sampleTimer_Callback(object timerVal) {
+                private static void SampleTimer_Callback(object timerVal) {
                     
                 }
 
