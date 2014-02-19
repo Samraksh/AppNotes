@@ -40,26 +40,29 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\EasyLcd.cs" />
+    <Compile Include="Utility\SimpleTimer.cs" />
     <Compile Include="Utility\VersionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_SPOT">
-      <HintPath>Samraksh DLLs\Samraksh_SPOT\Samraksh_SPOT.dll</HintPath>
+    <Reference Include="Samraksh_SPOT, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>eMote\Dlls\Samraksh_SPOT\Samraksh_SPOT.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_SPOT_Hardware">
-      <HintPath>Samraksh DLLs\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
+    <Reference Include="Samraksh_SPOT_Hardware, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>eMote\Dlls\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_SPOT_Hardware_SensorBoard">
-      <HintPath>Samraksh DLLs\Samraksh_SPOT_Hardware_SensorBoard\Samraksh_SPOT_Hardware_SensorBoard.dll</HintPath>
+      <HintPath>eMote\Dlls\Samraksh_SPOT_Hardware_SensorBoard\Samraksh_SPOT_Hardware_SensorBoard.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_SPOT_Net">
-      <HintPath>Samraksh DLLs\Samraksh_SPOT_Net\Samraksh_SPOT_Net.dll</HintPath>
+      <HintPath>eMote\Dlls\Samraksh_SPOT_Net\Samraksh_SPOT_Net.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_SPOT_RealTime">
-      <HintPath>Samraksh DLLs\Samraksh_SPOT_RealTime\Samraksh_SPOT_RealTime.dll</HintPath>
+      <HintPath>eMote\Dlls\Samraksh_SPOT_RealTime\Samraksh_SPOT_RealTime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,4 +72,5 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
 </Project>
