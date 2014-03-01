@@ -56,7 +56,7 @@
             </summary>
             <returns>Returns success, failure or error status</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.Byte[],System.UInt32,System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Write a byte array into the data store
             </summary>
@@ -65,7 +65,7 @@
             <param name="numData">Count of data to be written to data store</param>
             <returns>Returns success or failure</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.UInt16[],System.UInt32,System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.UInt16[],System.Int32,System.Int32)">
             <summary>
             Write a UInt16 array into the data store
             </summary>
@@ -74,7 +74,7 @@
             <param name="numData">Count of data to be written to data store</param>
             <returns>Returns success or failure</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.UInt32[],System.UInt32,System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.UInt32[],System.Int32,System.Int32)">
             <summary>
             Write a UInt32 array into the data store
             </summary>
@@ -83,7 +83,7 @@
             <param name="numData">Count of data to be written to data store</param>
             <returns>Returns success or failure</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.Byte[],System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.Byte[],System.Int32)">
             <summary>
             Write a byte array into the data store
             </summary>
@@ -91,7 +91,7 @@
             <param name="numData">Count of data to be written to data store</param>
             <returns>Returns success or failure</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.UInt16[],System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.UInt16[],System.Int32)">
             <summary>
             Write a UInt16 array into the data store
             </summary>
@@ -99,7 +99,7 @@
             <param name="numData">Count of data to be written to data store</param>
             <returns>Returns success or failure</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.UInt32[],System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Write(System.UInt32[],System.Int32)">
             <summary>
             Write a UInt32 array into the data store
             </summary>
@@ -107,7 +107,7 @@
             <param name="numData">Count of data to be written to data store</param>
             <returns>Returns success or failure</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Read(System.Byte[],System.UInt32,System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Read(System.Byte[],System.Int32,System.Int32)">
             <summary>
             Read a byte array from the data store into the array passed as parameter
             </summary>
@@ -116,7 +116,7 @@
             <param name="numData">Count of data to be read</param>
             <returns>Returns if read was a success or a failure</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Read(System.UInt16[],System.UInt32,System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Read(System.UInt16[],System.Int32,System.Int32)">
             <summary>
             Read a UInt16 array from the data store into the array passed as parameter
             </summary>
@@ -125,7 +125,7 @@
             <param name="numData">Count of data to be read</param>
             <returns>Returns if read was a success or a failure</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Read(System.UInt32[],System.UInt32,System.UInt32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataAllocation.Read(System.UInt32[],System.Int32,System.Int32)">
             <summary>
             Read a UInt32 array from the data store into the array passed as parameter
             </summary>
@@ -199,9 +199,9 @@
             The only instance of DataStore.
             </summary>
         </member>
-        <member name="F:Samraksh.SPOT.NonVolatileMemory.DataStore.counter">
+        <member name="F:Samraksh.SPOT.NonVolatileMemory.DataStore.syncObject">
             <summary>
-            Counter for multiton pattern 
+            For synchronization between multiple threads
             </summary>
         </member>
         <member name="F:Samraksh.SPOT.NonVolatileMemory.DataStore.dataStoreInstances">
@@ -214,13 +214,19 @@
             Private constructor so that only one instance of DataStore exists.
             </summary>
         </member>
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Instance(System.Int32)">
+            <summary>
+            Multiton pattern. This allows the DataStore to be initialized with different block storage devices such as NOR, NAND etc.
+            http://en.wikipedia.org/wiki/Multiton_pattern
+            </summary>
+        </member>
         <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.InitDataStore(System.Int32)">
             <summary>
             DataStore constructor that takes a storageType as parameter and initializes the data store with that storageType.
             </summary>
             <param name="storageType">storageType can be NOR, SD card or any other block storage device</param>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.ReadAllDataIds(System.Int32[],System.UInt16)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.ReadAllDataIds(System.Int32[],System.Int32)">
             <summary>
             Fills up the array passed as parameter with all dataIDs
             </summary>
@@ -234,7 +240,7 @@
             </summary>
             <returns>Returns count of dataIDs</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.ReadAllDataReferences(Samraksh.SPOT.NonVolatileMemory.DataAllocation[],System.UInt16)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.ReadAllDataReferences(Samraksh.SPOT.NonVolatileMemory.DataAllocation[],System.Int32)">
             <summary>
             Fills up the array (passed as first parameter) with the dataIDs starting from offset (passed as second parameter)
             </summary>
@@ -360,7 +366,7 @@
             </summary>
             <returns>Amount of free space</returns>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetReadAllDataIds(System.Int32[],System.UInt16,System.UInt16)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.GetReadAllDataIds(System.Int32[],System.Int32,System.Int32)">
             <summary>
             Returns valid data currently stored in the data store
             </summary>
@@ -433,12 +439,6 @@
             <param name="storageType">Block storage type</param>
             <returns>Returns number of bytes read, returns -1 if operation fails</returns>
         </member>
-        <member name="P:Samraksh.SPOT.NonVolatileMemory.DataStore.Instance">
-            <summary>
-            Multiton pattern. This allows the DataStore to be initialized with different block storage devices such as NOR, NAND etc.
-            http://en.wikipedia.org/wiki/Multiton_pattern
-            </summary>
-        </member>
         <member name="P:Samraksh.SPOT.NonVolatileMemory.DataStore.MaxAllocationSize">
             <summary>
             Maximum allocation size possible
@@ -446,17 +446,17 @@
         </member>
         <member name="P:Samraksh.SPOT.NonVolatileMemory.DataStore.Size">
             <summary>
-            Size of the DataStore in Kilo Bytes
+            Size of the DataStore in bytes
             </summary>
         </member>
         <member name="P:Samraksh.SPOT.NonVolatileMemory.DataStore.UsedBytes">
             <summary>
-            Number of Kilo Bytes of space already occupied by data
+            Number of bytes of space already occupied by data
             </summary>
         </member>
         <member name="P:Samraksh.SPOT.NonVolatileMemory.DataStore.FreeBytes">
             <summary>
-            Number of Kilo Bytes of space available to store data
+            Number of bytes of space available to store data
             </summary>
         </member>
         <member name="T:Samraksh.SPOT.NonVolatileMemory.DataStore.DATASTORE_ERROR">
