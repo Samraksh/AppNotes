@@ -214,13 +214,13 @@
             Private constructor so that only one instance of DataStore exists.
             </summary>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Instance(System.Int32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.Instance(Samraksh.SPOT.NonVolatileMemory.StorageType)">
             <summary>
             Multiton pattern. This allows the DataStore to be initialized with different block storage devices such as NOR, NAND etc.
             http://en.wikipedia.org/wiki/Multiton_pattern
             </summary>
         </member>
-        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.InitDataStore(System.Int32)">
+        <member name="M:Samraksh.SPOT.NonVolatileMemory.DataStore.InitDataStore(Samraksh.SPOT.NonVolatileMemory.StorageType)">
             <summary>
             DataStore constructor that takes a storageType as parameter and initializes the data store with that storageType.
             </summary>

@@ -3,9 +3,6 @@
  *  Define a simple one-shot or recorring timer
  * Versions
  *  1.0 Initial Version
- *  1.1 Fixed bugs 
- *      - Rcurrent timer
- *      - Thread-safe callback (use CallBack method with lock
 =========================*/
 
 using System;
@@ -20,14 +17,12 @@ namespace Samraksh {
             /// Timer with a simplified interface
             /// </summary>
             public class SimpleTimer {
-                private Timer _theTimer; // Can't inherit since the timer class is sealed
+                private Timer TheTimer; // Can't inherit since the timer class is sealed
 
                 private readonly TimerCallback _timerCallback;
                 private readonly object _callBackValue;
                 private readonly int _initialDueTime;
                 private readonly int _initialPeriod;
-                // Need current values in order to tell if timer is running or not
-                //  Cannot reflect on timer to determine its status
                 private int _currDueTime;
                 private int _currPeriod;
 
@@ -59,19 +54,19 @@ namespace Samraksh {
                 public SimpleTimer(TimerCallback timerCallback, object callBackValue, int currDueTime, int currPeriod) {
                     _timerCallback = timerCallback;
                     _callBackValue = callBackValue;
-                    _initialDueTime = _currDueTime = currDueTime;
-                    _initialPeriod = _currPeriod = currPeriod;
+                    _currDueTime = currDueTime;
+                    _currPeriod = currPeriod;
                 }
 
                 /// <summary>
                 /// Start (or restart) the timer
                 /// </summary>
                 public void Start() {
-                    if (_theTimer == null) {
-                        _theTimer = new Timer(CallBack, _callBackValue, _initialDueTime, _initialPeriod);
+                    if (TheTimer == null) {
+                        TheTimer = new Timer(_timerCallback, _callBackValue, _initialDueTime, _initialDueTime);
                     }
                     else {
-                        _theTimer.Change(_initialDueTime, _initialPeriod);
+                        TheTimer.Change(_initialDueTime, _initialPeriod);
                     }
                     StartTime = DateTime.Now.Ticks;
                 }
@@ -80,13 +75,13 @@ namespace Samraksh {
                 /// Stop the timer
                 /// </summary>
                 public void Stop() {
-                    if (_theTimer == null) {
+                    if (TheTimer == null) {
                         return;
                     }
                     lock (this) {
                         // Make sure we're not in the callback before killing the timer
                         _currDueTime = _currPeriod = Timeout.Infinite;
-                        _theTimer.Change(_currDueTime, _currPeriod);
+                        TheTimer.Change(_currDueTime, _currPeriod);
                     }
                 }
 
@@ -94,7 +89,7 @@ namespace Samraksh {
                 /// Check if the timer is stopped
                 /// </summary>
                 public bool IsStopped {
-                    get { return (_theTimer == null || _currDueTime == Timeout.Infinite); }
+                    get { return (TheTimer == null || _currDueTime == Timeout.Infinite); }
                 }
 
                 /// <summary>

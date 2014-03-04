@@ -38,7 +38,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utility\EasyLcd.cs" />
+    <Compile Include="Utility\EnhancedLcd.cs" />
     <Compile Include="Utility\SimpleTimer.cs" />
     <Compile Include="Utility\VersionInfo.cs" />
   </ItemGroup>
