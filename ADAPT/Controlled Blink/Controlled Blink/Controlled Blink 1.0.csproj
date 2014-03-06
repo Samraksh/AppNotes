@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>Debounced Digital Input</AssemblyName>
+    <AssemblyName>Controlled Blink</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Samraksh.AppNotes.ADAPT.DebouncedDigitalInput</RootNamespace>
+    <RootNamespace>Controlled_Blink</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{95A12BCD-5438-4EDE-BBB1-FEECB85436E7}</ProjectGuid>
+    <ProjectGuid>{43B50629-09DE-45F9-BA0F-1437C215E609}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
   </PropertyGroup>
@@ -37,11 +37,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utility\VersionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Graphics" />
-    <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
   </ItemGroup>
@@ -52,5 +49,4 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
 </Project>

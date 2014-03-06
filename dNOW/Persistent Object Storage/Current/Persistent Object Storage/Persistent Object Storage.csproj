@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>PersistentObjectStorage</AssemblyName>
+    <AssemblyName>Samraksh.AppNote.DotNOW.PersistentObjectStorage</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Samraksh</RootNamespace>
+    <RootNamespace>Samraksh.AppNote.DotNOW.PersistentObjectStorage</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -19,7 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\PersistentObjectStorage.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Samraksh.AppNote.DotNOW.PersistentObjectStorage.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,15 +53,6 @@
     <Reference Include="Samraksh_SPOT_Hardware, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>eMote\Dlls\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
-    </Reference>
-    <Reference Include="Samraksh_SPOT_Hardware_SensorBoard">
-      <HintPath>eMote\Dlls\Samraksh_SPOT_Hardware_SensorBoard\Samraksh_SPOT_Hardware_SensorBoard.dll</HintPath>
-    </Reference>
-    <Reference Include="Samraksh_SPOT_Net">
-      <HintPath>eMote\Dlls\Samraksh_SPOT_Net\Samraksh_SPOT_Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Samraksh_SPOT_RealTime">
-      <HintPath>eMote\Dlls\Samraksh_SPOT_RealTime\Samraksh_SPOT_RealTime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

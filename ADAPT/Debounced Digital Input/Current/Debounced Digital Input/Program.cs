@@ -7,9 +7,11 @@
 ---------------------------------------------------------------------*/
 
 using System;
+using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using System.Threading;
+
+using Samraksh.AppNote.Utility;
 
 namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
     public class Program {
@@ -26,15 +28,15 @@ namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
         //      We want to trigger an interrupt on both leading and trailing edge of the signal.
         //  Other notes
         //      The second argument in the contructor, glitchFilter, is not currently implemented.
-        private static readonly InterruptPort InputPort = new InterruptPort((Cpu.Pin)PinMap.Gpio01, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeBoth);
+        private static readonly InterruptPort Input = new InterruptPort((Cpu.Pin)PinMap.Gpio05, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeBoth);
 
         // Define the status ports. 
-        static readonly OutputPort StatusHi = new OutputPort((Cpu.Pin)PinMap.Gpio02, false);    //  Raised (set high) when input is high
-        static readonly OutputPort StatusLo = new OutputPort((Cpu.Pin)PinMap.Gpio03, true);     //  Reset (set low) when input is low
+        static readonly OutputPort StatusHi = new OutputPort((Cpu.Pin)PinMap.Gpio01, false);    //  Raised (set high) when input is high
+        static readonly OutputPort StatusLo = new OutputPort((Cpu.Pin)PinMap.Gpio02, true);     //  Reset (set low) when input is low
 
         // Define ports to provide logic power. 
         static readonly OutputPort PwrHigh = new OutputPort((Cpu.Pin)PinMap.Gpio04, true);      //  Provide V++ (high)
-        static readonly OutputPort PwrLow = new OutputPort((Cpu.Pin)PinMap.Gpio05, false);      //  Provide Gnd (low)
+        //static readonly OutputPort PwrLow = new OutputPort((Cpu.Pin)PinMap.Gpio05, false);      //  Provide Gnd (low)
 
         // Keep track of the number of button interrupts and the last time a button interrupt was called
         //  This is optional
@@ -43,8 +45,8 @@ namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
 
         public static void Main() {
             try {
-                // Print the name of the app note
-                Debug.Print("Debounced Digital Input");
+                // Print the name & version/build info 
+                Debug.Print("Debounced Digital Input" + VersionInfo.VersionDateTime);
 
                 // Flash the LED a few times to confirm we're working
                 for (var i = 0; i < 5; i++) {
@@ -57,9 +59,15 @@ namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
                 }
 
                 // Set the callback method that is accessed when an interrupt occurs
-                InputPort.OnInterrupt += InputPort_OnInterrupt;
+                Input.OnInterrupt += Input_OnInterrupt;
 
                 Debug.Print("Ready for input");
+
+                var cnt = 0;
+                while (true) {
+                    Thread.Sleep(1000);
+                    Debug.Print(cnt++ + " Input value is " + Input.Read());
+                }
 
                 // Put this thread to sleep and don't wake up
                 //  If this isn't included, the Main program will exit now and nothing else will happen.
@@ -95,7 +103,7 @@ namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
         /// <param name="pin">The pin number that caused the timeout</param>
         /// <param name="state">The state of the pin</param>
         /// <param name="time">The (local) time of the interrupt</param>
-        static void InputPort_OnInterrupt(uint pin, uint state, DateTime time) {
+        static void Input_OnInterrupt(uint pin, uint state, DateTime time) {
 
             // Debounce the input
             //  Debouncing is needed because mechanical contacts will tend to make and break momentarily when opening or closing.
@@ -132,7 +140,7 @@ namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
             _interruptCnt++;
 
             // Read the button value. True = set (high); false = reset (low)
-            var inputValue = InputPort.Read();
+            var inputValue = Input.Read();
 
             // Set status port values
             StatusHi.Write(inputValue);

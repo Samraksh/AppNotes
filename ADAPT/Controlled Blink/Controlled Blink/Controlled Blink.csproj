@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>Controlled Blink</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Controlled_Blink</RootNamespace>
+    <RootNamespace>Samraksh.SPOT.AppNote.ADAPT.ControlledBlink</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -19,6 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Controlled Blink.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,8 +38,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utility\VersionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Graphics" />
+    <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
   </ItemGroup>
@@ -49,4 +53,5 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
 </Project>
