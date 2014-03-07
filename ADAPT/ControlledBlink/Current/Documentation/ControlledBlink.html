@@ -21,6 +21,7 @@
 </head>
 <body>
 
+<h1>Controlled Blink</h1>
 <h2>Key Ideas</h2>
 <ul>
 	<li>Input from GPIO port.</li>
@@ -40,28 +41,28 @@ board and the third is the usage in this app note.</p>
 <table cellpadding="2" cellspacing="4" class="auto-style1">
 	<tr>
 		<td class="auto-style2">CPU Pin</td>
-		<td class="auto-style2">AADAPT Dev Board Labeling</td>
+		<td class="auto-style2">ADAPT Dev Board Labeling</td>
 		<td class="auto-style2">This App Note</td>
 	</tr>
 	<tr>
 		<td class="auto-style3">58</td>
 		<td class="auto-style3">GPIO01</td>
-		<td class="auto-style3">LED 1</td>
+		<td class="auto-style3">Led1</td>
 	</tr>
 	<tr>
 		<td class="auto-style3">55</td>
 		<td class="auto-style3">GPIO02</td>
-		<td class="auto-style3">LED 2</td>
+		<td class="auto-style3">Led2</td>
 	</tr>
 	<tr>
 		<td class="auto-style3">53</td>
 		<td class="auto-style3">GPIO03</td>
-		<td class="auto-style3">LED 3</td>
+		<td class="auto-style3">Led3</td>
 	</tr>
 	<tr>
 		<td class="auto-style3">52</td>
 		<td class="auto-style3">GPIO04</td>
-		<td class="auto-style3">Simulated Ground</td>
+		<td class="auto-style3">SignalHigh</td>
 	</tr>
 	<tr>
 		<td class="auto-style3">51</td>
@@ -74,28 +75,27 @@ to connect an LED can be found online; for example:
 <a href="http://www.instructables.com/id/LEDs-for-Beginners/http://www.instructables.com/id/LEDs-for-Beginners/">
 www.instructables.com/id/LEDs-for-Beginners
 </a>. Be sure you use a suitable resistor to avoid overloading the port. Connect 
-a switch between Simulated Ground and Input. This can be a push button, an 
+a switch between SignalHigh and Input. This can be a push button, an 
 on-off switch, or another 
-kind of switch that lets you connect and disconnect Simulated Ground to/from 
-Input.</p>
+kind of switch that lets you connect and disconnect Signal High to/from 
+Input. Or you can use the digital output of some other device.</p>
 <p>For information on deployment and on monitoring console output (including the 
 output of Print.Debug statements), see the eMote user guide.</p>
 <h2>Discussion</h2>
 <p>The app note defines the three LED ports in the array Leds. It defines an 
-output SimulatedGround which is initialized to low (false). This is called 
-simulated ground because it does not connect directly to ground but provides an 
-equivalent to ground for logic purposes. The Input port is defined using 
-Port.ResistorMode.PullUp so that when nothing is connected, it will be high. </p>
+output SignalHigh which is initialized to high (true). This provides a high 
+signal for logic purposes. The Input port is defined using 
+Port.ResistorMode.PullDown so that when nothing is connected, it will be low. </p>
 <p>The app note initializes toggleLight to true. The main loop reads the input. 
 If high (true), it sets the LED port values to current value of toggleLight in 
-order from LED 1 to LED 2; if low (false), it sets the LED port values in the 
+order from Led1 to Led3; if low (false), it sets the LED port values in the 
 reverse order. After each loop, it changes the value of toggleLight. So the 
 first time through it turns the lights on and the second time through it turns 
 them off.</p>
-<p>When the program is running, use your switch to ensure that Simulated Gound 
-and Input are disconnected. The value read from input should be high (true) and 
-the first loop should be executed. Then use the switch to connect Simulated 
-Ground and Input. The value read should be low (false) and the second loop 
+<p>When the program is running, use your switch to ensure that SignalHigh and Input are disconnected. The value read from input should be 
+low (false) and 
+the second loop should be executed. Then use the switch to connect SignalHigh and Input. The value read should be 
+high (true ) and the first loop 
 should be executed.</p>
 
 </body>

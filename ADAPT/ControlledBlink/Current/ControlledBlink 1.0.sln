@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controlled Blink", "Controlled Blink\Controlled Blink.csproj", "{43B50629-09DE-45F9-BA0F-1437C215E609}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControlledBlink", "ControlledBlink\ControlledBlink.csproj", "{43B50629-09DE-45F9-BA0F-1437C215E609}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

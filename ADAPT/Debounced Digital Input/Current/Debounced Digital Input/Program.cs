@@ -28,7 +28,7 @@ namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
         //      We want to trigger an interrupt on both leading and trailing edge of the signal.
         //  Other notes
         //      The second argument in the contructor, glitchFilter, is not currently implemented.
-        private static readonly InterruptPort Input = new InterruptPort((Cpu.Pin)PinMap.Gpio05, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeBoth);
+        private static readonly InterruptPort Input = new InterruptPort((Cpu.Pin)PinMap.Gpio05, false, Port.ResistorMode.PullDown, Port.InterruptMode.InterruptEdgeBoth);
 
         // Define the status ports. 
         static readonly OutputPort StatusHi = new OutputPort((Cpu.Pin)PinMap.Gpio01, false);    //  Raised (set high) when input is high
@@ -36,7 +36,6 @@ namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
 
         // Define ports to provide logic power. 
         static readonly OutputPort PwrHigh = new OutputPort((Cpu.Pin)PinMap.Gpio04, true);      //  Provide V++ (high)
-        //static readonly OutputPort PwrLow = new OutputPort((Cpu.Pin)PinMap.Gpio05, false);      //  Provide Gnd (low)
 
         // Keep track of the number of button interrupts and the last time a button interrupt was called
         //  This is optional
@@ -46,7 +45,7 @@ namespace Samraksh.AppNotes.ADAPT.DebouncedDigitalInput {
         public static void Main() {
             try {
                 // Print the name & version/build info 
-                Debug.Print("Debounced Digital Input" + VersionInfo.VersionDateTime);
+                Debug.Print("Debounced Digital Input " + VersionInfo.VersionDateTime);
 
                 // Flash the LED a few times to confirm we're working
                 for (var i = 0; i < 5; i++) {
