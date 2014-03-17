@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>Radar Motion Detection</AssemblyName>
+    <AssemblyName>Radar Displacement Detector</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Samraksh.AppNote</RootNamespace>
+    <RootNamespace>Samraksh.AppNote.DotNow.RadarDisplacementDetector</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -38,19 +38,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Utility\LcdExtension.cs" />
-    <Compile Include="Utility\VersionInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_SPOT">
-      <HintPath>Samraksh DLLs\Samraksh_SPOT\Samraksh_SPOT.dll</HintPath>
-    </Reference>
-    <Reference Include="Samraksh_SPOT_Hardware">
-      <HintPath>Samraksh DLLs\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
+    <Reference Include="Samraksh_SPOT_Hardware, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>eMote\Dlls\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -59,5 +55,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

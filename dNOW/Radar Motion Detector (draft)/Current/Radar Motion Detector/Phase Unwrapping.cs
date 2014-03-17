@@ -1,32 +1,26 @@
-using System;
-using Microsoft.SPOT;
-
-namespace Samraksh.AppNote.RadarMotionDetection
-{
+namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
     // Class for phase unwrapping
     // arcTan array stores the inverse tangents for [0..1] in program memory for easy lookup via findArcTan
-    public static class PhaseUnwrapping
-    {
-        public static int wPhase;
-        public static int uwPhase;
-        public static int wPhase_prev;
-        public static int uwPhase_prev;
-        public static int phase_diff;
-        public static int newPhase;
-        public static int temp;
+    public static class PhaseUnwrapping {
+        public static int WPhase;
+        public static int UwPhase;
+        public static int WPhasePrev;
+        public static int UwPhasePrev;
+        public static int PhaseDiff;
+        public static int NewPhase;
+        public static int Temp;
 
-        public static short[] arcTan;
+        public static short[] ArcTan;
 
-        public static void init()
-        {
-            wPhase = 0;
-            uwPhase = 0;
-            wPhase_prev = 0;
-            uwPhase_prev = 0;
-            uwPhase_prev = 0;
+        public static void Init() {
+            WPhase = 0;
+            UwPhase = 0;
+            WPhasePrev = 0;
+            UwPhasePrev = 0;
+            UwPhasePrev = 0;
 
-            arcTan = new short[4097]
+            ArcTan = new short[]
             {
                 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
                 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,

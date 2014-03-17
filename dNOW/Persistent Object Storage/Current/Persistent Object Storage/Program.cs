@@ -34,10 +34,10 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
     public class Program {
 
         private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();    // Set up the LCD
-        private static readonly DataStore DStore = DataStore.Instance(StorageType.NOR);     // Set up the DataStore
+        private static readonly DataStore DStore = DataStore.Instance(STORAGE_TYPE.NOR);     // Set up the DataStore
         private static readonly AutoResetEvent DoneSampling = new AutoResetEvent(false);    // Set up thread sync to shift between sampling and comparison phases
 
-        private static DataStatus _retVal;  // DataStore and DataAllocation value returned by methods
+        private static DATASTORE_RETURN_STATUS _retVal;  // DataStore and DataReference value returned by methods
 
         private const int SampleTimerInterval = 1000;   // Frequency (in ms) of sampling
         private static readonly SimpleTimer SampleTimer =
@@ -49,7 +49,7 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
         //  2: Number of times sensed
         private static readonly UInt32[] SensorValues = new UInt32[3];
 
-        private static Hashtable _sensorDataAllocations = new Hashtable();      // Indexed table of data allocations, used for sensing
+        private static Hashtable _sensorDataReferences = new Hashtable();      // Indexed table of data references, used for sensing
         private static readonly Hashtable ComparisonTable = new Hashtable();    // Indexed table of sensor values
 
         private static readonly Random RandomGenerator = new Random();    // Used to generate sensor IDs
@@ -72,10 +72,10 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
 
                 // Invalidate existing data
                 Debug.Print("Initializing Data Store");
-                if ((_retVal = DataStore.DeleteAllData()) != DataStatus.Success) {
+                if ((_retVal = DStore.DeleteAllData()) != DATASTORE_RETURN_STATUS.Success) {
                     throw new Exception("Cannot delete the data store; return value " + _retVal);
                 }
-                
+
                 // Start sampling
                 Debug.Print("Starting periodic sampling");
                 SampleTimer.Start();
@@ -85,51 +85,51 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
 
                 // Begin comparing what we stored with what should be there
                 Lcd.Display("comp");
-                Debug.Print("\nSampled " + _sensorDataAllocations.Count + " sensors");
-                Debug.Print("\nRecovering data directly from DataStore and comparing allocations with earlier references");
+                Debug.Print("\nSampled " + _sensorDataReferences.Count + " sensors");
+                Debug.Print("\nRecovering data directly from DataStore and comparing allocations with earlier values");
 
                 // Report the final sensor values
-                foreach (DictionaryEntry entry in _sensorDataAllocations) {
+                foreach (DictionaryEntry entry in _sensorDataReferences) {
                     var sensorId = (uint)entry.Key;
-                    var dalloc = (DataAllocation)entry.Value;
-                    if (dalloc == null) {
-                        throw new Exception("Data allocation for sensor " + sensorId + " is null");
+                    var dRef = (DataReference)entry.Value;
+                    if (dRef == null) {
+                        throw new Exception("Data reference for sensor " + sensorId + " is null");
                     }
-                    if (dalloc.Read(SensorValues, 0, 3) != DataStatus.Success) {
+                    if (dRef.Read(SensorValues, 0, 3) != DATASTORE_RETURN_STATUS.Success) {
                         throw new Exception("Cannot read data allocation values for Id = " + sensorId);
                     }
                     Debug.Print("From Sensor Data Allocations: Sensor " + sensorId + ", Total " + SensorValues[1] + ", Count " + SensorValues[2] + ", Average " + ((double)SensorValues[1] / (double)SensorValues[2]));
                 }
 
-                // Null out the data allocations so garbage collector can pick it up
+                // Null out the data references so garbage collector can pick it up
                 //  We won't use this info any further since ReadAllDataReferences will cause these refrences to be stale
-                _sensorDataAllocations = null;
+                _sensorDataReferences = null;
 
-                // Get back the allocations directly from the DataStore & check to be sure things match
-                //  Note that we cannot use the Sensor Data Allocations because the entries are now invalid and hence stale
+                // Get back the references directly from the DataStore & check to be sure things match
+                //  Note that we cannot use the original Sensor Data References because the entries are now invalid and hence stale
 
-                var dSDataAllocations = new DataAllocation[Math.Max(MaxSensors / 2, 1)]; // Ensure that we use it at least twice
-                var dSOffset = 0;   // An offset into the storage that is updated by the number of allocations retrieved at a time
-                var dSNumAllocations = 0; // Count the number of allocations so we can compare at the end
+                var dSDataReferences = new DataReference[Math.Max(MaxSensors / 2, 1)]; // Ensure that we use it at least twice
+                var dSOffset = 0;   // An offset into the storage that is updated by the number of references retrieved at a time
+                var dSNumReferences = 0; // Count the number of references so we can compare at the end
                 Debug.Print("");
                 while (true) {
-                    // Get the next batch of allocation references
-                    if ((_retVal = DStore.ReadAllDataReferences(dSDataAllocations, (ushort)dSOffset)) != DataStatus.Success) {
-                        throw new Exception("Cannot get data allocations from offset " + dSOffset + "; return value " + _retVal);
+                    // Get the next batch of references
+                    if ((_retVal = DStore.ReadAllDataReferences(dSDataReferences, (ushort)dSOffset)) != DATASTORE_RETURN_STATUS.Success) {
+                        throw new Exception("Cannot get data references from offset " + dSOffset + "; return value " + _retVal);
                     }
                     // Increment the offset for the next call of ReadAllDataReferences
-                    dSOffset += dSDataAllocations.Length;
+                    dSOffset += dSDataReferences.Length;
                     // Run thru this batch
-                    foreach (var dSdAlloc in dSDataAllocations) {
+                    foreach (var dSdRef in dSDataReferences) {
                         // A null entry means we've finished
-                        if (dSdAlloc == null) {
+                        if (dSdRef == null) {
                             goto breakAll;
                         }
-                        // Increment the number of allocations, for later comparison
-                        dSNumAllocations++;
+                        // Increment the number of references, for later comparison
+                        dSNumReferences++;
 
-                        // Read the allocation from the Data Store 
-                        if ((_retVal = dSdAlloc.Read(SensorValues, 0, SensorValues.Length)) != DataStatus.Success) {
+                        // Read the allocation data from the Data Store 
+                        if ((_retVal = dSdRef.Read(SensorValues, 0, SensorValues.Length)) != DATASTORE_RETURN_STATUS.Success) {
                             throw new Exception("Cannot read data from allocation (DS); return value " + _retVal);
                         }
 
@@ -158,9 +158,9 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
                 }
             breakAll:
                 // We're done reading from the DataStore
-                //  Check to see if we've read the same number of sensors allocations from Data Store as we stored directly
-                Debug.Print("\nComparison table has " + ComparisonTable.Count + " entries, flash has " + dSNumAllocations + " entries");
-                if (ComparisonTable.Count != dSNumAllocations) {
+                //  Check to see if we've read the same number of sensors references from Data Store as we stored directly
+                Debug.Print("\nComparison table has " + ComparisonTable.Count + " entries, flash has " + dSNumReferences + " entries");
+                if (ComparisonTable.Count != dSNumReferences) {
                     Debug.Print("  Comparison table and DataStore do not have the same number of entries");
                 }
 
@@ -178,13 +178,13 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
         /// Sensor timer callback
         /// </summary>
         /// <remarks>
-        /// Simulate a sensor reading. Create a new allocation for sensor values if this is a new sensor; else update the existing sensor values allocation
+        /// Simulate a sensor reading. Create a new allocation and reference for sensor values if this is a new sensor; else update the existing sensor values allocation
         /// </remarks>
         /// <param name="timerVal"></param>
         private static void SampleTimer_Callback(object timerVal) {
             try {
                 // If we've sampled enuf, move on to phase 2
-                if (_sensorDataAllocations.Count >= MaxSensors) {
+                if (_sensorDataReferences.Count >= MaxSensors) {
                     Debug.Print("\nStopping sensing");
                     // Stop the timer
                     SampleTimer.Stop();
@@ -198,20 +198,20 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
                 Debug.Print("\nSample #" + (_sampleNumber++) + ", Id=" + sampleId);
 
                 // Check if this is an existing sensor or a new one
-                if (_sensorDataAllocations.Contains(sampleId)) {
+                if (_sensorDataReferences.Contains(sampleId)) {
                     // Existing sensor: update the values
                     Debug.Print("Updating sensor");
-                    // Get the data allocation reference for the sensor
-                    var dalloc = (DataAllocation)_sensorDataAllocations[sampleId];
-                    // Read the data allocation value
-                    if ((_retVal = dalloc.Read(SensorValues, 0, SensorValues.Length)) != DataStatus.Success) {
-                        throw new Exception("Failed to read data allocation for Id = " + sampleId + "; return value =" + _retVal);
+                    // Get the data reference for the sensor
+                    var dRef = (DataReference)_sensorDataReferences[sampleId];
+                    // Read the data reference value
+                    if ((_retVal = dRef.Read(SensorValues, 0, SensorValues.Length)) != DATASTORE_RETURN_STATUS.Success) {
+                        throw new Exception("Failed to read data allocation data for Id = " + sampleId + "; return value =" + _retVal);
                     }
                     // Update the values
                     SensorValues[1] += sampleVal;  // Update sum of sample values
                     SensorValues[2]++;             // Update count of samples
                     // Update the allocation with the new values
-                    if ((_retVal = dalloc.Write(SensorValues, 0, SensorValues.Length)) != DataStatus.Success) {
+                    if ((_retVal = dRef.Write(SensorValues, 0, SensorValues.Length)) != DATASTORE_RETURN_STATUS.Success) {
                         throw new Exception("Failed to write data allocation during update; return value=" + _retVal);
                     }
                     // Copy the updated values into the Comparison Table
@@ -225,13 +225,12 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
                 else {
                     // New sensor
                     Debug.Print("New sensor");
-                    var dalloc = new DataAllocation(DStore, (uint)SensorValues.Length, typeof(UInt32));
-                    _sensorDataAllocations.Add(sampleId, dalloc);
-                    SensorValues[0] = sampleId;    // Id
+                    var dRef = new DataReference(DStore, SensorValues.Length, REFERENCE_DATA_TYPE.UINT32);
+                    _sensorDataReferences.Add(sampleId, dRef);SensorValues[0] = sampleId;    // Id
                     SensorValues[1] = sampleVal;   // Sum of sample values
                     SensorValues[2] = 1;           // Count of samples
-                    if ((_retVal = dalloc.Write(SensorValues, 0, SensorValues.Length)) != DataStatus.Success) {
-                        throw new Exception("Failed write data allocation during initial creation; return value=" + _retVal);
+                    if ((_retVal = dRef.Write(SensorValues, 0, SensorValues.Length)) != DATASTORE_RETURN_STATUS.Success) {
+                        throw new Exception("Failed write data reference during initial creation; return value=" + _retVal);
                     }
                     // Save the values for later comparison
                     var comparisonValue = new uint[SensorValues.Length];
