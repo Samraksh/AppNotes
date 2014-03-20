@@ -1,0 +1,17 @@
+level_0;
+
+include timers.hkp;
+
+group TESTIND = (Gpio1);
+event(TESTIND) 
+	EventStartTest = (R);
+	EventEndTest = (F); 
+end;
+
+group TIMERTEST = (Gpio2);
+event(TIMERTEST)
+	TimerFired1 = (R);
+	TimerFired2 = (F);
+end;
+
+ 
