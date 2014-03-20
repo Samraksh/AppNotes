@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Controlled Blink</title>
+<style type="text/css">
+.auto-style1 {
+	border-style: solid;
+	border-width: 1px;
+}
+.auto-style2 {
+	text-align: center;
+	background-color: #C0C0C0;
+}
+.auto-style3 {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+<h1>Signal Meter</h1>
+<h2>Key Ideas</h2>
+<ul>
+	<li>
+    Wireless communication.</li>
+	<li>
+    &nbsp;Link metrics.
+</li>
+</ul>
+<h2>Description</h2>
+<p>eMote for ADAPT comes with radio networking capabilities built in. This app 
+note shows you how to listen for radio traffic and determine information about 
+sender, signal strength, etc.</p>
+<h2>Compatability</h2>
+<p class="MsoNormal"><span style="color:#17365D">ADAPT Core Hardware v 1.04</span>, <span style="color:#17365D">eMote release v 1.01<o:p></o:p></span></p>
+<h2>Complexity Level</h2>
+<p>Fairly introductory. There is some complexity with respect to radio setup.</p>
+<h2>Setup</h2>
+<p>You'll need two or more ADAPT platforms, each with a
+<a href="https://samraksh.com/products/small-battery-powered-computers/31-product-pages/product-small-battery-powered-computers/60-emote-now">
+Samraksh Long-Range Radio</a> and a Samraksh Shim Adapter. Connect the Shim 
+Adapter to the ADAPT platform as follows. First, solder a wire to each of the 
+Shim Board solder terminals mentioned in the table below.</p>
+<table cellpadding="2" cellspacing="4" class="auto-style1">
+	<tr>
+		<td class="auto-style2">ADAPT Dev Board Labeling</td>
+		<td class="auto-style2">External Power Source</td>
+		<td class="auto-style2">Shim Adapter Solder Terminals</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">Gnd (on JTAG connector)</td>
+		<td class="auto-style3">Gnd</td>
+		<td class="auto-style3">Gnd</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">Digital Logic: 1.8-2v</td>
+		<td class="auto-style3">VIO</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">Amplified power. <br />
+		Up to 4.5v; higher voltage = more range.<br />
+		750mA max current requirement</td>
+		<td class="auto-style3">VBatt</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">M_GP01</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">M_GP02</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">M_GP03</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">M_GP04</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">M_GP05</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">F_GP01</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">F_GP02</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">F_GP03</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">F_GP04</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="auto-style3">&nbsp;F_GP05</td>
+		<td class="auto-style3">&nbsp;</td>
+		<td class="auto-style3">&nbsp;</td>
+	</tr>
+</table>
+<p>This app note assumes that you're using the ADAPT Dev board which has LEDs 
+associated with several GPIO pins. These are used to give some on-board status 
+information and are optional. See the Controlled Blink app note for information 
+on how to connect LEDs.</p>
+<h2>Running the Program</h2>
+<p>Use the ADAPT eMote User's Guide for details on running programs. </p>
+<p>Compile the program. Deploy it on each ADAPT platform by turn. Setup console 
+monitors, one for each ADAPT platform. Start the program on each platform. You 
+can see output on the monitors.</p>
+<h2>Discussion</h2>
+<p>The basic idea behind this app note is pretty simple. Both motes are running 
+the same program. Each one periodically sends a broadcast message. When it 
+receives a message, it prints information about the sender, signal strength, 
+etc. on the debug log.&nbsp;</p>
+<p>The app note includes a SimpleCsmaRadio class that is used to configure the 
+radio. It specifies the kind of radio (long-range, in this case), the CCA sense 
+time, the transmit power, and a method to call when data is received. In the 
+constructor call from Main, the CCA sense time and transmit power are set to 
+typical values but you can change them if you'd like. The RadioReceive method 
+gets the first message from the first packet and prints the details to the 
+console. </p>
+
+</body>
+
+</html>
