@@ -79,10 +79,10 @@ namespace Samraksh.AppNote.Utility {
         /// <param name="message">Message to be sent, as a byte array</param>
         public void Send(Addresses msgType, byte[] message) {
             var lcd = new EnhancedEmoteLcd();
-            lcd.Display("3333");
+            //lcd.Display("3333");
             _csma.Send((ushort)msgType, message, 0, (ushort)message.Length);
-            Thread.Sleep(100);
-            lcd.Display("4444");
+            //Thread.Sleep(100);
+            //lcd.Display("4444");
         }
 
         /// <summary>

@@ -6,7 +6,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Long-Range Radio|AnyCPU'">
     <DeployTransport>Serial</DeployTransport>
-    <DeployDevice>COM15</DeployDevice>
+    <DeployDevice>COM31</DeployDevice>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'On-Board Radio|AnyCPU'">
     <DeployTransport>Serial</DeployTransport>
