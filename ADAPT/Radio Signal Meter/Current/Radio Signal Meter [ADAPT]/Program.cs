@@ -45,10 +45,6 @@ namespace Samraksh.AppNote.Adapt {
             Debug.Print(Resources.GetString(Resources.StringResources.ProgramName) + ", Version " + currVersion.Major +
                         "." + currVersion.Minor);
 
-            // Alert on the board
-            AdaptLedAlert.Alert(0);
-            Thread.Sleep(4000);
-
             // Set up the radio for CSMA interaction
             //  The first argument specifies the radio
             //  The next two arguments are fairly standard but you're free to try changing them
@@ -56,8 +52,8 @@ namespace Samraksh.AppNote.Adapt {
             try {
                 _csmaRadio = new SimpleCsmaRadio(RadioName.RF231RADIOLR, 140, TxPowerValue.Power_0Point7dBm, RadioReceive);
             }
-            catch {
-                OnBoardAlert("9999");
+            catch (Exception ex) {
+                Debug.Print("Error initializing CSMA radio\n" + ex);
                 Thread.Sleep(Timeout.Infinite);
             }
 
@@ -68,8 +64,8 @@ namespace Samraksh.AppNote.Adapt {
                     _csmaRadio.Send(Addresses.BROADCAST, toSendByte);
                     Thread.Sleep(SendDelay);
                 }
-                catch {
-                    OnBoardAlert("8888");
+                catch (Exception ex) {
+                    Debug.Print("Error sending message\n" + ex);
                     Thread.Sleep(Timeout.Infinite);
                 }
             }
