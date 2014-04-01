@@ -13,8 +13,6 @@ using Samraksh.SPOT.Net;
 using Samraksh.SPOT.Net.Mac;
 using Samraksh.SPOT.Net.Radio;
 
-using Samraksh.AppNote.Utility;
-
 namespace Samraksh.AppNote.Utility {
     /// <summary>
     /// Handle CSMA radio communication

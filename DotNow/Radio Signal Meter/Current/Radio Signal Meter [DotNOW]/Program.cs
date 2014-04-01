@@ -6,6 +6,7 @@
  *      1.0: initial release
  *      1.1: Corrected an issue with reporting on the length of the message
  *      1.2: Added build profiles for on-board and long-range radios
+ *      1.3: *** tbd
  *      
  *  Remarks
  *      Choose "Long Range" or "On Board" solution configuration depending on which radio you're using.
