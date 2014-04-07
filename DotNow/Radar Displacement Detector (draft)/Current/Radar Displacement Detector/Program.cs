@@ -60,7 +60,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             // Initialize radar fields
             SensorData.InitNoise();
-            PhaseUnwrapping.Init();
             CumulativeCuts.Init();
 
             AnalogInput.InitializeADC();
@@ -71,73 +70,104 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Thread.Sleep(Timeout.Infinite);
         }
 
-        public struct Comp {
-            public int I, Q;
+        /// <summary>
+        /// Holds a sample value
+        /// </summary>
+        public struct Sample {
+            /// <summary>I value</summary>
+            public int I;
+            /// <summary>Q value</summary>
+            public int Q;
 
-            public Comp(int p1, int p2) {
-                I = p1;
-                Q = p2;
-            }
+            //public Sample(int p1, int p2) {
+            //    I = p1;
+            //    Q = p2;
+            //}
         }
 
 
         public static class CumulativeCuts {
-            public static Comp PrevSample;
+            private static Sample _prevSample;
+            /// <summary>
+            /// Cumulative cuts
+            /// </summary>
             public static int CumCuts;
 
+            /// <summary>
+            /// Constructor: Initialize previous values
+            /// </summary>
             public static void Init() {
-                PrevSample.I = PrevSample.Q = 0;
+                _prevSample.I = _prevSample.Q = 0;
             }
 
+            /// <summary>
+            /// Reset the cumulative cuts
+            /// </summary>
             public static void Reset() {
                 CumCuts = 0;
             }
 
-            public static void Update(Comp currSample) {
-                if (((PrevSample.I * currSample.Q - currSample.I * PrevSample.Q) < 0) && (currSample.Q > 0) &&
-                    (PrevSample.Q < 0))
+            /// <summary>
+            /// Increment or decrement the cumulative cuts based on previous and current sample (adjusted by mean)
+            /// </summary>
+            //public static void Update(Sample compSample) {
+            public static void Update() {
+                var rotation = _prevSample.I * SensorData.CompSample.Q - SensorData.CompSample.I * _prevSample.Q;
+                if ((rotation < 0 && _prevSample.Q < 0 && SensorData.CompSample.Q > 0))
                     CumCuts += 1;
-                else if (((PrevSample.I * currSample.Q - currSample.I * PrevSample.Q) > 0) && (currSample.Q < 0) &&
-                         (PrevSample.Q > 0))
+                else if (rotation > 0 && _prevSample.Q > 0 && SensorData.CompSample.Q < 0)
                     CumCuts -= 1;
 
-                PrevSample.I = currSample.I;
-                PrevSample.Q = currSample.Q;
+                _prevSample.I = SensorData.CompSample.I;
+                _prevSample.Q = SensorData.CompSample.Q;
             }
         }
 
         public static class SensorData {
-            public static int MeanI = 0;
-            public static int MeanQ = 0;
+            public static Sample Mean = new Sample();
+            //public static int MeanI = 0;
+            //public static int MeanQ = 0;
             public static int SampNum = 0;
-            public static int NoiseSumI = 0;
-            public static int NoiseSumQ = 0;
-            public static ushort[] CurrSample = new ushort[2];
+            public static Sample NoiseSum = new Sample();
+            //public static int NoiseSumI = 0;
+            //public static int NoiseSumQ = 0;
+            public static Sample CurrSample = new Sample();
+            //public static ushort[] CurrSample = new ushort[2];
             public static int TempPhase;
-            public static Comp CompSample = new Comp(0, 0);
+            public static Sample CompSample = new Sample();
 
             public static void InitNoise() {
-                MeanI = MeanQ = SampNum = 0;
-                NoiseSumI = NoiseSumQ = 0;
+                Mean.I = Mean.Q = SampNum = 0;
+                NoiseSum.I = NoiseSum.Q = 0;
             }
         }
 
 
+        /// <summary>
+        /// Define GPIO ports
+        /// </summary>
         public static class MyGpio {
-            public static OutputPort Gpio0 = new OutputPort(Pins.GPIO_J12_PIN1, false);
-            public static OutputPort Gpio1 = new OutputPort(Pins.GPIO_J12_PIN2, false);
-            // Enable the BumbleBee. Set this false to disable.
+            /// <summary>Indicate when sample is processed</summary>
+            public static OutputPort SampleProcessed = new OutputPort(Pins.GPIO_J12_PIN1, false);
+
+            /// <summary>Indicate whether or not event detected</summary>
+            public static OutputPort DetectEvent = new OutputPort(Pins.GPIO_J12_PIN2, false);
+
+            /// <summary>Enable the BumbleBee. Set this false to disable. </summary>
             public static OutputPort EnableBumbleBee = new OutputPort(Pins.GPIO_J11_PIN3, true);
         }
 
+        /// <summary>
+        /// Check if, in the last N seconds, there were M seconds in which events were detected.
+        /// </summary>
+        /// <remarks>Event detection is handled in the calling code.</remarks>
         public static class MofNFilter {
             public static int SnippetIndex, SnippetNum;
             public static int Thresh = 100;
             public static int SnippetMin, SnippetMax;
 
-            private const int M = 2;
-            //private const int M = 1;
-            private const int N = 8;
+            private const int M = (int)Detector.M;
+            private const int N = (int)Detector.N;
 
             private static readonly int[] Buff = new int[M];
             public static int State = 0;
@@ -147,7 +177,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             public static void Init() {
                 SnippetIndex = SnippetNum = 0;
                 State = Prevstate = 0;
-
                 _end = 0;
                 for (_i = 0; _i < M; _i++)
                     Buff[_i] = -N;
@@ -166,7 +195,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             }
         }
 
-        // in the last N seconds, there were M seconds (snippets) in which more than 5 cuts were traversed
+        // In the last N seconds, there were M seconds (snippets) in which more than 5 cuts were traversed
         // 5 cuts = 60 cm ?
 
         // Interrupt handler activated when Timer fires
@@ -195,8 +224,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             //for (var i = 0; i < 10; i++) {
             for (var i = 0; i < (int)Detector.NumberOfSamplesPerInterval; i++) {
-                SensorData.CurrSample[0] = Ibuffer[i];
-                SensorData.CurrSample[1] = Qbuffer[i];
+                SensorData.CurrSample.I = Ibuffer[i];
+                SensorData.CurrSample.Q = Qbuffer[i];
                 ProcessSample();
             }
             //Debug.Print("SampNum: " + SensorData.SampNum);
@@ -205,19 +234,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         private static void ProcessSample() {
             SensorData.SampNum += 1;
 
-            MyGpio.Gpio0.Write(SensorData.SampNum % 2 == 0);
+            MyGpio.SampleProcessed.Write(SensorData.SampNum % 2 == 0);
             Lcd.Display(SensorData.SampNum);
             //Debug.Print("\nSample " + SensorData.SampNum);
 
-            //ADC.getData(SensorData.currSample, 0, 2);
+            //ADC.getData(SensorData.compSample, 0, 2);
 
             const int samplesToWait = (int)Detector.SamplesPerSecond * 10; // Wait for 10 seconds
 
             // for the first DC_EST_SECS * SAMPRATE samples, collect noise data
             //if (SensorData.SampNum < (int)Detector.Samprate * (int)Detector.DcEstSecs) {
             if (SensorData.SampNum < samplesToWait) {
-                SensorData.NoiseSumI += SensorData.CurrSample[0];
-                SensorData.NoiseSumQ += SensorData.CurrSample[1];
+                SensorData.NoiseSum.I += SensorData.CurrSample.I;
+                SensorData.NoiseSum.Q += SensorData.CurrSample.Q;
                 return;
             }
 
@@ -225,8 +254,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             if (SensorData.SampNum == samplesToWait) {
                 //SensorData.MeanI = SensorData.NoiseSumI / ((int)Detector.Samprate * (int)Detector.DcEstSecs);
                 //SensorData.MeanQ = SensorData.NoiseSumQ / ((int)Detector.Samprate * (int)Detector.DcEstSecs);
-                SensorData.MeanI = SensorData.NoiseSumI / samplesToWait;
-                SensorData.MeanQ = SensorData.NoiseSumQ / samplesToWait;
+                SensorData.Mean.I = SensorData.NoiseSum.I / samplesToWait;
+                SensorData.Mean.Q = SensorData.NoiseSum.Q / samplesToWait;
                 Debug.Print("*** Start moving");
             }
 
@@ -235,8 +264,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             //    return;
             //}
 
-            SensorData.CompSample.I = SensorData.CurrSample[0] - SensorData.MeanI;
-            SensorData.CompSample.Q = SensorData.CurrSample[1] - SensorData.MeanQ;
+            SensorData.CompSample.I = SensorData.CurrSample.I - SensorData.Mean.I;
+            SensorData.CompSample.Q = SensorData.CurrSample.Q - SensorData.Mean.Q;
 
             /*
                 SensorData.tempPhase = PhaseUnwrapping.unwrap(SensorData.compSample) / 4096;
@@ -251,18 +280,15 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             if (MofNFilter.SnippetIndex == 0) {
                 CumulativeCuts.Reset();
             }
-            CumulativeCuts.Update(SensorData.CompSample);
+            //CumulativeCuts.Update(SensorData.CompSample);
+            CumulativeCuts.Update();
 
             MofNFilter.SnippetIndex++;
 
-            //Debug.Print(">MofNFilter " + MofNFilter.SnippetIndex + ", " + NumberOfSamplesPerInterval);
-
-            // one snippet
-            //if (MofNFilter.SnippetIndex != (int)Detector.Samprate) {
+            // one snippet = one second
             if (MofNFilter.SnippetIndex != (int)Detector.SamplesPerSecond) {
                 return;
             }
-            //myGPIO.Gpio1.Write(true);
             //if (MofNFilter.snippetMax - MofNFilter.snippetMin >= MofNFilter.Thresh)
             MofNFilter.Update(MofNFilter.SnippetNum, System.Math.Abs(CumulativeCuts.CumCuts) > 5 ? 1 : 0);
 
@@ -271,18 +297,18 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             // new detect event started
             if (MofNFilter.Prevstate == 0 && MofNFilter.State == 1) {
-                MyGpio.Gpio1.Write(true);
+                MyGpio.DetectEvent.Write(true);
                 Debug.Print("\n-------------------------Detect Event started");
                 //MessageHandler.sendStart();
             }
 
                 // current detect event ended
             else if (MofNFilter.State == 0 && MofNFilter.Prevstate == 1) {
-                MyGpio.Gpio1.Write(false);
+                MyGpio.DetectEvent.Write(false);
                 Debug.Print("\n-------------------------Detect Event ended");
                 //MessageHandler.sendStop();
             }
-            //myGPIO.Gpio1.Write(false);
+            //myGPIO.DetectEvent.Write(false);
         }
 
     }

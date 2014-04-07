@@ -19,6 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Radar Displacement Detector.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +31,6 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="Phase Unwrapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -48,6 +48,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>eMote\Dlls\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
     </Reference>
+    <Reference Include="Utility, Version=1.0.5189.20241, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Utility\bin\Debug\Utility.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -55,11 +59,5 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Utility\Utility.csproj">
-      <Project>{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}</Project>
-      <Name>Utility</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
