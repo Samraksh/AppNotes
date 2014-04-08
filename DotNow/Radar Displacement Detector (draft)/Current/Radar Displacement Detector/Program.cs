@@ -76,9 +76,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         /// </summary>
         public static class CumulativeCuts {
             private static Sample _prevSample;
-            /// <summary>
-            /// Cumulative cuts
-            /// </summary>
+            /// <summary>Cumulative cuts</summary>
             public static int CumCuts;
 
             /// <summary>
@@ -98,15 +96,16 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             /// <summary>
             /// Increment or decrement the cumulative cuts based on previous and current sample
             /// </summary>
-            /// <param name="compSample"></param>
-            public static void Update(Sample compSample) {
-                if (((_prevSample.I * compSample.Q - compSample.I * _prevSample.Q) < 0) && (compSample.Q > 0) && (_prevSample.Q < 0))
+            /// <param name="currSample"></param>
+            public static void Update(Sample currSample) {
+                var direction = _prevSample.I * currSample.Q - currSample.I * _prevSample.Q;
+                if (direction < 0 && _prevSample.Q < 0 && currSample.Q > 0)
                     CumCuts += 1;
-                else if (((_prevSample.I * compSample.Q - compSample.I * _prevSample.Q) > 0) && (compSample.Q < 0) && (_prevSample.Q > 0))
+                else if (direction > 0 && _prevSample.Q > 0 && currSample.Q < 0)
                     CumCuts -= 1;
 
-                _prevSample.I = compSample.I;
-                _prevSample.Q = compSample.Q;
+                _prevSample.I = currSample.I;
+                _prevSample.Q = currSample.Q;
             }
         }
 
@@ -196,7 +195,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Lcd.Display(SensorData.SampNum);
             //Debug.Print("\nSample " + SensorData.SampNum);
 
-            //ADC.getData(SensorData.compSample, 0, 2);
+            //ADC.getData(SensorData.currSample, 0, 2);
 
             const int samplesToWait = (int)Detector.SamplesPerSecond * 10; // Wait for 10 seconds
 
@@ -216,7 +215,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             SensorData.CompSample.Q = SensorData.CurrSample.Q - SensorData.Mean.Q;
 
             /*
-                SensorData.tempPhase = PhaseUnwrapping.unwrap(SensorData.compSample) / 4096;
+                SensorData.tempPhase = PhaseUnwrapping.unwrap(SensorData.currSample) / 4096;
                 if (MofNFilter.snippetIndex == 0)
                     MofNFilter.snippetMin = MofNFilter.snippetMax = SensorData.tempPhase;
                 else if (SensorData.tempPhase > MofNFilter.snippetMax)
