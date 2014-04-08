@@ -60,8 +60,14 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Thread.Sleep(Timeout.Infinite);
         }
 
+        /// <summary>
+        /// Hold a sample pair
+        /// </summary>
         public struct Sample {
-            public int I, Q;
+            /// <summary>I value</summary>
+            public int I;
+            /// <summary>Q value</summary>
+            public int Q;
         }
 
 
