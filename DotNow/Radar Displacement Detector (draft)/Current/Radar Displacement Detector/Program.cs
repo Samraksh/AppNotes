@@ -71,6 +71,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         }
 
 
+        /// <summary>
+        /// Calculate cumulative cuts
+        /// </summary>
         public static class CumulativeCuts {
             private static Sample _prevSample;
             /// <summary>
