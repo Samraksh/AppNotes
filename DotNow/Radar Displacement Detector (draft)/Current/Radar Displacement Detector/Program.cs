@@ -16,24 +16,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
     // Detector parameters
     enum Detector {
-        //InterSampTime = 4, // sampling rate in ms
-        //Samprate = 250,
-        //private const uint SamplingIntervalMs = 1000;
-        //private const uint NumberOfSamplesPerInterval = 1000;
         SamplingIntervalMs = 1000,
         NumberOfSamplesPerInterval = 250,
         SamplesPerSecond = NumberOfSamplesPerInterval / (SamplingIntervalMs / 1000),
         M = 2,
         N = 8,
         MaxCumCuts = 5,
-        //Thresh = 100,
-        //DcEstSecs = 10,
-        //StartType = 0,
-        //StopType = 1,
     }
 
-
-
+    /// <summary>
+    /// Radar Displacement Detector
+    ///     Detects displacement (towards or away from the radar)
+    ///     Filters out "back and forth" movement (such as trees blowing in the wind)
+    /// </summary>
     public static class RadarDisplacementDetector {
 
         private static readonly ushort[] Ibuffer = new ushort[(int)Detector.NumberOfSamplesPerInterval];
@@ -41,7 +36,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
         private static readonly EmoteLcdUtil Lcd = new EmoteLcdUtil();
 
-        // Main function - initialize DC estimator, phase estimator, start Timer for sampling and ADC
+        /// <summary>
+        /// Get things started
+        /// </summary>
         public static void Main() {
             // Basic setup
             Debug.EnableGCMessages(false);
