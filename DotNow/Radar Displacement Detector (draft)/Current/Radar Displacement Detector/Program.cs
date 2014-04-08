@@ -21,7 +21,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         SamplesPerSecond = NumberOfSamplesPerInterval / (SamplingIntervalMs / 1000),
         M = 2,
         N = 8,
-        MaxCumCuts = 5,
+        MinCumCuts = 5,
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Thread.Sleep(4000); // Wait a bit to let the user stop moving
 
             // Initialize radar fields
-            SensorData.InitNoise();
+            SampleData.InitNoise();
             CumulativeCuts.Init();
 
             AnalogInput.InitializeADC();
@@ -109,13 +109,24 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             }
         }
 
-        public static class SensorData {
+        /// <summary>
+        /// Sample data
+        /// </summary>
+        public static class SampleData {
+            /// <summary>Sample Counter</summary>
             public static int SampNum = 0;
+            /// <summary>Average value of background noise</summary>
             public static Sample Mean = new Sample();
+            /// <summary>Sum of background noise values</summary>
             public static Sample NoiseSum = new Sample();
+            /// <summary>Current sample</summary>
             public static Sample CurrSample = new Sample();
+            /// <summary>Current sample, adjusted for background noise</summary>
             public static Sample CompSample = new Sample();
 
+            /// <summary>
+            /// Initialize background noise values
+            /// </summary>
             public static void InitNoise() {
                 Mean.I = Mean.Q = SampNum = 0;
                 NoiseSum.I = NoiseSum.Q = 0;
@@ -139,34 +150,49 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         /// <summary>
         /// Check if, in the last N seconds, there were M seconds in which events were detected.
         /// </summary>
+        /// <remarks>
+        /// Buff is a circular buffer of size M. 
+        /// </remarks>
         public static class MofNFilter {
-            public static int SnippetIndex, SnippetNum;
-            public static int Thresh = 100;
-            public static int SnippetMin, SnippetMax;
+            /// <summary>Counts samples to see when a snippet (one second) has been reached</summary>
+            public static int SnippetCntr;
+            /// <summary>Snippet Number. Incremented once per second.</summary>
+            public static int SnippetNum;
 
             private const int M = (int)Detector.M;  // Syntactic sugar
             private const int N = (int)Detector.N;
 
             private static readonly int[] Buff = new int[M];
+            private static int _currentBuffLoc;
+            /// <summary>Current state</summary>
             public static int State = 0;
+            /// <summary>Previous state</summary>
             public static int Prevstate = 0;
-            private static int _i, _end;
 
+            /// <summary>
+            /// Initialize M of N filter
+            /// </summary>
             public static void Init() {
-                SnippetIndex = SnippetNum = 0;
+                SnippetCntr = SnippetNum = 0;
                 State = Prevstate = 0;
-                _end = 0;
-                for (_i = 0; _i < M; _i++)
-                    Buff[_i] = -N;
+                _currentBuffLoc = 0;
+                for (var i = 0; i < M; i++)
+                    Buff[i] = -N;   // Any value less than -N will do
             }
 
-            public static void Update(int index, bool detect) {
+            /// <summary>
+            /// Determine whether we are detecting motion or not
+            /// </summary>
+            /// <param name="snippetNumber">Snippet Number</param>
+            /// <param name="displacement">true iff displacement detection has occurred</param>
+            public static void UpdateDetectionState(int snippetNumber, bool displacement) {
                 Prevstate = State;
-                State = (index - Buff[_end] < N) ? 1 : 0;
+                State = (snippetNumber - Buff[_currentBuffLoc] < N) ? 1 : 0;
 
-                if (detect) {
-                    Buff[_end] = index;
-                    _end = (_end + 1) % M;
+                if (displacement) {
+                    Debug.Print("*d");
+                    Buff[_currentBuffLoc] = snippetNumber;
+                    _currentBuffLoc = (_currentBuffLoc + 1) % M;
                 }
             }
         }
@@ -181,77 +207,65 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         private static void SampleFired(long threshold) {
             Debug.Print("* " + _firing++);
             for (var i = 0; i < (int)Detector.NumberOfSamplesPerInterval; i++) {
-                SensorData.CurrSample.I = Ibuffer[i];
-                SensorData.CurrSample.Q = Qbuffer[i];
+                SampleData.CurrSample.I = Ibuffer[i];
+                SampleData.CurrSample.Q = Qbuffer[i];
                 ProcessSample();
             }
         }
         private static int _firing;
 
         private static void ProcessSample() {
-            SensorData.SampNum += 1;
+            SampleData.SampNum += 1;
 
-            MyGpio.SampleProcessed.Write(SensorData.SampNum % 2 == 0);
-            Lcd.Display(SensorData.SampNum);
-            //Debug.Print("\nSample " + SensorData.SampNum);
+            MyGpio.SampleProcessed.Write(SampleData.SampNum % 2 == 0);
+            Lcd.Display(SampleData.SampNum);
+            //Debug.Print("\nSample " + SampleData.SampNum);
 
-            //ADC.getData(SensorData.currSample, 0, 2);
+            //ADC.getData(SampleData.currSample, 0, 2);
 
             const int samplesToWait = (int)Detector.SamplesPerSecond * 10; // Wait for 10 seconds
 
-            if (SensorData.SampNum < samplesToWait) {
-                SensorData.NoiseSum.I += SensorData.CurrSample.I;
-                SensorData.NoiseSum.Q += SensorData.CurrSample.Q;
+            if (SampleData.SampNum < samplesToWait) {
+                SampleData.NoiseSum.I += SampleData.CurrSample.I;
+                SampleData.NoiseSum.Q += SampleData.CurrSample.Q;
                 return;
             }
 
-            if (SensorData.SampNum == samplesToWait) {
-                SensorData.Mean.I = SensorData.NoiseSum.I / samplesToWait;
-                SensorData.Mean.Q = SensorData.NoiseSum.Q / samplesToWait;
+            if (SampleData.SampNum == samplesToWait) {
+                SampleData.Mean.I = SampleData.NoiseSum.I / samplesToWait;
+                SampleData.Mean.Q = SampleData.NoiseSum.Q / samplesToWait;
                 Debug.Print("*** Start moving");
             }
 
-            SensorData.CompSample.I = SensorData.CurrSample.I - SensorData.Mean.I;
-            SensorData.CompSample.Q = SensorData.CurrSample.Q - SensorData.Mean.Q;
+            SampleData.CompSample.I = SampleData.CurrSample.I - SampleData.Mean.I;
+            SampleData.CompSample.Q = SampleData.CurrSample.Q - SampleData.Mean.Q;
 
-            /*
-                SensorData.tempPhase = PhaseUnwrapping.unwrap(SensorData.currSample) / 4096;
-                if (MofNFilter.snippetIndex == 0)
-                    MofNFilter.snippetMin = MofNFilter.snippetMax = SensorData.tempPhase;
-                else if (SensorData.tempPhase > MofNFilter.snippetMax)
-                    MofNFilter.snippetMax = SensorData.tempPhase;
-                else if (SensorData.tempPhase < MofNFilter.snippetMin)
-                    MofNFilter.snippetMin = SensorData.tempPhase;
-                */
+            CumulativeCuts.Update(SampleData.CompSample);
 
-            CumulativeCuts.Update(SensorData.CompSample);
-
-            MofNFilter.SnippetIndex++;
+            MofNFilter.SnippetCntr++;
 
             // one snippet = one second
-            if (MofNFilter.SnippetIndex != (int)Detector.SamplesPerSecond) {
+            if (MofNFilter.SnippetCntr != (int)Detector.SamplesPerSecond) {
                 return;
             }
-            MofNFilter.Update(MofNFilter.SnippetNum, System.Math.Abs(CumulativeCuts.CumCuts) > (int)Detector.MaxCumCuts);
+            var displacementDetected = System.Math.Abs(CumulativeCuts.CumCuts) > (int)Detector.MinCumCuts;
+            MofNFilter.UpdateDetectionState(MofNFilter.SnippetNum, displacementDetected);
 
             MofNFilter.SnippetNum++;
-            MofNFilter.SnippetIndex = 0;
+            MofNFilter.SnippetCntr = 0;
             CumulativeCuts.Reset();
 
-            // new detect event started
+            // displacement event started
             if (MofNFilter.Prevstate == 0 && MofNFilter.State == 1) {
                 MyGpio.DetectEvent.Write(true);
                 Debug.Print("\n-------------------------Detect Event started");
-                //MessageHandler.sendStart();
             }
 
-                // current detect event ended
+            // displacement event ended
             else if (MofNFilter.State == 0 && MofNFilter.Prevstate == 1) {
                 MyGpio.DetectEvent.Write(false);
                 Debug.Print("\n-------------------------Detect Event ended");
-                //MessageHandler.sendStop();
             }
-            //myGPIO.DetectEvent.Write(false);
         }
 
     }
