@@ -7,23 +7,6 @@ using AnalogInput = Samraksh.SPOT.Hardware.EmoteDotNow.AnalogInput;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
-    //enum Pi {
-    //    Half = 6434,
-    //    Full = 12868,
-    //    Neg = -12868,
-    //    Two = 25736,
-    //}
-
-    // Detector parameters
-    enum Detector {
-        SamplingIntervalMs = 1000,
-        NumberOfSamplesPerInterval = 250,
-        SamplesPerSecond = NumberOfSamplesPerInterval / (SamplingIntervalMs / 1000),
-        M = 2,
-        N = 8,
-        MinCumCuts = 5,
-    }
-
     /// <summary>
     /// Radar Displacement Detector
     ///     Detects displacement (towards or away from the radar)
@@ -53,21 +36,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             CumulativeCuts.Init();
 
             AnalogInput.InitializeADC();
-            AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (int)Detector.NumberOfSamplesPerInterval, (int)Detector.SamplingIntervalMs, SampleFired);
+            AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (int)Detector.NumberOfSamplesPerInterval, (int)Detector.SamplingIntervalMs, AdcBuffer_Callback);
 
             MofNFilter.Init();
 
             Thread.Sleep(Timeout.Infinite);
-        }
-
-        /// <summary>
-        /// Hold a sample pair
-        /// </summary>
-        public struct Sample {
-            /// <summary>I value</summary>
-            public int I;
-            /// <summary>Q value</summary>
-            public int Q;
         }
 
 
@@ -110,73 +83,39 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         }
 
         /// <summary>
-        /// Sample data
-        /// </summary>
-        public static class SampleData {
-            /// <summary>Sample Counter</summary>
-            public static int SampNum = 0;
-            /// <summary>Average value of background noise</summary>
-            public static Sample Mean = new Sample();
-            /// <summary>Sum of background noise values</summary>
-            public static Sample NoiseSum = new Sample();
-            /// <summary>Current sample</summary>
-            public static Sample CurrSample = new Sample();
-            /// <summary>Current sample, adjusted for background noise</summary>
-            public static Sample CompSample = new Sample();
-
-            /// <summary>
-            /// Initialize background noise values
-            /// </summary>
-            public static void InitNoise() {
-                Mean.I = Mean.Q = SampNum = 0;
-                NoiseSum.I = NoiseSum.Q = 0;
-            }
-        }
-
-        /// <summary>
-        /// Define GPIO ports
-        /// </summary>
-        public static class MyGpio {
-            /// <summary>Indicate when sample is processed</summary>
-            public static OutputPort SampleProcessed = new OutputPort(Pins.GPIO_J12_PIN1, false);
-
-            /// <summary>Indicate whether or not event detected</summary>
-            public static OutputPort DetectEvent = new OutputPort(Pins.GPIO_J12_PIN2, false);
-
-            /// <summary>Enable the BumbleBee. Set this false to disable. </summary>
-            public static OutputPort EnableBumbleBee = new OutputPort(Pins.GPIO_J11_PIN3, true);
-        }
-
-        /// <summary>
         /// Check if, in the last N seconds, there were M seconds in which events were detected.
         /// </summary>
         /// <remarks>
         /// Buff is a circular buffer of size M. 
+        ///     It is initialized to values guaranteed to be sufficiently distant in the past so as to not trigger a detection event.
+        /// UpdateDetectionState is called once per snippet (once per second). 
+        ///     It checks to see if the current buffer value is sufficiently recent or not and sets the detection state accordingly.
+        /// If displacement occurred during this snippet, 
+        ///     then the snippet number is saved and the buffer pointer advances.
+        /// When we do a comparison in UpdateDetectionState, the current buffer entry is the oldest snippet where displacement occurred.
+        ///     Since all the other snippets are more recent, it suffices to see if the current one occurred within N snippets.
         /// </remarks>
         public static class MofNFilter {
             /// <summary>Counts samples to see when a snippet (one second) has been reached</summary>
-            public static int SnippetCntr;
+            public static int SnippetCntr = 0;
             /// <summary>Snippet Number. Incremented once per second.</summary>
-            public static int SnippetNum;
+            public static int SnippetNum = 0;
 
             private const int M = (int)Detector.M;  // Syntactic sugar
             private const int N = (int)Detector.N;
 
             private static readonly int[] Buff = new int[M];
-            private static int _currentBuffLoc;
+            private static int _currBuffPtr = 0;
             /// <summary>Current state</summary>
-            public static int State = 0;
+            public static DisplacementState State = DisplacementState.Inactive;
             /// <summary>Previous state</summary>
-            public static int Prevstate = 0;
+            public static DisplacementState Prevstate = DisplacementState.Inactive;
 
             /// <summary>
             /// Initialize M of N filter
             /// </summary>
             public static void Init() {
-                SnippetCntr = SnippetNum = 0;
-                State = Prevstate = 0;
-                _currentBuffLoc = 0;
-                for (var i = 0; i < M; i++)
+                for (var i = 0; i < Buff.Length; i++)
                     Buff[i] = -N;   // Any value less than -N will do
             }
 
@@ -187,24 +126,24 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             /// <param name="displacement">true iff displacement detection has occurred</param>
             public static void UpdateDetectionState(int snippetNumber, bool displacement) {
                 Prevstate = State;
-                State = (snippetNumber - Buff[_currentBuffLoc] < N) ? 1 : 0;
+                // Check if the snippet number occurred sufficiently recently
+                State = (snippetNumber - Buff[_currBuffPtr] < N) ? DisplacementState.Displacing : DisplacementState.Inactive;
 
-                if (displacement) {
-                    Debug.Print("*d");
-                    Buff[_currentBuffLoc] = snippetNumber;
-                    _currentBuffLoc = (_currentBuffLoc + 1) % M;
+                // If displacement occurred, record the current snippet number and advance the current buffer location
+                if (!displacement) {
+                    return;
                 }
+                Debug.Print("*d");
+                Buff[_currBuffPtr] = snippetNumber;
+                _currBuffPtr = (_currBuffPtr + 1) % M;
             }
         }
 
-        // In the last N seconds, there were M seconds (snippets) in which more than 5 cuts were traversed
-        // 5 cuts = 60 cm ?
-
-        // Interrupt handler activated when Timer fires
-        // Read data from ADC
-        // If initial data, estimate DC
-        // Otherwise, unwrap phase and test whether displacement > threshold
-        private static void SampleFired(long threshold) {
+        /// <summary>
+        /// Callback for buffered ADC
+        /// </summary>
+        /// <param name="threshold"></param>
+        private static void AdcBuffer_Callback(long threshold) {
             Debug.Print("* " + _firing++);
             for (var i = 0; i < (int)Detector.NumberOfSamplesPerInterval; i++) {
                 SampleData.CurrSample.I = Ibuffer[i];
@@ -214,56 +153,62 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         }
         private static int _firing;
 
+        /// <summary>
+        /// Process a sample
+        /// </summary>
         private static void ProcessSample() {
-            SampleData.SampNum += 1;
-
-            MyGpio.SampleProcessed.Write(SampleData.SampNum % 2 == 0);
-            Lcd.Display(SampleData.SampNum);
-            //Debug.Print("\nSample " + SampleData.SampNum);
-
-            //ADC.getData(SampleData.currSample, 0, 2);
-
             const int samplesToWait = (int)Detector.SamplesPerSecond * 10; // Wait for 10 seconds
 
+            SampleData.SampNum += 1;
+            GpioPorts.SampleProcessed.Write(SampleData.SampNum % 2 == 0);
+            Lcd.Display(SampleData.SampNum);
+            
+            // Collect background noise data
             if (SampleData.SampNum < samplesToWait) {
                 SampleData.NoiseSum.I += SampleData.CurrSample.I;
                 SampleData.NoiseSum.Q += SampleData.CurrSample.Q;
                 return;
             }
 
+            // Done collecting background noise data: calculate means and let user begin to move
             if (SampleData.SampNum == samplesToWait) {
                 SampleData.Mean.I = SampleData.NoiseSum.I / samplesToWait;
                 SampleData.Mean.Q = SampleData.NoiseSum.Q / samplesToWait;
                 Debug.Print("*** Start moving");
             }
 
+            // Adjust sample data by the noise mean and update cumulative cuts
             SampleData.CompSample.I = SampleData.CurrSample.I - SampleData.Mean.I;
             SampleData.CompSample.Q = SampleData.CurrSample.Q - SampleData.Mean.Q;
-
             CumulativeCuts.Update(SampleData.CompSample);
 
+            // Update snippet counter and see if we've reached a snippet boundary (one second)
             MofNFilter.SnippetCntr++;
-
-            // one snippet = one second
             if (MofNFilter.SnippetCntr != (int)Detector.SamplesPerSecond) {
                 return;
             }
+
+            // We've collected cumulative cut data for a snippet. See if displacement has occurred
+            //  Displacement occurs only if there are more than MinCumCuts in the snippet
             var displacementDetected = System.Math.Abs(CumulativeCuts.CumCuts) > (int)Detector.MinCumCuts;
+            
+            // See if we've had displacement in N of the last M snippets
             MofNFilter.UpdateDetectionState(MofNFilter.SnippetNum, displacementDetected);
 
+            // Reset M of N and cumulative cuts values
             MofNFilter.SnippetNum++;
             MofNFilter.SnippetCntr = 0;
             CumulativeCuts.Reset();
 
-            // displacement event started
-            if (MofNFilter.Prevstate == 0 && MofNFilter.State == 1) {
-                MyGpio.DetectEvent.Write(true);
+            // Displacement event started
+            if (MofNFilter.Prevstate == 0 && MofNFilter.State == DisplacementState.Displacing) {
+                GpioPorts.DetectEvent.Write(true);
                 Debug.Print("\n-------------------------Detect Event started");
             }
 
-            // displacement event ended
-            else if (MofNFilter.State == 0 && MofNFilter.Prevstate == 1) {
-                MyGpio.DetectEvent.Write(false);
+            // Displacement event ended
+            else if (MofNFilter.State == 0 && MofNFilter.Prevstate == DisplacementState.Inactive) {
+                GpioPorts.DetectEvent.Write(false);
                 Debug.Print("\n-------------------------Detect Event ended");
             }
         }
