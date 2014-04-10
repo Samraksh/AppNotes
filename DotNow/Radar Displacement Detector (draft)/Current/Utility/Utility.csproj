@@ -38,8 +38,8 @@
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_SPOT_Hardware">
-      <HintPath>..\Radar Motion Detector\eMote\Dlls\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
+    <Reference Include="Samraksh_eMote_DotNow">
+      <HintPath>..\Radar Displacement Detector\eMote\DLLs\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

@@ -2,8 +2,8 @@ using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.Utility;
-using Samraksh.SPOT.Hardware.EmoteDotNow;
-using AnalogInput = Samraksh.SPOT.Hardware.EmoteDotNow.AnalogInput;
+using Samraksh.eMote.DotNow;
+using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 

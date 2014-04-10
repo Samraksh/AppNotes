@@ -1,4 +1,5 @@
-using Samraksh.SPOT.Hardware.EmoteDotNow;
+using Samraksh.eMote.DotNow;
+
 
 namespace Samraksh.AppNote.Utility {
 
