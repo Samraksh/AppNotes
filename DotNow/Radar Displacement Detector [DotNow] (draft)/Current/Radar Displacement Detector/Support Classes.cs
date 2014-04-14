@@ -7,9 +7,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     /// Displacement detection parameters
     /// </summary>
     enum Detector {
-        SamplingIntervalMs = 1000,
-        NumberOfSamplesPerInterval = 250,
-        SamplesPerSecond = NumberOfSamplesPerInterval / (SamplingIntervalMs / 1000),
+        SamplingIntervalMilliSec = 1000,
+        SamplesPerSecond = 10 ^ 6 / SamplingIntervalMilliSec,
+        BufferSize = 300,
+        //SamplesPerSecond = BufferSize / (SamplingIntervalMilliSec / 1000),
         M = 2,
         N = 8,
         MinCumCuts = 5,
@@ -41,22 +42,22 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     public static class SampleData {
         /// <summary>Sample Counter</summary>
         public static int SampNum = 0;
-        /// <summary>Average value of background noise</summary>
-        public static Sample Mean = new Sample();
-        /// <summary>Sum of background noise values</summary>
-        public static Sample NoiseSum = new Sample();
+        ///// <summary>Average value of background noise</summary>
+        //public static Sample Mean = new Sample();
+        ///// <summary>Sum of background noise values</summary>
+        //public static Sample NoiseSum = new Sample();
         /// <summary>Current sample</summary>
         public static Sample CurrSample = new Sample();
-        /// <summary>Current sample, adjusted for background noise</summary>
-        public static Sample CompSample = new Sample();
+        ///// <summary>Current sample, adjusted for background noise</summary>
+        //public static Sample CompSample = new Sample();
 
-        /// <summary>
-        /// Initialize background noise values
-        /// </summary>
-        public static void InitNoise() {
-            Mean.I = Mean.Q = SampNum = 0;
-            NoiseSum.I = NoiseSum.Q = 0;
-        }
+        ///// <summary>
+        ///// Initialize background noise values
+        ///// </summary>
+        //public static void InitNoise() {
+        //    Mean.I = Mean.Q = SampNum = 0;
+        //    NoiseSum.I = NoiseSum.Q = 0;
+        //}
     }
 
     /// <summary>
