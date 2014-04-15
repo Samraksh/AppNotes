@@ -1,21 +1,9 @@
+using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.eMote;
 using Samraksh.eMote.DotNow;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
-    /// <summary>
-    /// Displacement detection parameters
-    /// </summary>
-    enum Detector {
-        SamplingIntervalMilliSec = 1000,
-        SamplesPerSecond = 10 ^ 6 / SamplingIntervalMilliSec,
-        BufferSize = 300,
-        //SamplesPerSecond = BufferSize / (SamplingIntervalMilliSec / 1000),
-        M = 2,
-        N = 8,
-        MinCumCuts = 5,
-    }
-
     /// <summary>
     /// Displacement detection state values
     /// </summary>
@@ -61,22 +49,28 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     }
 
     /// <summary>
-    /// Keep a running total
+    /// Keep a running total and compute a running average via a circular buffer
     /// </summary>
-    public static class SampleAverage {
+    public static class SampleMean {
         private const int Bits = 8;
-        private static readonly Sample[] SampBuffer = new Sample[2 ^ Bits];
-        private static int _sampBufferPtr = 0;
-        private static Sample _sum = new Sample();
-        private static Sample _retVal = new Sample();
+        private const int BufferSize = 256; // This should be 2^Bits
+        private static readonly Sample[] SampBuffer = new Sample[BufferSize];
+        private static int _sampBufferPtr;
+        private static Sample _sum;
+        private static Sample _retVal;
+
+        /// <summary>
+        /// True iff buffer has been filled (pointer has wrapped)
+        /// </summary>
+        public static bool Filled = false;
 
         /// <summary>
         /// Return the average
         /// </summary>
         public static Sample Average {
             get {
-                _retVal.I = _sum.I << Bits;
-                _retVal.Q = _sum.Q << Bits;
+                _retVal.I = _sum.I >> Bits;
+                _retVal.Q = _sum.Q >> Bits;
                 return _retVal;
             }
         }
@@ -89,15 +83,18 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             // Subtract the values of the sample that's going away
             _sum.I -= SampBuffer[_sampBufferPtr].I;
             _sum.Q -= SampBuffer[_sampBufferPtr].Q;
-            // Add the new sample value
+            // Add the new sample values
             _sum.I += theSample.I;
             _sum.Q += theSample.Q;
             // Move in the new sample
             SampBuffer[_sampBufferPtr] = theSample;
             // Update the pointer
             _sampBufferPtr = (_sampBufferPtr + 1) % SampBuffer.Length;
+            // If the pointer has wrapped around, mark the buffer as filled
+            if (_sampBufferPtr == 0) {
+                Filled = true;
+            }
         }
-        
     }
 
 
