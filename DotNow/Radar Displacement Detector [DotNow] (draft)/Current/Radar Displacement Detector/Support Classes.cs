@@ -8,10 +8,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     /// Displacement detection state values
     /// </summary>
     public enum DisplacementState {
-        /// <summary>Displacement is happening</summary>
-        Displacing,
         /// <summary>No displacement is happening</summary>
-        Inactive,
+        Inactive = 0,
+        /// <summary>Displacement is happening</summary>
+        Displacing = 1,
     }
 
     /// <summary>
@@ -30,7 +30,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     public static class SampleData {
         /// <summary>Sample Counter</summary>
         public static int SampNum = 0;
-        ///// <summary>Average value of background noise</summary>
+        ///// <summary>Mean value of background noise</summary>
         //public static Sample Mean = new Sample();
         ///// <summary>Sum of background noise values</summary>
         //public static Sample NoiseSum = new Sample();
@@ -67,7 +67,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         /// <summary>
         /// Return the average
         /// </summary>
-        public static Sample Average {
+        public static Sample Mean {
             get {
                 _retVal.I = _sum.I >> Bits;
                 _retVal.Q = _sum.Q >> Bits;

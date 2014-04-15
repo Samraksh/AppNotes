@@ -54,13 +54,13 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Lcd.Display("radar");
 
             Thread.Sleep(4000); // Wait a bit before launch
+            Debug.Print("Collecting initial data for mean");
 
             // Initialize radar fields
             //SampleData.InitNoise();
             CumulativeCuts.Init();
 
             AnalogInput.InitializeADC();
-            //AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (int)Detector.BufferSize, (int)Detector.SamplingIntervalMilliSec, AdcBuffer_Callback);
             AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (uint)Ibuffer.Length, (int)Detector.SamplingIntervalMilliSec, AdcBuffer_Callback);
 
             MofNFilter.Init();
@@ -76,7 +76,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         private static void AdcBuffer_Callback(long threshold) {
 
             //Debug.Print((DateTime.Now - _lastCall).Milliseconds + " " + Ibuffer.Length);
-            _lastCall = DateTime.Now;
+            //_lastCall = DateTime.Now;
 
             //Debug.Print("* " + _firing++);
             for (var i = 0; i < (int)Detector.BufferSize; i++) {
@@ -86,7 +86,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             }
         }
         //private static int _firing;
-        private static DateTime _lastCall = new DateTime(2000, 1, 1);
+        //private static DateTime _lastCall = new DateTime(2000, 1, 1);
 
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             //Debug.Print("# "+ SampleData.CurrSample.I + ", " + SampleData.CurrSample.Q);
 
-            // Update averages
+            // Update mean
             SampleMean.AddSample(SampleData.CurrSample);
 
             // If we haven't yet filled the buffer, return
@@ -130,7 +130,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             }
 
             // Get the current mean of the samples
-            var sampleMean = SampleMean.Average;
+            var sampleMean = SampleMean.Mean;
 
             // Adjust current sample by the mean and check for a cut
             Sample compSample;
@@ -157,13 +157,13 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             CumulativeCuts.Reset();
 
             // Displacement event started
-            if (MofNFilter.Prevstate == DisplacementState.Inactive && MofNFilter.State == DisplacementState.Displacing) {
+            if (MofNFilter.Prevstate == DisplacementState.Inactive && MofNFilter.CurrState == DisplacementState.Displacing) {
                 GpioPorts.DetectEvent.Write(true);
                 Debug.Print("\n-------------------------Detect Event started");
             }
 
             // Displacement event ended
-            else if (MofNFilter.State == DisplacementState.Displacing && MofNFilter.Prevstate == DisplacementState.Inactive) {
+            else if (MofNFilter.Prevstate == DisplacementState.Displacing && MofNFilter.CurrState == DisplacementState.Inactive) {
                 GpioPorts.DetectEvent.Write(false);
                 Debug.Print("\n-------------------------Detect Event ended");
             }
@@ -237,16 +237,32 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             private const int N = (int)Detector.N;
 
             private static readonly int[] Buff = new int[M];
-            private static int _currBuffPtr = 0;
+            private static int _currBuffPtr;
             /// <summary>Current state</summary>
-            public static DisplacementState State = DisplacementState.Inactive;
+            public static DisplacementState CurrState {
+                get { return _currState; }
+                set {
+                    _currState = value;
+                    Debug.Print("Curr " + Prevstate + CurrState + value);
+                }
+            }
+            private static DisplacementState _currState = DisplacementState.Inactive;
+
             /// <summary>Previous state</summary>
-            public static DisplacementState Prevstate = DisplacementState.Inactive;
+            public static DisplacementState Prevstate {
+                get { return _prevState; }
+                set {
+                    _prevState = value;
+                    Debug.Print("Prev " + Prevstate + CurrState + value);
+                }
+            }
+            private static DisplacementState _prevState = DisplacementState.Inactive;
 
             /// <summary>
             /// Initialize M of N filter
             /// </summary>
             public static void Init() {
+
                 for (var i = 0; i < Buff.Length; i++)
                     Buff[i] = -N;   // Any value less than -N will do
             }
@@ -258,9 +274,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             /// <param name="displacement">true iff displacement detection has occurred</param>
             public static void UpdateDetectionState(int snippetNumber, bool displacement) {
 
-                Prevstate = State;
+                //if (Prevstate != CurrState) { Debug.Print("States " + Prevstate + CurrState); }
+
+                Prevstate = CurrState;
                 // Check if the snippet number occurred sufficiently recently
-                State = (snippetNumber - Buff[_currBuffPtr] < N) ? DisplacementState.Displacing : DisplacementState.Inactive;
+                CurrState = (snippetNumber - Buff[_currBuffPtr] < N) ? DisplacementState.Displacing : DisplacementState.Inactive;
 
                 // If displacement occurred, record the current snippet number and advance the current buffer location
                 if (!displacement) {
