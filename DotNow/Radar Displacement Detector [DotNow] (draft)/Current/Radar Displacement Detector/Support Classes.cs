@@ -112,6 +112,12 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         public static OutputPort EnableBumbleBee = new OutputPort(Pins.GPIO_J11_PIN3, true);
     }
 
-
+    /// <summary>
+    /// Bool surrogate that can be passed as ref
+    /// </summary>
+    struct IntBool {
+        public const int True = 1;
+        public const int False = 0;
+    }
 
 }

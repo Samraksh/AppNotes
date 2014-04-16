@@ -23,6 +23,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         SamplingIntervalMilliSec = 1000,
         SamplesPerSecond = 1000000 / SamplingIntervalMilliSec,
         BufferSize = 500,
+        CallbackIntervalMs = (BufferSize * 1000) / SamplesPerSecond,
         M = 2,
         N = 8,
         //MinCumCuts = 5,
@@ -69,26 +70,47 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         }
 
 
+        private static int _isCallbackLocked = IntBool.False;
+        private static DateTime _callbackTime;
+        private static int _callbackCtr;
         /// <summary>
         /// Callback for buffered ADC
         /// </summary>
         /// <param name="threshold"></param>
         private static void AdcBuffer_Callback(long threshold) {
 
-            //Debug.Print((DateTime.Now - _lastCall).Milliseconds + " " + Ibuffer.Length);
-            //_lastCall = DateTime.Now;
+            var started = DateTime.Now;
+            Debug.Print("\nStarted  " + started.Minute + ":" + started.Second + "." + started.Millisecond);
 
-            //Debug.Print("* " + _firing++);
+            _callbackTime = DateTime.Now;
+
+            _callbackCtr++;
+
+            Debug.Print("a. blocked " + _isCallbackLocked);
+
+            if (Interlocked.CompareExchange(ref _isCallbackLocked, IntBool.True, IntBool.False) == IntBool.True) {
+                Debug.Print("********************************************************************* Missed a buffer; callback #" + _callbackCtr);
+                return;
+            }
+
+            Debug.Print("b. blocked " + _isCallbackLocked);
+
             for (var i = 0; i < (int)Detector.BufferSize; i++) {
                 SampleData.CurrSample.I = Ibuffer[i];
                 SampleData.CurrSample.Q = Qbuffer[i];
                 ProcessSample();
             }
+
+
+            Debug.Print("Callback #" + _callbackCtr + " " + (DateTime.Now - _callbackTime).Milliseconds + " " + Detector.CallbackIntervalMs);
+
+            var finished = DateTime.Now;
+            Debug.Print("Finished " + finished.Minute + ":" + finished.Second + "." + finished.Millisecond);
+
+            _isCallbackLocked = IntBool.False;
         }
-        //private static int _firing;
-        //private static DateTime _lastCall = new DateTime(2000, 1, 1);
 
-
+        static bool _waitingForMean = true;
         /// <summary>
         /// Process a sample
         /// </summary>
@@ -129,6 +151,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
                 return;
             }
 
+            if (_waitingForMean) {
+                _waitingForMean = false;
+                Debug.Print("Finished with initial mean; now processing data");
+            }
+
             // Get the current mean of the samples
             var sampleMean = SampleMean.Mean;
 
@@ -167,6 +194,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
                 GpioPorts.DetectEvent.Write(false);
                 Debug.Print("\n-------------------------Detect Event ended");
             }
+
         }
 
         /// <summary>
@@ -243,7 +271,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
                 get { return _currState; }
                 set {
                     _currState = value;
-                    Debug.Print("Curr " + Prevstate + CurrState + value);
+                    //Debug.Print("Curr " + Prevstate + CurrState + value);
                 }
             }
             private static DisplacementState _currState = DisplacementState.Inactive;
@@ -253,7 +281,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
                 get { return _prevState; }
                 set {
                     _prevState = value;
-                    Debug.Print("Prev " + Prevstate + CurrState + value);
+                    //Debug.Print("Prev " + Prevstate + CurrState + value);
                 }
             }
             private static DisplacementState _prevState = DisplacementState.Inactive;
