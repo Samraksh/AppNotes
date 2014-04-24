@@ -110,25 +110,16 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         /// <param name="threshold"></param>
         private static void AdcBuffer_Callback(long threshold) {
 
-            _callbackCtr++;
-
-            //Debug.Print("Blocked " + _currentlyProcessingBuffer);
-
             // Check if we're currently processing a buffer. If so, give message and return
-            //  The variable is reset in ProcessSampleBuffer.
+            //  The variable _currentlyProcessingBuffer is reset in ProcessSampleBuffer.
             if (Interlocked.CompareExchange(ref _currentlyProcessingBuffer, IntBool.True, IntBool.False) == IntBool.True) {
-                Debug.Print(
-                    "***************************************************************** Missed a buffer; callback #" + _callbackCtr);
+                Debug.Print("***************************************************************** Missed a buffer; callback #" + (++_callbackCtr));
                 return;
             }
-            //Debug.Print("b. blocked " + _currentlyProcessingBuffer);
 
             // Not currently processing a buffer. Signal processing and return.
             ProcessSampleBufferAutoResetEvent.Set();
         }
-
-
-
 
     }
 }
