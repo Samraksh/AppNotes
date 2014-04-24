@@ -4,6 +4,7 @@ using Samraksh.eMote;
 using Samraksh.eMote.DotNow;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
+    
     /// <summary>
     /// Displacement detection state values
     /// </summary>
@@ -29,73 +30,78 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     /// </summary>
     public static class SampleData {
         /// <summary>Sample Counter</summary>
-        public static int SampNum = 0;
-        ///// <summary>Mean value of background noise</summary>
-        //public static Sample Mean = new Sample();
-        ///// <summary>Sum of background noise values</summary>
-        //public static Sample NoiseSum = new Sample();
+        public static int SampleCounter = 0;
         /// <summary>Current sample</summary>
         public static Sample CurrSample = new Sample();
-        ///// <summary>Current sample, adjusted for background noise</summary>
-        //public static Sample CompSample = new Sample();
-
-        ///// <summary>
-        ///// Initialize background noise values
-        ///// </summary>
-        //public static void InitNoise() {
-        //    Mean.I = Mean.Q = SampNum = 0;
-        //    NoiseSum.I = NoiseSum.Q = 0;
-        //}
+        /// <summary>Sum of samples</summary>
+        public static Sample SampleSum = new Sample();
     }
 
-    /// <summary>
-    /// Keep a running total and compute a running average via a circular buffer
-    /// </summary>
-    public static class SampleMean {
-        private const int Bits = 8;
-        private const int BufferSize = 256; // This should be 2^Bits
-        private static readonly Sample[] SampBuffer = new Sample[BufferSize];
-        private static int _sampBufferPtr;
-        private static Sample _sum;
-        private static Sample _retVal;
+    /////// <summary>
+    /////// Keep a running total and compute a running average via a circular buffer
+    /////// </summary>
+    ////public static class SampleMean {
+    ////    private static int _bits;
+    ////    //private const int BufferSize = (2 << (Bits - 1)); // This should be 2^Bits
+    ////    private static Sample[] _sampBuffer;// = new Sample[BufferSize];
+    ////    private static int _sampBufferPtr;
+    ////    private static Sample _sum;
+    ////    private static Sample _retVal;
 
-        /// <summary>
-        /// True iff buffer has been filled (pointer has wrapped)
-        /// </summary>
-        public static bool Filled = false;
+    ////    /// <summary>
+    ////    /// Get the buffer size
+    ////    /// </summary>
+    ////    public static int BufferSize {
+    ////    get { return _sampBuffer.Length; }
+    ////    }
 
-        /// <summary>
-        /// Return the average
-        /// </summary>
-        public static Sample Mean {
-            get {
-                _retVal.I = _sum.I >> Bits;
-                _retVal.Q = _sum.Q >> Bits;
-                return _retVal;
-            }
-        }
+    ////    /// <summary>
+    ////    /// Initialize the buffer
+    ////    /// </summary>
+    ////    /// <param name="bits">The number of bits. Buffer size = 2 ^ bits</param>
+    ////    public static void Initialize(int bits) {
+    ////        _bits = bits;
+    ////        var bufferSize = (1 << _bits);
+    ////        _sampBuffer = new Sample[bufferSize];
+    ////    }
 
-        /// <summary>
-        /// Add in a new sample
-        /// </summary>
-        /// <param name="theSample">Sample to add in</param>
-        public static void AddSample(Sample theSample) {
-            // Subtract the values of the sample that's going away
-            _sum.I -= SampBuffer[_sampBufferPtr].I;
-            _sum.Q -= SampBuffer[_sampBufferPtr].Q;
-            // Add the new sample values
-            _sum.I += theSample.I;
-            _sum.Q += theSample.Q;
-            // Move in the new sample
-            SampBuffer[_sampBufferPtr] = theSample;
-            // Update the pointer
-            _sampBufferPtr = (_sampBufferPtr + 1) % SampBuffer.Length;
-            // If the pointer has wrapped around, mark the buffer as filled
-            if (_sampBufferPtr == 0) {
-                Filled = true;
-            }
-        }
-    }
+    //    /// <summary>
+    //    /// True iff buffer has been filled (pointer has wrapped)
+    //    /// </summary>
+    //    public static bool Filled = false;
+
+    //    /// <summary>
+    //    /// Return the average
+    //    /// </summary>
+    //    public static Sample Mean {
+    //        get {
+    //            _retVal.I = _sum.I >> _bits;
+    //            _retVal.Q = _sum.Q >> _bits;
+    //            return _retVal;
+    //        }
+    //    }
+
+    //    /// <summary>
+    //    /// Add in a new sample
+    //    /// </summary>
+    //    /// <param name="theSample">Sample to add in</param>
+    //    public static void AddSample(Sample theSample) {
+    //        // Subtract the values of the sample that's going away
+    //        _sum.I -= _sampBuffer[_sampBufferPtr].I;
+    //        _sum.Q -= _sampBuffer[_sampBufferPtr].Q;
+    //        // Add the new sample values
+    //        _sum.I += theSample.I;
+    //        _sum.Q += theSample.Q;
+    //        // Move in the new sample
+    //        _sampBuffer[_sampBufferPtr] = theSample;
+    //        // Update the pointer
+    //        _sampBufferPtr = (_sampBufferPtr + 1) % _sampBuffer.Length;
+    //        // If the pointer has wrapped around, mark the buffer as filled
+    //        if (_sampBufferPtr == 0) {
+    //            Filled = true;
+    //        }
+    //    }
+    //}
 
 
     /// <summary>
