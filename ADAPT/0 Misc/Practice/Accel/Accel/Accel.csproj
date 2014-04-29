@@ -43,7 +43,7 @@
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
     <Reference Include="Samraksh_SPOT_Hardware">
-      <HintPath>eMote\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
+      <HintPath>eMote\Dlls\Samraksh_SPOT_Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

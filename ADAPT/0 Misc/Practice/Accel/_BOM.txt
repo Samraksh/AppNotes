@@ -1,2 +1,2 @@
-"C:\\Samraksh Git\\app-notes\\ADAPT\\0 Misc\\Practice\\Accel\\Accel\\bin\\Debug\\le\\Accel.pe"
-"C:\\Samraksh Git\\app-notes\\ADAPT\\0 Misc\\Practice\\Accel\\Accel\\bin\\Debug\\le\\Samraksh_SPOT_Hardware.pe"
+"C:\\Samraksh Git\\AppNotes\\ADAPT\\0 Misc\\Practice\\Accel\\Accel\\bin\\Debug\\le\\Accel.pe"
+"C:\\Samraksh Git\\AppNotes\\ADAPT\\0 Misc\\Practice\\Accel\\Accel\\bin\\Debug\\le\\Samraksh_SPOT_Hardware.pe"

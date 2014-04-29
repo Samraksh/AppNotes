@@ -10,7 +10,7 @@ using System;
 using System.Threading;
 using System.Collections;
 using Microsoft.SPOT;
-using Samraksh.SPOT.NonVolatileMemory;
+using Samraksh.eMote.NonVolatileMemory;
 
 using Samraksh.AppNote.Utility;
 using Math = System.Math;
