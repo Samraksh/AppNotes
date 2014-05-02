@@ -50,7 +50,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         //            ProcessSample();
         //        }
 
-        //        Debug.Print("Mean: I " + SampleData.SampleSum.I / SampleData.SampleCounter + ", Q " + SampleData.SampleSum.Q / SampleData.SampleCounter);
+        //        Debug.Print("Mean: I " + SampleData.SampleSum.I / SampleData.SampleNumber + ", Q " + SampleData.SampleSum.Q / SampleData.SampleNumber);
 
         //        // Report on time to process buffer
         //        var timeSpan = DateTime.Now - started;
@@ -70,7 +70,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         /// Process a sample
         /// </summary>
         private static void ProcessSample() {
-            SampleData.SampleCounter++;
             SampleData.SampleSum.I += SampleData.CurrSample.I;
             SampleData.SampleSum.Q += SampleData.CurrSample.Q;
 
@@ -78,8 +77,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Sample compSample;
             //compSample.I = SampleData.CurrSample.I - sampleMean.I;
             //compSample.Q = SampleData.CurrSample.Q - sampleMean.Q;
-            compSample.I = SampleData.CurrSample.I - SampleData.SampleSum.I / SampleData.SampleCounter;
-            compSample.Q = SampleData.CurrSample.Q - SampleData.SampleSum.Q / SampleData.SampleCounter;
+            compSample.I = SampleData.CurrSample.I - SampleData.SampleSum.I / SampleData.SampleNumber;
+            compSample.Q = SampleData.CurrSample.Q - SampleData.SampleSum.Q / SampleData.SampleNumber;
             CumulativeCuts.Update(compSample);
 
             // Update snippet counter and see if we've reached a snippet boundary (one second)

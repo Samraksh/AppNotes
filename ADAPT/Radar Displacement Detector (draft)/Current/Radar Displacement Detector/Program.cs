@@ -63,13 +63,25 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             // Set up thread to process the sample
             (new Thread(ProcessSampleThread)).Start();
+            Debug.Print("Started ProcessSample thread");
 
             // Set up ADC sampling
             Adc.Initialize();
+            Debug.Print("Initialized ADC");
 
-            // Start the timer
-            var sampleTimer = new SimpleTimer(TimerCallback, 0, DetectorParameters.CallbackIntervalMs / 1000);
-            sampleTimer.Start();
+            // Testing
+            for (var i = 0; i < 4; i++) {
+                Debug.Print("");
+                Debug.Print("Driver. Sample num before: " + SampleData.SampleNumber);
+                TimerCallback(null);
+                Thread.Sleep(4 * DetectorParameters.SamplingIntervalMilliSec / 1000);
+                Debug.Print("Driver. Sample num after: " + SampleData.SampleNumber);
+            }
+
+            //// Start the timer
+            //var sampleTimer = new SimpleTimer(TimerCallback, 0, DetectorParameters.SamplingIntervalMilliSec / 1000);
+            //sampleTimer.Start();
+            //Debug.Print("Started the timer with interval " + DetectorParameters.SamplingIntervalMilliSec / 1000);
 
             Thread.Sleep(Timeout.Infinite);
         }
@@ -106,7 +118,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             public static int CurrentlyProcessingSample = IntBool.False;
 
             /// <summary>Event synch</summary>
-            public static readonly AutoResetEvent ProcessSampleAutoResetEvent = new AutoResetEvent(false);
+            //public static readonly AutoResetEvent ProcessSampleResetEvent = new AutoResetEvent(false);
+            public static readonly ManualResetEvent ProcessSampleResetEvent = new ManualResetEvent(false);
         }
 
         /// <summary>
@@ -117,12 +130,14 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             // Check if we're currently processing a sample. If so, give message and return
             //  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
             if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
-                Debug.Print("*************************************************** Missed a sample; sample #" + (SampleData.SampleCounter + 1));
+                Debug.Print("*************************************************** Missed a sample; sample # " + (SampleData.SampleNumber + 1));
                 return;
             }
 
             // Not currently processing a sample ... we can proceed
-            ProcessingSynchronization.ProcessSampleAutoResetEvent.Set();
+            Debug.Print("TimerCallback. Process sample");
+
+            ProcessingSynchronization.ProcessSampleResetEvent.Set();
         }
 
         private static DateTime _startTime;
@@ -130,22 +145,44 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         static void ProcessSampleThread() {
             while (true) {
                 // Wait for callback to signal that a sample is ready for processing
-                ProcessingSynchronization.ProcessSampleAutoResetEvent.WaitOne();
+                ProcessingSynchronization.ProcessSampleResetEvent.WaitOne();
+
+                Debug.Print("ProcessSampleThread. Resetting reset event. Currently " + ProcessingSynchronization.ProcessSampleResetEvent.WaitOne(0, false));
+                ProcessingSynchronization.ProcessSampleResetEvent.Reset();
+                Debug.Print("  After reset: " + ProcessingSynchronization.ProcessSampleResetEvent.WaitOne(0, false));
+
+                Debug.Print("ProcessSampleThread. Begin");
 
                 _startTime = DateTime.Now;
 
-                // Set channel to read
-                var adcChannel = SampleData.SampleCounter % 2 == 0 ? AdcChannelI : AdcChannelQ;
+                // Set which channel to read
+                var adcChannel = SampleData.SampleNumber % 2 == 0 ? AdcChannelI : AdcChannelQ;
 
-                // Read the sample, update pointer & update counter
+                // Read the sample
+                Debug.Print("ProcessSampleThread. Preparing to read from ADC channel " + adcChannel);
+
                 Interpolation.Samples[Interpolation.NextSample] = Adc.Read(adcChannel);
+
+                Debug.Print("ProcessSampleThread. Finished reading from ADC. Sample read:  " + Interpolation.Samples[Interpolation.NextSample]);
+
+                // Update interpolation buffer pointer & sample number
                 Interpolation.NextSample = (Interpolation.NextSample + 1) % Interpolation.BufferSize;
-                SampleData.SampleCounter++;
+                SampleData.SampleNumber++;
 
                 // We need 3 samples before we can do interpolation
-                if (SampleData.SampleCounter < Interpolation.MinSamplesToStart) {
-                    return;
+                if (SampleData.SampleNumber < Interpolation.MinSamplesToStart) {
+                    Debug.Print("Initial collection. Sample number: " + SampleData.SampleNumber + ", MinSamplesToStart: " + Interpolation.MinSamplesToStart);
+                    ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
+                    Debug.Print("                          continuing");
+                    Debug.Print("                          continuing");
+                    Debug.Print("                          continuing");
+                    Debug.Print("                          continuing");
+                    Debug.Print("                          continuing");
+                    Debug.Print("                          continuing");
+                    continue;
                 }
+
+                Debug.Print("Now processing sample " + SampleData.SampleNumber);
 
                 // Get the I-Q pair to process
                 //  Pointer is positioned at next sample. We just read (next - 1) value.
@@ -174,9 +211,17 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
                     SampleData.CurrSample.Q = prevInterpolated;
                 }
 
-                var modSampleNumber = SampleData.SampleCounter % 100;
+                // Print trace info
+                var modSampleNumber = SampleData.SampleNumber % 100;
                 if (modSampleNumber == 0) { Debug.Print(""); }
-                if (modSampleNumber >= 0 && modSampleNumber < 10) { Debug.Print(SampleData.SampleCounter + " I:" + SampleData.CurrSample.I + ", Q:" + SampleData.CurrSample.Q); }
+                if (modSampleNumber >= 0 && modSampleNumber < 10) {
+                    var samples = "Interpolation Samples ";
+                    foreach (var theSample in Interpolation.Samples) {
+                        samples += " " + theSample;
+                    }
+                    Debug.Print(samples + ", NextSample:" + Interpolation.NextSample);
+                    Debug.Print(SampleData.SampleNumber + " I:" + SampleData.CurrSample.I + ", Q:" + SampleData.CurrSample.Q);
+                }
 
                 // Process the sample
                 ProcessSample();
@@ -184,10 +229,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
                 // Show processing time statistics
                 var runTime = DateTime.Now - _startTime;
                 _sumSampleProcessingTime += (runTime.Seconds * 1000) + runTime.Milliseconds;
-                if (SampleData.SampleCounter % 10 == 0) {
-                    Debug.Print("Sample Processing Time. Sum:" + _sumSampleProcessingTime + ", # samples:" + SampleData.SampleCounter + ", Mean:" + (_sumSampleProcessingTime / SampleData.SampleCounter));
+                if (SampleData.SampleNumber % 10 == 0) {
+                    Debug.Print("Sample Processing Time. Sum:" + _sumSampleProcessingTime + ", # samples:" + SampleData.SampleNumber + ", Mean:" + (_sumSampleProcessingTime / SampleData.SampleNumber));
                 }
 
+                ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
             }
         }
 

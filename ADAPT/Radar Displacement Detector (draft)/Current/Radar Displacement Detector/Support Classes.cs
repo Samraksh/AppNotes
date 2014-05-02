@@ -27,7 +27,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     /// </summary>
     public static class SampleData {
         /// <summary>Sample Counter</summary>
-        public static int SampleCounter = 0;
+        public static int SampleNumber = 0;
         /// <summary>Current sample</summary>
         public static Sample CurrSample = new Sample();
         /// <summary>Sum of samples</summary>

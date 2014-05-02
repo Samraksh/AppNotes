@@ -1,2 +1,3 @@
-"C:\\Samraksh Git\\app-notes\\ADAPT\\Radar Displacement Detector (draft)\\Current\\Radar Displacement Detector\\bin\\Debug\\le\\Radar Displacement Detection.pe"
-"C:\\Samraksh Git\\app-notes\\ADAPT\\Radar Displacement Detector (draft)\\Current\\Radar Displacement Detector\\bin\\Debug\\le\\Samraksh_SPOT_Hardware.pe"
+"C:\\Samraksh Git\\AppNotes\\ADAPT\\Radar Displacement Detector (draft)\\Current\\Radar Displacement Detector\\bin\\Debug\\le\\Radar Displacement Detector.pe"
+"C:\\Samraksh Git\\AppNotes\\ADAPT\\Radar Displacement Detector (draft)\\Current\\Radar Displacement Detector\\bin\\Debug\\le\\Samraksh_eMote_Adapt.pe"
+"C:\\Samraksh Git\\AppNotes\\ADAPT\\Radar Displacement Detector (draft)\\Current\\Radar Displacement Detector\\bin\\Debug\\le\\Utility.pe"
