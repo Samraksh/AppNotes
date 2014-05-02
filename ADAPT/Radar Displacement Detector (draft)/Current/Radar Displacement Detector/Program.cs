@@ -1,242 +1,195 @@
-// IIIT-A Forest Tracking Program for eMote
-// Author: Sandip Bapat (sandip.bapat@samraksh.com)
+/*--------------------------------------------------------------------
+ * Radar Displacement Detector: app note for the eMote .NOW
+ * (c) 2013 The Samraksh Company
+ * 
+ * Version history
+ *      1.0: initial release
+ *      1.1: Removed check for background noise
+ *      
+---------------------------------------------------------------------*/
 
-// This program reads BumbleBee sensor data using the ADC
-// The program processes the data and detects if there is displacement
-// It signals the start and stop of each Displacement Detect 
-
+using System;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-
 using Samraksh.AppNote.Utility;
-using Samraksh.SPOT.Hardware.EmoteDotNow;
-using AnalogInput = Samraksh.SPOT.Hardware.EmoteDotNow.AnalogInput;
+using AnalogInput = Samraksh.eMote.Adapt.AnalogInput;
 
-enum Pi {
-    Half = 6434,
-    Full = 12868,
-    Neg = -12868,
-    Two = 25736,
-}
-
-// Detector parameters
-enum Detector {
-    InterSampTime = 4, // sampling rate in ms
-    Samprate = 250,
-    M = 2,
-    N = 8,
-    Thresh = 100,
-    DcEstSecs = 10,
-    StartType = 0,
-    StopType = 1,
-}
-
-namespace Samraksh.AppNote.ADAPT.RadarDisplacementDetection {
-    public class PDRTracking {
-        public struct Comp {
-            public int I, Q;
-
-            public Comp(int p1, int p2) {
-                I = p1;
-                Q = p2;
-            }
-        }
+namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
 
-        public static class CumulativeCuts {
-            public static Comp PrevSample;
-            public static int CumCuts;
+    /// <summary>
+    /// Radar Displacement Detector
+    ///     Detects displacement (towards or away from the radar)
+    ///     Filters out "back and forth" movement (such as trees blowing in the wind)
+    /// </summary>
+    public static partial class RadarDisplacementDetector {
 
-            public static void Init() {
-                PrevSample.I = PrevSample.Q = 0;
-            }
+        private const int AdcChannelI = 0;
+        private const int AdcChannelQ = 1;
+        private static readonly AnalogInput Adc = new AnalogInput();
 
-            public static void Reset() {
-                CumCuts = 0;
-            }
-
-            public static void Update(Comp currSample) {
-                if (((PrevSample.I * currSample.Q - currSample.I * PrevSample.Q) < 0) && (currSample.Q > 0) &&
-                    (PrevSample.Q < 0))
-                    CumCuts += 1;
-                else if (((PrevSample.I * currSample.Q - currSample.I * PrevSample.Q) > 0) && (currSample.Q < 0) &&
-                         (PrevSample.Q > 0))
-                    CumCuts -= 1;
-
-                PrevSample.I = currSample.I;
-                PrevSample.Q = currSample.Q;
-            }
-        }
-
-        private const uint SamplingTime = 1000;
-        private const uint NumberOfSamples = 1000;
-        private static readonly ushort[] Ibuffer = new ushort[NumberOfSamples];
-        private static readonly ushort[] Qbuffer = new ushort[NumberOfSamples];
-
-
-        // Main function - initialize DC estimator, phase estimator, start Timer for sampling and ADC
+        /// <summary>
+        /// Get things started
+        /// </summary>
         public static void Main() {
             // Basic setup
             Debug.EnableGCMessages(false);
-            Debug.Print("Radar Motion Detection " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
-            Thread.Sleep(4000);
 
-            // Initialize radar fields
-            SensorData.InitNoise();
-            PhaseUnwrapping.Init();
-            CumulativeCuts.Init();
+            //VersionInfo.Init(Assembly.GetExecutingAssembly());
+            //Debug.Print("Radar Motion Detector [ADAPT] " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
 
-            AnalogInput.InitializeADC();
-            AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, NumberOfSamples, SamplingTime, SampleFired);
+            Debug.Print("Power Level: " + PowerState.CurrentPowerLevel + " (16=High, 32=Med, 48=Low");
+            PowerState.ChangePowerLevel(PowerLevel.High);
 
-            MofNFilter.Init();
+            Debug.Print("Bytes free: " + Debug.GC(true));
 
-            Debug.Print("Starting");
+            Debug.Print("Parameters");
+            Debug.Print("   SamplingIntervalMilliSec " + DetectorParameters.SamplingIntervalMilliSec);
+            Debug.Print("   BufferSize " + DetectorParameters.BufferSize);
+            Debug.Print("   SamplesPerSecond " + DetectorParameters.SamplesPerSecond);
+            Debug.Print("   CallbackIntervalMs " + DetectorParameters.CallbackIntervalMs);
+            Debug.Print("   M " + DetectorParameters.M);
+            Debug.Print("   N " + DetectorParameters.N);
+            Debug.Print("   MinCumCuts " + DetectorParameters.MinCumCuts);
+            Debug.Print("   CutDistCm " + DetectorParameters.CutDistanceCm);
+            Debug.Print("");
+
+            Thread.Sleep(4000); // Wait a bit before launch
+
+            // Initialize detection
+            CumulativeCuts.Initialize();
+            MofNFilter.Initialize();
+
+            // Set up thread to process the sample
+            (new Thread(ProcessSampleThread)).Start();
+
+            // Set up ADC sampling
+            Adc.Initialize();
+
+            // Start the timer
+            var sampleTimer = new SimpleTimer(TimerCallback, 0, DetectorParameters.CallbackIntervalMs / 1000);
+            sampleTimer.Start();
 
             Thread.Sleep(Timeout.Infinite);
         }
 
-        public static class SensorData {
-            public static int MeanI = 0;
-            public static int MeanQ = 0;
-            public static int SampNum = 0;
-            public static int NoiseSumI = 0;
-            public static int NoiseSumQ = 0;
-            public static ushort[] CurrSample = new ushort[2];
-            public static int TempPhase;
-            public static Comp CompSample = new Comp(0, 0);
+        /// <summary>
+        /// Data for sample interpolation
+        /// </summary>
+        public static class Interpolation {
 
-            public static void InitNoise() {
-                MeanI = MeanQ = SampNum = 0;
-                NoiseSumI = NoiseSumQ = 0;
-            }
+            /// <summary>Minimum number of samples before interpolation can start</summary>
+            public const int MinSamplesToStart = 3;
+
+            /// <summary>Size of the buffer</summary>
+            public const int BufferSize = 4;
+            /// <summary>Samples buffer</summary>
+            public static ushort[] Samples = new ushort[BufferSize];
+            /// <summary>Next-sample pointer</summary>
+            public static int NextSample = 0;
+
+            /// <summary>Add this value to NextSample to go back 1</summary>
+            public const int Back1 = BufferSize - 1;
+            /// <summary>Add this value to NextSample to go back 2</summary>
+            public const int Back2 = BufferSize - 2;
+            /// <summary>Add this value to NextSample to go back 3</summary>
+            public const int Back3 = BufferSize - 3;
         }
 
+        /// <summary>
+        /// Synchronization processing between callback thread and sample processing thread
+        /// </summary>
+        public static class ProcessingSynchronization {
 
-        public static class MyGpio {
-            public static OutputPort Gpio0 = new OutputPort(Pins.GPIO_J12_PIN1, false);
-            public static OutputPort Gpio1 = new OutputPort(Pins.GPIO_J12_PIN2, false);
-            // Enable the BumbleBee. Set this false to disable.
-            public static OutputPort EnableBumbleBee = new OutputPort(Pins.GPIO_J11_PIN3, true);
+            /// <summary>True iff currently processing a sample</summary>
+            public static int CurrentlyProcessingSample = IntBool.False;
+
+            /// <summary>Event synch</summary>
+            public static readonly AutoResetEvent ProcessSampleAutoResetEvent = new AutoResetEvent(false);
         }
 
-        public static class MofNFilter {
-            public static int SnippetIndex, SnippetNum;
-            public static int Thresh = 100;
-            public static int SnippetMin, SnippetMax;
+        /// <summary>
+        /// Callback for timer
+        /// </summary>
+        private static void TimerCallback(object state) {
 
-            private const int M = 2;
-            private const int N = 8;
-
-            private static readonly int[] Buff = new int[M];
-            public static int State = 0;
-            public static int Prevstate = 0;
-            private static int _i, _end;
-
-            public static void Init() {
-                SnippetIndex = SnippetNum = 0;
-                State = Prevstate = 0;
-
-                _end = 0;
-                for (_i = 0; _i < M; _i++)
-                    Buff[_i] = -N;
+            // Check if we're currently processing a sample. If so, give message and return
+            //  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
+            if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
+                Debug.Print("*************************************************** Missed a sample; sample #" + (SampleData.SampleCounter + 1));
+                return;
             }
 
-            public static void Update(int index, int detect) {
-                Prevstate = State;
-                State = (index - Buff[_end] < N) ? 1 : 0;
+            // Not currently processing a sample ... we can proceed
+            ProcessingSynchronization.ProcessSampleAutoResetEvent.Set();
+        }
 
-                Debug.Print("    index: " + index + ", Buff[_end]: " + Buff[_end] + ", index - Buff[_end]: " + (index - Buff[_end]) + ", N: " + N + ", (index - Buff[_end] < N):" + (index - Buff[_end] < N) + ", State: " + State);
+        private static DateTime _startTime;
+        private static int _sumSampleProcessingTime = 0;
+        static void ProcessSampleThread() {
+            while (true) {
+                // Wait for callback to signal that a sample is ready for processing
+                ProcessingSynchronization.ProcessSampleAutoResetEvent.WaitOne();
 
-                if (detect == 1) {
-                    Buff[_end] = index;
-                    _end = (_end + 1) % M;
+                _startTime = DateTime.Now;
+
+                // Set channel to read
+                var adcChannel = SampleData.SampleCounter % 2 == 0 ? AdcChannelI : AdcChannelQ;
+
+                // Read the sample, update pointer & update counter
+                Interpolation.Samples[Interpolation.NextSample] = Adc.Read(adcChannel);
+                Interpolation.NextSample = (Interpolation.NextSample + 1) % Interpolation.BufferSize;
+                SampleData.SampleCounter++;
+
+                // We need 3 samples before we can do interpolation
+                if (SampleData.SampleCounter < Interpolation.MinSamplesToStart) {
+                    return;
                 }
-            }
-        }
 
-        // Interrupt handler activated when Timer fires
-        // Read data from ADC
-        // If initial data, estimate DC
-        // Otherwise, unwrap phase and test whether displacement > threshold
-        private static int _firing;
-        private static void SampleFired(long threshold) {
-            Debug.Print("* " + _firing++);
-            for (var i = 0; i < NumberOfSamples; i++) {
-                SensorData.CurrSample[0] = Ibuffer[i];
-                SensorData.CurrSample[1] = Qbuffer[i];
+                // Get the I-Q pair to process
+                //  Pointer is positioned at next sample. We just read (next - 1) value.
+                //  Actual value to be returned is (next - 2) value.
+                //  Interpolated value to be returned is average of (next - 1) and (next - 3) values.
+
+                // Actual is (next - 2) value. For modulo arithmetic, add an offset that takes to 2 positions back.
+                var prevActual = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back2) % Interpolation.BufferSize];
+
+                // Interpolated is average of (next - 1) and (next - 3) values;
+                ushort prevInterpolated;
+                {
+                    var back1 = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back1) % Interpolation.BufferSize];
+                    var back3 = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back3) % Interpolation.BufferSize];
+                    prevInterpolated = (ushort)((back1 + back3) >> 1); // Divide by 2
+                }
+
+                // If we just sampled I value, then return previous interpolated for I and previous actutal for Q
+                if (adcChannel == AdcChannelI) {
+                    SampleData.CurrSample.I = prevInterpolated;
+                    SampleData.CurrSample.Q = prevActual;
+                }
+                // If we just sampled Q value, then return previous interpolated for Q and previous actutal for I
+                else {
+                    SampleData.CurrSample.I = prevActual;
+                    SampleData.CurrSample.Q = prevInterpolated;
+                }
+
+                var modSampleNumber = SampleData.SampleCounter % 100;
+                if (modSampleNumber == 0) { Debug.Print(""); }
+                if (modSampleNumber >= 0 && modSampleNumber < 10) { Debug.Print(SampleData.SampleCounter + " I:" + SampleData.CurrSample.I + ", Q:" + SampleData.CurrSample.Q); }
+
+                // Process the sample
                 ProcessSample();
-            }
-        }
 
-        private static void ProcessSample() {
-            SensorData.SampNum += 1;
-
-            MyGpio.Gpio0.Write(SensorData.SampNum % 2 == 0);
-
-            //ADC.getData(SensorData.currSample, 0, 2);
-
-            // for the first DC_EST_SECS * SAMPRATE samples, collect noise data
-            if (SensorData.SampNum < (int)Detector.Samprate * (int)Detector.DcEstSecs) {
-                SensorData.NoiseSumI += SensorData.CurrSample[0];
-                SensorData.NoiseSumQ += SensorData.CurrSample[1];
-            }
-
-            if (SensorData.SampNum == (int)Detector.Samprate * (int)Detector.DcEstSecs) {
-                SensorData.MeanI = SensorData.NoiseSumI / ((int)Detector.Samprate * (int)Detector.DcEstSecs);
-                SensorData.MeanQ = SensorData.NoiseSumQ / ((int)Detector.Samprate * (int)Detector.DcEstSecs);
-            }
-
-            if (SensorData.SampNum >= (int)Detector.Samprate * (int)Detector.DcEstSecs) {
-                SensorData.CompSample.I = (int)(SensorData.CurrSample[0]) - SensorData.MeanI;
-                SensorData.CompSample.Q = (int)(SensorData.CurrSample[1]) - SensorData.MeanQ;
-
-                /*
-                SensorData.tempPhase = PhaseUnwrapping.unwrap(SensorData.compSample) / 4096;
-                if (MofNFilter.snippetIndex == 0)
-                    MofNFilter.snippetMin = MofNFilter.snippetMax = SensorData.tempPhase;
-                else if (SensorData.tempPhase > MofNFilter.snippetMax)
-                    MofNFilter.snippetMax = SensorData.tempPhase;
-                else if (SensorData.tempPhase < MofNFilter.snippetMin)
-                    MofNFilter.snippetMin = SensorData.tempPhase;
-                */
-
-                if (MofNFilter.SnippetIndex == 0) {
-                    CumulativeCuts.Reset();
-                }
-                CumulativeCuts.Update(SensorData.CompSample);
-
-                MofNFilter.SnippetIndex++;
-
-                // one snippet
-                if (MofNFilter.SnippetIndex == (int)Detector.Samprate) {
-
-                    //myGPIO.Gpio1.Write(true);
-                    //if (MofNFilter.snippetMax - MofNFilter.snippetMin >= MofNFilter.Thresh)
-                    MofNFilter.Update(MofNFilter.SnippetNum, System.Math.Abs(CumulativeCuts.CumCuts) > 5 ? 1 : 0);
-
-                    MofNFilter.SnippetNum++;
-                    MofNFilter.SnippetIndex = 0;
-
-                    // new detect event started
-                    if (MofNFilter.Prevstate == 0 && MofNFilter.State == 1) {
-                        MyGpio.Gpio1.Write(true);
-                        Debug.Print("\nDetect Event started");
-                        //MessageHandler.sendStart();
-                    }
-
-                        // current detect event ended
-                    else if (MofNFilter.State == 0 && MofNFilter.Prevstate == 1) {
-                        MyGpio.Gpio1.Write(false);
-                        Debug.Print("\nDetect Event ended");
-                        //MessageHandler.sendStop();
-                    }
-                    //myGPIO.Gpio1.Write(false);
+                // Show processing time statistics
+                var runTime = DateTime.Now - _startTime;
+                _sumSampleProcessingTime += (runTime.Seconds * 1000) + runTime.Milliseconds;
+                if (SampleData.SampleCounter % 10 == 0) {
+                    Debug.Print("Sample Processing Time. Sum:" + _sumSampleProcessingTime + ", # samples:" + SampleData.SampleCounter + ", Mean:" + (_sumSampleProcessingTime / SampleData.SampleCounter));
                 }
 
             }
-
         }
+
     }
 }

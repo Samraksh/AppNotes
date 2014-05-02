@@ -49,6 +49,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
                 for (var i = 0; i < DetectorParameters.BufferSize; i++) {
                     SampleData.CurrSample.I = Ibuffer[i];
                     SampleData.CurrSample.Q = Qbuffer[i];
+                    SampleData.SampleCounter++;
                     ProcessSample();
                 }
 
@@ -73,7 +74,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         /// </summary>
         private static void ProcessSample() {
 
-            SampleData.SampleCounter++;
             SampleData.SampleSum.I += SampleData.CurrSample.I;
             SampleData.SampleSum.Q += SampleData.CurrSample.Q;
 

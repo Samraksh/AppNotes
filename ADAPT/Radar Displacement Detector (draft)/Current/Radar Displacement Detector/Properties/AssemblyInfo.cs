@@ -3,11 +3,11 @@
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Radar Motion Detection")]
+[assembly: AssemblyTitle("Radar Motion Detector [ADAPT]")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Radar Motion Detection")]
+[assembly: AssemblyProduct("Radar Motion Detector [ADAPT]")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
