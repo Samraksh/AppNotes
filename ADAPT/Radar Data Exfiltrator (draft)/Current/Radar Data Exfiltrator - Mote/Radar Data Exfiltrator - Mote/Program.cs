@@ -15,7 +15,7 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.DotNow.RadarDisplacementDetector;
 using Samraksh.AppNote.Utility;
-//using AnalogInput = Samraksh.eMote.Adapt.AnalogInput;
+using AnalogInput = Samraksh.eMote.Adapt.AnalogInput;
 
 namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
 
@@ -23,10 +23,14 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
     /// Detector parameters
     /// </summary>
     public struct DetectorParameters {
+
         /// <summary>Number of milliseconds between samples</summary>
-        public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
+        //public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
+        public const int SamplingIntervalMilliSec = 20000;    // Larger values => fewer samples/sec
+
         /// <summary>Number of samples per second</summary>
         public const int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;
+
         /// <summary>Number of microseconds between between samples</summary>
         public const int CallbackIntervalMs = SamplingIntervalMilliSec / 1000;
     }
@@ -49,10 +53,11 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
 
         private const int AdcChannelI = 0;
         private const int AdcChannelQ = 1;
-        //private static readonly AnalogInput Adc = new AnalogInput();
+        private static AnalogInput _adc;
 
-        //private static readonly SerialComm Serial = new SerialComm("COM29", SerialCallback);
-        //private static void SerialCallback(byte[] readBytes) { }    // Ignore any input stuff
+        //private static SerialComm _serial;
+        private static SerialPort _serial;
+        private static void SerialCallback(byte[] readBytes) { }    // Ignore any input stuff
 
 
         /// <summary>
@@ -72,30 +77,33 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
 
             Debug.Print("Parameters");
             Debug.Print("   SamplingIntervalMilliSec " + DetectorParameters.SamplingIntervalMilliSec);
-            //Debug.Print("   BufferSize " + DetectorParameters.BufferSize);
             Debug.Print("   SamplesPerSecond " + DetectorParameters.SamplesPerSecond);
             Debug.Print("   CallbackIntervalMs " + DetectorParameters.CallbackIntervalMs);
-            //Debug.Print("   M " + DetectorParameters.M);
-            //Debug.Print("   N " + DetectorParameters.N);
-            //Debug.Print("   MinCumCuts " + DetectorParameters.MinCumCuts);
-            //Debug.Print("   CutDistCm " + DetectorParameters.CutDistanceCm);
             Debug.Print("");
 
             Thread.Sleep(4000); // Wait a bit before launch
-
-            //// Initialize detection
-            //DotNow.RadarDisplacementDetector.RadarDisplacementDetector.CumulativeCuts.Initialize();
-            //DotNow.RadarDisplacementDetector.RadarDisplacementDetector.MofNFilter.Initialize();
 
             //// Set up thread to process the sample
             //(new Thread(ProcessSampleThread)).Start();
             //Debug.Print("Started ProcessSample thread");
 
-            //// Set up ADC sampling
-            //Adc.Initialize();
-            //Debug.Print("Initialized ADC");
+            try {
+                Debug.Print("Setting up the serial port");
+                //_serial = new SerialComm("COM29", SerialCallback);
+                _serial = new SerialPort("COM29") { BaudRate = 115200, Parity = Parity.None, DataBits = 8, StopBits = StopBits.One };
+                Debug.Print("  Opening serial port");
+                _serial.Open();
+                Debug.Print("  Serial port set up");
+            }
+            catch (Exception ex) {
+                Debug.Print("   ### Serial Exception\n" + ex);
+            }
 
-            //Serial.Open();
+            // Set up ADC sampling
+            _adc = new AnalogInput();
+            Debug.Print("Initializing ADC");
+            _adc.Initialize();
+            Debug.Print("  ADC initialized");
 
             //// Testing
             //Debug.Print("Sleep time: " + DetectorParameters.SamplingIntervalMilliSec + " ms");
@@ -107,28 +115,33 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
             //    //Debug.Print("Driver. Sample num after: " + SampleData.SampleNumber);
             //}
 
-            var profile = new Thread(() => {
-                while (true) {
-                    ProfileSync.WaitOne();
-                    if (_sampleCounter == 0) { _startTime = DateTime.Now; }
-                    if (_sampleCounter%ReportInterval != HalfReportInterval) continue;
-                    var time = DateTime.Now - _startTime;
-                    var millisecs = time.Seconds * 1000 + time.Milliseconds;
-                    Debug.Print(_sampleCounter + " T " + millisecs + " M " +
-                                (millisecs / ReportInterval));
-                    _startTime = DateTime.Now;
-                }
-            });
-            profile.Start();
+            //var profile = new Thread(() => {
+            //    while (true) {
+            //        ProfileSync.WaitOne();
+            //        if (_sampleCounter == 0) { _startTime = DateTime.Now; }
+            //        if (_sampleCounter%ReportInterval != HalfReportInterval) continue;
+            //        var time = DateTime.Now - _startTime;
+            //        var millisecs = time.Seconds * 1000 + time.Milliseconds;
+            //        Debug.Print(_sampleCounter + " T " + millisecs + " M " +
+            //                    (millisecs / ReportInterval));
+            //        _startTime = DateTime.Now;
+            //    }
+            //});
+            //profile.Start();
 
             Debug.EnableGCMessages(true);
             // Start the timer
-            //var sampleTimer = new SimpleTimer(TimerCallback, null, 0, DetectorParameters.CallbackIntervalMs);
-            //sampleTimer.Start();
-            var sampleTimer = new Timer(TimerCallback, null, 0, DetectorParameters.CallbackIntervalMs);
+            Debug.Print("Setting up the timer");
+            var sampleTimer = new SimpleTimer(TimerCallback, null, 0, DetectorParameters.CallbackIntervalMs);
+            Debug.Print("  Starting the timer");
+            sampleTimer.Start();
+            //var sampleTimer = new Timer(TimerCallback, null, 0, DetectorParameters.CallbackIntervalMs);
             Debug.Print("Started the timer with interval " + DetectorParameters.CallbackIntervalMs);
 
-            Thread.Sleep(Timeout.Infinite);
+            Thread.Sleep(30 * 1000);
+            //Thread.Sleep(Timeout.Infinite);
+
+            sampleTimer.Stop();
         }
 
         ///// <summary>
@@ -187,35 +200,32 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
             //    Debug.Print(_sampleCounter + " T " + millisecs + " M " + (millisecs / ReportInterval));
             //    _startTime = DateTime.Now;
             //}
-            _sampleCounter++;
 
-            Led1.Write(false);
-            return;
 
-            //// Check if we're currently processing a sample. If so, give message and return
-            ////  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
-            //if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
-            //    Debug.Print("*************************************************** Missed a sample; sample # " + (SampleData.SampleNumber + 1));
-            //    return;
-            //}
+            // Check if we're currently processing a sample. If so, give message and return
+            //  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
+            if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
+                Debug.Print("*************************************************** Missed a sample; sample # " + (SampleData.SampleNumber + 1));
+                return;
+            }
 
-            //// Not currently processing a sample ... we can proceed
-            ////Debug.Print("TimerCallback. Process sample");
+            // Not currently processing a sample ... we can proceed
+            //Debug.Print("TimerCallback. Process sample");
 
-            ////ProcessingSynchronization.ProcessSampleResetEvent.Set();
+            //ProcessingSynchronization.ProcessSampleResetEvent.Set();
 
-            //_startTime = DateTime.Now;
+            _startTime = DateTime.Now;
 
-            //// Set which channel to read
-            //var adcChannel = SampleData.SampleNumber % 2 == 0 ? AdcChannelI : AdcChannelQ;
+            // Set which channel to read
+            var adcChannel = SampleData.SampleNumber % 2 == 0 ? AdcChannelI : AdcChannelQ;
 
-            //// Read the sample
-            ////Debug.Print("ProcessSampleThread. Preparing to read from ADC channel " + adcChannel);
+            // Read the sample
+            Debug.Print("ProcessSampleThread. Reading from ADC channel " + adcChannel);
 
-            //var sample = Adc.Read(adcChannel);
+            var sample = _adc.Read(adcChannel);
 
-            //Debug.Print("#$# " + SampleData.SampleNumber + "," + sample);
-            ////Serial.Write("#$# " + SampleData.SampleNumber + "," + sample);
+            Debug.Print("#$# " + SampleData.SampleNumber + "," + sample);
+            //Serial.Write("#$# " + SampleData.SampleNumber + "," + sample);
 
             //// Show processing time statistics
             //var runTime = DateTime.Now - _startTime;
@@ -224,9 +234,11 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
             //    Debug.Print("Time. Sum:" + _sumSampleProcessingTime + ", # samples:" + SampleData.SampleNumber + ", Mean:" + (_sumSampleProcessingTime / (SampleData.SampleNumber + 1)));
             //}
 
-            //SampleData.SampleNumber++;
+            SampleData.SampleNumber++;
 
-            //ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
+            ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
+
+            Led1.Write(false);
 
         }
 
