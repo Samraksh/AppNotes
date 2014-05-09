@@ -15,7 +15,7 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.DotNow.RadarDisplacementDetector;
 using Samraksh.AppNote.Utility;
-using AnalogInput = Samraksh.eMote.Adapt.AnalogInput;
+//using AnalogInput = Samraksh.eMote.Adapt.AnalogInput;
 
 namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
 
@@ -27,9 +27,10 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
         public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
         /// <summary>Number of samples per second</summary>
         public const int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;
-        /// <summary>Number of microseconds between invocation of buffer processing callback</summary>
-        public const int CallbackIntervalMs = 1000 / SamplesPerSecond;
+        /// <summary>Number of microseconds between between samples</summary>
+        public const int CallbackIntervalMs = SamplingIntervalMilliSec / 1000;
     }
+
 
 
     /// <summary>
@@ -37,10 +38,18 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
     ///     Detects displacement (towards or away from the radar)
     ///     Filters out "back and forth" movement (such as trees blowing in the wind)
     /// </summary>
-    public static partial class RadarDisplacementDetector {
+    public static class RadarDisplacementDetector {
+
+        // Mapping between the GPIO pins stenciled on the ADAPT Dev board and those on the CPU itself
+        //  On the Dev board, GPIO 01-04 are connected to LEDs
+        private enum PinMap { Gpio01 = 58, Gpio02 = 55, Gpio03 = 53, Gpio04 = 52, Gpio05 = 51 };
+
+        private static readonly OutputPort Led1 = new OutputPort((Cpu.Pin)PinMap.Gpio01, false);
+
+
         private const int AdcChannelI = 0;
         private const int AdcChannelQ = 1;
-        private static readonly AnalogInput Adc = new AnalogInput();
+        //private static readonly AnalogInput Adc = new AnalogInput();
 
         //private static readonly SerialComm Serial = new SerialComm("COM29", SerialCallback);
         //private static void SerialCallback(byte[] readBytes) { }    // Ignore any input stuff
@@ -78,29 +87,46 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
             //DotNow.RadarDisplacementDetector.RadarDisplacementDetector.CumulativeCuts.Initialize();
             //DotNow.RadarDisplacementDetector.RadarDisplacementDetector.MofNFilter.Initialize();
 
-            // Set up thread to process the sample
-            (new Thread(ProcessSampleThread)).Start();
-            Debug.Print("Started ProcessSample thread");
+            //// Set up thread to process the sample
+            //(new Thread(ProcessSampleThread)).Start();
+            //Debug.Print("Started ProcessSample thread");
 
-            // Set up ADC sampling
-            Adc.Initialize();
-            Debug.Print("Initialized ADC");
+            //// Set up ADC sampling
+            //Adc.Initialize();
+            //Debug.Print("Initialized ADC");
 
             //Serial.Open();
 
             //// Testing
-            //for (var i = 0; i < 50; i++) {
+            //Debug.Print("Sleep time: " + DetectorParameters.SamplingIntervalMilliSec + " ms");
+            //for (var i = 0; i < 51; i++) {
             //    //Debug.Print("");
             //    //Debug.Print("Driver. Sample num before: " + SampleData.SampleNumber);
             //    TimerCallback(null);
-            //    Thread.Sleep(DetectorParameters.SamplingIntervalMilliSec / 1000);
+            //    Thread.Sleep(DetectorParameters.SamplingIntervalMilliSec);
             //    //Debug.Print("Driver. Sample num after: " + SampleData.SampleNumber);
             //}
 
+            var profile = new Thread(() => {
+                while (true) {
+                    ProfileSync.WaitOne();
+                    if (_sampleCounter == 0) { _startTime = DateTime.Now; }
+                    if (_sampleCounter%ReportInterval != HalfReportInterval) continue;
+                    var time = DateTime.Now - _startTime;
+                    var millisecs = time.Seconds * 1000 + time.Milliseconds;
+                    Debug.Print(_sampleCounter + " T " + millisecs + " M " +
+                                (millisecs / ReportInterval));
+                    _startTime = DateTime.Now;
+                }
+            });
+            profile.Start();
+
+            Debug.EnableGCMessages(true);
             // Start the timer
-            var sampleTimer = new SimpleTimer(TimerCallback, null, 0, DetectorParameters.SamplingIntervalMilliSec / 1000);
-            sampleTimer.Start();
-            Debug.Print("Started the timer with interval " + DetectorParameters.SamplingIntervalMilliSec / 1000);
+            //var sampleTimer = new SimpleTimer(TimerCallback, null, 0, DetectorParameters.CallbackIntervalMs);
+            //sampleTimer.Start();
+            var sampleTimer = new Timer(TimerCallback, null, 0, DetectorParameters.CallbackIntervalMs);
+            Debug.Print("Started the timer with interval " + DetectorParameters.CallbackIntervalMs);
 
             Thread.Sleep(Timeout.Infinite);
         }
@@ -136,131 +162,171 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
             /// <summary>True iff currently processing a sample</summary>
             public static int CurrentlyProcessingSample = IntBool.False;
 
-            /// <summary>Event synch</summary>
-            //public static readonly AutoResetEvent ProcessSampleResetEvent = new AutoResetEvent(false);
-            public static readonly ManualResetEvent ProcessSampleResetEvent = new ManualResetEvent(false);
-        }
-
-        /// <summary>
-        /// Callback for timer
-        /// </summary>
-        private static void TimerCallback(object state)
-        {
-            var now = DateTime.Now;
-            Debug.Print(((now.Second*1000) +  now.Millisecond).ToString());
-
-            // Check if we're currently processing a sample. If so, give message and return
-            //  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
-            if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
-                Debug.Print("*************************************************** Missed a sample; sample # " + (SampleData.SampleNumber + 1));
-                return;
-            }
-
-            // Not currently processing a sample ... we can proceed
-            //Debug.Print("TimerCallback. Process sample");
-
-            ProcessingSynchronization.ProcessSampleResetEvent.Set();
+            ///// <summary>Event synch</summary>
+            ////public static readonly AutoResetEvent ProcessSampleResetEvent = new AutoResetEvent(false);
+            //public static readonly ManualResetEvent ProcessSampleResetEvent = new ManualResetEvent(false);
         }
 
         private static DateTime _startTime;
         private static int _sumSampleProcessingTime = 0;
-        static void ProcessSampleThread() {
-            while (true) {
-                // Wait for callback to signal that a sample is ready for processing
-                ProcessingSynchronization.ProcessSampleResetEvent.WaitOne();
+        private static int _sampleCounter;
+        private const int ReportInterval = 100;
+        private const int HalfReportInterval = ReportInterval / 2;
 
-                //Debug.Print("ProcessSampleThread. Resetting reset event. Currently " + ProcessingSynchronization.ProcessSampleResetEvent.WaitOne(0, false));
-                ProcessingSynchronization.ProcessSampleResetEvent.Reset();
-                //Debug.Print("  After reset: " + ProcessingSynchronization.ProcessSampleResetEvent.WaitOne(0, false));
+        private static readonly AutoResetEvent ProfileSync = new AutoResetEvent(false);
 
-                //Debug.Print("PST.B");
+        /// <summary>
+        /// Callback for timer
+        /// </summary>
+        private static void TimerCallback(object state) {
+            Led1.Write(true);
+            //ProfileSync.Set();
+            //if (_sampleCounter % ReportInterval == HalfReportInterval) {
+            //    var time = DateTime.Now - _startTime;
+            //    var millisecs = time.Seconds * 1000 + time.Milliseconds;
+            //    Debug.Print(_sampleCounter + " T " + millisecs + " M " + (millisecs / ReportInterval));
+            //    _startTime = DateTime.Now;
+            //}
+            _sampleCounter++;
 
-                _startTime = DateTime.Now;
+            Led1.Write(false);
+            return;
 
-                // Set which channel to read
-                var adcChannel = SampleData.SampleNumber % 2 == 0 ? AdcChannelI : AdcChannelQ;
+            //// Check if we're currently processing a sample. If so, give message and return
+            ////  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
+            //if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
+            //    Debug.Print("*************************************************** Missed a sample; sample # " + (SampleData.SampleNumber + 1));
+            //    return;
+            //}
 
-                // Read the sample
-                //Debug.Print("ProcessSampleThread. Preparing to read from ADC channel " + adcChannel);
+            //// Not currently processing a sample ... we can proceed
+            ////Debug.Print("TimerCallback. Process sample");
 
-                var sample = Adc.Read(adcChannel);
+            ////ProcessingSynchronization.ProcessSampleResetEvent.Set();
 
-                Debug.Print("#$# " + SampleData.SampleNumber + "," + sample);
-                //Serial.Write("#$# " + SampleData.SampleNumber + "," + sample);
+            //_startTime = DateTime.Now;
 
-                #region Commented code
-                //Interpolation.Samples[Interpolation.NextSample] = Adc.Read(adcChannel);
+            //// Set which channel to read
+            //var adcChannel = SampleData.SampleNumber % 2 == 0 ? AdcChannelI : AdcChannelQ;
 
-                //Debug.Print("ProcessSampleThread. Finished reading from ADC. Sample read:  " + Interpolation.Samples[Interpolation.NextSample]);
+            //// Read the sample
+            ////Debug.Print("ProcessSampleThread. Preparing to read from ADC channel " + adcChannel);
 
-                //// Update interpolation buffer pointer & sample number
-                //Interpolation.NextSample = (Interpolation.NextSample + 1) % Interpolation.BufferSize;
-                //SampleData.SampleNumber++;
+            //var sample = Adc.Read(adcChannel);
 
-                //// We need 3 samples before we can do interpolation
-                //if (SampleData.SampleNumber < Interpolation.MinSamplesToStart) {
-                //    Debug.Print("Initial collection. Sample number: " + SampleData.SampleNumber + ", MinSamplesToStart: " + Interpolation.MinSamplesToStart);
-                //    ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
-                //    continue;
-                //}
+            //Debug.Print("#$# " + SampleData.SampleNumber + "," + sample);
+            ////Serial.Write("#$# " + SampleData.SampleNumber + "," + sample);
 
-                //Debug.Print("Now processing sample " + SampleData.SampleNumber);
+            //// Show processing time statistics
+            //var runTime = DateTime.Now - _startTime;
+            //_sumSampleProcessingTime += (runTime.Seconds * 1000) + runTime.Milliseconds;
+            //if (SampleData.SampleNumber % 10 == 0) {
+            //    Debug.Print("Time. Sum:" + _sumSampleProcessingTime + ", # samples:" + SampleData.SampleNumber + ", Mean:" + (_sumSampleProcessingTime / (SampleData.SampleNumber + 1)));
+            //}
 
-                //// Get the I-Q pair to process
-                ////  Pointer is positioned at next sample. We just read (next - 1) value.
-                ////  Actual value to be returned is (next - 2) value.
-                ////  Interpolated value to be returned is average of (next - 1) and (next - 3) values.
+            //SampleData.SampleNumber++;
 
-                //// Actual is (next - 2) value. For modulo arithmetic, add an offset that takes to 2 positions back.
-                //var prevActual = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back2) % Interpolation.BufferSize];
+            //ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
 
-                //// Interpolated is average of (next - 1) and (next - 3) values;
-                //ushort prevInterpolated;
-                //{
-                //    var back1 = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back1) % Interpolation.BufferSize];
-                //    var back3 = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back3) % Interpolation.BufferSize];
-                //    prevInterpolated = (ushort)((back1 + back3) >> 1); // Divide by 2
-                //}
-
-                //// If we just sampled I value, then return previous interpolated for I and previous actutal for Q
-                //if (adcChannel == AdcChannelI) {
-                //    SampleData.CurrSample.I = prevInterpolated;
-                //    SampleData.CurrSample.Q = prevActual;
-                //}
-                //// If we just sampled Q value, then return previous interpolated for Q and previous actutal for I
-                //else {
-                //    SampleData.CurrSample.I = prevActual;
-                //    SampleData.CurrSample.Q = prevInterpolated;
-                //}
-
-                //// Print trace info
-                //var modSampleNumber = SampleData.SampleNumber % 100;
-                //if (modSampleNumber == 0) { Debug.Print(""); }
-                //if (modSampleNumber >= 0 && modSampleNumber < 10) {
-                //    var samples = "Interpolation Samples ";
-                //    foreach (var theSample in Interpolation.Samples) {
-                //        samples += " " + theSample;
-                //    }
-                //    Debug.Print(samples + ", NextSample:" + Interpolation.NextSample);
-                //    Debug.Print(SampleData.SampleNumber + " I:" + SampleData.CurrSample.I + ", Q:" + SampleData.CurrSample.Q);
-                //}
-
-                //// Process the sample
-                //ProcessSample();
-                #endregion
-
-                // Show processing time statistics
-                var runTime = DateTime.Now - _startTime;
-                _sumSampleProcessingTime += (runTime.Seconds * 1000) + runTime.Milliseconds;
-                if (SampleData.SampleNumber % 10 == 0) {
-                    Debug.Print("Time. Sum:" + _sumSampleProcessingTime + ", # samples:" + SampleData.SampleNumber + ", Mean:" + (_sumSampleProcessingTime / (SampleData.SampleNumber + 1)));
-                }
-
-                SampleData.SampleNumber++;
-
-                ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
-            }
         }
+
+        //static void ProcessSampleThread() {
+        //    while (true) {
+        //        // Wait for callback to signal that a sample is ready for processing
+        //        ProcessingSynchronization.ProcessSampleResetEvent.WaitOne();
+
+        //        //Debug.Print("ProcessSampleThread. Resetting reset event. Currently " + ProcessingSynchronization.ProcessSampleResetEvent.WaitOne(0, false));
+        //        ProcessingSynchronization.ProcessSampleResetEvent.Reset();
+        //        //Debug.Print("  After reset: " + ProcessingSynchronization.ProcessSampleResetEvent.WaitOne(0, false));
+
+        //        //Debug.Print("PST.B");
+
+        //        _startTime = DateTime.Now;
+
+        //        // Set which channel to read
+        //        var adcChannel = SampleData.SampleNumber % 2 == 0 ? AdcChannelI : AdcChannelQ;
+
+        //        // Read the sample
+        //        //Debug.Print("ProcessSampleThread. Preparing to read from ADC channel " + adcChannel);
+
+        //        var sample = Adc.Read(adcChannel);
+
+        //        Debug.Print("#$# " + SampleData.SampleNumber + "," + sample);
+        //        //Serial.Write("#$# " + SampleData.SampleNumber + "," + sample);
+
+        //        #region Commented code
+        //        //Interpolation.Samples[Interpolation.NextSample] = Adc.Read(adcChannel);
+
+        //        //Debug.Print("ProcessSampleThread. Finished reading from ADC. Sample read:  " + Interpolation.Samples[Interpolation.NextSample]);
+
+        //        //// Update interpolation buffer pointer & sample number
+        //        //Interpolation.NextSample = (Interpolation.NextSample + 1) % Interpolation.BufferSize;
+        //        //SampleData.SampleNumber++;
+
+        //        //// We need 3 samples before we can do interpolation
+        //        //if (SampleData.SampleNumber < Interpolation.MinSamplesToStart) {
+        //        //    Debug.Print("Initial collection. Sample number: " + SampleData.SampleNumber + ", MinSamplesToStart: " + Interpolation.MinSamplesToStart);
+        //        //    ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
+        //        //    continue;
+        //        //}
+
+        //        //Debug.Print("Now processing sample " + SampleData.SampleNumber);
+
+        //        //// Get the I-Q pair to process
+        //        ////  Pointer is positioned at next sample. We just read (next - 1) value.
+        //        ////  Actual value to be returned is (next - 2) value.
+        //        ////  Interpolated value to be returned is average of (next - 1) and (next - 3) values.
+
+        //        //// Actual is (next - 2) value. For modulo arithmetic, add an offset that takes to 2 positions back.
+        //        //var prevActual = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back2) % Interpolation.BufferSize];
+
+        //        //// Interpolated is average of (next - 1) and (next - 3) values;
+        //        //ushort prevInterpolated;
+        //        //{
+        //        //    var back1 = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back1) % Interpolation.BufferSize];
+        //        //    var back3 = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back3) % Interpolation.BufferSize];
+        //        //    prevInterpolated = (ushort)((back1 + back3) >> 1); // Divide by 2
+        //        //}
+
+        //        //// If we just sampled I value, then return previous interpolated for I and previous actutal for Q
+        //        //if (adcChannel == AdcChannelI) {
+        //        //    SampleData.CurrSample.I = prevInterpolated;
+        //        //    SampleData.CurrSample.Q = prevActual;
+        //        //}
+        //        //// If we just sampled Q value, then return previous interpolated for Q and previous actutal for I
+        //        //else {
+        //        //    SampleData.CurrSample.I = prevActual;
+        //        //    SampleData.CurrSample.Q = prevInterpolated;
+        //        //}
+
+        //        //// Print trace info
+        //        //var modSampleNumber = SampleData.SampleNumber % 100;
+        //        //if (modSampleNumber == 0) { Debug.Print(""); }
+        //        //if (modSampleNumber >= 0 && modSampleNumber < 10) {
+        //        //    var samples = "Interpolation Samples ";
+        //        //    foreach (var theSample in Interpolation.Samples) {
+        //        //        samples += " " + theSample;
+        //        //    }
+        //        //    Debug.Print(samples + ", NextSample:" + Interpolation.NextSample);
+        //        //    Debug.Print(SampleData.SampleNumber + " I:" + SampleData.CurrSample.I + ", Q:" + SampleData.CurrSample.Q);
+        //        //}
+
+        //        //// Process the sample
+        //        //ProcessSample();
+        //        #endregion
+
+        //        // Show processing time statistics
+        //        var runTime = DateTime.Now - _startTime;
+        //        _sumSampleProcessingTime += (runTime.Seconds * 1000) + runTime.Milliseconds;
+        //        if (SampleData.SampleNumber % 10 == 0) {
+        //            Debug.Print("Time. Sum:" + _sumSampleProcessingTime + ", # samples:" + SampleData.SampleNumber + ", Mean:" + (_sumSampleProcessingTime / (SampleData.SampleNumber + 1)));
+        //        }
+
+        //        SampleData.SampleNumber++;
+
+        //        ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
+        //    }
+        //}
 
     }
 }
