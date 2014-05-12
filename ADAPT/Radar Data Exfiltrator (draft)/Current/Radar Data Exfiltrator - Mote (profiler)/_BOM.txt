@@ -1,2 +1,0 @@
-"C:\\Samraksh Git\\AppNotes\\ADAPT\\Radar Data Exfiltrator (draft)\\Current\\Radar Data Exfiltrator - Mote\\Radar Data Exfiltrator - Mote\\bin\\Debug\\le\\Radar Data Exfiltrator.pe"
-"C:\\Samraksh Git\\AppNotes\\ADAPT\\Radar Data Exfiltrator (draft)\\Current\\Radar Data Exfiltrator - Mote\\Radar Data Exfiltrator - Mote\\bin\\Debug\\le\\Utility.pe"
