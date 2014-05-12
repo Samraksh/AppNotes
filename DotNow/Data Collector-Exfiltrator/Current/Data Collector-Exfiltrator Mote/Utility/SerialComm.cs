@@ -4,22 +4,23 @@
  * Versions
  *  1.0 Initial Version
  *  1.1 Fix naming, add message on write exception
+ *  1.2 Change to inherited class
 =========================*/
 
 using System;
 using System.IO.Ports;
 using Microsoft.SPOT;
 
-
 namespace Samraksh.AppNote.Utility {
 
     /// <summary>
     /// Sends and receives from a serial port.
     /// </summary>
-    public class SerialComm {
+    public class SerialComm : SerialPort {
 
-        /// <summary>Serial port name</summary>
-        public SerialPort Port { get; private set; }
+        ///// <summary>Serial port name</summary>
+        //public SerialPort Port { get; private set; }
+
         /// <summary>Delegate for read callback</summary>
         /// <param name="readBytes">Bytes read</param>
         public delegate void ReadCallback(byte[] readBytes);
@@ -31,19 +32,26 @@ namespace Samraksh.AppNote.Utility {
         /// </summary>
         /// <param name="serialPortName">Serial port name (e.g., COM1)</param>
         /// <param name="readCallback">Callback method to process incoming data.</param>
-        public SerialComm(string serialPortName, ReadCallback readCallback) {
-            _readCallback = readCallback;
-            // Set up the serial port
-            Port = new SerialPort(serialPortName, 115200, Parity.None, 8, StopBits.One) { Handshake = Handshake.None };
-            Port.DataReceived += PortHandler;
-        }
+        //public SerialComm(string serialPortName, ReadCallback readCallback) {
+        //    _readCallback = readCallback;
+        //    // Set up the serial port
+        //    Port = new SerialPort(serialPortName, 115200, Parity.None, 8, StopBits.One) { Handshake = Handshake.None };
+        //    Port.DataReceived += PortHandler;
+        //}
 
-        /// <summary>
-        /// Open the port
-        /// </summary>
-        public void Open() {
-            Port.Open();
+        public SerialComm(string serialPortName, ReadCallback readCallback) 
+            : base(serialPortName, 115200, Parity.None,8,StopBits.One)
+        {
+            _readCallback = readCallback;
+            DataReceived += PortHandler;
         }
+        
+        ///// <summary>
+        ///// Open the port
+        ///// </summary>
+        //public void Open() {
+        //    Port.Open();
+        //}
 
         /// <summary>
         /// Write a string to the port
@@ -54,8 +62,8 @@ namespace Samraksh.AppNote.Utility {
         public bool Write(string str) {
             try {
                 var bytes = System.Text.Encoding.UTF8.GetBytes(str);
-                Port.Write(bytes, 0, bytes.Length);
-                Port.Flush();
+                Write(bytes, 0, bytes.Length);
+                Flush();
                 return true;
             }
             catch (Exception ex) {
@@ -71,9 +79,8 @@ namespace Samraksh.AppNote.Utility {
         /// <param name="sender">The sender</param>
         /// <param name="e">The event args</param>
         private void PortHandler(object sender, SerialDataReceivedEventArgs e) {
-            var numBytes = Port.BytesToRead;
-            var recvBuffer = new byte[numBytes];
-            Port.Read(recvBuffer, 0, numBytes);
+            var recvBuffer = new byte[BytesToRead];
+            Read(recvBuffer, 0, BytesToRead);
             _readCallback(recvBuffer);
         }
     }

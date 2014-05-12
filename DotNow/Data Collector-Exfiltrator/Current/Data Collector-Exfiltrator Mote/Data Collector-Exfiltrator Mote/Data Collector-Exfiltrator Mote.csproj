@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>Exfiltrator</AssemblyName>
+    <AssemblyName>Data Collector-Exfiltrator Mote</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SerialOnOffSwitch</RootNamespace>
+    <RootNamespace>Samraksh.AppNote.DotNow.DataCollectorExfiltrator</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -37,6 +37,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Switch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Graphics" />
@@ -56,6 +57,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Globals\Globals.csproj">
+      <Project>{DAE45299-CE12-4974-8589-07859AA38D81}</Project>
+      <Name>Globals</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{E45CDE8C-68FE-458A-A845-F262AAED87D6}</Project>
       <Name>Utility</Name>
