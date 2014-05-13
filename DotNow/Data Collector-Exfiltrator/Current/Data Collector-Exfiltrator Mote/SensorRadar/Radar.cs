@@ -1,4 +1,4 @@
-﻿namespace Samraksh.AppNote.DotNow.DataCollectorExfiltratorX {
-    public static class Sensorx {
+﻿namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
+    public static class Sensor {
     }
 }
