@@ -27,22 +27,25 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
         /// <summary>
         /// Initialize things and start the threads to handle switch and serial I/O
         /// </summary>
-        public static void Main() {
-            GlobalValues.Lcd.Initialize();
+        public static void Main()
+        {
+            Sensor.Initialize();
+
+            Global.Lcd.Initialize();
             // Flash a hello message for a second, to  let us know the program is starting
-            GlobalValues.Lcd.Display("Hola");
+            Global.Lcd.Display("Hola");
             Thread.Sleep(1000);
-            GlobalValues.Lcd.Display("");
+            Global.Lcd.Display("");
 
             // Set up serial comm. 
             //  This specifies the comm port to use and a callback method to process data received from the PC
             try {
-                GlobalValues._serialComm = new SerialComm(CommPort, SerialCallback);
-                GlobalValues._serialComm.Open();
+                Global._serialComm = new SerialComm(CommPort, SerialCallback);
+                Global._serialComm.Open();
             }
             // If can't open the port, display error on LCD
             catch {
-                GlobalValues.Lcd.Display("err");
+                Global.Lcd.Display("err");
             }
 
             // Sleep forever
@@ -58,22 +61,22 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
             var readChars = System.Text.Encoding.UTF8.GetChars(readBytes);   // Decode the input bytes as char using UTF8
             // If 1, note that PC wants to get sensed data
             if (readChars[0] == '1') {
-                GlobalValues._sendSensedData = true;
-                Switch.SerialLcd.InputValue('a');
-                GlobalValues._serialComm.Write("-- Switch enabled\n");  // Let the PC know we got it
+                Global._sendSensedData = true;
+                Global.SerialLcd.InputValue('a');
+                Global._serialComm.Write("-- Switch enabled\n");  // Let the PC know we got it
                 return;
             }
             // If 0, note that PC does not want to get sensed data
             if (readChars[0] == '0') {
-                GlobalValues._sendSensedData = false;
-                Switch.SerialLcd.InputValue('b');
-                GlobalValues._serialComm.Write("-- Switch disabled\n"); // Let the PC know we got it
+                Global._sendSensedData = false;
+                Global.SerialLcd.InputValue('b');
+                Global._serialComm.Write("-- Switch disabled\n"); // Let the PC know we got it
                 return;
             }
             // If neither one, use LCD to display data received, one char at a time
             var readStr = readChars.ToString();
             for (var i = 0; i < readStr.Length; i++) {
-                Switch.SerialLcd.InputValue(readStr[i]);
+                Global.SerialLcd.InputValue(readStr[i]);
                 Thread.Sleep(1000);
             }
         }

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>SamrakshAppnoteUtility</AssemblyName>
+    <AssemblyName>Sensor</AssemblyName>
     <OutputType>Library</OutputType>
-    <RootNamespace>Samraksh.Appnote.Utility</RootNamespace>
+    <RootNamespace>Samraksh.AppNote.DotNow.DataCollectorExfiltrator</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E45CDE8C-68FE-458A-A845-F262AAED87D6}</ProjectGuid>
+    <ProjectGuid>{EEC2350E-334E-4AB7-983D-177CA74C5D88}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
   </PropertyGroup>
@@ -30,7 +30,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'On-Off Switch Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\On-Off Switch Debug\</OutputPath>
+    <OutputPath>..\Sensor\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE,MF_FRAMEWORK_VERSION_V4_3</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <DebugType>full</DebugType>
@@ -41,11 +41,8 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="DebounceTimer.cs" />
-    <Compile Include="EnhancedLcd.cs" />
-    <Compile Include="InputSwitch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SerialComm.cs" />
+    <Compile Include="On-Off Switch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
@@ -55,5 +52,15 @@
     <Reference Include="Samraksh_eMote_DotNow">
       <HintPath>..\Data Collector-Exfiltrator Mote\eMote\Dlls\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Globals\Globals.csproj">
+      <Project>{DAE45299-CE12-4974-8589-07859AA38D81}</Project>
+      <Name>Globals</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{E45CDE8C-68FE-458A-A845-F262AAED87D6}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
