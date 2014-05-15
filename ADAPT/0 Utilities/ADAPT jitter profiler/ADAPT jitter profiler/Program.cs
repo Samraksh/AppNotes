@@ -10,11 +10,12 @@
 
 //#define Empty
 //#define ProfileThread
-//#define InlineProfiling
-#define CodeSerialPort
+#define InlineProfiling
+//#define CodeSerialPort
 //#define Adc
 //#define AdcInterpolate
 //#define Displacement
+//#define Sleep
 
 using System;
 using System.IO.Ports;
@@ -37,7 +38,6 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
         /// <summary>Number of microseconds between between samples</summary>
         public const int CallbackIntervalMs = SamplingIntervalMilliSec / 1000;
     }
-
 
 
 
@@ -146,7 +146,6 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
             const string theProfile = "*** Profile thread ***";
             Debug.Print(theProfile);
 #endif
-
 #if InlineProfiling
             const string theProfile = "*** Inline profiling ***";
             Debug.Print(theProfile);
@@ -192,6 +191,10 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
             CumulativeCuts.Initialize();
 
             Debug.Print("Starting");
+#endif
+#if Sleep
+            const string theProfile = "*** Sleep ***";
+            Debug.Print(theProfile);
 #endif
 
             var checkIfTheProfileStringExists = theProfile;
@@ -354,6 +357,14 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
                 Led1.Write(false);
             }
 #endif
+#if Sleep
+            Led1.Write(true);
+
+            Thread.Sleep(1);
+
+            Led1.Write(false);
+#endif
+
         }
     }
 }

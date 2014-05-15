@@ -7,53 +7,32 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Globals", "Globals\Globals.csproj", "{DAE45299-CE12-4974-8589-07859AA38D81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorOn-OffSwitch", "SensorOn-OffSwitch\SensorOn-OffSwitch.csproj", "{EEC2350E-334E-4AB7-983D-177CA74C5D88}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorRadar", "SensorRadar\SensorRadar.csproj", "{4ABAE6FD-4246-4373-BF2C-E763DA997911}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensor", "Sensor\Sensor.csproj", "{53B645EE-00EE-4DD1-8488-D573B82459F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		On-Off Switch Debug|Any CPU = On-Off Switch Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Radar|Any CPU = Radar|Any CPU
+		Switch|Any CPU = Switch|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.On-Off Switch Debug|Any CPU.ActiveCfg = On-Off Switch Debug|Any CPU
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.On-Off Switch Debug|Any CPU.Build.0 = On-Off Switch Debug|Any CPU
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.On-Off Switch Debug|Any CPU.Deploy.0 = On-Off Switch Debug|Any CPU
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.On-Off Switch Debug|Any CPU.ActiveCfg = On-Off Switch Debug|Any CPU
-		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.On-Off Switch Debug|Any CPU.Build.0 = On-Off Switch Debug|Any CPU
-		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.On-Off Switch Debug|Any CPU.Deploy.0 = On-Off Switch Debug|Any CPU
-		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAE45299-CE12-4974-8589-07859AA38D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAE45299-CE12-4974-8589-07859AA38D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAE45299-CE12-4974-8589-07859AA38D81}.On-Off Switch Debug|Any CPU.ActiveCfg = On-Off Switch Debug|Any CPU
-		{DAE45299-CE12-4974-8589-07859AA38D81}.On-Off Switch Debug|Any CPU.Build.0 = On-Off Switch Debug|Any CPU
-		{DAE45299-CE12-4974-8589-07859AA38D81}.On-Off Switch Debug|Any CPU.Deploy.0 = On-Off Switch Debug|Any CPU
-		{DAE45299-CE12-4974-8589-07859AA38D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAE45299-CE12-4974-8589-07859AA38D81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEC2350E-334E-4AB7-983D-177CA74C5D88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEC2350E-334E-4AB7-983D-177CA74C5D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEC2350E-334E-4AB7-983D-177CA74C5D88}.On-Off Switch Debug|Any CPU.ActiveCfg = On-Off Switch Debug|Any CPU
-		{EEC2350E-334E-4AB7-983D-177CA74C5D88}.On-Off Switch Debug|Any CPU.Build.0 = On-Off Switch Debug|Any CPU
-		{EEC2350E-334E-4AB7-983D-177CA74C5D88}.On-Off Switch Debug|Any CPU.Deploy.0 = On-Off Switch Debug|Any CPU
-		{EEC2350E-334E-4AB7-983D-177CA74C5D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEC2350E-334E-4AB7-983D-177CA74C5D88}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4ABAE6FD-4246-4373-BF2C-E763DA997911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4ABAE6FD-4246-4373-BF2C-E763DA997911}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4ABAE6FD-4246-4373-BF2C-E763DA997911}.On-Off Switch Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4ABAE6FD-4246-4373-BF2C-E763DA997911}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4ABAE6FD-4246-4373-BF2C-E763DA997911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Radar|Any CPU.ActiveCfg = Radar|Any CPU
+		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Radar|Any CPU.Build.0 = Radar|Any CPU
+		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Radar|Any CPU.Deploy.0 = Radar|Any CPU
+		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Switch|Any CPU.ActiveCfg = Switch|Any CPU
+		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Switch|Any CPU.Build.0 = Switch|Any CPU
+		{5A7090F1-EDDC-439A-A6A5-456FFDDB0AB7}.Switch|Any CPU.Deploy.0 = Switch|Any CPU
+		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Radar|Any CPU.ActiveCfg = Radar|Any CPU
+		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Radar|Any CPU.Build.0 = Radar|Any CPU
+		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Switch|Any CPU.ActiveCfg = Switch|Any CPU
+		{E45CDE8C-68FE-458A-A845-F262AAED87D6}.Switch|Any CPU.Build.0 = Switch|Any CPU
+		{DAE45299-CE12-4974-8589-07859AA38D81}.Radar|Any CPU.ActiveCfg = Radar|Any CPU
+		{DAE45299-CE12-4974-8589-07859AA38D81}.Radar|Any CPU.Build.0 = Radar|Any CPU
+		{DAE45299-CE12-4974-8589-07859AA38D81}.Switch|Any CPU.ActiveCfg = Switch|Any CPU
+		{DAE45299-CE12-4974-8589-07859AA38D81}.Switch|Any CPU.Build.0 = Switch|Any CPU
+		{53B645EE-00EE-4DD1-8488-D573B82459F7}.Radar|Any CPU.ActiveCfg = Radar|Any CPU
+		{53B645EE-00EE-4DD1-8488-D573B82459F7}.Radar|Any CPU.Build.0 = Radar|Any CPU
+		{53B645EE-00EE-4DD1-8488-D573B82459F7}.Switch|Any CPU.ActiveCfg = Switch|Any CPU
+		{53B645EE-00EE-4DD1-8488-D573B82459F7}.Switch|Any CPU.Build.0 = Switch|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
