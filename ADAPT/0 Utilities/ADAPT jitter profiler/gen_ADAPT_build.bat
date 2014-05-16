@@ -35,10 +35,10 @@ if errorlevel 1 (
 	exit /b
 )
 
-if exist _BOM.txt (del /s _BOM.txt > nul)
-if exist _BOM_out (del /s _BOM_out > nul)
-if exist _BOM2.txt (del /s _BOM2.txt > nul) 
-if exist _Build.dat (del /s _Build.dat > nul) 
+rem if exist _BOM.txt (del /s _BOM.txt > nul)
+rem if exist _BOM_out (del /s _BOM_out > nul)
+rem if exist _BOM2.txt (del /s _BOM2.txt > nul) 
+rem if exist _Build.dat (del /s _Build.dat > nul) 
 
 rem dir
 echo.

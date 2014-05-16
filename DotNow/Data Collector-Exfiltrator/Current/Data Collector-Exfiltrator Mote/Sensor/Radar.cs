@@ -21,7 +21,7 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Sensors {
             public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
 
             /// <summary>Number of samples to collect before presenting for processing</summary>
-            public const int BufferSize = 500;
+            public const int BufferSize = 300;
             
             /// <summary>Number of samples per second</summary>
             public const int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;

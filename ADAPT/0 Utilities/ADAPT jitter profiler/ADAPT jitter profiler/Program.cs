@@ -8,9 +8,9 @@
  *      
 ---------------------------------------------------------------------*/
 
-//#define Empty
+#define Empty
 //#define ProfileThread
-#define InlineProfiling
+//#define InlineProfiling
 //#define CodeSerialPort
 //#define Adc
 //#define AdcInterpolate
@@ -31,8 +31,8 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
     /// </summary>
     public struct SamplingParameters {
         /// <summary>Number of milliseconds between samples</summary>
-        //public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
-        public const int SamplingIntervalMilliSec = 50000;    // Larger values => fewer samples/sec
+        public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
+        //public const int SamplingIntervalMilliSec = 50000;    // Larger values => fewer samples/sec
         /// <summary>Number of samples per second</summary>
         public const int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;
         /// <summary>Number of microseconds between between samples</summary>

@@ -8,6 +8,7 @@
  *  1.2: Rename to "Data Collector-Exfiltrator". Allow building for either input switch or radar.
 ---------------------------------------------------------------------*/
 
+using System;
 using System.Threading;
 
 using Microsoft.SPOT;
@@ -57,8 +58,15 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
         /// </summary>
         /// <param name="readBytes">Data received</param>
         private static void SerialCallback(byte[] readBytes) {
-            var readChars = System.Text.Encoding.UTF8.GetChars(readBytes);   // Decode the input bytes as char using UTF8
+            var byteString = string.Empty;
+            foreach (var theByte in readBytes) { byteString = byteString + theByte + " "; }
+            Debug.Print("\n** 1 readBytes.Length=" + readBytes.Length + "[" + byteString + "]\n");
+            if (readBytes.Length == 0) { return; }
+
+            var readChars = System.Text.Encoding.UTF8.GetChars(readBytes);
+            // Decode the input bytes as char using UTF8
             // If 1, note that PC wants to get sensed data
+            Debug.Print("\n** 2\n");
             if (readChars[0] == '1') {
                 Global.SendSensedData = true;
                 //Global.SerialLcd.InputValue('a');
@@ -66,12 +74,15 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
                 return;
             }
             // If 0, note that PC does not want to get sensed data
+            Debug.Print("\n** 3\n");
             if (readChars[0] == '0') {
                 Global.SendSensedData = false;
                 //Global.SerialLcd.InputValue('b');
                 Global.Serial.Write("-- Switch disabled\n"); // Let the PC know we got it
                 return;
             }
+            Debug.Print("\n** 4\n");
+
             //// If neither one, use LCD to display data received, one char at a time
             //var readStr = readChars.ToString();
             //for (var i = 0; i < readStr.Length; i++) {
