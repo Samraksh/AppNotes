@@ -27,7 +27,7 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
         //private bool _serialStarted;     // True iff serial port has been opened and thread started
         private bool _moteSwitchEnabled = true;  // True iff the mote switch is enabled
         private StreamWriter _outputFile;
-        private bool _writingToFile;
+        //private bool _writingToFile;
         private const string DataPrefix = "#$ ";
 
 
@@ -64,9 +64,9 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
             var m = new MethodInvoker(() => FromMote.AppendText(lineRead + "\n"));
             if (FromMote.InvokeRequired) { FromMote.Invoke(m); } else { m(); }
 
-            if (!_writingToFile) {
-                return;
-            }
+            //if (!_writingToFile) {
+            //    return;
+            //}
 
             _outputFile.WriteLine(lineRead);
 
@@ -155,7 +155,9 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
         /// </summary>
         private void RefreshSerialPortList_Click(object sender, EventArgs e) {
             SerialPortList.Text = string.Empty;
-            SerialPortList.DataSource = SerialPort.GetPortNames();
+            var portNames = SerialPort.GetPortNames();
+            Array.Sort<string>(portNames);
+            SerialPortList.DataSource = portNames;
         }
 
 
@@ -179,14 +181,14 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
             }
             try {
                 _outputFile = new StreamWriter(OutputFile.Text);
-                _writingToFile = true;
+                //_writingToFile = true;
             }
             catch (Exception ex) {
                 ErrorMessages.AppendText("Cannot write to file " + OutputFile.Text + "\n" + ex);
                 System.Media.SystemSounds.Exclamation.Play();
                 return;
             }
-            
+
             var portName = SerialPortList.SelectedItem.ToString();
             _serial = new SerialReadLineeMote(portName, ProcessInput);
             // Try to start. If cannot open, give error message.
@@ -215,7 +217,8 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
         }
 
         private void DoStop() {
-            _writingToFile = false;
+            _serial.Stop();
+            //_writingToFile = false;
             _outputFile.Close();
             BtnStop.Image = Properties.Resources.Stop_Disabled;
             BtnStop.Enabled = false;
@@ -230,7 +233,7 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
                 RestoreDirectory = true,
                 CreatePrompt = true,
                 Title = "Append to File",
-                OverwritePrompt = false,
+                OverwritePrompt = true,
             };
             if (browser.ShowDialog() == DialogResult.OK) {
                 OutputFile.Text = browser.FileName;

@@ -8,8 +8,8 @@
  *      
 ---------------------------------------------------------------------*/
 
-#define Empty
-//#define ProfileThread
+//#define Empty
+#define ProfileThread
 //#define InlineProfiling
 //#define CodeSerialPort
 //#define Adc

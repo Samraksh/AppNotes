@@ -26,7 +26,6 @@
         /// </summary>
         private void InitializeComponent() {
             this.SerialPortList = new System.Windows.Forms.ComboBox();
-            this.SerialStartStop = new System.Windows.Forms.Button();
             this.ClearFromMote = new System.Windows.Forms.Button();
             this.EnableDisableMoteSwitch = new System.Windows.Forms.Button();
             this.FromMote = new System.Windows.Forms.TextBox();
@@ -54,18 +53,6 @@
             this.SerialPortList.Size = new System.Drawing.Size(160, 24);
             this.SerialPortList.TabIndex = 0;
             // 
-            // SerialStartStop
-            // 
-            this.SerialStartStop.AutoSize = true;
-            this.SerialStartStop.BackColor = System.Drawing.Color.LightCoral;
-            this.SerialStartStop.Location = new System.Drawing.Point(265, 43);
-            this.SerialStartStop.Margin = new System.Windows.Forms.Padding(4);
-            this.SerialStartStop.Name = "SerialStartStop";
-            this.SerialStartStop.Size = new System.Drawing.Size(186, 28);
-            this.SerialStartStop.TabIndex = 1;
-            this.SerialStartStop.Text = "Connect";
-            this.SerialStartStop.UseVisualStyleBackColor = false;
-            // 
             // ClearFromMote
             // 
             this.ClearFromMote.Location = new System.Drawing.Point(48, 471);
@@ -81,7 +68,7 @@
             // 
             this.EnableDisableMoteSwitch.AutoSize = true;
             this.EnableDisableMoteSwitch.BackColor = System.Drawing.Color.GreenYellow;
-            this.EnableDisableMoteSwitch.Location = new System.Drawing.Point(513, 43);
+            this.EnableDisableMoteSwitch.Location = new System.Drawing.Point(265, 47);
             this.EnableDisableMoteSwitch.Margin = new System.Windows.Forms.Padding(4);
             this.EnableDisableMoteSwitch.Name = "EnableDisableMoteSwitch";
             this.EnableDisableMoteSwitch.Size = new System.Drawing.Size(203, 28);
@@ -230,7 +217,6 @@
             this.Controls.Add(this.FromMote);
             this.Controls.Add(this.EnableDisableMoteSwitch);
             this.Controls.Add(this.ClearFromMote);
-            this.Controls.Add(this.SerialStartStop);
             this.Controls.Add(this.SerialPortList);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ExfiltratePc";
@@ -247,7 +233,6 @@
         #endregion
 
         private System.Windows.Forms.ComboBox SerialPortList;
-        private System.Windows.Forms.Button SerialStartStop;
         private System.Windows.Forms.Button ClearFromMote;
         private System.Windows.Forms.Button EnableDisableMoteSwitch;
         private System.Windows.Forms.TextBox FromMote;
