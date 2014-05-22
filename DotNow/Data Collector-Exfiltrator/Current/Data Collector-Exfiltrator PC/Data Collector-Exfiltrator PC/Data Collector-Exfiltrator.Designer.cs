@@ -39,15 +39,17 @@
             this.BtnStartPause = new System.Windows.Forms.PictureBox();
             this.RefreshSerialPortList = new System.Windows.Forms.PictureBox();
             this.BtnStop = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.BtnStartPause)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RefreshSerialPortList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnStop)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // SerialPortList
             // 
             this.SerialPortList.FormattingEnabled = true;
-            this.SerialPortList.Location = new System.Drawing.Point(64, 43);
+            this.SerialPortList.Location = new System.Drawing.Point(65, 22);
             this.SerialPortList.Margin = new System.Windows.Forms.Padding(4);
             this.SerialPortList.Name = "SerialPortList";
             this.SerialPortList.Size = new System.Drawing.Size(160, 24);
@@ -55,7 +57,8 @@
             // 
             // ClearFromMote
             // 
-            this.ClearFromMote.Location = new System.Drawing.Point(48, 471);
+            this.ClearFromMote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ClearFromMote.Location = new System.Drawing.Point(48, 518);
             this.ClearFromMote.Margin = new System.Windows.Forms.Padding(4);
             this.ClearFromMote.Name = "ClearFromMote";
             this.ClearFromMote.Size = new System.Drawing.Size(100, 28);
@@ -68,7 +71,7 @@
             // 
             this.EnableDisableMoteSwitch.AutoSize = true;
             this.EnableDisableMoteSwitch.BackColor = System.Drawing.Color.GreenYellow;
-            this.EnableDisableMoteSwitch.Location = new System.Drawing.Point(265, 47);
+            this.EnableDisableMoteSwitch.Location = new System.Drawing.Point(266, 22);
             this.EnableDisableMoteSwitch.Margin = new System.Windows.Forms.Padding(4);
             this.EnableDisableMoteSwitch.Name = "EnableDisableMoteSwitch";
             this.EnableDisableMoteSwitch.Size = new System.Drawing.Size(203, 28);
@@ -79,7 +82,8 @@
             // 
             // FromMote
             // 
-            this.FromMote.Location = new System.Drawing.Point(48, 212);
+            this.FromMote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.FromMote.Location = new System.Drawing.Point(48, 259);
             this.FromMote.Margin = new System.Windows.Forms.Padding(4);
             this.FromMote.Multiline = true;
             this.FromMote.Name = "FromMote";
@@ -90,9 +94,9 @@
             // 
             // ErrorMessages
             // 
-            this.ErrorMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ErrorMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ErrorMessages.Location = new System.Drawing.Point(445, 215);
+            this.ErrorMessages.Location = new System.Drawing.Point(445, 262);
             this.ErrorMessages.Margin = new System.Windows.Forms.Padding(4);
             this.ErrorMessages.Multiline = true;
             this.ErrorMessages.Name = "ErrorMessages";
@@ -103,7 +107,8 @@
             // 
             // ClearErrorMessages
             // 
-            this.ClearErrorMessages.Location = new System.Drawing.Point(445, 471);
+            this.ClearErrorMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ClearErrorMessages.Location = new System.Drawing.Point(445, 518);
             this.ClearErrorMessages.Margin = new System.Windows.Forms.Padding(4);
             this.ClearErrorMessages.Name = "ClearErrorMessages";
             this.ClearErrorMessages.Size = new System.Drawing.Size(100, 28);
@@ -115,7 +120,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(44, 191);
+            this.label1.Location = new System.Drawing.Point(44, 238);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(134, 17);
@@ -125,7 +130,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(441, 191);
+            this.label2.Location = new System.Drawing.Point(441, 238);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(47, 17);
@@ -136,7 +141,7 @@
             // 
             this.OutputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutputFile.Location = new System.Drawing.Point(152, 94);
+            this.OutputFile.Location = new System.Drawing.Point(118, 73);
             this.OutputFile.Name = "OutputFile";
             this.OutputFile.Size = new System.Drawing.Size(422, 22);
             this.OutputFile.TabIndex = 11;
@@ -144,7 +149,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(48, 98);
+            this.label3.Location = new System.Drawing.Point(14, 77);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 17);
             this.label3.TabIndex = 12;
@@ -153,7 +158,7 @@
             // BrowseForOutputFile
             // 
             this.BrowseForOutputFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowseForOutputFile.Location = new System.Drawing.Point(617, 92);
+            this.BrowseForOutputFile.Location = new System.Drawing.Point(583, 71);
             this.BrowseForOutputFile.Name = "BrowseForOutputFile";
             this.BrowseForOutputFile.Size = new System.Drawing.Size(75, 23);
             this.BrowseForOutputFile.TabIndex = 13;
@@ -165,7 +170,7 @@
             // 
             this.BtnStartPause.Image = global::Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Properties.Resources.Play_Normal;
             this.BtnStartPause.InitialImage = null;
-            this.BtnStartPause.Location = new System.Drawing.Point(193, 134);
+            this.BtnStartPause.Location = new System.Drawing.Point(47, 138);
             this.BtnStartPause.Name = "BtnStartPause";
             this.BtnStartPause.Size = new System.Drawing.Size(50, 50);
             this.BtnStartPause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -177,7 +182,7 @@
             // RefreshSerialPortList
             // 
             this.RefreshSerialPortList.Image = global::Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Properties.Resources.ButtonRefreshicon;
-            this.RefreshSerialPortList.Location = new System.Drawing.Point(16, 33);
+            this.RefreshSerialPortList.Location = new System.Drawing.Point(17, 12);
             this.RefreshSerialPortList.Margin = new System.Windows.Forms.Padding(4);
             this.RefreshSerialPortList.Name = "RefreshSerialPortList";
             this.RefreshSerialPortList.Size = new System.Drawing.Size(33, 42);
@@ -191,7 +196,7 @@
             this.BtnStop.Enabled = false;
             this.BtnStop.Image = global::Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Properties.Resources.Stop_Disabled;
             this.BtnStop.InitialImage = null;
-            this.BtnStop.Location = new System.Drawing.Point(265, 134);
+            this.BtnStop.Location = new System.Drawing.Point(119, 138);
             this.BtnStop.Name = "BtnStop";
             this.BtnStop.Size = new System.Drawing.Size(50, 50);
             this.BtnStop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -199,25 +204,33 @@
             this.BtnStop.TabStop = false;
             this.BtnStop.Click += new System.EventHandler(this.BtnStop_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.EnableDisableMoteSwitch);
+            this.panel1.Controls.Add(this.SerialPortList);
+            this.panel1.Controls.Add(this.RefreshSerialPortList);
+            this.panel1.Controls.Add(this.BrowseForOutputFile);
+            this.panel1.Controls.Add(this.OutputFile);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Location = new System.Drawing.Point(47, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(690, 107);
+            this.panel1.TabIndex = 17;
+            // 
             // ExfiltratePc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(753, 562);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.BtnStop);
             this.Controls.Add(this.BtnStartPause);
-            this.Controls.Add(this.BrowseForOutputFile);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.OutputFile);
-            this.Controls.Add(this.RefreshSerialPortList);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ClearErrorMessages);
             this.Controls.Add(this.ErrorMessages);
             this.Controls.Add(this.FromMote);
-            this.Controls.Add(this.EnableDisableMoteSwitch);
             this.Controls.Add(this.ClearFromMote);
-            this.Controls.Add(this.SerialPortList);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ExfiltratePc";
             this.Text = "Serial On-Off - PC";
@@ -225,6 +238,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.BtnStartPause)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RefreshSerialPortList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BtnStop)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,6 +261,7 @@
         private System.Windows.Forms.Button BrowseForOutputFile;
         private System.Windows.Forms.PictureBox BtnStartPause;
         private System.Windows.Forms.PictureBox BtnStop;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

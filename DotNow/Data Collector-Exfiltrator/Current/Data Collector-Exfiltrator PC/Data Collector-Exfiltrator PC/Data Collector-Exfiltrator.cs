@@ -27,7 +27,7 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
         //private bool _serialStarted;     // True iff serial port has been opened and thread started
         private bool _moteSwitchEnabled = true;  // True iff the mote switch is enabled
         private StreamWriter _outputFile;
-        //private bool _writingToFile;
+        private bool _writingToFile;
         private const string DataPrefix = "#$ ";
 
 
@@ -64,11 +64,12 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
             var m = new MethodInvoker(() => FromMote.AppendText(lineRead + "\n"));
             if (FromMote.InvokeRequired) { FromMote.Invoke(m); } else { m(); }
 
-            //if (!_writingToFile) {
-            //    return;
-            //}
-
-            _outputFile.WriteLine(lineRead);
+            // Race condition can cause the object to be disposed
+            try {
+                _outputFile.WriteLine(lineRead);
+            }
+            catch (ObjectDisposedException) { 
+            }
 
         }
 
@@ -175,13 +176,20 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
 
 
         private void DoStart() {
+            BtnStartPause.Tag = "Pause";
+            BtnStartPause.Image = Properties.Resources.Pause_Normal;
+            BtnStop.Image = Properties.Resources.Stop_Normal;
+            BtnStop.Enabled = true;
+
             if (!File.Exists(OutputFile.Text)) {
                 MessageBox.Show("Output file does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 return;
             }
             try {
-                _outputFile = new StreamWriter(OutputFile.Text);
-                //_writingToFile = true;
+                if (_outputFile == null) {
+                    _outputFile = new StreamWriter(OutputFile.Text);
+                }
+                _writingToFile = true;
             }
             catch (Exception ex) {
                 ErrorMessages.AppendText("Cannot write to file " + OutputFile.Text + "\n" + ex);
@@ -189,26 +197,20 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
                 return;
             }
 
-            var portName = SerialPortList.SelectedItem.ToString();
-            _serial = new SerialReadLineeMote(portName, ProcessInput);
-            // Try to start. If cannot open, give error message.
-            if (!_serial.Start()) {
-                ErrorMessages.AppendText("Cannot open serial port " + portName + "\n");
-                return;
+            if (_serial == null) {
+                var portName = SerialPortList.SelectedItem.ToString();
+                _serial = new SerialReadLineeMote(portName, ProcessInput);
+                // Try to start. If cannot open, give error message.
+                if (!_serial.Start()) {
+                    ErrorMessages.AppendText("Cannot open serial port " + portName + "\n");
+                    return;
+                }
             }
-            // Note that started and change control
-            //_serialStarted = true;
-            //SerialStartStop.Text = "Disconnect";
-            //SerialStartStop.BackColor = Color.YellowGreen;
-
-            BtnStartPause.Tag = "Pause";
-            BtnStartPause.Image = Properties.Resources.Pause_Normal;
-            BtnStop.Image = Properties.Resources.Stop_Normal;
-            BtnStop.Enabled = true;
         }
 
         private void DoPause() {
             BtnStartPause.Tag = "Start";
+            _writingToFile = false;
             BtnStartPause.Image = Properties.Resources.Play_Normal;
         }
 
@@ -218,7 +220,7 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
 
         private void DoStop() {
             _serial.Stop();
-            //_writingToFile = false;
+            _writingToFile = false;
             _outputFile.Close();
             BtnStop.Image = Properties.Resources.Stop_Disabled;
             BtnStop.Enabled = false;
@@ -232,7 +234,7 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
                 FilterIndex = 1,
                 RestoreDirectory = true,
                 CreatePrompt = true,
-                Title = "Append to File",
+                Title = "Output File",
                 OverwritePrompt = true,
             };
             if (browser.ShowDialog() == DialogResult.OK) {

@@ -1,11 +1,9 @@
-﻿#if Radar
-
+﻿using Microsoft.SPOT.Hardware;
+using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
+#if Radar
 using Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Globals;
 using System.Threading;
 using Microsoft.SPOT;
-
-using Samraksh.eMote.DotNow;
-
 using Samraksh.AppNote.Utility;
 
 
@@ -16,16 +14,16 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Sensors {
         /// Displacement detection parameters
         /// </summary>
         struct AdcParameters {
-            
+
             /// <summary>Number of milliseconds between samples</summary>
             public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
 
             /// <summary>Number of samples to collect before presenting for processing</summary>
             public const int BufferSize = 300;
-            
+
             /// <summary>Number of samples per second</summary>
             public const int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;
-            
+
             /// <summary>Number of microseconds between invocation of buffer processing callback</summary>
             public const int CallbackIntervalMs = (BufferSize * 1000) / SamplesPerSecond;
         }
@@ -37,6 +35,11 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Sensors {
 
         public const string SensorName = "Radar";
 
+        public static void Alert() {
+            Lcd.Initialize();
+            Lcd.Display("radr");
+        }
+
         public static void Initialize() {
             Debug.Print("Parameters");
             Debug.Print("   SamplingIntervalMilliSec " + AdcParameters.SamplingIntervalMilliSec);
@@ -45,10 +48,13 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Sensors {
             Debug.Print("   CallbackIntervalMs " + AdcParameters.CallbackIntervalMs);
             Debug.Print("");
 
+            var J11Pin3 = new OutputPort(eMote.DotNow.Pins.GPIO_J11_PIN3, true);
+
+            Global.Serial.Write(Global.DataPrefix + "Sample,I,Q\n");
+
             AnalogInput.InitializeADC();
             AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (uint)Ibuffer.Length, AdcParameters.SamplingIntervalMilliSec, AdcBuffer_Callback);
 
-            Lcd.Initialize();
         }
 
         /// <summary>

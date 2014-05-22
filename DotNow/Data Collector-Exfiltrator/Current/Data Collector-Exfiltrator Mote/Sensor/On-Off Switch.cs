@@ -34,6 +34,8 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator.Sensors {
             Thread.Sleep(1000);
             Lcd.Display("");
 
+            Global.Serial.Write(Global.DataPrefix + "Value");
+
             _onOffSwitch = new InputSwitch(Pins.GPIO_J12_PIN1, Port.ResistorMode.PullUp, SwitchCallback);
         }
 

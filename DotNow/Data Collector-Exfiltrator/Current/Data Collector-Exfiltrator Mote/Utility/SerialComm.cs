@@ -32,26 +32,11 @@ namespace Samraksh.AppNote.Utility {
         /// </summary>
         /// <param name="serialPortName">Serial port name (e.g., COM1)</param>
         /// <param name="readCallback">Callback method to process incoming data.</param>
-        //public SerialComm(string serialPortName, ReadCallback readCallback) {
-        //    _readCallback = readCallback;
-        //    // Set up the serial port
-        //    Port = new SerialPort(serialPortName, 115200, Parity.None, 8, StopBits.One) { Handshake = Handshake.None };
-        //    Port.DataReceived += PortHandler;
-        //}
-
-        public SerialComm(string serialPortName, ReadCallback readCallback) 
-            : base(serialPortName, 115200, Parity.None,8,StopBits.One)
-        {
+        public SerialComm(string serialPortName, ReadCallback readCallback)
+            : base(serialPortName, 115200, Parity.None, 8, StopBits.One) {
             _readCallback = readCallback;
             DataReceived += PortHandler;
         }
-        
-        ///// <summary>
-        ///// Open the port
-        ///// </summary>
-        //public void Open() {
-        //    Port.Open();
-        //}
 
         /// <summary>
         /// Write a string to the port

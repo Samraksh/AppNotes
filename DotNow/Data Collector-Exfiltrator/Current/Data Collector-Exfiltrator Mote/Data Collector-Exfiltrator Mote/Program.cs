@@ -33,20 +33,30 @@ namespace Samraksh.AppNote.DotNow.DataCollectorExfiltrator {
         /// Initialize things and start the threads to handle switch and serial I/O
         /// </summary>
         public static void Main() {
+
             Debug.Print(Global.DataPrefix + "Input Sensor: " + Sensor.SensorName);
-            Sensor.Initialize();
 
             // Set up serial comm. 
             //  This specifies the comm port to use and a callback method to process data received from the PC
             try {
                 Global.Serial = new SerialComm(CommPort, SerialCallback);
-                //                Global.Serial = new SerialComm(CommPort, SerialCallback);
                 Global.Serial.Open();
             }
             // If can't open the port, display error on LCD
-            catch {
+            catch (Exception ex) {
                 Sensor.ErrorMsg("err");
+                Debug.Print("Cannot set up serial port\n" + ex);
+                return;
             }
+
+            // Alert the operator to start listening
+            Sensor.Alert();
+
+            // Wait a few seconds ... improves likelihood that deployment will work
+            Thread.Sleep(5000);
+
+            // Initialize the sensor. It typically will do serial output so should be after serial is setup
+            Sensor.Initialize();
 
             // Sleep forever
             //  All the real work is handled by the input switch and serial comm threads, which are event driven.

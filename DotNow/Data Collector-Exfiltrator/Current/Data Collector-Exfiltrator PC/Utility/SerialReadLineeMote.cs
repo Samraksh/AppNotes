@@ -74,7 +74,9 @@ namespace Utility {
         /// </summary>
         public void Stop() {
             _cancelToken.Cancel();
-            _readLines.Wait();
+            if (_readLines != null) {
+                _readLines.Wait();
+            }
             _serialStream.Close();   // Close the stream
             _serialStream.Dispose(); // Dispose of all resources
         }

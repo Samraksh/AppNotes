@@ -9,10 +9,10 @@
 ---------------------------------------------------------------------*/
 
 //#define Empty
-#define ProfileThread
+//#define ProfileThread
 //#define InlineProfiling
 //#define CodeSerialPort
-//#define Adc
+#define Adc
 //#define AdcInterpolate
 //#define Displacement
 //#define Sleep
