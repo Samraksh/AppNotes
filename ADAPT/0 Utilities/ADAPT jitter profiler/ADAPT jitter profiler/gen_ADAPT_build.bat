@@ -8,7 +8,11 @@ if exist _BOM.txt (del /s _BOM.txt > nul)
 if exist _BOM_out (del /s _BOM_out > nul)
 if exist _BOM2.txt (del /s _BOM2.txt > nul)
 if exist _Build.dat (del /s _Build.dat > nul)
-if exist Build.bin (del /s Build.bin > nul)
+REM dir Build.bin | find "Build.bin"
+REM if exist Build.bin (del /s Build.bin > nul)
+REM dir Build.bin | find "Build.bin"
+del Build.bin
+dir Build.bin | find "Build.bin"
 
 if [%1]==[] (
 	echo *** Missing Directory
@@ -40,6 +44,6 @@ rem if exist _BOM_out (del /s _BOM_out > nul)
 rem if exist _BOM2.txt (del /s _BOM2.txt > nul) 
 rem if exist _Build.dat (del /s _Build.dat > nul) 
 
-rem dir
 echo.
 echo ## Done. Executable is in Build.bin ##
+dir Build.bin | find "Build.bin"

@@ -25,6 +25,22 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     /// </summary>
     public static partial class RadarDisplacementDetector {
 
+        /// <summary>
+        /// Parameters for sampling
+        /// </summary>
+        public struct SamplingParameters {
+            /// <summary>Number of milliseconds between samples</summary>
+            public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
+            /// <summary>Number of samples to collect before presenting for processing</summary>
+            //public const int BufferSize = 500;
+            public const int BufferSize = 500;
+            /// <summary>Number of samples per second</summary>
+            public const int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;
+            /// <summary>Number of microseconds between invocation of buffer processing callback</summary>
+            public const int CallbackIntervalMs = (BufferSize * 1000) / SamplesPerSecond;
+        }
+
+
         private const int AdcChannelI = 0;
         private const int AdcChannelQ = 1;
         private static readonly AnalogInput Adc = new AnalogInput();
@@ -44,18 +60,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             Debug.Print("Bytes free: " + Debug.GC(true));
 
-            Debug.Print("Parameters");
-            Debug.Print("   SamplingIntervalMilliSec " + DetectorParameters.SamplingIntervalMilliSec);
-            Debug.Print("   BufferSize " + DetectorParameters.BufferSize);
-            Debug.Print("   SamplesPerSecond " + DetectorParameters.SamplesPerSecond);
-            Debug.Print("   CallbackIntervalMs " + DetectorParameters.CallbackIntervalMs);
+            Debug.Print("Sampling Parameters");
+            Debug.Print("   SamplingIntervalMilliSec " + SamplingParameters.SamplingIntervalMilliSec);
+            Debug.Print("   SamplesPerSecond " + SamplingParameters.SamplesPerSecond);
+            Debug.Print("   CallbackIntervalMs " + SamplingParameters.CallbackIntervalMs);
+
+            Debug.Print("Detection Paramters");
             Debug.Print("   M " + DetectorParameters.M);
             Debug.Print("   N " + DetectorParameters.N);
             Debug.Print("   MinCumCuts " + DetectorParameters.MinCumCuts);
             Debug.Print("   CutDistCm " + DetectorParameters.CutDistanceCm);
             Debug.Print("");
 
-            Thread.Sleep(4000); // Wait a bit before launch
+            //Thread.Sleep(4000); // Wait a bit before launch
 
             // Initialize detection
             CumulativeCuts.Initialize();
@@ -69,19 +86,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Adc.Initialize();
             Debug.Print("Initialized ADC");
 
-            // Testing
-            for (var i = 0; i < 4; i++) {
-                Debug.Print("");
-                Debug.Print("Driver. Sample num before: " + SampleData.SampleNumber);
-                TimerCallback(null);
-                Thread.Sleep(4 * DetectorParameters.SamplingIntervalMilliSec / 1000);
-                Debug.Print("Driver. Sample num after: " + SampleData.SampleNumber);
-            }
+            //// Testing
+            //for (var i = 0; i < 4; i++) {
+            //    Debug.Print("");
+            //    Debug.Print("Driver. Sample num before: " + SampleData.SampleNumber);
+            //    TimerCallback(null);
+            //    Thread.Sleep(4 * DetectorParameters.SamplingIntervalMilliSec / 1000);
+            //    Debug.Print("Driver. Sample num after: " + SampleData.SampleNumber);
+            //}
 
-            //// Start the timer
-            //var sampleTimer = new SimpleTimer(TimerCallback, 0, DetectorParameters.SamplingIntervalMilliSec / 1000);
-            //sampleTimer.Start();
-            //Debug.Print("Started the timer with interval " + DetectorParameters.SamplingIntervalMilliSec / 1000);
+            // Start the timer
+            var sampleTimer = new SimpleTimer(TimerCallback, 0, SamplingParameters.SamplingIntervalMilliSec / 1000);
+            sampleTimer.Start();
+            Debug.Print("Started the timer with interval " + SamplingParameters.SamplingIntervalMilliSec / 1000);
 
             Thread.Sleep(Timeout.Infinite);
         }
@@ -109,35 +126,36 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             public const int Back3 = BufferSize - 3;
         }
 
-        /// <summary>
-        /// Synchronization processing between callback thread and sample processing thread
-        /// </summary>
-        public static class ProcessingSynchronization {
+        ///// <summary>
+        ///// Synchronization processing between callback thread and sample processing thread
+        ///// </summary>
+        //public static class ProcessingSynchronization {
 
-            /// <summary>True iff currently processing a sample</summary>
-            public static int CurrentlyProcessingSample = IntBool.False;
+        //    /// <summary>True iff currently processing a sample</summary>
+        //    public static int CurrentlyProcessingSample = IntBool.False;
 
-            /// <summary>Event synch</summary>
-            //public static readonly AutoResetEvent ProcessSampleResetEvent = new AutoResetEvent(false);
-            public static readonly ManualResetEvent ProcessSampleResetEvent = new ManualResetEvent(false);
-        }
+            ///// <summary>Event synch</summary>
+            ////public static readonly AutoResetEvent ProcessSampleResetEvent = new AutoResetEvent(false);
+            //public static readonly ManualResetEvent ProcessSampleResetEvent = new ManualResetEvent(false);
+        //}
 
         /// <summary>
         /// Callback for timer
         /// </summary>
         private static void TimerCallback(object state) {
 
-            // Check if we're currently processing a sample. If so, give message and return
-            //  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
-            if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
-                Debug.Print("*************************************************** Missed a sample; sample # " + (SampleData.SampleNumber + 1));
-                return;
-            }
 
-            // Not currently processing a sample ... we can proceed
-            Debug.Print("TimerCallback. Process sample");
 
-            ProcessingSynchronization.ProcessSampleResetEvent.Set();
+            //// Check if we're currently processing a sample. If so, give message and return
+            ////  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
+            //if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
+            //    Debug.Print("*************************************************** Missed a sample; sample # " + (SampleData.SampleNumber + 1));
+            //    return;
+            //}
+
+            //// Not currently processing a sample ... we can proceed
+            //Debug.Print("TimerCallback. Process sample");
+
         }
 
         private static DateTime _startTime;

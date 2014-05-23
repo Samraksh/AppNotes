@@ -7,15 +7,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     /// Displacement detection parameters
     /// </summary>
     public struct DetectorParameters {
-        /// <summary>Number of milliseconds between samples</summary>
-        public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
-        /// <summary>Number of samples to collect before presenting for processing</summary>
-        //public const int BufferSize = 500;
-        public const int BufferSize = 500;
-        /// <summary>Number of samples per second</summary>
-        public const int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;
-        /// <summary>Number of microseconds between invocation of buffer processing callback</summary>
-        public const int CallbackIntervalMs = (BufferSize * 1000) / SamplesPerSecond;
         /// <summary>Number of minor displacement events that must occur for displacement detection</summary>
         public const int M = 2;
         /// <summary>Number of seconds for which a displacement detection can last</summary>
@@ -83,7 +74,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             // Update snippet counter and see if we've reached a snippet boundary (one second)
             MofNFilter.SnippetCntr++;
-            if (MofNFilter.SnippetCntr != DetectorParameters.SamplesPerSecond) {
+            if (MofNFilter.SnippetCntr != SamplingParameters.SamplesPerSecond) {
                 return;
             }
 

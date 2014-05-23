@@ -12,7 +12,8 @@
 //#define ProfileThread
 //#define InlineProfiling
 //#define CodeSerialPort
-#define Adc
+//#define Adc
+#define AdcPrintVals
 //#define AdcInterpolate
 //#define Displacement
 //#define Sleep
@@ -24,15 +25,15 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 //using AnalogInput = Samraksh.eMote.Adapt.AnalogInput;
 
-namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
+namespace Samraksh.AppNote.DotNow.JitterProfiler {
 
     /// <summary>
     /// Sampling parameters
     /// </summary>
     public struct SamplingParameters {
         /// <summary>Number of milliseconds between samples</summary>
-        public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
-        //public const int SamplingIntervalMilliSec = 50000;    // Larger values => fewer samples/sec
+        //public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
+        public const int SamplingIntervalMilliSec = 50000;    // Larger values => fewer samples/sec
         /// <summary>Number of samples per second</summary>
         public const int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;
         /// <summary>Number of microseconds between between samples</summary>
@@ -50,7 +51,7 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
         private static SerialPort _port;
         private static byte[] _serialPayload = System.Text.Encoding.UTF8.GetBytes("abcdef");
 #endif
-#if Adc || AdcInterpolate || Displacement
+#if Adc || AdcPrintVals || AdcInterpolate || Displacement
         private static eMote.Adapt.AnalogInput _adc;
         private const int AdcChannelI = 0;
         private const int AdcChannelQ = 1;
@@ -169,6 +170,15 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
             _adc.Initialize();
             Debug.Print("    ADC initialized");
 #endif
+#if AdcPrintVals
+            const string theProfile = "*** Adc Print Values***";
+            Debug.Print(theProfile);
+            // Set up ADC sampling
+            _adc = new eMote.Adapt.AnalogInput();
+            Debug.Print("    Initializing ADC");
+            _adc.Initialize();
+            Debug.Print("    ADC initialized");
+#endif
 #if AdcInterpolate
             const string theProfile = "*** AdcInterpolate ***";
             Debug.Print(theProfile);
@@ -278,7 +288,17 @@ namespace Samraksh.AppNote.DotNow.RadarDataExfiltrator {
 #if Adc
             Led1.Write(true);
 
-            var sample = _adc.Read(AdcChannelI);
+            var sampleI = _adc.Read(AdcChannelI);
+            var sampleQ = _adc.Read(AdcChannelQ);
+
+            Led1.Write(false);
+#endif
+#if AdcPrintVals
+            Led1.Write(true);
+
+            var sampleI = _adc.Read(AdcChannelI);
+            var sampleQ = _adc.Read(AdcChannelQ);
+            Debug.Print((_sampleCounter++) + " I " + sampleI + ", Q " + sampleQ);
 
             Led1.Write(false);
 #endif
