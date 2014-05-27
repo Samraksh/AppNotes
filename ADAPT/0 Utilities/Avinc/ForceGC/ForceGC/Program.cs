@@ -10,6 +10,7 @@ namespace Samraksh.AppNote.DotNow.Avinc {
     /// Force GC
     /// </summary>
     public static class ForceGc {
+        const int NumItems = 100;
 
 
         /// <summary>
@@ -17,9 +18,10 @@ namespace Samraksh.AppNote.DotNow.Avinc {
         /// </summary>
         public static void Main() {
             const int numThreads = 300;
-            Debug.Print("Starting " + numThreads + " threads");
-            
-            
+            Debug.EnableGCMessages(true);
+            Debug.Print("Starting " + numThreads + " threads" + ", " + NumItems + " items per allocation");
+
+
             for (var i = 0; i < numThreads; i++) {
                 var i1 = i;
                 var thread = new Thread(() => MainThread(i1));
@@ -28,22 +30,23 @@ namespace Samraksh.AppNote.DotNow.Avinc {
             }
 
             new Thread(PrintThread).Start();
-            
+
         }
 
         private static void PrintThread() {
             while (true) {
                 var now = DateTime.Now;
-                var microSec = now.Hour * 24 * 60 * 60 * 1000 + now.Minute * 60 * 60 * 1000 + now.Second * 60 * 1000 + now.Millisecond;
-                Debug.Print(microSec.ToString());
+                Debug.Print(now.Ticks.ToString());
                 Thread.Sleep(1000);
             }
         }
 
         private static void MainThread(int threadNum) {
+            //var cnt = 0;
             Debug.Print("Starting " + threadNum);
             while (true) {
-                var a = new byte[1];
+                //if (cnt % 1000 == 0) { Debug.Print(threadNum + ", " + cnt++); }
+                var a = new byte[NumItems];
                 Thread.Sleep(1);
             }
         }

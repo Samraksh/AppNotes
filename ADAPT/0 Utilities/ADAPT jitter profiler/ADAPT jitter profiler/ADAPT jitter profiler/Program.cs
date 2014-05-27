@@ -8,12 +8,12 @@
  *      
 ---------------------------------------------------------------------*/
 
-//#define Empty
+#define Empty
 //#define ProfileThread
 //#define InlineProfiling
 //#define CodeSerialPort
 //#define Adc
-#define AdcPrintVals
+//#define AdcPrintVals
 //#define AdcInterpolate
 //#define Displacement
 //#define Sleep

@@ -33,6 +33,7 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="Process Sample.cs" />
+    <Compile Include="Sample Buffer.cs" />
     <Compile Include="Support Classes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
