@@ -11,43 +11,64 @@ namespace Samraksh.AppNote.DotNow.Avinc {
     /// </summary>
     public static class ForceGc {
         const int NumItems = 100;
+        const int NumThreads = 300;
+        const int MainThreadSleep = 100;
 
+        static readonly long[] Buffer = new long[120];
+        private static int _bufPtr;
+        private static readonly AutoResetEvent WaitForFull = new AutoResetEvent(false);
 
         /// <summary>
         /// Get things started
         /// </summary>
         public static void Main() {
-            const int numThreads = 300;
-            Debug.EnableGCMessages(true);
-            Debug.Print("Starting " + numThreads + " threads" + ", " + NumItems + " items per allocation");
+            //Debug.EnableGCMessages(true);
+            Debug.Print("Save to memory array; suppress I/O while sampling");
+            Debug.Print("Starting " + NumThreads + " threads" + ", " + NumItems + " items per allocation");
+            Debug.Print("Collecting " + Buffer.Length + " timing samples");
+            Debug.Print("Main Thread sleep time " + MainThreadSleep);
 
-
-            for (var i = 0; i < numThreads; i++) {
+            for (var i = 0; i < NumThreads; i++) {
                 var i1 = i;
                 var thread = new Thread(() => MainThread(i1));
                 thread.Start();
-                //new Thread(MainThread).Start();
             }
 
             new Thread(PrintThread).Start();
+
+            WaitForFull.WaitOne();
+
+            Debug.Print("Results");
+            for (var i = 0; i < Buffer.Length; i++) {
+                Debug.Print(Buffer[i].ToString());
+            }
+
 
         }
 
         private static void PrintThread() {
             while (true) {
-                var now = DateTime.Now;
-                Debug.Print(now.Ticks.ToString());
+                //var now = DateTime.Now;
+                //Debug.Print(now.Ticks.ToString());
+                if (_bufPtr >= Buffer.Length) {
+                    Debug.Print("Ending Sampling");
+                    WaitForFull.Set();
+                    return;
+                }
+                Buffer[_bufPtr] = DateTime.Now.Ticks;
+                _bufPtr++;
+                //Debug.Print(_bufPtr+", "+Buffer.Length);
                 Thread.Sleep(1000);
             }
         }
 
         private static void MainThread(int threadNum) {
             //var cnt = 0;
-            Debug.Print("Starting " + threadNum);
+            //Debug.Print("Starting " + threadNum);
             while (true) {
                 //if (cnt % 1000 == 0) { Debug.Print(threadNum + ", " + cnt++); }
                 var a = new byte[NumItems];
-                Thread.Sleep(1);
+                Thread.Sleep(MainThreadSleep);
             }
         }
 
