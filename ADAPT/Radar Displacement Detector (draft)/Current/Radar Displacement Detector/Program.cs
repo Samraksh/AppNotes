@@ -45,6 +45,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         private const int AdcChannelQ = 1;
         private static readonly AnalogInput Adc = new AnalogInput();
 
+        private static readonly SimpleTimer SampleTimer = new SimpleTimer(TimerCallback, 0, SamplingParameters.SamplingIntervalMilliSec / 1000);
+
         /// <summary>
         /// Get things started
         /// </summary>
@@ -96,66 +98,28 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             //}
 
             // Start the timer
-            var sampleTimer = new SimpleTimer(TimerCallback, 0, SamplingParameters.SamplingIntervalMilliSec / 1000);
-            sampleTimer.Start();
+            //SampleTimer = new SimpleTimer(TimerCallback, 0, SamplingParameters.SamplingIntervalMilliSec / 1000);
+            SampleTimer.Start();
             Debug.Print("Started the timer with interval " + SamplingParameters.SamplingIntervalMilliSec / 1000);
 
             Thread.Sleep(Timeout.Infinite);
         }
 
         /// <summary>
-        /// Data for sample interpolation
-        /// </summary>
-        public static class Interpolation {
-
-            /// <summary>Minimum number of samples before interpolation can start</summary>
-            public const int MinSamplesToStart = 3;
-
-            /// <summary>Size of the buffer</summary>
-            public const int BufferSize = 4;
-            /// <summary>Samples buffer</summary>
-            public static ushort[] Samples = new ushort[BufferSize];
-            /// <summary>Next-sample pointer</summary>
-            public static int NextSample = 0;
-
-            /// <summary>Add this value to NextSample to go back 1</summary>
-            public const int Back1 = BufferSize - 1;
-            /// <summary>Add this value to NextSample to go back 2</summary>
-            public const int Back2 = BufferSize - 2;
-            /// <summary>Add this value to NextSample to go back 3</summary>
-            public const int Back3 = BufferSize - 3;
-        }
-
-        ///// <summary>
-        ///// Synchronization processing between callback thread and sample processing thread
-        ///// </summary>
-        //public static class ProcessingSynchronization {
-
-        //    /// <summary>True iff currently processing a sample</summary>
-        //    public static int CurrentlyProcessingSample = IntBool.False;
-
-            ///// <summary>Event synch</summary>
-            ////public static readonly AutoResetEvent ProcessSampleResetEvent = new AutoResetEvent(false);
-            //public static readonly ManualResetEvent ProcessSampleResetEvent = new ManualResetEvent(false);
-        //}
-
-        /// <summary>
         /// Callback for timer
         /// </summary>
         private static void TimerCallback(object state) {
+            // Set which channel to read
+            var adcChannel = SampleData.SampleNumber % 2 == 0 ? AdcChannelI : AdcChannelQ;
 
-
-
-            //// Check if we're currently processing a sample. If so, give message and return
-            ////  The variable _currentlyProcessingSample is reset in ProcessSampleBuffer.
-            //if (Interlocked.CompareExchange(ref ProcessingSynchronization.CurrentlyProcessingSample, IntBool.True, IntBool.False) == IntBool.True) {
-            //    Debug.Print("*************************************************** Missed a sample; sample # " + (SampleData.SampleNumber + 1));
-            //    return;
-            //}
-
-            //// Not currently processing a sample ... we can proceed
-            //Debug.Print("TimerCallback. Process sample");
-
+            // Read the sample
+            Debug.Print("TimerCallback. Preparing to read from ADC channel " + adcChannel);
+            if (SampleBuffer.IsFull) {
+                Debug.Print("Buffer is full");
+                SampleTimer.Stop();
+                return;
+            }
+            SampleBuffer.Add(Adc.Read(adcChannel));
         }
 
         private static DateTime _startTime;
@@ -173,61 +137,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
                 _startTime = DateTime.Now;
 
-                // Set which channel to read
-                var adcChannel = SampleData.SampleNumber % 2 == 0 ? AdcChannelI : AdcChannelQ;
-
-                // Read the sample
-                Debug.Print("ProcessSampleThread. Preparing to read from ADC channel " + adcChannel);
-
-                Interpolation.Samples[Interpolation.NextSample] = Adc.Read(adcChannel);
 
                 Debug.Print("ProcessSampleThread. Finished reading from ADC. Sample read:  " + Interpolation.Samples[Interpolation.NextSample]);
-
-                // Update interpolation buffer pointer & sample number
-                Interpolation.NextSample = (Interpolation.NextSample + 1) % Interpolation.BufferSize;
-                SampleData.SampleNumber++;
-
-                // We need 3 samples before we can do interpolation
-                if (SampleData.SampleNumber < Interpolation.MinSamplesToStart) {
-                    Debug.Print("Initial collection. Sample number: " + SampleData.SampleNumber + ", MinSamplesToStart: " + Interpolation.MinSamplesToStart);
-                    ProcessingSynchronization.CurrentlyProcessingSample = IntBool.False;
-                    Debug.Print("                          continuing");
-                    Debug.Print("                          continuing");
-                    Debug.Print("                          continuing");
-                    Debug.Print("                          continuing");
-                    Debug.Print("                          continuing");
-                    Debug.Print("                          continuing");
-                    continue;
-                }
-
-                Debug.Print("Now processing sample " + SampleData.SampleNumber);
-
-                // Get the I-Q pair to process
-                //  Pointer is positioned at next sample. We just read (next - 1) value.
-                //  Actual value to be returned is (next - 2) value.
-                //  Interpolated value to be returned is average of (next - 1) and (next - 3) values.
-
-                // Actual is (next - 2) value. For modulo arithmetic, add an offset that takes to 2 positions back.
-                var prevActual = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back2) % Interpolation.BufferSize];
-
-                // Interpolated is average of (next - 1) and (next - 3) values;
-                ushort prevInterpolated;
-                {
-                    var back1 = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back1) % Interpolation.BufferSize];
-                    var back3 = Interpolation.Samples[(Interpolation.NextSample + Interpolation.Back3) % Interpolation.BufferSize];
-                    prevInterpolated = (ushort)((back1 + back3) >> 1); // Divide by 2
-                }
-
-                // If we just sampled I value, then return previous interpolated for I and previous actutal for Q
-                if (adcChannel == AdcChannelI) {
-                    SampleData.CurrSample.I = prevInterpolated;
-                    SampleData.CurrSample.Q = prevActual;
-                }
-                // If we just sampled Q value, then return previous interpolated for Q and previous actutal for I
-                else {
-                    SampleData.CurrSample.I = prevActual;
-                    SampleData.CurrSample.Q = prevInterpolated;
-                }
 
                 // Print trace info
                 var modSampleNumber = SampleData.SampleNumber % 100;

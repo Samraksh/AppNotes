@@ -1,3 +1,6 @@
+//#define EnableGCMessages
+//#define PrintWhileProfiling
+#define SaveWhileProfiling
 
 using System;
 using System.Threading;
@@ -6,13 +9,14 @@ using Microsoft.SPOT;
 
 namespace Samraksh.AppNote.DotNow.Avinc {
 
+
     /// <summary>
     /// Force GC
     /// </summary>
     public static class ForceGc {
         const int NumItems = 100;
         const int NumThreads = 300;
-        const int MainThreadSleep = 100;
+        const int MainThreadSleep = 1;
 
         static readonly long[] Buffer = new long[120];
         private static int _bufPtr;
@@ -22,10 +26,22 @@ namespace Samraksh.AppNote.DotNow.Avinc {
         /// Get things started
         /// </summary>
         public static void Main() {
-            //Debug.EnableGCMessages(true);
-            Debug.Print("Save to memory array; suppress I/O while sampling");
-            Debug.Print("Starting " + NumThreads + " threads" + ", " + NumItems + " items per allocation");
+
+#if EnableGCMessages
+            Debug.EnableGCMessages(true);
+            Debug.Print("GC messages enabled");
+#endif
+
+#if SaveWhileProfiling
+            Debug.Print("Save while profiling");
             Debug.Print("Collecting " + Buffer.Length + " timing samples");
+#endif
+
+#if PrintWhileProfiling
+            Debug.Print("Print while profiling");
+#endif
+
+            Debug.Print("Starting " + NumThreads + " threads" + ", " + NumItems + " items per allocation");
             Debug.Print("Main Thread sleep time " + MainThreadSleep);
 
             for (var i = 0; i < NumThreads; i++) {
@@ -36,20 +52,24 @@ namespace Samraksh.AppNote.DotNow.Avinc {
 
             new Thread(PrintThread).Start();
 
+#if SaveWhileProfiling
             WaitForFull.WaitOne();
 
             Debug.Print("Results");
             for (var i = 0; i < Buffer.Length; i++) {
                 Debug.Print(Buffer[i].ToString());
             }
+#endif
 
 
         }
 
         private static void PrintThread() {
             while (true) {
-                //var now = DateTime.Now;
-                //Debug.Print(now.Ticks.ToString());
+#if PrintWhileProfiling
+                Debug.Print(DateTime.Now.Ticks.ToString());
+#endif
+#if SaveWhileProfiling
                 if (_bufPtr >= Buffer.Length) {
                     Debug.Print("Ending Sampling");
                     WaitForFull.Set();
@@ -57,7 +77,7 @@ namespace Samraksh.AppNote.DotNow.Avinc {
                 }
                 Buffer[_bufPtr] = DateTime.Now.Ticks;
                 _bufPtr++;
-                //Debug.Print(_bufPtr+", "+Buffer.Length);
+#endif
                 Thread.Sleep(1000);
             }
         }
