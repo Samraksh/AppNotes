@@ -8,7 +8,7 @@
  *      
 ---------------------------------------------------------------------*/
 
-#define Empty
+//#define Empty
 //#define ProfileThread
 //#define InlineProfiling
 //#define CodeSerialPort
@@ -142,7 +142,6 @@ namespace Samraksh.AppNote.DotNow.JitterProfiler {
             const string theProfile = "*** Empty callback ***";
             Debug.Print(theProfile);
 #endif
-
 #if ProfileThread
             const string theProfile = "*** Profile thread ***";
             Debug.Print(theProfile);

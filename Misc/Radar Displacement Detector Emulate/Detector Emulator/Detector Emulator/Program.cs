@@ -1,18 +1,31 @@
 ﻿using System;
 using Microsoft.SPOT;
-//using Samraksh.SPOT.Emulator;
 using System.Threading;
-using Samraksh.SPOT.Emulator;
+using Samraksh.eMote.Emulator;
 
 namespace Detector_Emulator {
     public class Program {
+
+        const int BufferSize = 2;
+        static readonly ushort[] BufferI = new ushort[BufferSize];
+        static readonly ushort[] BufferQ = new ushort[BufferSize];
+
         public static void Main() {
-            int x = 3;
-            var adcConfig = new ADC_Configuration();
-            var adc = new ADC(adcConfig);
-            ADC.Init(4000);
+
+            //AnalogInput.InitializeADC();
+            AnalogInput.ConfigureContinuousModeDualChannel(BufferI, BufferQ, BufferSize, 4, AdcCallback);
+
             Thread.Sleep(Timeout.Infinite);
         }
+
+        private static void AdcCallback(long arg) {
+            Debug.Print("");
+            for (var i = 0; i < BufferSize; i++) {
+                Debug.Print(sampleNum++ + " I " + " Q");
+            }
+        }
+
+        private static int sampleNum;
 
     }
 }

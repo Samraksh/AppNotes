@@ -45,8 +45,8 @@
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="SamrakshEmulator">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Misc\SamrakshSimulator0.3\SamrakshEmulator.exe</HintPath>
+    <Reference Include="Samraksh.eMote.Emulator">
+      <HintPath>..\Samraksh.eMote.Emulator\bin\Debug\Samraksh.eMote.Emulator.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

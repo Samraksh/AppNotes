@@ -15,8 +15,6 @@ using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.Utility;
 using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
 
-//using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
-
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
     /// <summary>

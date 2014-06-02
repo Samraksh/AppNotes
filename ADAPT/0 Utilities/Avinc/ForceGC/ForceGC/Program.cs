@@ -1,6 +1,7 @@
 //#define EnableGCMessages
 //#define PrintWhileProfiling
 #define SaveWhileProfiling
+#define ForcGC
 
 using System;
 using System.Threading;
@@ -30,7 +31,12 @@ namespace Samraksh.AppNote.DotNow.Avinc {
 #if EnableGCMessages
             Debug.EnableGCMessages(true);
             Debug.Print("GC messages enabled");
+#else
+            Debug.EnableGCMessages(false);
+            Debug.Print("GC messages disabled");
 #endif
+
+
 
 #if SaveWhileProfiling
             Debug.Print("Save while profiling");
@@ -39,6 +45,10 @@ namespace Samraksh.AppNote.DotNow.Avinc {
 
 #if PrintWhileProfiling
             Debug.Print("Print while profiling");
+#endif
+
+#if ForcGC
+            Debug.Print("Force garbage collection");
 #endif
 
             Debug.Print("Starting " + NumThreads + " threads" + ", " + NumItems + " items per allocation");
@@ -66,6 +76,9 @@ namespace Samraksh.AppNote.DotNow.Avinc {
 
         private static void PrintThread() {
             while (true) {
+#if ForcGC
+                Debug.GC(true); // Force garbage collection
+#endif
 #if PrintWhileProfiling
                 Debug.Print(DateTime.Now.Ticks.ToString());
 #endif
