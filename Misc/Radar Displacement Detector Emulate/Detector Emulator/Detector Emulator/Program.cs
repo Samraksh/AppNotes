@@ -13,7 +13,7 @@ namespace Detector_Emulator {
         public static void Main() {
 
             //AnalogInput.InitializeADC();
-            AnalogInput.ConfigureContinuousModeDualChannel(BufferI, BufferQ, BufferSize, 4, AdcCallback);
+            AnalogInput.ConfigureContinuousModeDualChannel(BufferI, BufferQ, BufferSize, 1000, AdcCallback);
 
             Thread.Sleep(Timeout.Infinite);
         }

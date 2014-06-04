@@ -62,9 +62,8 @@ public class ADC {
         try {
             NumberOfChannels = (ushort)_NumberOfChannels;
             ADCValue = new ushort[NumberOfChannels];
-            SamplingThread = new Thread(new ThreadStart(ReadChannels));
-            ADCPort = new SerialPort("COM1");
-            ADCPort.ReadTimeout = 0;
+            SamplingThread = new Thread(ReadChannels);
+            ADCPort = new SerialPort("COM1") {ReadTimeout = 0};
             ADCPort.Open();
             //ADCPort.DataReceived += new SerialDataReceivedEventHandler(ADCPort_DataReceived);
         }
@@ -77,6 +76,9 @@ public class ADC {
         return 1;
     }
 
+    /// <summary>
+    /// Stop ADC sampling
+    /// </summary>
     public void Stop() {
         SamplingThread.Suspend();
         BatchMode = false;
@@ -85,6 +87,13 @@ public class ADC {
         NumberOfSamples = 0;
     }
 
+    /// <summary>
+    /// Get data from ADC
+    /// </summary>
+    /// <param name="currSample">Array to hold sample</param>
+    /// <param name="startChannel"></param>
+    /// <param name="numChannels"></param>
+    /// <returns></returns>
     public int GetData(ushort[] currSample, uint startChannel, uint numChannels) {
         if (startChannel > 2 || (startChannel + numChannels > 3))
             return 0;
