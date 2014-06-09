@@ -2,13 +2,18 @@
 //#define PrintWhileProfiling
 #define SaveWhileProfiling
 //#define ForceGC
+#define NoAlloc
+#define SignalGPIO
 
 using System;
 using System.Threading;
 using Microsoft.SPOT;
+using Microsoft.SPOT.Hardware;
 
 
 namespace Samraksh.AppNote.DotNow.Avinc {
+
+    enum PinMap { Gpio01 = 58, Gpio02 = 55, Gpio03 = 53, Gpio04 = 52, Gpio05 = 51 };
 
 
     /// <summary>
@@ -51,7 +56,7 @@ namespace Samraksh.AppNote.DotNow.Avinc {
 
 #if SaveWhileProfiling
             Debug.Print("Save while profiling");
-            Debug.Print("Collecting up to " + MaxMainThreadSamples + " / " + MaxPrintThreadSamples + "print thread samples");
+            Debug.Print("Collecting up to " + MaxMainThreadSamples + " Main Thread / " + MaxPrintThreadSamples + " Print Thread samples");
             for (var i = 0; i < NumMainThreads; i++) {
                 MainThreadSync[i] = new AutoResetEvent(false);
             }
@@ -67,8 +72,14 @@ namespace Samraksh.AppNote.DotNow.Avinc {
 #else
             Debug.Print("Auto garbage collection");
 #endif
+#if NoAlloc
+            Debug.Print("No data allocation");
+#else
+            Debug.Print("Allocating " + NumBytesPerAllocation + " bytes per allocation, " + NumAllocationsPerActivation + " allocations per activation");
 
-            Debug.Print("Starting " + NumMainThreads + " main threads, " + NumBytesPerAllocation + " bytes per allocation, " + NumAllocationsPerActivation + " allocations per activation");
+#endif
+
+            Debug.Print("Starting " + NumMainThreads + " main threads");
             Debug.Print("Main Thread sleep time " + MainThreadSleep);
 
             for (var i = 0; i < NumMainThreads; i++) {
@@ -86,7 +97,6 @@ namespace Samraksh.AppNote.DotNow.Avinc {
 
             Debug.Print("Results");
             Debug.EnableGCMessages(false);
-
             for (var i = 0; i < PrintBuffer.Length; i++) {
                 if (PrintBuffer[i] == 0) {
                     break;
@@ -123,8 +133,9 @@ namespace Samraksh.AppNote.DotNow.Avinc {
             }
         }
 
+        //-----------------------------------------------------------------------------------------------
         /// <summary>
-        /// Work is done here
+        /// Work is done here 
         /// </summary>
         /// <param name="threadNum"></param>
         private static void MainThread(int threadNum) {
@@ -132,12 +143,24 @@ namespace Samraksh.AppNote.DotNow.Avinc {
             var samples = new long[MaxMainThreadSamples];
             var samplePtr = 0;
 #endif
+#if SignalGPIO
+            const Cpu.Pin Led1 = (Cpu.Pin)PinMap.Gpio01;
+            OutputPort gpio;
+            var gpioState = true;
+            gpio = new OutputPort(Led1, true);
+#endif
             //var cnt = 0;
             //Debug.Print("Starting " + threadNum);
             while (true) {
                 if (!_profiling) {
                     break;
                 }
+#if SignalGPIO
+                if (threadNum == 0) {
+                    gpioState = !gpioState;
+                    gpio.Write(gpioState);
+                }
+#endif
 #if SaveWhileProfiling
                 if (samplePtr < MaxMainThreadSamples) {
                     samples[samplePtr] = DateTime.Now.Ticks;
@@ -149,9 +172,11 @@ namespace Samraksh.AppNote.DotNow.Avinc {
                 }
 #endif
                 //if (cnt % 1000 == 0) { Debug.Print(threadNum + ", " + cnt++); }
+#if !NoAlloc
                 for (var i = 0; i < NumAllocationsPerActivation; i++) {
                     var a = new byte[NumBytesPerAllocation];
                 }
+#endif
                 Thread.Sleep(MainThreadSleep);
             }
 #if SaveWhileProfiling

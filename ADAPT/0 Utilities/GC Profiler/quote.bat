@@ -1,0 +1,1 @@
+for /f "tokens=1,* delims=]" %%a in (%1) do echo "%%a"
