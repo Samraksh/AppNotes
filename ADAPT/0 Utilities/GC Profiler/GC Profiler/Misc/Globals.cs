@@ -1,7 +1,6 @@
 using System;
-using Microsoft.SPOT;
 
-namespace Misc {
+namespace Samraksh.Profiling.DotNow.GCProfiler.Misc {
     /// <summary>
     /// 
     /// </summary>

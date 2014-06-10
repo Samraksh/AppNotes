@@ -2,20 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GC Profiler", "GC Profiler\GC Profiler.csproj", "{6B3A5756-1A5B-4975-AC1B-37FA4831E489}"
-	ProjectSection(ProjectDependencies) = postProject
-		{81604607-69DA-425E-B586-B8AFC739D3AB} = {81604607-69DA-425E-B586-B8AFC739D3AB}
-		{A160E25D-E87A-444B-AE2E-F47439C649BE} = {A160E25D-E87A-444B-AE2E-F47439C649BE}
-		{A7407E98-214E-4EA8-82C5-92C54589643C} = {A7407E98-214E-4EA8-82C5-92C54589643C}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoGCTiming", "AutoGCTiming\AutoGCTiming.csproj", "{A160E25D-E87A-444B-AE2E-F47439C649BE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoryAllocationTiming", "MemoryAllocationTiming\MemoryAllocationTiming.csproj", "{81604607-69DA-425E-B586-B8AFC739D3AB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A7407E98-214E-4EA8-82C5-92C54589643C} = {A7407E98-214E-4EA8-82C5-92C54589643C}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misc", "Misc\Misc.csproj", "{A7407E98-214E-4EA8-82C5-92C54589643C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,18 +15,6 @@ Global
 		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{A160E25D-E87A-444B-AE2E-F47439C649BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A160E25D-E87A-444B-AE2E-F47439C649BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A160E25D-E87A-444B-AE2E-F47439C649BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A160E25D-E87A-444B-AE2E-F47439C649BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81604607-69DA-425E-B586-B8AFC739D3AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81604607-69DA-425E-B586-B8AFC739D3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81604607-69DA-425E-B586-B8AFC739D3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81604607-69DA-425E-B586-B8AFC739D3AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7407E98-214E-4EA8-82C5-92C54589643C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7407E98-214E-4EA8-82C5-92C54589643C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7407E98-214E-4EA8-82C5-92C54589643C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7407E98-214E-4EA8-82C5-92C54589643C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

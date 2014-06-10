@@ -1,24 +1,24 @@
 ﻿//#define Rand
 #define Const
 
-#define InjectPersistentObjects
+//#define InjectPersistentObjects
 
 using System;
 using System.Collections;
 using Microsoft.SPOT;
-using Misc;
+using Samraksh.Profiling.DotNow.GCProfiler.Misc;
 
-namespace Samraksh.Profiling.DotNow.GCProfiler {
+namespace Samraksh.Profiling.DotNow.GCProfiler.Tests {
 
     /// <summary>
     /// 
     /// </summary>
     public class AutoGCTiming {
 
-        const int SetAsidePower = 0;
-        const int SetAsideSize = (1 << SetAsidePower);
+        const int SetAsideExp = 0;
+        const int SetAsideSize = (1 << SetAsideExp);
 
-        const int ConstAllocExp = 7;
+        const int ConstAllocExp = 0;
         const int ConstAllocSize = (1 << ConstAllocExp);
 
         const int RandLowerAllocSize = 1;

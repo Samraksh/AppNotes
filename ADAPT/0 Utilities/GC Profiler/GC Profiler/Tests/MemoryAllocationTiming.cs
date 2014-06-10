@@ -1,16 +1,14 @@
-﻿#define Rand
-//#define Const
+﻿//#define Rand
+#define Const
 
 //#define ForceGC     // force GC between pre/post tests
 
 using System;
-using System.Threading;
 using Microsoft.SPOT;
-using Misc;
 using Samraksh.Profiling.DotNow.GCProfiler.Misc;
 using Math = System.Math;
 
-namespace Samraksh.Profiling.DotNow.GCProfiler {
+namespace Samraksh.Profiling.DotNow.GCProfiler.Tests {
 
     /// <summary>
     /// 
@@ -23,7 +21,7 @@ namespace Samraksh.Profiling.DotNow.GCProfiler {
 
 #if Const
         // Amount to allocate if constant allocation is chosen
-        const int ConstAllocExp = 7;
+        const int ConstAllocExp = 9;
         const int ConstAllocSize = (1 << ConstAllocExp);
 #endif
 
@@ -143,8 +141,7 @@ namespace Samraksh.Profiling.DotNow.GCProfiler {
                     currIntervalStart = DateTime.Now.Ticks;
                     currIntervalEnd = DateTime.Now.Ticks;
                 }
-
-
+                
                 var currIntervalTicks = currIntervalEnd - currIntervalStart;
                 intervalTicks[intervalTicksPtr] = (int)currIntervalTicks;
                 intervalTicksPtr++;

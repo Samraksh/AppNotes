@@ -1,12 +1,11 @@
 using System;
 
-// From http://www.codeproject.com/KB/cs/csstatistics.aspx
-
 namespace Samraksh.Profiling.DotNow.GCProfiler.Misc {
 
     /// <summary>
-    /// 
+    /// Statistics class
     /// </summary>
+    /// <remarks>http://www.codeproject.com/KB/cs/csstatistics.aspx</remarks>
     public class Statistics {
 
         private double[] _list;
@@ -43,7 +42,7 @@ namespace Samraksh.Profiling.DotNow.GCProfiler.Misc {
                 Sort(i);
                 double valMode = i[0], helpValMode = i[0];
                 int oldCounter = 0, newCounter = 0;
-                int j = 0;
+                var j = 0;
                 for (; j <= i.Length - 1; j++)
                     if (i[j] == helpValMode) newCounter++;
                     else if (newCounter > oldCounter) {

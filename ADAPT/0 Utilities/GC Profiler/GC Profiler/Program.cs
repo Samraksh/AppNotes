@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+using Samraksh.Profiling.DotNow.GCProfiler.Tests;
 
 
 namespace Samraksh.Profiling.DotNow.GCProfiler {
