@@ -32,9 +32,9 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="AutoGCTiming.cs" />
+    <Compile Include="Tests\AutoGCTiming.cs" />
     <Compile Include="Misc\Globals.cs" />
-    <Compile Include="MemoryAllocationTiming.cs" />
+    <Compile Include="Tests\MemoryAllocationTiming.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources.Designer.cs">
