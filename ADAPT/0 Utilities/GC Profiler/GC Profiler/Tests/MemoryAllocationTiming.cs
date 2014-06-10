@@ -7,10 +7,14 @@ using System;
 using System.Threading;
 using Microsoft.SPOT;
 using Misc;
+using Samraksh.Profiling.DotNow.GCProfiler.Misc;
 using Math = System.Math;
 
 namespace Samraksh.Profiling.DotNow.GCProfiler {
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class MemoryAllocationTiming {
         
         // Set aside lets you reduce the amount of memory available to garbage collection. This affects GC timing.
@@ -30,6 +34,9 @@ namespace Samraksh.Profiling.DotNow.GCProfiler {
         const int RandAllocSizeRange = RandUpperAllocSize - RandLowerAllocSize;
 #endif
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Start() {
             
             //const int numAllocTicksPerPeriod = 7000;

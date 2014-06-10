@@ -20,8 +20,8 @@ namespace Samraksh.Profiling.DotNow.GCProfiler {
         /// </summary>
         public static void Main() {
             // Exactly one of the following should be uncommented
-            //var test = new AutoGCTiming();
-            var test = new MemoryAllocationTiming();
+            var test = new AutoGCTiming();
+            //var test = new MemoryAllocationTiming();
 
             test.Start();
         }

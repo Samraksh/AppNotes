@@ -10,6 +10,9 @@ using Misc;
 
 namespace Samraksh.Profiling.DotNow.GCProfiler {
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class AutoGCTiming {
 
         const int SetAsidePower = 0;
@@ -27,6 +30,9 @@ namespace Samraksh.Profiling.DotNow.GCProfiler {
 
         const long TicksPerMillisecond = TimeSpan.TicksPerMillisecond;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Start() {
             Debug.EnableGCMessages(true);
 

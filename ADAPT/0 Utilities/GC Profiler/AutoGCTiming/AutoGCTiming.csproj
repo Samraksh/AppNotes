@@ -36,5 +36,8 @@
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
+    <Reference Include="Misc">
+      <HintPath>..\Misc\bin\Debug\Misc.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
