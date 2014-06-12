@@ -32,6 +32,7 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="Tests\CheckClock.cs" />
     <Compile Include="Tests\AutoGCTiming.cs" />
     <Compile Include="Misc\Globals.cs" />
     <Compile Include="Tests\MemoryAllocationTiming.cs" />

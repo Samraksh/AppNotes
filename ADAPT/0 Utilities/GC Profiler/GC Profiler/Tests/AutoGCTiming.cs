@@ -2,9 +2,9 @@
 #define Const
 
 //#define InjectPersistentObjects
+//#define SuppressGCMessages
 
 using System;
-using System.Collections;
 using Microsoft.SPOT;
 using Samraksh.Profiling.DotNow.GCProfiler.Misc;
 
@@ -18,7 +18,7 @@ namespace Samraksh.Profiling.DotNow.GCProfiler.Tests {
         const int SetAsideExp = 0;
         const int SetAsideSize = (1 << SetAsideExp);
 
-        const int ConstAllocExp = 0;
+        const int ConstAllocExp = 7;
         const int ConstAllocSize = (1 << ConstAllocExp);
 
         const int RandLowerAllocSize = 1;
@@ -34,10 +34,17 @@ namespace Samraksh.Profiling.DotNow.GCProfiler.Tests {
         /// 
         /// </summary>
         public void Start() {
-            Debug.EnableGCMessages(true);
 
             Debug.Print("\nGC Profiler: AutoGCTiming");
             Debug.Print("Set aside size: " + SetAsideSize);
+#if SuppressGCMessages
+            Debug.EnableGCMessages(false);
+            Debug.Print("GC messages disabled");
+#else
+            Debug.EnableGCMessages(true);
+            Debug.Print("GC messages enabled");
+#endif
+
 #if Const
             Debug.Print("Constant Allocation Size: " + ConstAllocSize);
             var dupCheck = 0;   // check whether two tests are defined
@@ -89,7 +96,7 @@ namespace Samraksh.Profiling.DotNow.GCProfiler.Tests {
                 totTicks += currLoopTicks;
                 if (currLoopTicks > (lastLoopTime + Globals.MinGCTicks)) {
                     var meanTicks = totTicks / numLoops;
-                    Debug.Print("\n" + numLoops + ",  curr (microsec): " + currLoopTicks / Globals.TicksPerMicrosecond + " last (microsec): " + lastLoopTime / Globals.TicksPerMicrosecond+ ", mean (microsec): "+ meanTicks);
+                    Debug.Print("\n" + numLoops + ",  curr (microsec): " + currLoopTicks / Globals.TicksPerMicrosecond + " last (microsec): " + lastLoopTime / Globals.TicksPerMicrosecond + ", mean (microsec): " + meanTicks);
                     Debug.Print("Est GC time (microsec): " + (currLoopTicks - meanTicks) / Globals.TicksPerMicrosecond + "\n");
                 }
 

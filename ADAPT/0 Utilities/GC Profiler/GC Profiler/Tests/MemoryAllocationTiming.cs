@@ -1,5 +1,5 @@
-﻿//#define Rand
-#define Const
+﻿#define Rand
+//#define Const
 
 //#define ForceGC     // force GC between pre/post tests
 
@@ -21,7 +21,7 @@ namespace Samraksh.Profiling.DotNow.GCProfiler.Tests {
 
 #if Const
         // Amount to allocate if constant allocation is chosen
-        const int ConstAllocExp = 9;
+        const int ConstAllocExp = 7;
         const int ConstAllocSize = (1 << ConstAllocExp);
 #endif
 
