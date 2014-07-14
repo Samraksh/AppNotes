@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <DeployDevice>{%24GUID2%24}</DeployDevice>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ReferencePath>C:\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Assemblies\le\</ReferencePath>
-  </PropertyGroup>
-</Project>
