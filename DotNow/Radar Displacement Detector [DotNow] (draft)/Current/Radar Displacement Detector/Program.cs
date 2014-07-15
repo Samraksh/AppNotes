@@ -58,16 +58,17 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             Thread.Sleep(4000); // Wait a bit before launch
 
-            // Initialize detection
-            CumulativeCuts.Initialize();
-            MofNFilter.Initialize();
+            // Set up a thread to process sample buffers
+            //  This lets the ADC callback, AdcBuffer_Callback, finish quickly and avoids issues if processing takes too long
+            var processSampleBufferThread = new Thread(ProcessSampleBuffer);
+            processSampleBufferThread.Start();
+
+            // Initialize displacement analysis
+            Radar.DisplacementAnalysis.AnalyzeDisplacement.Initialize(DetectorParameters.SamplingIntervalMilliSec, DetectorParameters.M, DetectorParameters.N, DetectorParameters.MinCumCuts, DetectDisplacementCallback);
 
             // Start ADC sampling
             AnalogInput.InitializeADC();
             AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (uint)Ibuffer.Length, DetectorParameters.SamplingIntervalMilliSec, AdcBuffer_Callback);
-
-            var processSampleBufferThread = new Thread(ProcessSampleBuffer);
-            processSampleBufferThread.Start();
 
             Thread.Sleep(Timeout.Infinite);
         }

@@ -2,8 +2,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radar Displacement Detector", "Radar Displacement Detector\Radar Displacement Detector.csproj", "{6B3A5756-1A5B-4975-AC1B-37FA4831E489}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F} = {A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radar Displacement Analysis", "RadarDisplacementAnalysis\Radar Displacement Analysis.csproj", "{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
