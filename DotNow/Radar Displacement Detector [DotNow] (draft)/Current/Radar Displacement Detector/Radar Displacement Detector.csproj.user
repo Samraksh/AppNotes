@@ -4,4 +4,7 @@
     <DeployTransport>Emulator</DeployTransport>
     <DeployDevice>{%24GUID2%24}</DeployDevice>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sam Emulator|AnyCPU'">
+    <DeployDevice>{%24GUID2%24}</DeployDevice>
+  </PropertyGroup>
 </Project>

@@ -154,21 +154,24 @@ public class ADC {
     }
 
     void ReadChannels() {
-        byte[] readBuffer = new byte[NumberOfChannels * 2];
+        var readBuffer = new byte[NumberOfChannels * 2];
         Debug.Print("Staring to sample ADC port...");
 
         while (true) {
             if (ADCPort.IsOpen) {
                 if (ADCPort.BytesToRead >= readBuffer.Length) {
-                    int bytes_read = ADCPort.Read(readBuffer, 0, 2 * NumberOfChannels);
+                    var bytesRead = ADCPort.Read(readBuffer, 0, 2 * NumberOfChannels);
                     //Debug.Print("Thread: Reading...");
-                    if (bytes_read > 0) {
+                    if (bytesRead > 0) {
                         try {
                             ByteArrayToUShortArray(readBuffer, ADCValue, readBuffer.Length);
 
-                            for (var i = 0; i < ADCValue.Length; i++) {
-                                Debug.Print("*** Read " + ADCValue[i]);
+                            if ((_inputCtr%100) == 0) {
+                                for (var i = 0; i < ADCValue.Length; i++) {
+                                    Debug.Print("*** " +_inputCtr+" "+ ADCValue[i]);
+                                }
                             }
+                            _inputCtr++;
 
                             if (BatchMode || ContinuousMode) {
                                 for (int i = 0; i < NumberOfChannels; i++) {
@@ -204,10 +207,11 @@ public class ADC {
             //Thread.Sleep((int)(SamplingTime));
         }
     }
+    private int _inputCtr;
 
     // Helper Functions
-    void ByteArrayToUShortArray(byte[] x, ushort[] ret, int byte_length) {
-        for (int i = 0; i < byte_length / 2; i++) {
+    void ByteArrayToUShortArray(byte[] x, ushort[] ret, int byteLength) {
+        for (int i = 0; i < byteLength / 2; i++) {
             ret[i] = (ushort)(x[i * 2] << 8);
             ret[i] += x[i * 2 + 1];
         }

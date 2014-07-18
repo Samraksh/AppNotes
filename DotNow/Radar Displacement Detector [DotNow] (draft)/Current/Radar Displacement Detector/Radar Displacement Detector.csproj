@@ -87,6 +87,10 @@
       <Project>{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}</Project>
       <Name>Radar Displacement Analysis</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Samraksh.eMote.Emulator\Samraksh.eMote.Emulator.csproj">
+      <Project>{CD833822-AD8D-4D13-9A4E-9329CB180828}</Project>
+      <Name>Samraksh.eMote.Emulator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}</Project>
       <Name>Utility</Name>

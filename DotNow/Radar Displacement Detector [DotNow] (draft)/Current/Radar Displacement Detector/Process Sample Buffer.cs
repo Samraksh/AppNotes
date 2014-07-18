@@ -30,8 +30,22 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
     public static partial class RadarDisplacementDetector {
 
-        private static void DetectDisplacementCallback(bool displacing) {
+        private static void MofNConfirmationCallback(bool displacing) {
+#if Sam_Emulator
+            GpioPorts.MofNConfirmationPort.Write(displacing);
+#endif
+#if DotNow
             GpioPorts.DetectEvent.Write(displacing);
+#endif
+        }
+
+        private static void DisplacementCallback(bool displacing) {
+#if Sam_Emulator
+            GpioPorts.DisplacementPort.Write(displacing);
+#endif
+#if DotNow
+            GpioPorts.DetectEvent.Write(displacing);
+#endif
         }
 
         static int _totalTimeMs;

@@ -13,7 +13,14 @@ using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.Utility;
+
+#if DotNow
 using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
+#endif
+
+#if Sam_Emulator
+using AnalogInput = Samraksh.eMote.Emulator.AnalogInput;
+#endif
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
@@ -27,7 +34,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         private static readonly ushort[] Ibuffer = new ushort[DetectorParameters.BufferSize];
         private static readonly ushort[] Qbuffer = new ushort[DetectorParameters.BufferSize];
 
+#if DotNow
         private static readonly EmoteLcdUtil Lcd = new EmoteLcdUtil();
+#endif
 
         /// <summary>
         /// Get things started
@@ -38,7 +47,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
             VersionInfo.Init(Assembly.GetExecutingAssembly());
             Debug.Print("Radar Motion Detection " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
+#if DotNow
             Lcd.Display("radar");
+#endif
 
             Debug.Print("Power Level: " + PowerState.CurrentPowerLevel + " (16=High, 32=Med, 48=Low");
             PowerState.ChangePowerLevel(PowerLevel.High);
@@ -64,7 +75,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             processSampleBufferThread.Start();
 
             // Initialize displacement analysis
-            Radar.DisplacementAnalysis.AnalyzeDisplacement.Initialize(DetectorParameters.SamplingIntervalMilliSec, DetectorParameters.M, DetectorParameters.N, DetectorParameters.MinCumCuts, DetectDisplacementCallback);
+            Radar.DisplacementAnalysis.AnalyzeDisplacement.Initialize(DetectorParameters.SamplingIntervalMilliSec, 
+                DetectorParameters.M, DetectorParameters.N, DetectorParameters.MinCumCuts, 
+                DisplacementCallback, MofNConfirmationCallback);
 
             // Start ADC sampling
             AnalogInput.InitializeADC();
@@ -82,11 +95,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
         /// </summary>
         /// <param name="threshold"></param>
         private static void AdcBuffer_Callback(long threshold) {
-
+            _callbackCtr++;
             // Check if we're currently processing a buffer. If so, give message and return
             //  The variable _currentlyProcessingBuffer is reset in ProcessSampleBuffer.
             if (Interlocked.CompareExchange(ref _currentlyProcessingBuffer, IntBool.True, IntBool.False) == IntBool.True) {
-                Debug.Print("***************************************************************** Missed a buffer; callback #" + (++_callbackCtr));
+                Debug.Print("***************************************************************** Missed a buffer; callback #" + _callbackCtr);
                 return;
             }
 

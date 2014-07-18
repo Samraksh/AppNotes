@@ -3,34 +3,38 @@ using Microsoft.SPOT;
 
 namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
     public static partial class AnalyzeDisplacement {
-
         /// <summary>
         /// Method to call to signal major detection
         /// </summary>
         /// <param name="displacing">true iff displacing</param>
-        public delegate void DetectDisplacementCallback(bool displacing);
+        public delegate void EventCallback(bool displacing);
 
-        private static class DetectorParameters {
+        private static class ClassParameters {
             /// <summary>Number of milliseconds between samples</summary>
-            public static int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
+            public static int SamplingIntervalMilliSec;    // Larger values => fewer samples/sec
 
             /// <summary>Number of samples per second</summary>
-            public static readonly int SamplesPerSecond = 1000000 / SamplingIntervalMilliSec;
+            public static int SamplesPerSecond;
 
             /// <summary>Number of minor displacement events that must occur for displacement detection</summary>
-            public static int M = 2;
+            public static int M;
 
             /// <summary>Number of seconds for which a displacement detection can last</summary>
-            public static int N = 8;
+            public static int N;
 
             /// <summary>Minimum number of cuts (phase unwraps) that must occur for a minor displacement event</summary>
-            public static int MinCumCuts = 6;
+            public static int MinCumCuts;
 
             /// <summary>The centimeters traversed by one cut. This is a fixed characteristic of the Bumblebee; do not change this value.</summary>
             public const float CutDistanceCm = 5.2f / 2;
+
+            /// <summary>Method to call when M of N confirms displacement</summary>
+            public static EventCallback MofNConfirmationCallback;
+
+            /// <summary>Method to call when M of N confirms displacement</summary>
+            public static EventCallback DisplacementCallback;
         }
 
-        private static DetectDisplacementCallback _detectDisplacementCallback;
 
         /// <summary>
         /// Initialize displacement analysis
@@ -39,13 +43,19 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
         /// <param name="m">Minimum number of snippets having displacement to detect major displacement</param>
         /// <param name="n">Size of window snippet to check for minimum</param>
         /// <param name="minCumCuts">Minimum number of cumulative cuts for snippet displacement</param>
-        /// <param name="detectDisplacementCallback">Method to call to signal major detection start/stop</param>
-        public static void Initialize(int samplingIntervalMilliSec, int m, int n, int minCumCuts, DetectDisplacementCallback detectDisplacementCallback) {
-            DetectorParameters.SamplingIntervalMilliSec = samplingIntervalMilliSec;
-            DetectorParameters.M = m;
-            DetectorParameters.N = n;
-            DetectorParameters.MinCumCuts = minCumCuts;
-            _detectDisplacementCallback = detectDisplacementCallback;
+        /// <param name="displacementCallback">Method to call to signal displacement in a snippet</param>
+        /// <param name="mofNConfirmationCallback">Method to call to signal M of N confirmation</param>
+        public static void Initialize(int samplingIntervalMilliSec, int m, int n, int minCumCuts, EventCallback displacementCallback, EventCallback mofNConfirmationCallback) {
+            // Save parameters
+            ClassParameters.SamplingIntervalMilliSec = samplingIntervalMilliSec;
+            ClassParameters.SamplesPerSecond = 1000000 / samplingIntervalMilliSec;
+            ClassParameters.M = m;
+            ClassParameters.N = n;
+            ClassParameters.MinCumCuts = minCumCuts;
+            ClassParameters.DisplacementCallback = displacementCallback;
+            ClassParameters.MofNConfirmationCallback = mofNConfirmationCallback;
+
+            // Initialize analysis classes
             CumulativeCuts.Initialize();
             MofNFilter.Initialize();
         }
@@ -69,19 +79,22 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
             // Adjust current sample by the mean and check for a cut
             SampleData.CompSample.I = iValue - (SampleData.SampleSum.I / SampleData.SampleCounter);
             SampleData.CompSample.Q = qValue - (SampleData.SampleSum.Q / SampleData.SampleCounter);
+
             CumulativeCuts.Update(SampleData.CompSample);
 
             // Update snippet counter and see if we've reached a snippet boundary (one second)
             CumulativeCuts.SnippetCntr++;
-            if (CumulativeCuts.SnippetCntr != DetectorParameters.SamplesPerSecond) {
+            if (CumulativeCuts.SnippetCntr != ClassParameters.SamplesPerSecond) {
                 return;
             }
 
-            //Debug.Print("Snippet cntr " + MofNFilter.SnippetCntr + ", samples/sec " + DetectorParameters.SamplesPerSecond + ", samp num " + _sampNum);
+            //Debug.Print("Snippet cntr " + MofNFilter.SnippetCntr + ", samples/sec " + ClassParameters.SamplesPerSecond + ", samp num " + _sampNum);
 
             // We've collected cumulative cut data for a snippet. See if snippet displacement has occurred
             //  Displacement occurs only if there are more than MinCumCuts in the snippet
-            var displacementDetected = (System.Math.Abs(CumulativeCuts.CumCuts) >= DetectorParameters.MinCumCuts);
+            var displacementDetected = (System.Math.Abs(CumulativeCuts.CumCuts) >= ClassParameters.MinCumCuts);
+            ClassParameters.DisplacementCallback(displacementDetected);
+            Debug.Print(displacementDetected ? "* Displacement" : "*");
 
             // See if we've had displacement in N of the last M snippets
             MofNFilter.UpdateDetectionState(CumulativeCuts.SnippetNum, displacementDetected);
@@ -92,15 +105,15 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
 
             // Displacement event started
             if (MofNFilter.PrevState == DisplacementState.Inactive && MofNFilter.CurrState == DisplacementState.Displacing) {
-                _detectDisplacementCallback(true);
-                Debug.Print("\n-------------------------Detect Event started");
+                ClassParameters.MofNConfirmationCallback(true);
+                Debug.Print("\n-------------------------MofN confirmation started");
             }
 
             // Displacement event ended
             else if (MofNFilter.PrevState == DisplacementState.Displacing &&
                      MofNFilter.CurrState == DisplacementState.Inactive) {
-                _detectDisplacementCallback(false);
-                Debug.Print("\n-------------------------Detect Event ended");
+                ClassParameters.MofNConfirmationCallback(false);
+                Debug.Print("\n-------------------------MofN confirmation ended");
             }
         }
 
@@ -142,17 +155,17 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
             /// <param name="currSample"></param>
             public static void Update(Sample currSample) {
                 if (PrevSample.I == 0) {
-                    var direction = PrevSample.I * currSample.Q - currSample.I * PrevSample.Q;
+                    var dotProduct = PrevSample.I * currSample.Q - currSample.I * PrevSample.Q;
 
-                    //Debug.Print("# " + direction + "; (" + currSample.Q + "," + _prevSample.Q + "); (" + currSample.I + "," + _prevSample.I + ")");
+                    Debug.Print("# " + dotProduct + "; (" + currSample.Q + "," + PrevSample.Q + "); (" + currSample.I + "," + PrevSample.I + ")");
 
-                    if (direction < 0 && PrevSample.Q < 0 && currSample.Q > 0) {
+                    if (dotProduct < 0 && PrevSample.Q < 0 && currSample.Q > 0) {
                         CumCuts += 1;
-                        //Debug.Print("\n+= " + CumCuts + "\n");
+                        Debug.Print("\n+= " + CumCuts + "\n");
                     }
-                    else if (direction > 0 && PrevSample.Q > 0 && currSample.Q < 0) {
+                    else if (dotProduct > 0 && PrevSample.Q > 0 && currSample.Q < 0) {
                         CumCuts -= 1;
-                        //Debug.Print("\n-= " + CumCuts + "\n");
+                        Debug.Print("\n-= " + CumCuts + "\n");
                     }
                 }
 
@@ -176,10 +189,10 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
         /// </remarks>
         public static class MofNFilter {
 
-            private static readonly int M = DetectorParameters.M; // Syntactic sugar
-            private static readonly int N = DetectorParameters.N;
+            //private static readonly int M = ClassParameters.M; // Syntactic sugar
+            //private static readonly int N = ClassParameters.N;
 
-            private static readonly int[] Buff = new int[M];
+            private static int[] _buff;
             private static int _currBuffPtr;
 
             public static DisplacementState CurrState = DisplacementState.Inactive;
@@ -190,8 +203,9 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
             /// Initialize M of N filter
             /// </summary>
             public static void Initialize() {
-                for (var i = 0; i < Buff.Length; i++)
-                    Buff[i] = -N; // Any value less than -N will do
+                _buff = new int[ClassParameters.M];
+                for (var i = 0; i < _buff.Length; i++)
+                    _buff[i] = -ClassParameters.N; // Any value less than -N will do
             }
 
             /// <summary>
@@ -207,7 +221,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
                 PrevState = CurrState;
 
                 // Check if the snippet number occurred sufficiently recently
-                CurrState = (snippetNumber - Buff[_currBuffPtr] < N)
+                CurrState = (snippetNumber - _buff[_currBuffPtr] < ClassParameters.N)
                     ? DisplacementState.Displacing
                     : DisplacementState.Inactive;
 
@@ -218,9 +232,9 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
                     return;
                 }
                 Debug.Print("** displacement cuts " + CumulativeCuts.CumCuts + ", distance " +
-                            (CumulativeCuts.CumCuts * DetectorParameters.CutDistanceCm));
-                Buff[_currBuffPtr] = snippetNumber;
-                _currBuffPtr = (_currBuffPtr + 1) % M;
+                            (CumulativeCuts.CumCuts * ClassParameters.CutDistanceCm));
+                _buff[_currBuffPtr] = snippetNumber;
+                _currBuffPtr = (_currBuffPtr + 1) % ClassParameters.M;
             }
         }
 
