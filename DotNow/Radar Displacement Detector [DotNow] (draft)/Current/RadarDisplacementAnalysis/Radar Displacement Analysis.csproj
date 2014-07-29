@@ -31,18 +31,19 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DotNow|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\DotNow\</OutputPath>
-    <DefineConstants>DEBUG;TRACE,MF_FRAMEWORK_VERSION_V4_3</DefineConstants>
+    <DefineConstants>DEBUG;DotNow,TRACE,MF_FRAMEWORK_VERSION_V4_3,MF_FRAMEWORK_VERSION_V4_3</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sam Emulator|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Sam Emulator\</OutputPath>
-    <DefineConstants>DEBUG;TRACE,MF_FRAMEWORK_VERSION_V4_3</DefineConstants>
+    <DefineConstants>DEBUG;Sam_Emulator,TRACE,MF_FRAMEWORK_VERSION_V4_3,MF_FRAMEWORK_VERSION_V4_3</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,7 +58,14 @@
     <Compile Include="Support Classes.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Globals\Globals.csproj">
+      <Project>{899601D7-75E7-4213-8B91-D6F51D20DBA5}</Project>
+      <Name>Globals</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

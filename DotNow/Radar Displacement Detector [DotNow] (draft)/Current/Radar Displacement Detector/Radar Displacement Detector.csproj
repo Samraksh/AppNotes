@@ -41,6 +41,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sam Emulator|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -83,6 +84,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Globals\Globals.csproj">
+      <Project>{899601D7-75E7-4213-8B91-D6F51D20DBA5}</Project>
+      <Name>Globals</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RadarDisplacementAnalysis\Radar Displacement Analysis.csproj">
       <Project>{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}</Project>
       <Name>Radar Displacement Analysis</Name>

@@ -63,7 +63,7 @@ public class ADC {
             NumberOfChannels = (ushort)_NumberOfChannels;
             ADCValue = new ushort[NumberOfChannels];
             SamplingThread = new Thread(ReadChannels);
-            ADCPort = new SerialPort("COM1") {ReadTimeout = 0};
+            ADCPort = new SerialPort("COM1") { ReadTimeout = 0 };
             ADCPort.Open();
             //ADCPort.DataReceived += new SerialDataReceivedEventHandler(ADCPort_DataReceived);
         }
@@ -166,15 +166,17 @@ public class ADC {
                         try {
                             ByteArrayToUShortArray(readBuffer, ADCValue, readBuffer.Length);
 
-                            if ((_inputCtr%100) == 0) {
-                                for (var i = 0; i < ADCValue.Length; i++) {
-                                    Debug.Print("*** " +_inputCtr+" "+ ADCValue[i]);
-                                }
-                            }
-                            _inputCtr++;
+                            //if ((_inputCtr % 100) == 0) {
+                            //    var adcValsStr = string.Empty;
+                            //    for (var i = 0; i < ADCValue.Length; i++) {
+                            //        adcValsStr += ADCValue[i] + " ";
+                            //    }
+                            //    Debug.Print("*** " + _inputCtr + " " + adcValsStr);
+                            //}
+                            //_inputCtr++;
 
                             if (BatchMode || ContinuousMode) {
-                                for (int i = 0; i < NumberOfChannels; i++) {
+                                for (var i = 0; i < NumberOfChannels; i++) {
                                     ContinuousBuffer[CurSampleNumber * NumberOfChannels + i] = ADCValue[i];
                                 }
                                 CurSampleNumber++;

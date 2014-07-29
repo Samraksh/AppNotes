@@ -1,5 +1,6 @@
 using System;
 using Microsoft.SPOT;
+using Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
@@ -8,7 +9,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
     /// </summary>
     public static class DetectorParameters {
         /// <summary>Number of milliseconds between samples</summary>
-        public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
+        //public const int SamplingIntervalMilliSec = 4000;    // Larger values => fewer samples/sec
+        public const int SamplingIntervalMilliSec = 3000;    // Larger values => fewer samples/sec
         /// <summary>Number of samples to collect before presenting for processing</summary>
         //public const int BufferSize = 500;
         public const int BufferSize = 500;
@@ -35,7 +37,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             GpioPorts.MofNConfirmationPort.Write(displacing);
 #endif
 #if DotNow
-            GpioPorts.DetectEvent.Write(displacing);
+            Globals.GpioPorts.DetectEvent.Write(displacing);
 #endif
         }
 
@@ -44,7 +46,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             GpioPorts.DisplacementPort.Write(displacing);
 #endif
 #if DotNow
-            GpioPorts.DetectEvent.Write(displacing);
+            Globals.GpioPorts.DetectEvent.Write(displacing);
 #endif
         }
 

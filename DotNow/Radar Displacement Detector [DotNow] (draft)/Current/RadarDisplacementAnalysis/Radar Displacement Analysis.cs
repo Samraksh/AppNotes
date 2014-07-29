@@ -1,5 +1,6 @@
 using System;
 using Microsoft.SPOT;
+using Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis;
 
 namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
     public static partial class AnalyzeDisplacement {
@@ -58,6 +59,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
             // Initialize analysis classes
             CumulativeCuts.Initialize();
             MofNFilter.Initialize();
+
         }
 
         /// <summary>
@@ -72,6 +74,10 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
         /// </remarks>
         public static void Analyze(int iValue, int qValue) {
             SampleData.SampleCounter++;
+
+            //if (((SampleData.SampleCounter - 1) % 25) == 0) {
+            //    Debug.Print("@@@ " + (SampleData.SampleCounter - 1) + " " + iValue + " " + qValue);
+            //}
 
             SampleData.SampleSum.I += iValue;
             SampleData.SampleSum.Q += qValue;
@@ -128,10 +134,10 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
             public static int CumCuts;
 
             /// <summary>Counts samples to see when a snippet (one second) has been reached</summary>
-            public static int SnippetCntr = 0;
+            public static int SnippetCntr;
 
             /// <summary>Snippet Number. Incremented once per second.</summary>
-            public static int SnippetNum = 0;
+            public static int SnippetNum;
 
             /// <summary>
             /// Constructor: Initialize previous values
@@ -147,6 +153,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
             public static void Reset() {
                 CumCuts = 0;
                 SnippetCntr = 0;
+                //altCumCuts = 0;
             }
 
             /// <summary>
@@ -154,25 +161,53 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
             /// </summary>
             /// <param name="currSample"></param>
             public static void Update(Sample currSample) {
-                if (PrevSample.I == 0) {
-                    var dotProduct = PrevSample.I * currSample.Q - currSample.I * PrevSample.Q;
+                if (SampleData.SampleCounter > 1) {
 
-                    Debug.Print("# " + dotProduct + "; (" + currSample.Q + "," + PrevSample.Q + "); (" + currSample.I + "," + PrevSample.I + ")");
+                    // Signal the beginning
+                    Globals.GpioPorts.LogicJ11Pin4.Write(true);
+
+                    var dotProduct = currSample.Q * PrevSample.I - currSample.I * PrevSample.Q;
+
+                    //Debug.Print("# " + SampleData.SampleCounter + " L= " + dotProduct + "; (" + currSample.Q + "," + PrevSample.Q + "); (" + currSample.I + "," + PrevSample.I + ")");
 
                     if (dotProduct < 0 && PrevSample.Q < 0 && currSample.Q > 0) {
                         CumCuts += 1;
-                        Debug.Print("\n+= " + CumCuts + "\n");
+                        //Debug.Print("\n# " + SampleData.SampleCounter + " += " + CumCuts + " "
+                        //    + " L = " + dotProduct + "; (" + currSample.Q + "," + PrevSample.Q + "); (" + currSample.I + "," + PrevSample.I + ")");
                     }
                     else if (dotProduct > 0 && PrevSample.Q > 0 && currSample.Q < 0) {
                         CumCuts -= 1;
-                        Debug.Print("\n-= " + CumCuts + "\n");
+                        //Debug.Print("\n# " + SampleData.SampleCounter + " -= " + CumCuts + " "
+                        //    + " L = " + dotProduct + "; (" + currSample.Q + "," + PrevSample.Q + "); (" + currSample.I + "," + PrevSample.I + ")");
                     }
                 }
+
+                // Signal the end
+                Globals.GpioPorts.LogicJ11Pin4.Write(false);
+
+                ////Debug.Print("altCumCuts, CumCuts: " + altCumCuts + " " + CumCuts);
+                //var baseTicks = -(DateTime.Now.Ticks - DateTime.Now.Ticks);
+                //var beginTicks = DateTime.Now.Ticks;
+                //var signPQ = System.Math.Sign(PrevSample.Q);
+                //var signCQ = System.Math.Sign(currSample.Q);
+                //int signDotProduct;
+                //if (signCQ != 0 && signPQ != signCQ) {
+                //    signDotProduct = System.Math.Sign(PrevSample.I * currSample.Q - currSample.I * PrevSample.Q);
+                //    if (signDotProduct != 0 && signDotProduct == signPQ) { altCumCuts -= signPQ; }
+                //}
+                //var endTicks = DateTime.Now.Ticks;
+                //Debug.Print("Cut Microsec = " + ((endTicks - beginTicks - baseTicks) / 10d));
+                //if (altCumCuts != CumCuts) {
+                //    Debug.Print("##### altCumCuts != CumCuts: " + altCumCuts + " " + CumCuts);
+                //}
+
 
                 PrevSample.I = currSample.I;
                 PrevSample.Q = currSample.Q;
             }
         }
+
+        //private static int altCumCuts = 0;
 
         /// <summary>
         /// Check if, in the last N seconds, there were M seconds in which displacement occurred

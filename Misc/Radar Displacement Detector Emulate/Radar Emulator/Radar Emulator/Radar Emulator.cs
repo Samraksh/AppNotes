@@ -84,7 +84,7 @@ namespace Samraksh.eMote.Radar.Emulator {
                     }
                 }
                 _emulatorComm.SendToADC(vals, 2);
-                PrintVals(vals, 100);
+                PrintVals(vals, 25);
                 Thread.Sleep(SampleTime / 1000);
             }
             //while (pos < binRdr.BaseStream.Length) {
