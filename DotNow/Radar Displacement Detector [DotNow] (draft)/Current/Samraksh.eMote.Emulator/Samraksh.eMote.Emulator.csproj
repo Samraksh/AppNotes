@@ -42,8 +42,14 @@
     <Compile Include="ADC.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
-    <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="System.IO" />
+    <Reference Include="Microsoft.SPOT.Hardware.SerialPort">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Native">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.IO">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
 </Project>

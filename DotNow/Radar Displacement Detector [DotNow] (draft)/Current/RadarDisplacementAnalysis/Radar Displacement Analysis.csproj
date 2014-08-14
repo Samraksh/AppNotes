@@ -58,8 +58,11 @@
     <Compile Include="Support Classes.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Hardware" />
+    <Reference Include="Microsoft.SPOT.Hardware">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.SPOT.Native">
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

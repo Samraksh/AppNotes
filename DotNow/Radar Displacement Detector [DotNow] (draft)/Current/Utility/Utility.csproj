@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native">
+      <Private>False</Private>
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow">
       <HintPath>..\Radar Displacement Detector\eMote\DLLs\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>

@@ -5,8 +5,8 @@
     <DeployDevice>{%24GUID2%24}</DeployDevice>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sam Emulator|AnyCPU'">
-    <DeployDevice>COM9</DeployDevice>
-    <DeployTransport>Serial</DeployTransport>
+    <DeployDevice>{%24GUID2%24}</DeployDevice>
+    <DeployTransport>Emulator</DeployTransport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DotNow|AnyCPU'">
     <DeployTransport>Serial</DeployTransport>

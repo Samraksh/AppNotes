@@ -12,16 +12,16 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
         /// </summary>
         public static class GpioPorts {
 #if Sam_Emulator
-        public static Cpu.Pin Led1Pin = 0;
-        public static Cpu.Pin Led2Pin = (Cpu.Pin)1;
-        public static Cpu.Pin Led3Pin = (Cpu.Pin)2;
-        public static Cpu.Pin Button1Pin = (Cpu.Pin)3;
-        public static Cpu.Pin Button2Pin = (Cpu.Pin)4;
-        public static Cpu.Pin Button3Pin = (Cpu.Pin)5;
-        /// <summary>On iff snippet displacement</summary>
-        public static OutputPort DisplacementPort = new OutputPort(Led1Pin, false);
-        /// <summary>On iff MofN confirms displacement</summary>
-        public static OutputPort MofNConfirmationPort = new OutputPort(Led2Pin, false);
+            public static Cpu.Pin Led1Pin = 0;
+            public static Cpu.Pin Led2Pin = (Cpu.Pin)1;
+            public static Cpu.Pin Led3Pin = (Cpu.Pin)2;
+            public static Cpu.Pin Button1Pin = (Cpu.Pin)3;
+            public static Cpu.Pin Button2Pin = (Cpu.Pin)4;
+            public static Cpu.Pin Button3Pin = (Cpu.Pin)5;
+            /// <summary>On iff snippet displacement</summary>
+            public static OutputPort DisplacementPort = new OutputPort(Led1Pin, false);
+            /// <summary>On iff MofN confirms displacement</summary>
+            public static OutputPort MofNConfirmationPort = new OutputPort(Led2Pin, false);
 #endif
 #if DotNow
             /// <summary>Indicate when sample is processed</summary>
@@ -36,6 +36,17 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
             /// <summary>For a logic analyzer</summary>
             public static OutputPort LogicJ11Pin4 = new OutputPort(Pins.GPIO_J11_PIN4, false);
 #endif
+        }
+
+        /// <summary>
+        /// Right-align a number
+        /// </summary>
+        /// <param name="val"></param>
+        /// <param name="pad"></param>
+        /// <returns></returns>
+        public static string AlignRight(int val, string pad) {
+            var valStr = val.ToString();
+            return valStr == string.Empty ? pad : (pad + val).Substring(valStr.Length, pad.Length);
         }
     }
 }

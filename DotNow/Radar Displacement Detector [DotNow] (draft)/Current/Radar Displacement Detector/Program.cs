@@ -57,7 +57,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Debug.Print("Bytes free: " + Debug.GC(true));
 
             Debug.Print("Parameters");
-            Debug.Print("   SamplingIntervalMilliSec " + DetectorParameters.SamplingIntervalMilliSec);
+            Debug.Print("   SamplingIntervalMicroSec " + DetectorParameters.SamplingIntervalMicroSec);
             Debug.Print("   BufferSize " + DetectorParameters.BufferSize);
             Debug.Print("   SamplesPerSecond " + DetectorParameters.SamplesPerSecond);
             Debug.Print("   CallbackIntervalMs " + DetectorParameters.CallbackIntervalMs);
@@ -66,6 +66,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             Debug.Print("   MinCumCuts " + DetectorParameters.MinCumCuts);
             Debug.Print("   CutDistCm " + DetectorParameters.CutDistanceCm);
             Debug.Print("");
+            Debug.Print("Snippet CumCuts; #####=M of N confirmation");
 
             Thread.Sleep(4000); // Wait a bit before launch
 
@@ -75,13 +76,13 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
             processSampleBufferThread.Start();
 
             // Initialize displacement analysis
-            Radar.DisplacementAnalysis.AnalyzeDisplacement.Initialize(DetectorParameters.SamplingIntervalMilliSec, 
+            Radar.DisplacementAnalysis.AnalyzeDisplacement.Initialize(DetectorParameters.SamplingIntervalMicroSec, 
                 DetectorParameters.M, DetectorParameters.N, DetectorParameters.MinCumCuts, 
                 DisplacementCallback, MofNConfirmationCallback);
 
             // Start ADC sampling
             AnalogInput.InitializeADC();
-            AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (uint)Ibuffer.Length, DetectorParameters.SamplingIntervalMilliSec, AdcBuffer_Callback);
+            AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (uint)Ibuffer.Length, DetectorParameters.SamplingIntervalMicroSec, AdcBuffer_Callback);
 
             Thread.Sleep(Timeout.Infinite);
         }

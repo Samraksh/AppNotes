@@ -25,7 +25,7 @@ namespace Samraksh.eMote.Radar.Emulator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("IQIQIQ")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string FileFormat {
             get {
                 return ((string)(this["FileFormat"]));
@@ -37,7 +37,7 @@ namespace Samraksh.eMote.Radar.Emulator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("256")]
         public string BlockSize {
             get {
                 return ((string)(this["BlockSize"]));
@@ -56,6 +56,42 @@ namespace Samraksh.eMote.Radar.Emulator.Properties {
             }
             set {
                 this["FileName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public string AmountOfEndPadding {
+            get {
+                return ((string)(this["AmountOfEndPadding"]));
+            }
+            set {
+                this["AmountOfEndPadding"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PaddingType {
+            get {
+                return ((string)(this["PaddingType"]));
+            }
+            set {
+                this["PaddingType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3000")]
+        public string SampleIntervalMicroSec {
+            get {
+                return ((string)(this["SampleIntervalMicroSec"]));
+            }
+            set {
+                this["SampleIntervalMicroSec"] = value;
             }
         }
     }

@@ -1,0 +1,4572 @@
+14:34:49.278 :: CORE :: Starting Emulation...
+14:34:49.278 :: CORE :: /******Samraksh NETMF4.3 Emulator, verion 0.3******/
+14:34:49.301 :: MFAPP :: 
+TinyCLR (Build 4.3.0.0)
+
+
+14:34:49.302 :: MFAPP :: Starting...
+
+14:34:49.312 :: CORE :: Found Emulator ADC port : Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+14:34:49.313 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+14:34:49.313 :: CORE :: I can write to ADC
+14:34:49.313 :: CORE :: Found Emulator USART port : Usart2
+14:34:49.313 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+14:34:49.313 :: CORE :: I can write to Emulator Serial Port
+14:34:49.315 :: PHYCOMM :: The server is running at port: 47000...
+14:34:49.315 :: PHYCOMM :: The local End point is  :127.0.0.1:47000
+14:34:49.315 :: PHYCOMM :: Starting thread to accept connections.....
+14:34:49.316 :: CORE :: Watching for communication from Model..
+14:34:49.318 :: PHYCOMM :: Waiting for connection...
+14:34:49.321 :: MFAPP :: Created EE.
+
+14:34:49.323 :: MFAPP :: Started Hardware.
+
+14:34:49.453 :: MFAPP :: Found debugger!
+
+14:34:50.867 :: MFAPP ::    Assembly: Microsoft.SPOT.Graphics (4.3.0.0)   (392 RAM - 2268 ROM - 1357 METADATA)
+
+
+14:34:50.872 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+14:34:50.877 :: MFAPP ::    TypeRef        =       24 bytes (       6 elements)
+
+14:34:50.882 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:50.887 :: MFAPP ::    MethodRef      =       20 bytes (       5 elements)
+
+14:34:50.891 :: MFAPP ::    TypeDef        =       40 bytes (       5 elements)
+
+14:34:50.895 :: MFAPP ::    FieldDef       =       16 bytes (       8 elements)
+
+14:34:50.899 :: MFAPP ::    MethodDef      =       96 bytes (      48 elements)
+
+14:34:50.905 :: MFAPP :: 
+
+14:34:50.910 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:50.916 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:50.921 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+14:34:50.927 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+14:34:50.932 :: MFAPP ::    Resources Data  =        0 bytes
+
+14:34:50.937 :: MFAPP ::    Strings         =      537 bytes
+
+14:34:50.942 :: MFAPP ::    Signatures      =      293 bytes
+
+14:34:50.948 :: MFAPP ::    ByteCode        =      242 bytes
+
+14:34:50.953 :: MFAPP :: 
+
+
+14:34:50.958 :: MFAPP ::    Assembly: Microsoft.SPOT.Hardware.SerialPort (4.3.0.0)   (548 RAM - 3608 ROM - 1697 METADATA)
+
+
+14:34:50.960 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+14:34:50.966 :: MFAPP ::    TypeRef        =      100 bytes (      25 elements)
+
+14:34:50.971 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:50.975 :: MFAPP ::    MethodRef      =       88 bytes (      22 elements)
+
+14:34:50.979 :: MFAPP ::    TypeDef        =       16 bytes (       2 elements)
+
+14:34:50.983 :: MFAPP ::    FieldDef       =       32 bytes (      16 elements)
+
+14:34:50.987 :: MFAPP ::    MethodDef      =      108 bytes (      54 elements)
+
+14:34:50.991 :: MFAPP :: 
+
+14:34:50.996 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:51.000 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:51.005 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+14:34:51.009 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+14:34:51.014 :: MFAPP ::    Resources Data  =        0 bytes
+
+14:34:51.018 :: MFAPP ::    Strings         =      667 bytes
+
+14:34:51.022 :: MFAPP ::    Signatures      =      257 bytes
+
+14:34:51.026 :: MFAPP ::    ByteCode        =     1114 bytes
+
+14:34:51.031 :: MFAPP :: 
+
+
+14:34:51.036 :: MFAPP ::    Assembly: Microsoft.SPOT.Hardware (4.3.0.0)   (1996 RAM - 14288 ROM - 8587 METADATA)
+
+
+14:34:51.041 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+14:34:51.045 :: MFAPP ::    TypeRef        =      132 bytes (      33 elements)
+
+14:34:51.049 :: MFAPP ::    FieldRef       =       24 bytes (       6 elements)
+
+14:34:51.055 :: MFAPP ::    MethodRef      =      132 bytes (      33 elements)
+
+14:34:51.059 :: MFAPP ::    TypeDef        =      536 bytes (      67 elements)
+
+14:34:51.064 :: MFAPP ::    FieldDef       =      208 bytes (     104 elements)
+
+14:34:51.070 :: MFAPP ::    MethodDef      =      544 bytes (     272 elements)
+
+14:34:51.075 :: MFAPP :: 
+
+14:34:51.079 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:51.084 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:51.089 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+14:34:51.093 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+14:34:51.098 :: MFAPP ::    Resources Data  =        0 bytes
+
+14:34:51.103 :: MFAPP ::    Strings         =     2061 bytes
+
+14:34:51.108 :: MFAPP ::    Signatures      =     1195 bytes
+
+14:34:51.112 :: MFAPP ::    ByteCode        =     3511 bytes
+
+14:34:51.117 :: MFAPP :: 
+
+
+14:34:51.123 :: MFAPP ::    Assembly: Microsoft.SPOT.Native (4.3.0.0)   (1248 RAM - 7468 ROM - 4862 METADATA)
+
+
+14:34:51.128 :: MFAPP ::    AssemblyRef    =        4 bytes (       1 elements)
+
+14:34:51.134 :: MFAPP ::    TypeRef        =       88 bytes (      22 elements)
+
+14:34:51.140 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:51.146 :: MFAPP ::    MethodRef      =       60 bytes (      15 elements)
+
+14:34:51.153 :: MFAPP ::    TypeDef        =      368 bytes (      46 elements)
+
+14:34:51.159 :: MFAPP ::    FieldDef       =      220 bytes (     110 elements)
+
+14:34:51.166 :: MFAPP ::    MethodDef      =      244 bytes (     122 elements)
+
+14:34:51.174 :: MFAPP :: 
+
+14:34:51.181 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:51.187 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:51.194 :: MFAPP ::    Resources       =       72 bytes (       9 elements)
+
+14:34:51.200 :: MFAPP ::    Resources Files =        8 bytes (       1 elements)
+
+14:34:51.206 :: MFAPP ::    Resources Data  =      747 bytes
+
+14:34:51.211 :: MFAPP ::    Strings         =     1099 bytes
+
+14:34:51.216 :: MFAPP ::    Signatures      =      618 bytes
+
+14:34:51.221 :: MFAPP ::    ByteCode        =      535 bytes
+
+14:34:51.226 :: MFAPP :: 
+
+
+14:34:51.231 :: MFAPP ::    Assembly: mscorlib (4.3.0.0)   (4256 RAM - 41324 ROM - 21846 METADATA)
+
+
+14:34:51.236 :: MFAPP ::    AssemblyRef    =        0 bytes (       0 elements)
+
+14:34:51.242 :: MFAPP ::    TypeRef        =        0 bytes (       0 elements)
+
+14:34:51.247 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:51.253 :: MFAPP ::    MethodRef      =        0 bytes (       0 elements)
+
+14:34:51.258 :: MFAPP ::    TypeDef        =     1152 bytes (     144 elements)
+
+14:34:51.264 :: MFAPP ::    FieldDef       =      300 bytes (     149 elements)
+
+14:34:51.270 :: MFAPP ::    MethodDef      =     1776 bytes (     888 elements)
+
+14:34:51.276 :: MFAPP :: 
+
+14:34:51.283 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:51.288 :: MFAPP ::    TypeSpec        =       16 bytes (       4 elements)
+
+14:34:51.291 :: MFAPP ::    Resources       =      232 bytes (      29 elements)
+
+14:34:51.295 :: MFAPP ::    Resources Files =       16 bytes (       2 elements)
+
+14:34:51.298 :: MFAPP ::    Resources Data  =      437 bytes
+
+14:34:51.302 :: MFAPP ::    Strings         =     2643 bytes
+
+14:34:51.307 :: MFAPP ::    Signatures      =     2974 bytes
+
+14:34:51.312 :: MFAPP ::    ByteCode        =    15985 bytes
+
+14:34:51.317 :: MFAPP :: 
+
+
+14:34:51.321 :: MFAPP ::    Assembly: Radar Displacement Detector (1.1.5310.24163)   (560 RAM - 3632 ROM - 1272 METADATA)
+
+
+14:34:51.325 :: MFAPP ::    AssemblyRef    =       24 bytes (       6 elements)
+
+14:34:51.330 :: MFAPP ::    TypeRef        =      124 bytes (      31 elements)
+
+14:34:51.334 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:51.339 :: MFAPP ::    MethodRef      =      160 bytes (      40 elements)
+
+14:34:51.343 :: MFAPP ::    TypeDef        =       48 bytes (       6 elements)
+
+14:34:51.348 :: MFAPP ::    FieldDef       =       32 bytes (      16 elements)
+
+14:34:51.353 :: MFAPP ::    MethodDef      =       20 bytes (      10 elements)
+
+14:34:51.357 :: MFAPP :: 
+
+14:34:51.363 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:51.375 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:51.383 :: MFAPP ::    Resources       =       16 bytes (       2 elements)
+
+14:34:51.391 :: MFAPP ::    Resources Files =        8 bytes (       1 elements)
+
+14:34:51.398 :: MFAPP ::    Resources Data  =       13 bytes
+
+14:34:51.405 :: MFAPP ::    Strings         =     1348 bytes
+
+14:34:51.414 :: MFAPP ::    Signatures      =      200 bytes
+
+14:34:51.421 :: MFAPP ::    ByteCode        =      829 bytes
+
+14:34:51.428 :: MFAPP :: 
+
+
+14:34:51.436 :: MFAPP ::    Assembly: Samraksh_eMote_DotNow (1.0.0.1)   (608 RAM - 4408 ROM - 2157 METADATA)
+
+
+14:34:51.443 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+14:34:51.450 :: MFAPP ::    TypeRef        =       48 bytes (      12 elements)
+
+14:34:51.459 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:51.467 :: MFAPP ::    MethodRef      =       32 bytes (       8 elements)
+
+14:34:51.477 :: MFAPP ::    TypeDef        =      120 bytes (      15 elements)
+
+14:34:51.487 :: MFAPP ::    FieldDef       =       56 bytes (      27 elements)
+
+14:34:51.497 :: MFAPP ::    MethodDef      =      136 bytes (      68 elements)
+
+14:34:51.505 :: MFAPP :: 
+
+14:34:51.514 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:51.524 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:51.532 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+14:34:51.540 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+14:34:51.547 :: MFAPP ::    Resources Data  =        0 bytes
+
+14:34:51.556 :: MFAPP ::    Strings         =      895 bytes
+
+14:34:51.561 :: MFAPP ::    Signatures      =      309 bytes
+
+14:34:51.573 :: MFAPP ::    ByteCode        =     1228 bytes
+
+14:34:51.583 :: MFAPP :: 
+
+
+14:34:51.594 :: MFAPP ::    Assembly: RadarDisplacementAnalysis (1.0.0.0)   (360 RAM - 2176 ROM - 819 METADATA)
+
+
+14:34:51.603 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+14:34:51.612 :: MFAPP ::    TypeRef        =       40 bytes (      10 elements)
+
+14:34:51.621 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:51.631 :: MFAPP ::    MethodRef      =       16 bytes (       4 elements)
+
+14:34:51.641 :: MFAPP ::    TypeDef        =       64 bytes (       8 elements)
+
+14:34:51.649 :: MFAPP ::    FieldDef       =       44 bytes (      21 elements)
+
+14:34:51.662 :: MFAPP ::    MethodDef      =       32 bytes (      15 elements)
+
+14:34:51.674 :: MFAPP :: 
+
+14:34:51.684 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:51.693 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:51.703 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+14:34:51.715 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+14:34:51.724 :: MFAPP ::    Resources Data  =        0 bytes
+
+14:34:51.732 :: MFAPP ::    Strings         =      583 bytes
+
+14:34:51.740 :: MFAPP ::    Signatures      =       83 bytes
+
+14:34:51.749 :: MFAPP ::    ByteCode        =      646 bytes
+
+14:34:51.758 :: MFAPP :: 
+
+
+14:34:51.766 :: MFAPP ::    Assembly: Samraksh.eMote.Emulator (4.3.0.0)   (504 RAM - 3224 ROM - 1319 METADATA)
+
+
+14:34:51.773 :: MFAPP ::    AssemblyRef    =       12 bytes (       3 elements)
+
+14:34:51.786 :: MFAPP ::    TypeRef        =       76 bytes (      19 elements)
+
+14:34:51.796 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:51.807 :: MFAPP ::    MethodRef      =       88 bytes (      22 elements)
+
+14:34:51.817 :: MFAPP ::    TypeDef        =       72 bytes (       9 elements)
+
+14:34:51.825 :: MFAPP ::    FieldDef       =       48 bytes (      24 elements)
+
+14:34:51.835 :: MFAPP ::    MethodDef      =       44 bytes (      22 elements)
+
+14:34:51.844 :: MFAPP :: 
+
+14:34:51.852 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+14:34:51.860 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:51.868 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+14:34:51.876 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+14:34:51.884 :: MFAPP ::    Resources Data  =        0 bytes
+
+14:34:51.891 :: MFAPP ::    Strings         =      833 bytes
+
+14:34:51.899 :: MFAPP ::    Signatures      =      195 bytes
+
+14:34:51.907 :: MFAPP ::    ByteCode        =      942 bytes
+
+14:34:51.915 :: MFAPP :: 
+
+
+14:34:51.922 :: MFAPP ::    Assembly: Utility (0.0.5309.24937)   (332 RAM - 1736 ROM - 623 METADATA)
+
+
+14:34:51.930 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+14:34:51.938 :: MFAPP ::    TypeRef        =       48 bytes (      12 elements)
+
+14:34:51.946 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+14:34:51.954 :: MFAPP ::    MethodRef      =       84 bytes (      21 elements)
+
+14:34:51.963 :: MFAPP ::    TypeDef        =       24 bytes (       3 elements)
+
+14:34:51.971 :: MFAPP ::    FieldDef       =        4 bytes (       1 elements)
+
+14:34:51.980 :: MFAPP ::    MethodDef      =       16 bytes (       8 elements)
+
+14:34:51.988 :: MFAPP :: 
+
+14:34:51.996 :: MFAPP ::    Attributes      =       16 bytes (       2 elements)
+
+14:34:52.004 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+14:34:52.013 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+14:34:52.021 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+14:34:52.029 :: MFAPP ::    Resources Data  =        0 bytes
+
+14:34:52.038 :: MFAPP ::    Strings         =      236 bytes
+
+14:34:52.046 :: MFAPP ::    Signatures      =      111 bytes
+
+14:34:52.055 :: MFAPP ::    ByteCode        =      752 bytes
+
+14:34:52.064 :: MFAPP :: 
+
+
+14:34:52.073 :: MFAPP :: Loading Deployment Assemblies.
+
+14:34:52.083 :: MFAPP :: ERROR: Could not find device for DEPLOYMENT usage
+
+14:34:52.094 :: MFAPP :: Resolving.
+
+14:34:52.106 :: MFAPP :: 
+Total: (9288 RAM - 84132 ROM - 44539 METADATA)
+
+
+14:34:52.115 :: MFAPP ::    AssemblyRef    =       88 bytes (      22 elements)
+
+14:34:52.125 :: MFAPP ::    TypeRef        =      680 bytes (     170 elements)
+
+14:34:52.135 :: MFAPP ::    FieldRef       =       24 bytes (       6 elements)
+
+14:34:52.144 :: MFAPP ::    MethodRef      =      680 bytes (     170 elements)
+
+14:34:52.153 :: MFAPP ::    TypeDef        =     2440 bytes (     305 elements)
+
+14:34:52.163 :: MFAPP ::    FieldDef       =      960 bytes (     476 elements)
+
+14:34:52.172 :: MFAPP ::    MethodDef      =     3016 bytes (    1507 elements)
+
+14:34:52.180 :: MFAPP :: 
+
+14:34:52.190 :: MFAPP ::    DebuggingInfo  =     1516 bytes
+
+14:34:52.199 :: MFAPP :: 
+
+14:34:52.208 :: MFAPP ::    Attributes      =       16 bytes (       2 elements)
+
+14:34:52.217 :: MFAPP ::    TypeSpec        =       16 bytes (       4 elements)
+
+14:34:52.229 :: MFAPP ::    Resources Files =       96 bytes (       4 elements)
+
+14:34:52.238 :: MFAPP ::    Resources       =      320 bytes (      40 elements)
+
+14:34:52.247 :: MFAPP ::    Resources Data  =     1197 bytes
+
+14:34:52.256 :: MFAPP ::    Strings         =    10902 bytes
+
+14:34:52.265 :: MFAPP ::    Signatures      =     6235 bytes
+
+14:34:52.274 :: MFAPP ::    ByteCode        =    25784 bytes
+
+14:34:52.284 :: MFAPP :: 
+
+
+14:34:52.297 :: MFAPP :: Ready.
+
+14:34:57.540 :: MFAPP :: Radar Motion Detection 1.1 (07/16/2014 13:25:26)
+
+14:34:57.572 :: MFAPP :: Power Level: 16 (16=High, 32=Med, 48=Low
+
+14:34:57.590 :: MFAPP :: Bytes free: 501192
+
+14:34:57.602 :: MFAPP :: Parameters
+
+14:34:57.612 :: MFAPP ::    SamplingIntervalMilliSec 4000
+
+14:34:57.622 :: MFAPP ::    BufferSize 500
+
+14:34:57.632 :: MFAPP ::    SamplesPerSecond 250
+
+14:34:57.642 :: MFAPP ::    CallbackIntervalMs 2000
+
+14:34:57.651 :: MFAPP ::    M 2
+
+14:34:57.661 :: MFAPP ::    N 8
+
+14:34:57.670 :: MFAPP ::    MinCumCuts 6
+
+14:34:57.682 :: MFAPP ::    CutDistCm 2.5999999
+
+14:34:57.693 :: MFAPP :: 
+
+14:35:02.566 :: MFAPP :: Initializing ADC...
+
+14:35:03.483 :: MFAPP :: Staring to sample ADC port...
+
+14:35:03.515 :: MFAPP :: Completed ConfigureContinuousModeDualChannel 1
+
+14:35:06.235 :: PHYCOMM :: Connection accepted from 127.0.0.1:52121
+14:35:06.251 :: PHYCOMM :: Recieved...
+14:35:06.266 :: PHYCOMM :: Sent Acknowledgement
+14:35:15.092 :: MFAPP :: *** Read 2793
+
+14:35:15.108 :: MFAPP :: *** Read 2855
+
+14:35:15.125 :: MFAPP :: *** Read 2819
+
+14:35:15.135 :: MFAPP :: *** Read 2855
+
+14:35:15.150 :: MFAPP :: *** Read 2787
+
+14:35:15.161 :: MFAPP :: *** Read 2909
+
+14:35:15.175 :: MFAPP :: *** Read 2787
+
+14:35:15.185 :: MFAPP :: *** Read 2867
+
+14:35:15.200 :: MFAPP :: *** Read 2751
+
+14:35:15.210 :: MFAPP :: *** Read 2799
+
+14:35:15.225 :: MFAPP :: *** Read 2737
+
+14:35:15.235 :: MFAPP :: *** Read 2767
+
+14:35:15.250 :: MFAPP :: *** Read 2693
+
+14:35:15.261 :: MFAPP :: *** Read 2819
+
+14:35:15.275 :: MFAPP :: *** Read 2723
+
+14:35:15.286 :: MFAPP :: *** Read 2831
+
+14:35:15.300 :: MFAPP :: *** Read 2777
+
+14:35:15.310 :: MFAPP :: *** Read 2801
+
+14:35:15.326 :: MFAPP :: *** Read 2779
+
+14:35:15.337 :: MFAPP :: *** Read 2849
+
+14:35:15.351 :: MFAPP :: *** Read 2769
+
+14:35:15.362 :: MFAPP :: *** Read 2875
+
+14:35:15.376 :: MFAPP :: *** Read 2771
+
+14:35:15.386 :: MFAPP :: *** Read 2777
+
+14:35:15.401 :: MFAPP :: *** Read 2785
+
+14:35:15.411 :: MFAPP :: *** Read 2795
+
+14:35:15.426 :: MFAPP :: *** Read 2793
+
+14:35:15.436 :: MFAPP :: *** Read 2799
+
+14:35:15.451 :: MFAPP :: *** Read 2737
+
+14:35:15.462 :: MFAPP :: *** Read 2783
+
+14:35:15.476 :: MFAPP :: *** Read 2751
+
+14:35:15.486 :: MFAPP :: *** Read 2721
+
+14:35:15.506 :: MFAPP :: *** Read 2725
+
+14:35:15.516 :: MFAPP :: *** Read 2763
+
+14:35:15.531 :: MFAPP :: *** Read 2707
+
+14:35:15.542 :: MFAPP :: *** Read 2839
+
+14:35:15.557 :: MFAPP :: *** Read 2665
+
+14:35:15.568 :: MFAPP :: *** Read 2799
+
+14:35:15.583 :: MFAPP :: *** Read 2669
+
+14:35:15.593 :: MFAPP :: *** Read 2811
+
+14:35:15.609 :: MFAPP :: *** Read 2747
+
+14:35:15.621 :: MFAPP :: *** Read 2767
+
+14:35:15.641 :: MFAPP :: *** Read 2669
+
+14:35:15.653 :: MFAPP :: *** Read 2817
+
+14:35:15.669 :: MFAPP :: *** Read 2675
+
+14:35:15.680 :: MFAPP :: *** Read 2847
+
+14:35:15.696 :: MFAPP :: *** Read 2711
+
+14:35:15.706 :: MFAPP :: *** Read 2791
+
+14:35:15.721 :: MFAPP :: *** Read 2623
+
+14:35:15.733 :: MFAPP :: *** Read 2791
+
+14:35:15.750 :: MFAPP :: *** Read 2643
+
+14:35:15.761 :: MFAPP :: *** Read 2803
+
+14:35:15.776 :: MFAPP :: *** Read 2667
+
+14:35:15.787 :: MFAPP :: *** Read 2843
+
+14:35:15.802 :: MFAPP :: *** Read 2699
+
+14:35:15.813 :: MFAPP :: *** Read 2859
+
+14:35:15.828 :: MFAPP :: *** Read 2651
+
+14:35:15.840 :: MFAPP :: *** Read 2849
+
+14:35:15.856 :: MFAPP :: *** Read 2705
+
+14:35:15.869 :: MFAPP :: *** Read 2803
+
+14:35:15.887 :: MFAPP :: *** Read 2741
+
+14:35:15.899 :: MFAPP :: *** Read 2753
+
+14:35:15.916 :: MFAPP :: *** Read 2755
+
+14:35:15.927 :: MFAPP :: *** Read 2749
+
+14:35:15.942 :: MFAPP :: *** Read 2809
+
+14:35:15.953 :: MFAPP :: *** Read 2827
+
+14:35:15.971 :: MFAPP :: *** Read 2659
+
+14:35:15.983 :: MFAPP :: *** Read 2787
+
+14:35:15.999 :: MFAPP :: *** Read 2629
+
+14:35:16.011 :: MFAPP :: *** Read 2791
+
+14:35:16.029 :: MFAPP :: *** Read 2667
+
+14:35:16.042 :: MFAPP :: *** Read 2763
+
+14:35:16.059 :: MFAPP :: *** Read 2689
+
+14:35:16.071 :: MFAPP :: *** Read 2719
+
+14:35:16.087 :: MFAPP :: *** Read 2701
+
+14:35:16.100 :: MFAPP :: *** Read 2737
+
+14:35:16.119 :: MFAPP :: *** Read 2709
+
+14:35:16.131 :: MFAPP :: *** Read 2775
+
+14:35:16.150 :: MFAPP :: *** Read 2735
+
+14:35:16.163 :: MFAPP :: *** Read 2767
+
+14:35:16.179 :: MFAPP :: *** Read 2691
+
+14:35:16.190 :: MFAPP :: *** Read 2751
+
+14:35:16.206 :: MFAPP :: *** Read 2627
+
+14:35:16.218 :: MFAPP :: *** Read 2643
+
+14:35:16.234 :: MFAPP :: *** Read 2725
+
+14:35:16.248 :: MFAPP :: *** Read 2783
+
+14:35:16.265 :: MFAPP :: *** Read 2733
+
+14:35:16.277 :: MFAPP :: *** Read 2755
+
+14:35:16.294 :: MFAPP :: *** Read 2749
+
+14:35:16.306 :: MFAPP :: *** Read 2759
+
+14:35:16.324 :: MFAPP :: *** Read 2641
+
+14:35:16.336 :: MFAPP :: *** Read 2709
+
+14:35:16.353 :: MFAPP :: *** Read 2653
+
+14:35:16.365 :: MFAPP :: *** Read 2735
+
+14:35:16.382 :: MFAPP :: *** Read 2681
+
+14:35:16.394 :: MFAPP :: *** Read 2721
+
+14:35:16.410 :: MFAPP :: *** Read 2691
+
+14:35:16.422 :: MFAPP :: *** Read 2647
+
+14:35:16.438 :: MFAPP :: *** Read 2699
+
+14:35:16.450 :: MFAPP :: *** Read 2629
+
+14:35:16.466 :: MFAPP :: *** Read 2795
+
+14:35:16.478 :: MFAPP :: *** Read 2595
+
+14:35:16.493 :: MFAPP :: *** Read 2751
+
+14:35:16.505 :: MFAPP :: *** Read 2607
+
+14:35:16.521 :: MFAPP :: *** Read 2731
+
+14:35:16.533 :: MFAPP :: *** Read 2671
+
+14:35:16.549 :: MFAPP :: *** Read 2721
+
+14:35:16.560 :: MFAPP :: *** Read 2639
+
+14:35:16.576 :: MFAPP :: *** Read 2741
+
+14:35:16.588 :: MFAPP :: *** Read 2553
+
+14:35:16.603 :: MFAPP :: *** Read 2755
+
+14:35:16.615 :: MFAPP :: *** Read 2569
+
+14:35:16.631 :: MFAPP :: *** Read 2761
+
+14:35:16.643 :: MFAPP :: *** Read 2529
+
+14:35:16.658 :: MFAPP :: *** Read 2789
+
+14:35:16.670 :: MFAPP :: *** Read 2593
+
+14:35:16.687 :: MFAPP :: *** Read 2773
+
+14:35:16.699 :: MFAPP :: *** Read 2639
+
+14:35:16.716 :: MFAPP :: *** Read 2833
+
+14:35:16.728 :: MFAPP :: *** Read 2607
+
+14:35:16.746 :: MFAPP :: *** Read 2769
+
+14:35:16.758 :: MFAPP :: *** Read 2553
+
+14:35:16.776 :: MFAPP :: *** Read 2793
+
+14:35:16.788 :: MFAPP :: *** Read 2591
+
+14:35:16.806 :: MFAPP :: *** Read 2793
+
+14:35:16.818 :: MFAPP :: *** Read 2663
+
+14:35:16.836 :: MFAPP :: *** Read 2795
+
+14:35:16.848 :: MFAPP :: *** Read 2629
+
+14:35:16.866 :: MFAPP :: *** Read 2793
+
+14:35:16.878 :: MFAPP :: *** Read 2581
+
+14:35:16.896 :: MFAPP :: *** Read 2813
+
+14:35:16.908 :: MFAPP :: *** Read 2639
+
+14:35:16.926 :: MFAPP :: *** Read 2881
+
+14:35:16.938 :: MFAPP :: *** Read 2615
+
+14:35:16.954 :: MFAPP :: *** Read 2855
+
+14:35:16.966 :: MFAPP :: *** Read 2639
+
+14:35:16.983 :: MFAPP :: *** Read 2809
+
+14:35:16.995 :: MFAPP :: *** Read 2679
+
+14:35:17.011 :: MFAPP :: *** Read 2801
+
+14:35:17.023 :: MFAPP :: *** Read 2727
+
+14:35:17.041 :: MFAPP :: *** Read 2791
+
+14:35:17.053 :: MFAPP :: *** Read 2657
+
+14:35:17.071 :: MFAPP :: *** Read 2781
+
+14:35:17.085 :: MFAPP :: *** Read 2643
+
+14:35:17.106 :: MFAPP :: *** Read 2781
+
+14:35:17.119 :: MFAPP :: *** Read 2649
+
+14:35:17.137 :: MFAPP :: *** Read 2791
+
+14:35:17.151 :: MFAPP :: *** Read 2659
+
+14:35:17.168 :: MFAPP :: *** Read 2825
+
+14:35:17.184 :: MFAPP :: *** Read 2715
+
+14:35:17.206 :: MFAPP :: *** Read 2895
+
+14:35:17.223 :: MFAPP :: *** Read 2715
+
+14:35:17.244 :: MFAPP :: *** Read 2847
+
+14:35:17.256 :: MFAPP :: *** Read 2649
+
+14:35:17.272 :: MFAPP :: *** Read 2839
+
+14:35:17.285 :: MFAPP :: *** Read 2635
+
+14:35:17.301 :: MFAPP :: *** Read 2751
+
+14:35:17.313 :: MFAPP :: *** Read 2667
+
+14:35:17.331 :: MFAPP :: *** Read 2771
+
+14:35:17.344 :: MFAPP :: *** Read 2675
+
+14:35:17.361 :: MFAPP :: *** Read 2793
+
+14:35:17.374 :: MFAPP :: *** Read 2675
+
+14:35:17.391 :: MFAPP :: *** Read 2825
+
+14:35:17.404 :: MFAPP :: *** Read 2669
+
+14:35:17.421 :: MFAPP :: *** Read 2835
+
+14:35:17.433 :: MFAPP :: *** Read 2675
+
+14:35:17.451 :: MFAPP :: *** Read 2729
+
+14:35:17.464 :: MFAPP :: *** Read 2667
+
+14:35:17.481 :: MFAPP :: *** Read 2737
+
+14:35:17.496 :: MFAPP :: *** Read 2655
+
+14:35:17.513 :: MFAPP :: *** Read 2759
+
+14:35:17.526 :: MFAPP :: *** Read 2657
+
+14:35:17.543 :: MFAPP :: *** Read 2813
+
+14:35:17.555 :: MFAPP :: *** Read 2683
+
+14:35:17.572 :: MFAPP :: *** Read 2787
+
+14:35:17.587 :: MFAPP :: *** Read 2665
+
+14:35:17.606 :: MFAPP :: *** Read 2793
+
+14:35:17.621 :: MFAPP :: *** Read 2677
+
+14:35:17.639 :: MFAPP :: *** Read 2765
+
+14:35:17.655 :: MFAPP :: *** Read 2683
+
+14:35:17.672 :: MFAPP :: *** Read 2769
+
+14:35:17.689 :: MFAPP :: *** Read 2619
+
+14:35:17.718 :: MFAPP :: *** Read 2763
+
+14:35:17.732 :: MFAPP :: *** Read 2629
+
+14:35:17.752 :: MFAPP :: *** Read 2673
+
+14:35:17.765 :: MFAPP :: *** Read 2733
+
+14:35:17.782 :: MFAPP :: *** Read 2755
+
+14:35:17.796 :: MFAPP :: *** Read 2705
+
+14:35:17.812 :: MFAPP :: *** Read 2769
+
+14:35:17.825 :: MFAPP :: *** Read 2687
+
+14:35:17.842 :: MFAPP :: *** Read 2753
+
+14:35:17.855 :: MFAPP :: *** Read 2721
+
+14:35:17.872 :: MFAPP :: *** Read 2781
+
+14:35:17.886 :: MFAPP :: *** Read 2695
+
+14:35:17.903 :: MFAPP :: *** Read 2781
+
+14:35:17.916 :: MFAPP :: *** Read 2687
+
+14:35:17.933 :: MFAPP :: *** Read 2733
+
+14:35:17.946 :: MFAPP :: *** Read 2653
+
+14:35:17.963 :: MFAPP :: *** Read 2677
+
+14:35:17.977 :: MFAPP :: *** Read 2665
+
+14:35:17.997 :: MFAPP :: *** Read 2747
+
+14:35:18.011 :: MFAPP :: *** Read 2671
+
+14:35:18.028 :: MFAPP :: *** Read 2713
+
+14:35:18.042 :: MFAPP :: *** Read 2707
+
+14:35:18.058 :: MFAPP :: *** Read 2705
+
+14:35:18.071 :: MFAPP :: *** Read 2705
+
+14:35:18.089 :: MFAPP :: *** Read 2711
+
+14:35:18.106 :: MFAPP :: *** Read 2675
+
+14:35:18.124 :: MFAPP :: *** Read 2785
+
+14:35:18.137 :: MFAPP :: *** Read 2647
+
+14:35:18.154 :: MFAPP :: *** Read 2803
+
+14:35:18.168 :: MFAPP :: *** Read 2663
+
+14:35:18.187 :: MFAPP :: *** Read 2789
+
+14:35:18.200 :: MFAPP :: *** Read 2663
+
+14:35:18.217 :: MFAPP :: *** Read 2819
+
+14:35:18.231 :: MFAPP :: *** Read 2701
+
+14:35:18.250 :: MFAPP :: *** Read 2801
+
+14:35:18.265 :: MFAPP :: *** Read 2695
+
+14:35:18.296 :: MFAPP :: *** Read 2811
+
+14:35:18.310 :: MFAPP :: *** Read 2683
+
+14:35:18.329 :: MFAPP :: *** Read 2807
+
+14:35:18.344 :: MFAPP :: *** Read 2683
+
+14:35:18.367 :: MFAPP :: *** Read 2831
+
+14:35:18.382 :: MFAPP :: *** Read 2813
+
+14:35:18.402 :: MFAPP :: *** Read 2709
+
+14:35:18.417 :: MFAPP :: *** Read 2861
+
+14:35:18.437 :: MFAPP :: *** Read 2785
+
+14:35:18.452 :: MFAPP :: *** Read 2747
+
+14:35:18.472 :: MFAPP :: *** Read 2763
+
+14:35:18.486 :: MFAPP :: *** Read 2629
+
+14:35:18.504 :: MFAPP :: *** Read 2743
+
+14:35:18.518 :: MFAPP :: *** Read 2641
+
+14:35:18.537 :: MFAPP :: *** Read 2761
+
+14:35:18.551 :: MFAPP :: *** Read 2729
+
+14:35:18.570 :: MFAPP :: *** Read 2731
+
+14:35:18.583 :: MFAPP :: *** Read 2651
+
+14:35:18.602 :: MFAPP :: *** Read 2715
+
+14:35:18.616 :: MFAPP :: *** Read 2681
+
+14:35:18.634 :: MFAPP :: *** Read 2817
+
+14:35:18.648 :: MFAPP :: *** Read 2655
+
+14:35:18.667 :: MFAPP :: *** Read 2737
+
+14:35:18.681 :: MFAPP :: *** Read 2647
+
+14:35:18.699 :: MFAPP :: *** Read 2739
+
+14:35:18.713 :: MFAPP :: *** Read 2639
+
+14:35:18.733 :: MFAPP :: *** Read 2773
+
+14:35:18.747 :: MFAPP :: *** Read 2619
+
+14:35:18.764 :: MFAPP :: *** Read 2753
+
+14:35:18.782 :: MFAPP :: *** Read 2635
+
+14:35:18.802 :: MFAPP :: *** Read 2875
+
+14:35:18.816 :: MFAPP :: *** Read 2681
+
+14:35:18.834 :: MFAPP :: *** Read 2877
+
+14:35:18.848 :: MFAPP :: *** Read 2687
+
+14:35:18.867 :: MFAPP :: *** Read 2789
+
+14:35:18.881 :: MFAPP :: *** Read 2815
+
+14:35:18.902 :: MFAPP :: *** Read 2811
+
+14:35:18.916 :: MFAPP :: *** Read 2803
+
+14:35:18.934 :: MFAPP :: *** Read 2797
+
+14:35:18.948 :: MFAPP :: *** Read 2705
+
+14:35:18.967 :: MFAPP :: *** Read 2771
+
+14:35:18.982 :: MFAPP :: *** Read 2723
+
+14:35:19.002 :: MFAPP :: *** Read 2805
+
+14:35:19.016 :: MFAPP :: *** Read 2703
+
+14:35:19.034 :: MFAPP :: *** Read 2813
+
+14:35:19.048 :: MFAPP :: *** Read 2687
+
+14:35:19.067 :: MFAPP :: *** Read 2809
+
+14:35:19.081 :: MFAPP :: *** Read 2691
+
+14:35:19.099 :: MFAPP :: *** Read 2829
+
+14:35:19.118 :: MFAPP :: *** Read 2701
+
+14:35:19.137 :: MFAPP :: *** Read 2761
+
+14:35:19.151 :: MFAPP :: *** Read 2671
+
+14:35:19.172 :: MFAPP :: *** Read 2805
+
+14:35:19.187 :: MFAPP :: *** Read 2731
+
+14:35:19.207 :: MFAPP :: *** Read 2721
+
+14:35:19.221 :: MFAPP :: *** Read 2739
+
+14:35:19.241 :: MFAPP :: *** Read 2789
+
+14:35:19.256 :: MFAPP :: *** Read 2747
+
+14:35:19.276 :: MFAPP :: *** Read 2807
+
+14:35:19.289 :: MFAPP :: *** Read 2655
+
+14:35:19.317 :: MFAPP :: *** Read 2777
+
+14:35:19.337 :: MFAPP :: *** Read 2691
+
+14:35:19.357 :: MFAPP :: *** Read 2821
+
+14:35:19.372 :: MFAPP :: *** Read 2721
+
+14:35:19.396 :: MFAPP :: *** Read 2725
+
+14:35:19.413 :: MFAPP :: *** Read 2719
+
+14:35:19.431 :: MFAPP :: *** Read 2755
+
+14:35:19.447 :: MFAPP :: *** Read 2691
+
+14:35:19.466 :: MFAPP :: *** Read 2773
+
+14:35:19.481 :: MFAPP :: *** Read 2633
+
+14:35:19.501 :: MFAPP :: *** Read 2693
+
+14:35:19.515 :: MFAPP :: *** Read 2647
+
+14:35:19.536 :: MFAPP :: *** Read 2697
+
+14:35:19.552 :: MFAPP :: *** Read 2649
+
+14:35:19.572 :: MFAPP :: *** Read 2705
+
+14:35:19.588 :: MFAPP :: *** Read 2673
+
+14:35:19.607 :: MFAPP :: *** Read 2759
+
+14:35:19.622 :: MFAPP :: *** Read 2627
+
+14:35:19.641 :: MFAPP :: *** Read 2789
+
+14:35:19.656 :: MFAPP :: *** Read 2623
+
+14:35:19.676 :: MFAPP :: *** Read 2697
+
+14:35:19.692 :: MFAPP :: *** Read 2645
+
+14:35:19.711 :: MFAPP :: *** Read 2709
+
+14:35:19.727 :: MFAPP :: *** Read 2589
+
+14:35:19.747 :: MFAPP :: *** Read 2699
+
+14:35:19.762 :: MFAPP :: *** Read 2609
+
+14:35:19.782 :: MFAPP :: *** Read 2715
+
+14:35:19.798 :: MFAPP :: *** Read 2635
+
+14:35:19.820 :: MFAPP :: *** Read 2659
+
+14:35:19.845 :: MFAPP :: *** Read 2649
+
+14:35:19.870 :: MFAPP :: *** Read 2749
+
+14:35:19.885 :: MFAPP :: *** Read 2693
+
+14:35:19.906 :: MFAPP :: *** Read 2755
+
+14:35:19.921 :: MFAPP :: *** Read 2619
+
+14:35:19.940 :: MFAPP :: *** Read 2783
+
+14:35:19.956 :: MFAPP :: *** Read 2605
+
+14:35:19.977 :: MFAPP :: *** Read 2807
+
+14:35:19.993 :: MFAPP :: *** Read 2647
+
+14:35:20.012 :: MFAPP :: *** Read 2697
+
+14:35:20.033 :: MFAPP :: *** Read 2691
+
+14:35:20.055 :: MFAPP :: *** Read 2741
+
+14:35:20.070 :: MFAPP :: *** Read 2687
+
+14:35:20.090 :: MFAPP :: *** Read 2711
+
+14:35:20.108 :: MFAPP :: *** Read 2623
+
+14:35:20.127 :: MFAPP :: *** Read 2705
+
+14:35:20.143 :: MFAPP :: *** Read 2741
+
+14:35:20.163 :: MFAPP :: *** Read 2635
+
+14:35:20.179 :: MFAPP :: *** Read 2647
+
+14:35:20.200 :: MFAPP :: *** Read 2629
+
+14:35:20.215 :: MFAPP :: *** Read 2611
+
+14:35:20.235 :: MFAPP :: *** Read 2589
+
+14:35:20.251 :: MFAPP :: *** Read 2591
+
+14:35:20.270 :: MFAPP :: *** Read 2611
+
+14:35:20.286 :: MFAPP :: *** Read 2615
+
+14:35:20.307 :: MFAPP :: *** Read 2625
+
+14:35:20.325 :: MFAPP :: *** Read 2559
+
+14:35:20.345 :: MFAPP :: *** Read 2701
+
+14:35:20.361 :: MFAPP :: *** Read 2597
+
+14:35:20.381 :: MFAPP :: *** Read 2625
+
+14:35:20.397 :: MFAPP :: *** Read 2723
+
+14:35:20.418 :: MFAPP :: *** Read 2649
+
+14:35:20.434 :: MFAPP :: *** Read 2707
+
+14:35:20.453 :: MFAPP :: *** Read 2641
+
+14:35:20.470 :: MFAPP :: *** Read 2675
+
+14:35:20.497 :: MFAPP :: *** Read 2583
+
+14:35:20.514 :: MFAPP :: *** Read 2635
+
+14:35:20.540 :: MFAPP :: *** Read 2609
+
+14:35:20.557 :: MFAPP :: *** Read 2625
+
+14:35:20.578 :: MFAPP :: *** Read 2649
+
+14:35:20.595 :: MFAPP :: *** Read 2707
+
+14:35:20.616 :: MFAPP :: *** Read 2649
+
+14:35:20.633 :: MFAPP :: *** Read 2637
+
+14:35:20.653 :: MFAPP :: *** Read 2669
+
+14:35:20.669 :: MFAPP :: *** Read 2659
+
+14:35:20.691 :: MFAPP :: *** Read 2649
+
+14:35:20.707 :: MFAPP :: *** Read 2639
+
+14:35:20.730 :: MFAPP :: *** Read 2647
+
+14:35:20.747 :: MFAPP :: *** Read 2679
+
+14:35:20.782 :: MFAPP :: *** Read 2647
+
+14:35:20.808 :: MFAPP :: *** Read 2639
+
+14:35:20.859 :: MFAPP :: *** Read 2615
+
+14:35:20.882 :: MFAPP :: *** Read 2707
+
+14:35:20.922 :: MFAPP :: *** Read 2583
+
+14:35:20.947 :: MFAPP :: *** Read 2687
+
+14:35:20.983 :: MFAPP :: *** Read 2563
+
+14:35:21.010 :: MFAPP :: *** Read 2667
+
+14:35:21.046 :: MFAPP :: *** Read 2535
+
+14:35:21.072 :: MFAPP :: *** Read 2627
+
+14:35:21.124 :: MFAPP :: *** Read 2665
+
+14:35:21.154 :: MFAPP :: *** Read 2627
+
+14:35:21.187 :: MFAPP :: *** Read 2719
+
+14:35:21.218 :: MFAPP :: *** Read 2695
+
+14:35:21.255 :: MFAPP :: *** Read 2665
+
+14:35:21.280 :: MFAPP :: *** Read 2649
+
+14:35:21.314 :: MFAPP :: *** Read 2721
+
+14:35:21.342 :: MFAPP :: *** Read 2713
+
+14:35:21.377 :: MFAPP :: *** Read 2699
+
+14:35:21.405 :: MFAPP :: *** Read 2721
+
+14:35:21.453 :: MFAPP :: *** Read 2741
+
+14:35:21.479 :: MFAPP :: *** Read 2713
+
+14:35:21.516 :: MFAPP :: *** Read 2631
+
+14:35:21.539 :: MFAPP :: *** Read 2635
+
+14:35:21.564 :: MFAPP :: *** Read 2663
+
+14:35:21.584 :: MFAPP :: *** Read 2613
+
+14:35:21.625 :: MFAPP :: *** Read 2725
+
+14:35:21.650 :: MFAPP :: *** Read 2735
+
+14:35:21.687 :: MFAPP :: *** Read 2681
+
+14:35:21.706 :: MFAPP :: *** Read 2653
+
+14:35:21.734 :: MFAPP :: *** Read 2667
+
+14:35:21.751 :: MFAPP :: *** Read 2647
+
+14:35:21.780 :: MFAPP :: *** Read 2677
+
+14:35:21.797 :: MFAPP :: *** Read 2719
+
+14:35:21.829 :: MFAPP :: *** Read 2677
+
+14:35:21.848 :: MFAPP :: *** Read 2735
+
+14:35:21.876 :: MFAPP :: *** Read 2749
+
+14:35:21.895 :: MFAPP :: *** Read 2801
+
+14:35:21.921 :: MFAPP :: *** Read 2733
+
+14:35:21.941 :: MFAPP :: *** Read 2783
+
+14:35:21.979 :: MFAPP :: *** Read 2709
+
+14:35:22.004 :: MFAPP :: *** Read 2721
+
+14:35:22.031 :: MFAPP :: *** Read 2717
+
+14:35:22.049 :: MFAPP :: *** Read 2711
+
+14:35:22.078 :: MFAPP :: *** Read 2725
+
+14:35:22.099 :: MFAPP :: *** Read 2701
+
+14:35:22.124 :: MFAPP :: *** Read 2791
+
+14:35:22.151 :: MFAPP :: *** Read 2763
+
+14:35:22.187 :: MFAPP :: *** Read 2697
+
+14:35:22.205 :: MFAPP :: *** Read 2699
+
+14:35:22.233 :: MFAPP :: *** Read 2721
+
+14:35:22.257 :: MFAPP :: *** Read 2741
+
+14:35:22.280 :: MFAPP :: *** Read 2817
+
+14:35:22.297 :: MFAPP :: *** Read 2721
+
+14:35:22.329 :: MFAPP :: *** Read 2791
+
+14:35:22.348 :: MFAPP :: *** Read 2697
+
+14:35:22.376 :: MFAPP :: *** Read 2741
+
+14:35:22.394 :: MFAPP :: *** Read 2693
+
+14:35:22.421 :: MFAPP :: *** Read 2817
+
+14:35:22.439 :: MFAPP :: *** Read 2743
+
+14:35:22.470 :: MFAPP :: *** Read 2755
+
+14:35:22.497 :: MFAPP :: *** Read 2763
+
+14:35:22.532 :: MFAPP :: *** Read 2773
+
+14:35:22.557 :: MFAPP :: *** Read 2699
+
+14:35:22.581 :: MFAPP :: *** Read 2795
+
+14:35:22.602 :: MFAPP :: *** Read 2731
+
+14:35:22.625 :: MFAPP :: *** Read 2791
+
+14:35:22.644 :: MFAPP :: *** Read 2709
+
+14:35:22.673 :: MFAPP :: *** Read 2815
+
+14:35:22.690 :: MFAPP :: *** Read 2679
+
+14:35:22.719 :: MFAPP :: *** Read 2741
+
+14:35:22.736 :: MFAPP :: *** Read 2691
+
+14:35:22.765 :: MFAPP :: *** Read 2757
+
+14:35:22.785 :: MFAPP :: *** Read 2749
+
+14:35:22.811 :: MFAPP :: *** Read 2751
+
+14:35:22.829 :: MFAPP :: *** Read 2737
+
+14:35:22.859 :: MFAPP :: *** Read 2745
+
+14:35:22.876 :: MFAPP :: *** Read 2711
+
+14:35:22.922 :: MFAPP :: *** Read 2751
+
+14:35:22.948 :: MFAPP :: *** Read 2711
+
+14:35:22.984 :: MFAPP :: *** Read 2717
+
+14:35:23.007 :: MFAPP :: *** Read 2659
+
+14:35:23.046 :: MFAPP :: *** Read 2605
+
+14:35:23.072 :: MFAPP :: *** Read 2763
+
+14:35:23.095 :: MFAPP :: *** Read 2725
+
+14:35:23.112 :: MFAPP :: *** Read 2761
+
+14:35:23.141 :: MFAPP :: *** Read 2739
+
+14:35:23.158 :: MFAPP :: *** Read 2699
+
+14:35:23.188 :: MFAPP :: *** Read 2759
+
+14:35:23.205 :: MFAPP :: *** Read 2743
+
+14:35:23.234 :: MFAPP :: *** Read 2747
+
+14:35:23.252 :: MFAPP :: *** Read 2733
+
+14:35:23.282 :: MFAPP :: *** Read 2745
+
+14:35:23.306 :: MFAPP :: *** Read 2707
+
+14:35:23.329 :: MFAPP :: *** Read 2733
+
+14:35:23.347 :: MFAPP :: *** Read 2705
+
+14:35:23.375 :: MFAPP :: *** Read 2725
+
+14:35:23.396 :: MFAPP :: *** Read 2743
+
+14:35:23.424 :: MFAPP :: *** Read 2685
+
+14:35:23.442 :: MFAPP :: *** Read 2763
+
+14:35:23.479 :: MFAPP :: *** Read 2713
+
+14:35:23.501 :: MFAPP :: *** Read 2745
+
+14:35:23.533 :: MFAPP :: *** Read 2673
+
+14:35:23.550 :: MFAPP :: *** Read 2709
+
+14:35:23.594 :: MFAPP :: *** Read 2641
+
+14:35:23.612 :: MFAPP :: *** Read 2695
+
+14:35:23.641 :: MFAPP :: *** Read 2653
+
+14:35:23.659 :: MFAPP :: *** Read 2649
+
+14:35:23.689 :: MFAPP :: *** Read 2655
+
+14:35:23.706 :: MFAPP :: *** Read 2615
+
+14:35:23.734 :: MFAPP :: *** Read 2605
+
+14:35:23.758 :: MFAPP :: *** Read 2583
+
+14:35:23.782 :: MFAPP :: *** Read 2647
+
+14:35:23.803 :: MFAPP :: *** Read 2635
+
+14:35:23.829 :: MFAPP :: *** Read 2709
+
+14:35:23.848 :: MFAPP :: *** Read 2639
+
+14:35:23.875 :: MFAPP :: *** Read 2747
+
+14:35:23.900 :: MFAPP :: *** Read 2667
+
+14:35:23.937 :: MFAPP :: *** Read 2699
+
+14:35:23.954 :: MFAPP :: *** Read 2609
+
+14:35:24.000 :: MFAPP :: *** Read 2701
+
+14:35:24.023 :: MFAPP :: *** Read 2683
+
+14:35:24.062 :: MFAPP :: *** Read 2675
+
+14:35:24.080 :: MFAPP :: *** Read 2703
+
+14:35:24.111 :: MFAPP :: *** Read 2635
+
+14:35:24.131 :: MFAPP :: *** Read 2661
+
+14:35:24.171 :: MFAPP :: *** Read 2645
+
+14:35:24.190 :: MFAPP :: *** Read 2673
+
+14:35:24.218 :: MFAPP :: *** Read 2637
+
+14:35:24.243 :: MFAPP :: *** Read 2689
+
+14:35:24.267 :: MFAPP :: *** Read 2601
+
+14:35:24.287 :: MFAPP :: *** Read 2663
+
+14:35:24.327 :: MFAPP :: *** Read 2623
+
+14:35:24.346 :: MFAPP :: *** Read 2671
+
+14:35:24.375 :: MFAPP :: *** Read 2619
+
+14:35:24.395 :: MFAPP :: *** Read 2685
+
+14:35:24.423 :: MFAPP :: *** Read 2687
+
+14:35:24.442 :: MFAPP :: *** Read 2619
+
+14:35:24.475 :: MFAPP :: *** Read 2661
+
+14:35:24.496 :: MFAPP :: *** Read 2593
+
+14:35:24.524 :: MFAPP :: *** Read 2633
+
+14:35:24.543 :: MFAPP :: *** Read 2637
+
+14:35:24.577 :: MFAPP :: *** Read 2577
+
+14:35:24.597 :: MFAPP :: *** Read 2735
+
+14:35:24.624 :: MFAPP :: *** Read 2621
+
+14:35:24.644 :: MFAPP :: *** Read 2683
+
+14:35:24.671 :: MFAPP :: *** Read 2587
+
+14:35:24.695 :: MFAPP :: *** Read 2715
+
+14:35:24.735 :: MFAPP :: *** Read 2677
+
+14:35:24.757 :: MFAPP :: *** Read 2761
+
+14:35:24.796 :: MFAPP :: *** Read 2713
+
+14:35:24.821 :: MFAPP :: *** Read 2719
+
+14:35:24.860 :: MFAPP :: *** Read 2675
+
+14:35:24.882 :: MFAPP :: *** Read 2635
+
+14:35:24.921 :: MFAPP :: *** Read 2641
+
+14:35:24.939 :: MFAPP :: *** Read 2607
+
+14:35:24.969 :: MFAPP :: *** Read 2627
+
+14:35:24.994 :: MFAPP :: *** Read 2665
+
+14:35:25.024 :: MFAPP :: *** Read 2589
+
+14:35:25.047 :: MFAPP :: *** Read 2767
+
+14:35:25.077 :: MFAPP :: *** Read 2713
+
+14:35:25.097 :: MFAPP :: *** Read 2673
+
+14:35:25.124 :: MFAPP :: *** Read 2689
+
+14:35:25.143 :: MFAPP :: *** Read 2695
+
+14:35:25.171 :: MFAPP :: *** Read 2679
+
+14:35:25.193 :: MFAPP :: *** Read 2739
+
+14:35:25.220 :: MFAPP :: *** Read 2639
+
+14:35:25.245 :: MFAPP :: *** Read 2715
+
+14:35:25.280 :: MFAPP :: *** Read 2643
+
+14:35:25.298 :: MFAPP :: *** Read 2641
+
+14:35:25.329 :: MFAPP :: *** Read 2613
+
+14:35:25.349 :: MFAPP :: *** Read 2707
+
+14:35:25.375 :: MFAPP :: *** Read 2697
+
+14:35:25.394 :: MFAPP :: *** Read 2793
+
+14:35:25.423 :: MFAPP :: *** Read 2689
+
+14:35:25.445 :: MFAPP :: *** Read 2783
+
+14:35:25.479 :: MFAPP :: *** Read 2665
+
+14:35:25.499 :: MFAPP :: *** Read 2729
+
+14:35:25.524 :: MFAPP :: *** Read 2663
+
+14:35:25.549 :: MFAPP :: *** Read 2641
+
+14:35:25.578 :: MFAPP :: *** Read 2635
+
+14:35:25.602 :: MFAPP :: *** Read 2651
+
+14:35:25.639 :: MFAPP :: *** Read 2569
+
+14:35:25.662 :: MFAPP :: *** Read 2673
+
+14:35:25.702 :: MFAPP :: *** Read 2621
+
+14:35:25.728 :: MFAPP :: *** Read 2647
+
+14:35:25.765 :: MFAPP :: *** Read 2669
+
+14:35:25.785 :: MFAPP :: *** Read 2639
+
+14:35:25.813 :: MFAPP :: *** Read 2715
+
+14:35:25.834 :: MFAPP :: *** Read 2623
+
+14:35:25.874 :: MFAPP :: *** Read 2645
+
+14:35:25.896 :: MFAPP :: *** Read 2641
+
+14:35:25.936 :: MFAPP :: *** Read 2717
+
+14:35:25.963 :: MFAPP :: *** Read 2599
+
+14:35:26.000 :: MFAPP :: *** Read 2619
+
+14:35:26.019 :: MFAPP :: *** Read 2603
+
+14:35:26.061 :: MFAPP :: *** Read 2629
+
+14:35:26.080 :: MFAPP :: *** Read 2707
+
+14:35:26.110 :: MFAPP :: *** Read 2621
+
+14:35:26.134 :: MFAPP :: *** Read 2661
+
+14:35:26.172 :: MFAPP :: *** Read 2549
+
+14:35:26.192 :: MFAPP :: *** Read 2567
+
+14:35:26.219 :: MFAPP :: *** Read 2593
+
+14:35:26.238 :: MFAPP :: *** Read 2603
+
+14:35:26.267 :: MFAPP :: *** Read 2649
+
+14:35:26.286 :: MFAPP :: *** Read 2617
+
+14:35:26.328 :: MFAPP :: *** Read 2593
+
+14:35:26.349 :: MFAPP :: *** Read 2601
+
+14:35:26.377 :: MFAPP :: *** Read 2677
+
+14:35:26.398 :: MFAPP :: *** Read 2555
+
+14:35:26.437 :: MFAPP :: *** Read 2641
+
+14:35:26.462 :: MFAPP :: *** Read 2547
+
+14:35:26.502 :: MFAPP :: *** Read 2631
+
+14:35:26.523 :: MFAPP :: *** Read 2625
+
+14:35:26.548 :: MFAPP :: *** Read 2629
+
+14:35:26.571 :: MFAPP :: *** Read 2625
+
+14:35:26.609 :: MFAPP :: *** Read 2603
+
+14:35:26.629 :: MFAPP :: *** Read 2649
+
+14:35:26.659 :: MFAPP :: *** Read 2677
+
+14:35:26.678 :: MFAPP :: *** Read 2715
+
+14:35:26.705 :: MFAPP :: *** Read 2523
+
+14:35:26.730 :: MFAPP :: *** Read 2651
+
+14:35:26.766 :: MFAPP :: *** Read 2523
+
+14:35:26.790 :: MFAPP :: *** Read 2651
+
+14:35:26.828 :: MFAPP :: *** Read 2561
+
+14:35:26.851 :: MFAPP :: *** Read 2691
+
+14:35:26.892 :: MFAPP :: *** Read 2617
+
+14:35:26.918 :: MFAPP :: *** Read 2651
+
+14:35:26.953 :: MFAPP :: *** Read 2547
+
+14:35:26.975 :: MFAPP :: *** Read 2619
+
+14:35:27.015 :: MFAPP :: *** Read 2563
+
+14:35:27.036 :: MFAPP :: *** Read 2711
+
+14:35:27.062 :: MFAPP :: *** Read 2471
+
+14:35:27.084 :: MFAPP :: *** Read 2627
+
+14:35:27.124 :: MFAPP :: *** Read 2493
+
+14:35:27.143 :: MFAPP :: *** Read 2601
+
+14:35:27.173 :: MFAPP :: *** Read 2531
+
+14:35:27.193 :: MFAPP :: *** Read 2577
+
+14:35:27.235 :: MFAPP :: *** Read 2531
+
+14:35:27.256 :: MFAPP :: *** Read 2465
+
+14:35:27.282 :: MFAPP :: *** Read 2621
+
+14:35:27.307 :: MFAPP :: *** Read 2531
+
+14:35:27.343 :: MFAPP :: *** Read 2585
+
+14:35:27.365 :: MFAPP :: *** Read 2555
+
+14:35:27.391 :: MFAPP :: *** Read 2565
+
+14:35:27.413 :: MFAPP :: *** Read 2563
+
+14:35:27.439 :: MFAPP :: *** Read 2575
+
+14:35:27.462 :: MFAPP :: *** Read 2561
+
+14:35:27.499 :: MFAPP :: *** Read 2649
+
+14:35:27.520 :: MFAPP :: *** Read 2507
+
+14:35:27.548 :: MFAPP :: *** Read 2645
+
+14:35:27.569 :: MFAPP :: *** Read 2495
+
+14:35:27.595 :: MFAPP :: *** Read 2603
+
+14:35:27.616 :: MFAPP :: *** Read 2601
+
+14:35:27.655 :: MFAPP :: *** Read 2575
+
+14:35:27.677 :: MFAPP :: *** Read 2597
+
+14:35:27.703 :: MFAPP :: *** Read 2577
+
+14:35:27.736 :: MFAPP :: *** Read 2653
+
+14:35:27.766 :: MFAPP :: *** Read 2573
+
+14:35:27.788 :: MFAPP :: *** Read 2649
+
+14:35:27.814 :: MFAPP :: *** Read 2661
+
+14:35:27.835 :: MFAPP :: *** Read 2615
+
+14:35:27.874 :: MFAPP :: *** Read 2617
+
+14:35:27.895 :: MFAPP :: *** Read 2641
+
+14:35:27.937 :: MFAPP :: *** Read 2653
+
+14:35:27.957 :: MFAPP :: *** Read 2635
+
+14:35:28.000 :: MFAPP :: *** Read 2615
+
+14:35:28.022 :: MFAPP :: *** Read 2577
+
+14:35:28.064 :: MFAPP :: *** Read 2553
+
+14:35:28.086 :: MFAPP :: *** Read 2685
+
+14:35:28.124 :: MFAPP :: *** Read 2541
+
+14:35:28.149 :: MFAPP :: *** Read 2713
+
+14:35:28.186 :: MFAPP :: *** Read 2531
+
+14:35:28.208 :: MFAPP :: *** Read 2669
+
+14:35:28.249 :: MFAPP :: *** Read 2635
+
+14:35:28.274 :: MFAPP :: *** Read 2657
+
+14:35:28.312 :: MFAPP :: *** Read 2567
+
+14:35:28.336 :: MFAPP :: *** Read 2651
+
+14:35:28.376 :: MFAPP :: *** Read 2517
+
+14:35:28.400 :: MFAPP :: *** Read 2605
+
+14:35:28.437 :: MFAPP :: *** Read 2545
+
+14:35:28.459 :: MFAPP :: *** Read 2559
+
+14:35:28.501 :: MFAPP :: *** Read 2537
+
+14:35:28.528 :: MFAPP :: *** Read 2565
+
+14:35:28.563 :: MFAPP :: *** Read 2551
+
+14:35:28.586 :: MFAPP :: *** Read 2605
+
+14:35:28.624 :: MFAPP :: *** Read 2521
+
+14:35:28.649 :: MFAPP :: *** Read 2655
+
+14:35:28.688 :: MFAPP :: *** Read 2577
+
+14:35:28.712 :: MFAPP :: *** Read 2761
+
+14:35:28.751 :: MFAPP :: *** Read 2567
+
+14:35:28.776 :: MFAPP :: *** Read 2687
+
+14:35:28.813 :: MFAPP :: *** Read 2577
+
+14:35:28.835 :: MFAPP :: *** Read 2517
+
+14:35:28.875 :: MFAPP :: *** Read 2549
+
+14:35:28.899 :: MFAPP :: *** Read 2499
+
+14:35:28.939 :: MFAPP :: *** Read 2621
+
+14:35:28.962 :: MFAPP :: *** Read 2571
+
+14:35:29.002 :: MFAPP :: *** Read 2593
+
+14:35:29.026 :: MFAPP :: *** Read 2537
+
+14:35:29.064 :: MFAPP :: *** Read 2625
+
+14:35:29.088 :: MFAPP :: *** Read 2531
+
+14:35:29.127 :: MFAPP :: *** Read 2627
+
+14:35:29.152 :: MFAPP :: *** Read 2549
+
+14:35:29.187 :: MFAPP :: *** Read 2627
+
+14:35:29.208 :: MFAPP :: *** Read 2595
+
+14:35:29.250 :: MFAPP :: *** Read 2601
+
+14:35:29.278 :: MFAPP :: *** Read 2607
+
+14:35:29.313 :: MFAPP :: *** Read 2653
+
+14:35:29.340 :: MFAPP :: *** Read 2625
+
+14:35:29.377 :: MFAPP :: *** Read 2635
+
+14:35:29.399 :: MFAPP :: *** Read 2639
+
+14:35:29.439 :: MFAPP :: *** Read 2631
+
+14:35:29.461 :: MFAPP :: *** Read 2703
+
+14:35:29.500 :: MFAPP :: *** Read 2625
+
+14:35:29.525 :: MFAPP :: *** Read 2583
+
+14:35:29.562 :: MFAPP :: *** Read 2689
+
+14:35:29.585 :: MFAPP :: *** Read 2593
+
+14:35:29.619 :: MFAPP :: *** Read 2685
+
+14:35:29.643 :: MFAPP :: *** Read 2567
+
+14:35:29.673 :: MFAPP :: *** Read 2617
+
+14:35:29.698 :: MFAPP :: *** Read 2537
+
+14:35:29.734 :: MFAPP :: *** Read 2645
+
+14:35:29.758 :: MFAPP :: *** Read 2595
+
+14:35:29.797 :: MFAPP :: *** Read 2581
+
+14:35:29.819 :: MFAPP :: *** Read 2569
+
+14:35:29.860 :: MFAPP :: *** Read 2663
+
+14:35:29.883 :: MFAPP :: *** Read 2647
+
+14:35:29.923 :: MFAPP :: *** Read 2611
+
+14:35:29.945 :: MFAPP :: *** Read 2537
+
+14:35:29.988 :: MFAPP :: *** Read 2595
+
+14:35:30.026 :: MFAPP :: *** Read 2521
+
+14:35:30.063 :: MFAPP :: *** Read 2691
+
+14:35:30.090 :: MFAPP :: *** Read 2615
+
+14:35:30.140 :: MFAPP :: *** Read 2663
+
+14:35:30.170 :: MFAPP :: *** Read 2637
+
+14:35:30.220 :: MFAPP :: *** Read 2685
+
+14:35:30.248 :: MFAPP :: *** Read 2593
+
+14:35:30.280 :: MFAPP :: *** Read 2581
+
+14:35:30.312 :: MFAPP :: *** Read 2557
+
+14:35:30.344 :: MFAPP :: *** Read 2711
+
+14:35:30.370 :: MFAPP :: *** Read 2559
+
+14:35:30.407 :: MFAPP :: *** Read 2719
+
+14:35:30.430 :: MFAPP :: *** Read 2587
+
+14:35:30.470 :: MFAPP :: *** Read 2665
+
+14:35:30.496 :: MFAPP :: *** Read 2613
+
+14:35:30.530 :: MFAPP :: *** Read 2709
+
+14:35:30.571 :: MFAPP :: *** Read 2609
+
+14:35:30.609 :: MFAPP :: *** Read 2737
+
+14:35:30.634 :: MFAPP :: *** Read 2623
+
+14:35:30.673 :: MFAPP :: *** Read 2739
+
+14:35:30.700 :: MFAPP :: *** Read 2651
+
+14:35:30.733 :: MFAPP :: *** Read 2789
+
+14:35:30.756 :: MFAPP :: *** Read 2657
+
+14:35:30.797 :: MFAPP :: *** Read 2793
+
+14:35:30.827 :: MFAPP :: *** Read 2675
+
+14:35:30.859 :: MFAPP :: *** Read 2753
+
+14:35:30.885 :: MFAPP :: *** Read 2731
+
+14:35:30.924 :: MFAPP :: *** Read 2797
+
+14:35:30.951 :: MFAPP :: *** Read 2753
+
+14:35:31.001 :: MFAPP :: *** Read 2697
+
+14:35:31.029 :: MFAPP :: *** Read 2681
+
+14:35:31.062 :: MFAPP :: *** Read 2743
+
+14:35:31.087 :: MFAPP :: *** Read 2707
+
+14:35:31.126 :: MFAPP :: *** Read 2683
+
+14:35:31.152 :: MFAPP :: *** Read 2735
+
+14:35:31.188 :: MFAPP :: *** Read 2705
+
+14:35:31.212 :: MFAPP :: *** Read 2711
+
+14:35:31.249 :: MFAPP :: *** Read 2677
+
+14:35:31.273 :: MFAPP :: *** Read 2655
+
+14:35:31.313 :: MFAPP :: *** Read 2783
+
+14:35:31.336 :: MFAPP :: *** Read 2661
+
+14:35:31.376 :: MFAPP :: *** Read 2753
+
+14:35:31.415 :: MFAPP :: *** Read 2643
+
+14:35:31.452 :: MFAPP :: *** Read 2729
+
+14:35:31.476 :: MFAPP :: *** Read 2681
+
+14:35:31.514 :: MFAPP :: *** Read 2705
+
+14:35:31.542 :: MFAPP :: *** Read 2759
+
+14:35:31.577 :: MFAPP :: *** Read 2677
+
+14:35:31.600 :: MFAPP :: *** Read 2763
+
+14:35:31.641 :: MFAPP :: *** Read 2603
+
+14:35:31.666 :: MFAPP :: *** Read 2705
+
+14:35:31.703 :: MFAPP :: *** Read 2663
+
+14:35:31.732 :: MFAPP :: *** Read 2691
+
+14:35:31.765 :: MFAPP :: *** Read 2801
+
+14:35:31.787 :: MFAPP :: *** Read 2643
+
+14:35:31.829 :: MFAPP :: *** Read 2829
+
+14:35:31.853 :: MFAPP :: *** Read 2671
+
+14:35:31.890 :: MFAPP :: *** Read 2763
+
+14:35:31.915 :: MFAPP :: *** Read 2679
+
+14:35:31.954 :: MFAPP :: *** Read 2771
+
+14:35:31.981 :: MFAPP :: *** Read 2669
+
+14:35:32.016 :: MFAPP :: *** Read 2801
+
+14:35:32.045 :: MFAPP :: *** Read 2669
+
+14:35:32.080 :: MFAPP :: *** Read 2799
+
+14:35:32.105 :: MFAPP :: *** Read 2643
+
+14:35:32.140 :: MFAPP :: *** Read 2705
+
+14:35:32.167 :: MFAPP :: *** Read 2633
+
+14:35:32.204 :: MFAPP :: *** Read 2733
+
+14:35:32.230 :: MFAPP :: *** Read 2693
+
+14:35:32.265 :: MFAPP :: *** Read 2733
+
+14:35:32.287 :: MFAPP :: *** Read 2753
+
+14:35:32.331 :: MFAPP :: *** Read 2733
+
+14:35:32.360 :: MFAPP :: *** Read 2755
+
+14:35:32.392 :: MFAPP :: *** Read 2697
+
+14:35:32.420 :: MFAPP :: *** Read 2693
+
+14:35:32.454 :: MFAPP :: *** Read 2733
+
+14:35:32.478 :: MFAPP :: *** Read 2643
+
+14:35:32.515 :: MFAPP :: *** Read 2755
+
+14:35:32.542 :: MFAPP :: *** Read 2691
+
+14:35:32.578 :: MFAPP :: *** Read 2759
+
+14:35:32.603 :: MFAPP :: *** Read 2787
+
+14:35:32.642 :: MFAPP :: *** Read 2735
+
+14:35:32.664 :: MFAPP :: *** Read 2723
+
+14:35:32.703 :: MFAPP :: *** Read 2753
+
+14:35:32.729 :: MFAPP :: *** Read 2715
+
+14:35:32.767 :: MFAPP :: *** Read 2809
+
+14:35:32.795 :: MFAPP :: *** Read 2635
+
+14:35:32.843 :: MFAPP :: *** Read 2771
+
+14:35:32.867 :: MFAPP :: *** Read 2635
+
+14:35:32.906 :: MFAPP :: *** Read 2717
+
+14:35:32.929 :: MFAPP :: *** Read 2657
+
+14:35:32.982 :: MFAPP :: *** Read 2759
+
+14:35:33.011 :: MFAPP :: *** Read 2655
+
+14:35:33.048 :: MFAPP :: *** Read 2753
+
+14:35:33.078 :: MFAPP :: *** Read 2611
+
+14:35:33.110 :: MFAPP :: *** Read 2753
+
+14:35:33.136 :: MFAPP :: *** Read 2601
+
+14:35:33.187 :: MFAPP :: *** Read 2657
+
+14:35:33.210 :: MFAPP :: *** Read 2707
+
+14:35:33.250 :: MFAPP :: *** Read 2749
+
+14:35:33.277 :: MFAPP :: *** Read 2719
+
+14:35:33.312 :: MFAPP :: *** Read 2775
+
+14:35:33.336 :: MFAPP :: *** Read 2745
+
+14:35:33.374 :: MFAPP :: *** Read 2727
+
+14:35:33.398 :: MFAPP :: *** Read 2663
+
+14:35:33.437 :: MFAPP :: *** Read 2749
+
+14:35:33.460 :: MFAPP :: *** Read 2737
+
+14:35:33.501 :: MFAPP :: *** Read 2721
+
+14:35:33.524 :: MFAPP :: *** Read 2727
+
+14:35:33.562 :: MFAPP :: *** Read 2707
+
+14:35:33.590 :: MFAPP :: *** Read 2745
+
+14:35:33.624 :: MFAPP :: *** Read 2675
+
+14:35:33.651 :: MFAPP :: *** Read 2715
+
+14:35:33.687 :: MFAPP :: *** Read 2727
+
+14:35:33.713 :: MFAPP :: *** Read 2781
+
+14:35:33.751 :: MFAPP :: *** Read 2695
+
+14:35:33.776 :: MFAPP :: *** Read 2767
+
+14:35:33.827 :: MFAPP :: *** Read 2829
+
+14:35:33.860 :: MFAPP :: *** Read 2687
+
+14:35:33.905 :: MFAPP :: *** Read 2823
+
+14:35:33.930 :: MFAPP :: *** Read 2683
+
+14:35:33.970 :: MFAPP :: *** Read 2835
+
+14:35:34.001 :: MFAPP :: *** Read 2771
+
+14:35:34.032 :: MFAPP :: *** Read 2771
+
+14:35:34.057 :: MFAPP :: *** Read 2687
+
+14:35:34.093 :: MFAPP :: *** Read 2773
+
+14:35:34.119 :: MFAPP :: *** Read 2673
+
+14:35:34.155 :: MFAPP :: *** Read 2833
+
+14:35:34.180 :: MFAPP :: *** Read 2693
+
+14:35:34.214 :: MFAPP :: *** Read 2645
+
+14:35:34.240 :: MFAPP :: *** Read 2683
+
+14:35:34.282 :: MFAPP :: *** Read 2641
+
+14:35:34.307 :: MFAPP :: *** Read 2663
+
+14:35:34.344 :: MFAPP :: *** Read 2743
+
+14:35:34.368 :: MFAPP :: *** Read 2629
+
+14:35:34.406 :: MFAPP :: *** Read 2729
+
+14:35:34.440 :: MFAPP :: *** Read 2645
+
+14:35:34.483 :: MFAPP :: *** Read 2767
+
+14:35:34.511 :: MFAPP :: *** Read 2675
+
+14:35:34.547 :: MFAPP :: *** Read 2807
+
+14:35:34.573 :: MFAPP :: *** Read 2709
+
+14:35:34.611 :: MFAPP :: *** Read 2787
+
+14:35:34.636 :: MFAPP :: *** Read 2659
+
+14:35:34.674 :: MFAPP :: *** Read 2775
+
+14:35:34.702 :: MFAPP :: *** Read 2663
+
+14:35:34.735 :: MFAPP :: *** Read 2749
+
+14:35:34.760 :: MFAPP :: *** Read 2683
+
+14:35:34.797 :: MFAPP :: *** Read 2763
+
+14:35:34.821 :: MFAPP :: *** Read 2681
+
+14:35:34.859 :: MFAPP :: *** Read 2773
+
+14:35:34.883 :: MFAPP :: *** Read 2691
+
+14:35:34.921 :: MFAPP :: *** Read 2801
+
+14:35:34.946 :: MFAPP :: *** Read 2671
+
+14:35:34.984 :: MFAPP :: *** Read 2771
+
+14:35:35.011 :: MFAPP :: *** Read 2689
+
+14:35:35.046 :: MFAPP :: *** Read 2757
+
+14:35:35.070 :: MFAPP :: *** Read 2673
+
+14:35:35.109 :: MFAPP :: *** Read 2697
+
+14:35:35.137 :: MFAPP :: *** Read 2691
+
+14:35:35.173 :: MFAPP :: *** Read 2705
+
+14:35:35.203 :: MFAPP :: *** Read 2803
+
+14:35:35.249 :: MFAPP :: *** Read 2697
+
+14:35:35.279 :: MFAPP :: *** Read 2865
+
+14:35:35.313 :: MFAPP :: *** Read 2757
+
+14:35:35.341 :: MFAPP :: *** Read 2801
+
+14:35:35.392 :: MFAPP :: *** Read 2577
+
+14:35:35.420 :: MFAPP :: *** Read 2715
+
+14:35:35.455 :: MFAPP :: *** Read 2589
+
+14:35:35.486 :: MFAPP :: *** Read 2713
+
+14:35:35.531 :: MFAPP :: *** Read 2597
+
+14:35:35.556 :: MFAPP :: *** Read 2643
+
+14:35:35.609 :: MFAPP :: *** Read 2649
+
+14:35:35.634 :: MFAPP :: *** Read 2789
+
+14:35:35.671 :: MFAPP :: *** Read 2635
+
+14:35:35.697 :: MFAPP :: *** Read 2741
+
+14:35:35.750 :: MFAPP :: *** Read 2647
+
+14:35:35.777 :: MFAPP :: *** Read 2717
+
+14:35:35.813 :: MFAPP :: *** Read 2703
+
+14:35:35.838 :: MFAPP :: *** Read 2691
+
+14:35:35.875 :: MFAPP :: *** Read 2679
+
+14:35:35.901 :: MFAPP :: *** Read 2693
+
+14:35:35.937 :: MFAPP :: *** Read 2621
+
+14:35:35.966 :: MFAPP :: *** Read 2705
+
+14:35:36.017 :: MFAPP :: *** Read 2675
+
+14:35:36.042 :: MFAPP :: *** Read 2737
+
+14:35:36.095 :: MFAPP :: *** Read 2725
+
+14:35:36.132 :: MFAPP :: *** Read 2691
+
+14:35:36.172 :: MFAPP :: *** Read 2745
+
+14:35:36.198 :: MFAPP :: *** Read 2605
+
+14:35:36.234 :: MFAPP :: *** Read 2699
+
+14:35:36.261 :: MFAPP :: *** Read 2759
+
+14:35:36.296 :: MFAPP :: *** Read 2675
+
+14:35:36.325 :: MFAPP :: *** Read 2741
+
+14:35:36.360 :: MFAPP :: *** Read 2625
+
+14:35:36.386 :: MFAPP :: *** Read 2643
+
+14:35:36.423 :: MFAPP :: *** Read 2637
+
+14:35:36.452 :: MFAPP :: *** Read 2721
+
+14:35:36.501 :: MFAPP :: *** Read 2635
+
+14:35:36.529 :: MFAPP :: *** Read 2711
+
+14:35:36.577 :: MFAPP :: *** Read 2669
+
+14:35:36.607 :: MFAPP :: *** Read 2731
+
+14:35:36.642 :: MFAPP :: *** Read 2691
+
+14:35:36.670 :: MFAPP :: *** Read 2765
+
+14:35:36.718 :: MFAPP :: *** Read 2675
+
+14:35:36.751 :: MFAPP :: *** Read 2769
+
+14:35:36.797 :: MFAPP :: *** Read 2639
+
+14:35:36.825 :: MFAPP :: *** Read 2711
+
+14:35:36.860 :: MFAPP :: *** Read 2625
+
+14:35:36.889 :: MFAPP :: *** Read 2737
+
+14:35:36.936 :: MFAPP :: *** Read 2633
+
+14:35:36.968 :: MFAPP :: *** Read 2767
+
+14:35:37.014 :: MFAPP :: *** Read 2679
+
+14:35:37.039 :: MFAPP :: *** Read 2787
+
+14:35:37.079 :: MFAPP :: *** Read 2665
+
+14:35:37.108 :: MFAPP :: *** Read 2771
+
+14:35:37.156 :: MFAPP :: *** Read 2679
+
+14:35:37.187 :: MFAPP :: *** Read 2791
+
+14:35:37.236 :: MFAPP :: *** Read 2673
+
+14:35:37.266 :: MFAPP :: *** Read 2793
+
+14:35:37.311 :: MFAPP :: *** Read 2771
+
+14:35:37.346 :: MFAPP :: *** Read 2721
+
+14:35:37.391 :: MFAPP :: *** Read 2699
+
+14:35:37.421 :: MFAPP :: *** Read 2783
+
+14:35:37.468 :: MFAPP :: *** Read 2579
+
+14:35:37.503 :: MFAPP :: *** Read 2795
+
+14:35:37.548 :: MFAPP :: *** Read 2643
+
+14:35:37.576 :: MFAPP :: *** Read 2799
+
+14:35:37.626 :: MFAPP :: *** Read 2631
+
+14:35:37.657 :: MFAPP :: *** Read 2785
+
+14:35:37.703 :: MFAPP :: *** Read 2505
+
+14:35:37.740 :: MFAPP :: *** Read 2743
+
+14:35:37.782 :: MFAPP :: *** Read 2545
+
+14:35:37.810 :: MFAPP :: *** Read 2851
+
+14:35:37.843 :: MFAPP :: *** Read 2629
+
+14:35:37.878 :: MFAPP :: *** Read 2881
+
+14:35:37.921 :: MFAPP :: *** Read 2571
+
+14:35:37.952 :: MFAPP :: *** Read 2819
+
+14:35:37.985 :: MFAPP :: *** Read 2581
+
+14:35:38.013 :: MFAPP :: *** Read 2647
+
+14:35:38.047 :: MFAPP :: *** Read 2595
+
+14:35:38.073 :: MFAPP :: *** Read 2627
+
+14:35:38.111 :: MFAPP :: *** Read 2457
+
+14:35:38.145 :: MFAPP :: *** Read 2643
+
+14:35:38.187 :: MFAPP :: *** Read 2523
+
+14:35:38.214 :: MFAPP :: *** Read 2641
+
+14:35:38.265 :: MFAPP :: *** Read 2589
+
+14:35:38.299 :: MFAPP :: *** Read 2739
+
+14:35:38.343 :: MFAPP :: *** Read 2579
+
+14:35:38.368 :: MFAPP :: *** Read 2751
+
+14:35:38.407 :: MFAPP :: *** Read 2587
+
+14:35:38.436 :: MFAPP :: *** Read 2791
+
+14:35:38.484 :: MFAPP :: *** Read 2555
+
+14:35:38.513 :: MFAPP :: *** Read 2801
+
+14:35:38.548 :: MFAPP :: *** Read 2557
+
+14:35:38.581 :: MFAPP :: *** Read 2769
+
+14:35:38.640 :: MFAPP :: *** Read 2661
+
+14:35:38.669 :: MFAPP :: *** Read 2807
+
+14:35:38.718 :: MFAPP :: *** Read 2593
+
+14:35:38.756 :: MFAPP :: *** Read 2755
+
+14:35:38.796 :: MFAPP :: *** Read 2619
+
+14:35:38.827 :: MFAPP :: *** Read 2813
+
+14:35:38.890 :: MFAPP :: *** Read 2569
+
+14:35:38.917 :: MFAPP :: *** Read 2775
+
+14:35:38.954 :: MFAPP :: *** Read 2577
+
+14:35:38.986 :: MFAPP :: *** Read 2771
+
+14:35:39.046 :: MFAPP :: *** Read 2541
+
+14:35:39.072 :: MFAPP :: *** Read 2691
+
+14:35:39.110 :: MFAPP :: *** Read 2579
+
+14:35:39.139 :: MFAPP :: *** Read 2703
+
+14:35:39.187 :: MFAPP :: *** Read 2635
+
+14:35:39.214 :: MFAPP :: *** Read 2721
+
+14:35:39.265 :: MFAPP :: *** Read 2611
+
+14:35:39.293 :: MFAPP :: *** Read 2811
+
+14:35:39.343 :: MFAPP :: *** Read 2649
+
+14:35:39.370 :: MFAPP :: *** Read 2735
+
+14:35:39.416 :: MFAPP :: *** Read 2651
+
+14:35:39.443 :: MFAPP :: *** Read 2751
+
+14:35:39.485 :: MFAPP :: *** Read 2635
+
+14:35:39.515 :: MFAPP :: *** Read 2755
+
+14:35:39.561 :: MFAPP :: *** Read 2653
+
+14:35:39.587 :: MFAPP :: *** Read 2791
+
+14:35:39.626 :: MFAPP :: *** Read 2665
+
+14:35:39.656 :: MFAPP :: *** Read 2747
+
+14:35:39.702 :: MFAPP :: *** Read 2605
+
+14:35:39.733 :: MFAPP :: *** Read 2775
+
+14:35:39.796 :: MFAPP :: *** Read 2565
+
+14:35:39.822 :: MFAPP :: *** Read 2839
+
+14:35:39.859 :: MFAPP :: *** Read 2637
+
+14:35:39.888 :: MFAPP :: *** Read 2849
+
+14:35:39.921 :: MFAPP :: *** Read 2605
+
+14:35:39.948 :: MFAPP :: *** Read 2829
+
+14:35:39.999 :: MFAPP :: *** Read 2645
+
+14:35:40.038 :: MFAPP :: *** Read 2787
+
+14:35:40.077 :: MFAPP :: *** Read 2609
+
+14:35:40.114 :: MFAPP :: *** Read 2747
+
+14:35:40.157 :: MFAPP :: *** Read 2557
+
+14:35:40.184 :: MFAPP :: *** Read 2763
+
+14:35:40.219 :: MFAPP :: *** Read 2609
+
+14:35:40.249 :: MFAPP :: *** Read 2787
+
+14:35:40.283 :: MFAPP :: *** Read 2599
+
+14:35:40.317 :: MFAPP :: *** Read 2787
+
+14:35:40.361 :: MFAPP :: *** Read 2685
+
+14:35:40.397 :: MFAPP :: *** Read 2715
+
+14:35:40.438 :: MFAPP :: *** Read 2663
+
+14:35:40.485 :: MFAPP :: *** Read 2699
+
+14:35:40.533 :: MFAPP :: *** Read 2541
+
+14:35:40.561 :: MFAPP :: *** Read 2723
+
+14:35:40.593 :: MFAPP :: *** Read 2629
+
+14:35:40.623 :: MFAPP :: *** Read 2739
+
+14:35:40.689 :: MFAPP :: *** Read 2565
+
+14:35:40.717 :: MFAPP :: *** Read 2727
+
+14:35:40.767 :: MFAPP :: *** Read 2521
+
+14:35:40.796 :: MFAPP :: *** Read 2763
+
+14:35:40.832 :: MFAPP :: Started  35:40.831
+
+14:35:40.887 :: MFAPP :: Callback #1, time 55, mean time 55, max time allowed 2000
+
+14:35:40.923 :: MFAPP :: 
+
+14:35:40.952 :: MFAPP :: *** Read 2529
+
+14:35:40.984 :: MFAPP :: *** Read 2749
+
+14:35:41.031 :: MFAPP :: *** Read 2601
+
+14:35:41.060 :: MFAPP :: *** Read 2727
+
+14:35:41.110 :: MFAPP :: *** Read 2625
+
+14:35:41.139 :: MFAPP :: *** Read 2779
+
+14:35:41.173 :: MFAPP :: *** Read 2627
+
+14:35:41.212 :: MFAPP :: *** Read 2759
+
+14:35:41.267 :: MFAPP :: *** Read 2623
+
+14:35:41.301 :: MFAPP :: *** Read 2803
+
+14:35:41.344 :: MFAPP :: *** Read 2623
+
+14:35:41.372 :: MFAPP :: *** Read 2803
+
+14:35:41.408 :: MFAPP :: *** Read 2547
+
+14:35:41.438 :: MFAPP :: *** Read 2785
+
+14:35:41.485 :: MFAPP :: *** Read 2525
+
+14:35:41.515 :: MFAPP :: *** Read 2831
+
+14:35:41.564 :: MFAPP :: *** Read 2513
+
+14:35:41.592 :: MFAPP :: *** Read 2851
+
+14:35:41.640 :: MFAPP :: *** Read 2569
+
+14:35:41.668 :: MFAPP :: *** Read 2783
+
+14:35:41.718 :: MFAPP :: *** Read 2751
+
+14:35:41.751 :: MFAPP :: *** Read 2795
+
+14:35:41.796 :: MFAPP :: *** Read 2725
+
+14:35:41.830 :: MFAPP :: *** Read 2791
+
+14:35:41.875 :: MFAPP :: *** Read 2641
+
+14:35:41.903 :: MFAPP :: *** Read 2827
+
+14:35:41.937 :: MFAPP :: *** Read 2665
+
+14:35:41.969 :: MFAPP :: *** Read 2771
+
+14:35:42.016 :: MFAPP :: *** Read 2597
+
+14:35:42.043 :: MFAPP :: *** Read 2707
+
+14:35:42.077 :: MFAPP :: *** Read 2631
+
+14:35:42.106 :: MFAPP :: *** Read 2715
+
+14:35:42.155 :: MFAPP :: *** Read 2643
+
+14:35:42.190 :: MFAPP :: *** Read 2671
+
+14:35:42.233 :: MFAPP :: *** Read 2649
+
+14:35:42.264 :: MFAPP :: *** Read 2657
+
+14:35:42.311 :: MFAPP :: *** Read 2627
+
+14:35:42.341 :: MFAPP :: *** Read 2683
+
+14:35:42.376 :: MFAPP :: *** Read 2627
+
+14:35:42.412 :: MFAPP :: *** Read 2797
+
+14:35:42.452 :: MFAPP :: *** Read 2623
+
+14:35:42.488 :: MFAPP :: *** Read 2701
+
+14:35:42.532 :: MFAPP :: *** Read 2579
+
+14:35:42.560 :: MFAPP :: *** Read 2675
+
+14:35:42.608 :: MFAPP :: *** Read 2665
+
+14:35:42.636 :: MFAPP :: *** Read 2617
+
+14:35:42.686 :: MFAPP :: *** Read 2655
+
+14:35:42.714 :: MFAPP :: *** Read 2631
+
+14:35:42.765 :: MFAPP :: *** Read 2611
+
+14:35:42.795 :: MFAPP :: *** Read 2659
+
+14:35:42.844 :: MFAPP :: *** Read 2593
+
+14:35:42.876 :: MFAPP :: *** Read 2619
+
+14:35:42.921 :: MFAPP :: *** Read 2759
+
+14:35:42.958 :: MFAPP :: *** Read 2611
+
+14:35:43.000 :: MFAPP :: *** Read 2781
+
+14:35:43.031 :: MFAPP :: *** Read 2621
+
+14:35:43.080 :: MFAPP :: *** Read 2701
+
+14:35:43.108 :: MFAPP :: *** Read 2567
+
+14:35:43.156 :: MFAPP :: *** Read 2699
+
+14:35:43.185 :: MFAPP :: *** Read 2593
+
+14:35:43.220 :: MFAPP :: *** Read 2703
+
+14:35:43.258 :: MFAPP :: *** Read 2625
+
+14:35:43.298 :: MFAPP :: *** Read 2717
+
+14:35:43.333 :: MFAPP :: *** Read 2659
+
+14:35:43.377 :: MFAPP :: *** Read 2615
+
+14:35:43.405 :: MFAPP :: *** Read 2603
+
+14:35:43.453 :: MFAPP :: *** Read 2617
+
+14:35:43.486 :: MFAPP :: *** Read 2689
+
+14:35:43.531 :: MFAPP :: *** Read 2645
+
+14:35:43.562 :: MFAPP :: *** Read 2687
+
+14:35:43.609 :: MFAPP :: *** Read 2655
+
+14:35:43.640 :: MFAPP :: *** Read 2675
+
+14:35:43.688 :: MFAPP :: *** Read 2641
+
+14:35:43.734 :: MFAPP :: *** Read 2647
+
+14:35:43.781 :: MFAPP :: *** Read 2643
+
+14:35:43.809 :: MFAPP :: *** Read 2627
+
+14:35:43.844 :: MFAPP :: *** Read 2599
+
+14:35:43.897 :: MFAPP :: *** Read 2585
+
+14:35:43.937 :: MFAPP :: *** Read 2561
+
+14:35:43.975 :: MFAPP :: *** Read 2641
+
+14:35:44.015 :: MFAPP :: *** Read 2657
+
+14:35:44.045 :: MFAPP :: *** Read 2691
+
+14:35:44.093 :: MFAPP :: *** Read 2641
+
+14:35:44.122 :: MFAPP :: *** Read 2697
+
+14:35:44.173 :: MFAPP :: *** Read 2659
+
+14:35:44.209 :: MFAPP :: *** Read 2679
+
+14:35:44.251 :: MFAPP :: *** Read 2649
+
+14:35:44.289 :: MFAPP :: *** Read 2655
+
+14:35:44.328 :: MFAPP :: *** Read 2669
+
+14:35:44.357 :: MFAPP :: *** Read 2667
+
+14:35:44.405 :: MFAPP :: *** Read 2701
+
+14:35:44.437 :: MFAPP :: *** Read 2705
+
+14:35:44.484 :: MFAPP :: *** Read 2599
+
+14:35:44.518 :: MFAPP :: *** Read 2723
+
+14:35:44.564 :: MFAPP :: *** Read 2631
+
+14:35:44.596 :: MFAPP :: *** Read 2713
+
+14:35:44.642 :: MFAPP :: *** Read 2615
+
+14:35:44.675 :: MFAPP :: *** Read 2735
+
+14:35:44.718 :: MFAPP :: *** Read 2657
+
+14:35:44.759 :: MFAPP :: *** Read 2627
+
+14:35:44.798 :: MFAPP :: *** Read 2727
+
+14:35:44.830 :: MFAPP :: *** Read 2617
+
+14:35:44.876 :: MFAPP :: *** Read 2671
+
+14:35:44.915 :: MFAPP :: *** Read 2677
+
+14:35:44.968 :: MFAPP :: *** Read 2675
+
+14:35:45.002 :: MFAPP :: *** Read 2783
+
+14:35:45.046 :: MFAPP :: *** Read 2657
+
+14:35:45.076 :: MFAPP :: *** Read 2769
+
+14:35:45.124 :: MFAPP :: *** Read 2679
+
+14:35:45.158 :: MFAPP :: *** Read 2799
+
+14:35:45.202 :: MFAPP :: *** Read 2679
+
+14:35:45.234 :: MFAPP :: *** Read 2787
+
+14:35:45.282 :: MFAPP :: *** Read 2631
+
+14:35:45.314 :: MFAPP :: *** Read 2801
+
+14:35:45.361 :: MFAPP :: *** Read 2641
+
+14:35:45.389 :: MFAPP :: *** Read 2779
+
+14:35:45.436 :: MFAPP :: *** Read 2637
+
+14:35:45.483 :: MFAPP :: *** Read 2747
+
+14:35:45.530 :: MFAPP :: *** Read 2641
+
+14:35:45.579 :: MFAPP :: *** Read 2733
+
+14:35:45.626 :: MFAPP :: *** Read 2621
+
+14:35:45.663 :: MFAPP :: *** Read 2771
+
+14:35:45.702 :: MFAPP :: *** Read 2581
+
+14:35:45.732 :: MFAPP :: *** Read 2851
+
+14:35:45.780 :: MFAPP :: *** Read 2579
+
+14:35:45.812 :: MFAPP :: *** Read 2751
+
+14:35:45.858 :: MFAPP :: *** Read 2659
+
+14:35:45.890 :: MFAPP :: *** Read 2699
+
+14:35:45.937 :: MFAPP :: *** Read 2635
+
+14:35:45.966 :: MFAPP :: *** Read 2889
+
+14:35:46.018 :: MFAPP :: *** Read 2617
+
+14:35:46.052 :: MFAPP :: *** Read 2899
+
+14:35:46.093 :: MFAPP :: *** Read 2619
+
+14:35:46.125 :: MFAPP :: *** Read 2837
+
+14:35:46.172 :: MFAPP :: *** Read 2653
+
+14:35:46.208 :: MFAPP :: *** Read 2767
+
+14:35:46.251 :: MFAPP :: *** Read 2657
+
+14:35:46.285 :: MFAPP :: *** Read 2743
+
+14:35:46.328 :: MFAPP :: *** Read 2623
+
+14:35:46.358 :: MFAPP :: *** Read 2811
+
+14:35:46.408 :: MFAPP :: *** Read 2535
+
+14:35:46.443 :: MFAPP :: *** Read 2863
+
+14:35:46.500 :: MFAPP :: *** Read 2549
+
+14:35:46.531 :: MFAPP :: *** Read 2849
+
+14:35:46.580 :: MFAPP :: *** Read 2595
+
+14:35:46.619 :: MFAPP :: *** Read 2739
+
+14:35:46.671 :: MFAPP :: *** Read 2663
+
+14:35:46.700 :: MFAPP :: *** Read 2759
+
+14:35:46.749 :: MFAPP :: *** Read 2657
+
+14:35:46.780 :: MFAPP :: *** Read 2781
+
+14:35:46.827 :: MFAPP :: *** Read 2651
+
+14:35:46.857 :: MFAPP :: *** Read 2715
+
+14:35:46.906 :: MFAPP :: *** Read 2599
+
+14:35:46.936 :: MFAPP :: *** Read 2795
+
+14:35:46.984 :: MFAPP :: *** Read 2561
+
+14:35:47.021 :: MFAPP :: *** Read 2823
+
+14:35:47.062 :: MFAPP :: *** Read 2553
+
+14:35:47.102 :: MFAPP :: *** Read 2855
+
+14:35:47.158 :: MFAPP :: *** Read 2545
+
+14:35:47.188 :: MFAPP :: *** Read 2785
+
+14:35:47.235 :: MFAPP :: *** Read 2597
+
+14:35:47.266 :: MFAPP :: *** Read 2751
+
+14:35:47.312 :: MFAPP :: *** Read 2577
+
+14:35:47.348 :: MFAPP :: *** Read 2791
+
+14:35:47.406 :: MFAPP :: *** Read 2649
+
+14:35:47.438 :: MFAPP :: *** Read 2851
+
+14:35:47.484 :: MFAPP :: *** Read 2679
+
+14:35:47.519 :: MFAPP :: *** Read 2851
+
+14:35:47.564 :: MFAPP :: *** Read 2663
+
+14:35:47.595 :: MFAPP :: *** Read 2881
+
+14:35:47.673 :: MFAPP :: *** Read 2585
+
+14:35:47.710 :: MFAPP :: *** Read 2809
+
+14:35:47.765 :: MFAPP :: *** Read 2593
+
+14:35:47.799 :: MFAPP :: *** Read 2711
+
+14:35:47.845 :: MFAPP :: *** Read 2673
+
+14:35:47.880 :: MFAPP :: *** Read 2707
+
+14:35:47.937 :: MFAPP :: *** Read 2557
+
+14:35:47.967 :: MFAPP :: *** Read 2719
+
+14:35:48.016 :: MFAPP :: *** Read 2553
+
+14:35:48.053 :: MFAPP :: *** Read 2715
+
+14:35:48.095 :: MFAPP :: *** Read 2549
+
+14:35:48.127 :: MFAPP :: *** Read 2843
+
+14:35:48.187 :: MFAPP :: *** Read 2675
+
+14:35:48.220 :: MFAPP :: *** Read 2767
+
+14:35:48.266 :: MFAPP :: *** Read 2655
+
+14:35:48.296 :: MFAPP :: *** Read 2739
+
+14:35:48.358 :: MFAPP :: *** Read 2635
+
+14:35:48.390 :: MFAPP :: *** Read 2729
+
+14:35:48.437 :: MFAPP :: *** Read 2609
+
+14:35:48.484 :: MFAPP :: *** Read 2679
+
+14:35:48.532 :: MFAPP :: *** Read 2599
+
+14:35:48.565 :: MFAPP :: *** Read 2659
+
+14:35:48.609 :: MFAPP :: *** Read 2549
+
+14:35:48.640 :: MFAPP :: *** Read 2681
+
+14:35:48.688 :: MFAPP :: *** Read 2557
+
+14:35:48.726 :: MFAPP :: *** Read 2723
+
+14:35:48.782 :: MFAPP :: *** Read 2657
+
+14:35:48.813 :: MFAPP :: *** Read 2797
+
+14:35:48.859 :: MFAPP :: *** Read 2669
+
+14:35:48.892 :: MFAPP :: *** Read 2763
+
+14:35:48.936 :: MFAPP :: *** Read 2755
+
+14:35:48.974 :: MFAPP :: *** Read 2611
+
+14:35:49.030 :: MFAPP :: *** Read 2759
+
+14:35:49.063 :: MFAPP :: *** Read 2611
+
+14:35:49.109 :: MFAPP :: *** Read 2711
+
+14:35:49.148 :: MFAPP :: *** Read 2625
+
+14:35:49.188 :: MFAPP :: *** Read 2701
+
+14:35:49.232 :: MFAPP :: *** Read 2655
+
+14:35:49.282 :: MFAPP :: *** Read 2687
+
+14:35:49.320 :: MFAPP :: *** Read 2715
+
+14:35:49.374 :: MFAPP :: *** Read 2767
+
+14:35:49.407 :: MFAPP :: *** Read 2711
+
+14:35:49.454 :: MFAPP :: *** Read 2781
+
+14:35:49.491 :: MFAPP :: *** Read 2737
+
+14:35:49.546 :: MFAPP :: *** Read 2799
+
+14:35:49.585 :: MFAPP :: *** Read 2721
+
+14:35:49.627 :: MFAPP :: *** Read 2779
+
+14:35:49.664 :: MFAPP :: *** Read 2701
+
+14:35:49.705 :: MFAPP :: *** Read 2773
+
+14:35:49.748 :: MFAPP :: *** Read 2687
+
+14:35:49.796 :: MFAPP :: *** Read 2729
+
+14:35:49.834 :: MFAPP :: *** Read 2635
+
+14:35:49.875 :: MFAPP :: *** Read 2795
+
+14:35:49.912 :: MFAPP :: *** Read 2611
+
+14:35:49.954 :: MFAPP :: *** Read 2807
+
+14:35:49.989 :: MFAPP :: *** Read 2619
+
+14:35:50.033 :: MFAPP :: *** Read 2797
+
+14:35:50.071 :: MFAPP :: *** Read 2663
+
+14:35:50.109 :: MFAPP :: *** Read 2817
+
+14:35:50.142 :: MFAPP :: *** Read 2697
+
+14:35:50.188 :: MFAPP :: *** Read 2771
+
+14:35:50.226 :: MFAPP :: *** Read 2649
+
+14:35:50.283 :: MFAPP :: *** Read 2749
+
+14:35:50.333 :: MFAPP :: *** Read 2683
+
+14:35:50.391 :: MFAPP :: *** Read 2791
+
+14:35:50.434 :: MFAPP :: *** Read 2681
+
+14:35:50.486 :: MFAPP :: *** Read 2827
+
+14:35:50.531 :: MFAPP :: *** Read 2791
+
+14:35:50.593 :: MFAPP :: *** Read 2849
+
+14:35:50.636 :: MFAPP :: *** Read 2789
+
+14:35:50.687 :: MFAPP :: *** Read 2781
+
+14:35:50.734 :: MFAPP :: *** Read 2709
+
+14:35:50.781 :: MFAPP :: *** Read 2799
+
+14:35:50.825 :: MFAPP :: *** Read 2695
+
+14:35:50.874 :: MFAPP :: *** Read 2773
+
+14:35:50.908 :: MFAPP :: *** Read 2801
+
+14:35:50.954 :: MFAPP :: *** Read 2701
+
+14:35:50.990 :: MFAPP :: *** Read 2877
+
+14:35:51.034 :: MFAPP :: *** Read 2653
+
+14:35:51.068 :: MFAPP :: *** Read 2941
+
+14:35:51.111 :: MFAPP :: *** Read 2667
+
+14:35:51.152 :: MFAPP :: *** Read 2849
+
+14:35:51.202 :: MFAPP :: *** Read 2813
+
+14:35:51.236 :: MFAPP :: *** Read 2771
+
+14:35:51.280 :: MFAPP :: *** Read 2637
+
+14:35:51.310 :: MFAPP :: *** Read 2731
+
+14:35:51.360 :: MFAPP :: *** Read 2681
+
+14:35:51.391 :: MFAPP :: *** Read 2787
+
+14:35:51.438 :: MFAPP :: *** Read 2747
+
+14:35:51.481 :: MFAPP :: *** Read 2761
+
+14:35:51.546 :: MFAPP :: *** Read 2725
+
+14:35:51.586 :: MFAPP :: *** Read 2845
+
+14:35:51.625 :: MFAPP :: *** Read 2769
+
+14:35:51.662 :: MFAPP :: *** Read 2837
+
+14:35:51.704 :: MFAPP :: *** Read 2787
+
+14:35:51.740 :: MFAPP :: *** Read 2753
+
+14:35:51.798 :: MFAPP :: *** Read 2727
+
+14:35:51.833 :: MFAPP :: *** Read 2649
+
+14:35:51.891 :: MFAPP :: *** Read 2649
+
+14:35:51.927 :: MFAPP :: *** Read 2777
+
+14:35:51.968 :: MFAPP :: *** Read 2695
+
+14:35:52.008 :: MFAPP :: *** Read 2797
+
+14:35:52.048 :: MFAPP :: *** Read 2709
+
+14:35:52.088 :: MFAPP :: *** Read 2769
+
+14:35:52.139 :: MFAPP :: *** Read 2709
+
+14:35:52.176 :: MFAPP :: *** Read 2777
+
+14:35:52.218 :: MFAPP :: *** Read 2707
+
+14:35:52.270 :: MFAPP :: *** Read 2789
+
+14:35:52.312 :: MFAPP :: *** Read 2701
+
+14:35:52.344 :: MFAPP :: *** Read 2771
+
+14:35:52.389 :: MFAPP :: *** Read 2647
+
+14:35:52.425 :: MFAPP :: *** Read 2817
+
+14:35:52.468 :: MFAPP :: *** Read 2677
+
+14:35:52.507 :: MFAPP :: *** Read 2725
+
+14:35:52.549 :: MFAPP :: *** Read 2655
+
+14:35:52.584 :: MFAPP :: *** Read 2735
+
+14:35:52.625 :: MFAPP :: *** Read 2681
+
+14:35:52.659 :: MFAPP :: *** Read 2731
+
+14:35:52.704 :: MFAPP :: *** Read 2687
+
+14:35:52.741 :: MFAPP :: *** Read 2813
+
+14:35:52.782 :: MFAPP :: *** Read 2653
+
+14:35:52.817 :: MFAPP :: *** Read 2655
+
+14:35:52.861 :: MFAPP :: *** Read 2633
+
+14:35:52.897 :: MFAPP :: *** Read 2693
+
+14:35:52.939 :: MFAPP :: *** Read 2737
+
+14:35:52.982 :: MFAPP :: *** Read 2703
+
+14:35:53.031 :: MFAPP :: *** Read 2681
+
+14:35:53.064 :: MFAPP :: *** Read 2743
+
+14:35:53.109 :: MFAPP :: *** Read 2697
+
+14:35:53.151 :: MFAPP :: *** Read 2715
+
+14:35:53.191 :: MFAPP :: *** Read 2773
+
+14:35:53.236 :: MFAPP :: *** Read 2697
+
+14:35:53.277 :: MFAPP :: *** Read 2683
+
+14:35:53.307 :: MFAPP :: *** Read 2687
+
+14:35:53.361 :: MFAPP :: *** Read 2679
+
+14:35:53.396 :: MFAPP :: *** Read 2681
+
+14:35:53.438 :: MFAPP :: *** Read 2761
+
+14:35:53.484 :: MFAPP :: *** Read 2639
+
+14:35:53.531 :: MFAPP :: *** Read 2829
+
+14:35:53.567 :: MFAPP :: *** Read 2695
+
+14:35:53.625 :: MFAPP :: *** Read 2833
+
+14:35:53.664 :: MFAPP :: *** Read 2667
+
+14:35:53.703 :: MFAPP :: *** Read 2801
+
+14:35:53.743 :: MFAPP :: *** Read 2717
+
+14:35:53.796 :: MFAPP :: *** Read 2697
+
+14:35:53.838 :: MFAPP :: *** Read 2583
+
+14:35:53.876 :: MFAPP :: *** Read 2697
+
+14:35:53.913 :: MFAPP :: *** Read 2543
+
+14:35:53.984 :: MFAPP :: *** Read 2771
+
+14:35:54.029 :: MFAPP :: *** Read 2681
+
+14:35:54.078 :: MFAPP :: *** Read 2737
+
+14:35:54.120 :: MFAPP :: *** Read 2663
+
+14:35:54.171 :: MFAPP :: *** Read 2745
+
+14:35:54.206 :: MFAPP :: *** Read 2663
+
+14:35:54.265 :: MFAPP :: *** Read 2841
+
+14:35:54.298 :: MFAPP :: *** Read 2687
+
+14:35:54.345 :: MFAPP :: *** Read 2873
+
+14:35:54.379 :: MFAPP :: *** Read 2703
+
+14:35:54.423 :: MFAPP :: *** Read 2871
+
+14:35:54.465 :: MFAPP :: *** Read 2701
+
+14:35:54.515 :: MFAPP :: *** Read 2865
+
+14:35:54.551 :: MFAPP :: *** Read 2705
+
+14:35:54.594 :: MFAPP :: *** Read 2835
+
+14:35:54.630 :: MFAPP :: *** Read 2637
+
+14:35:54.673 :: MFAPP :: *** Read 2867
+
+14:35:54.714 :: MFAPP :: *** Read 2647
+
+14:35:54.765 :: MFAPP :: *** Read 2841
+
+14:35:54.800 :: MFAPP :: *** Read 2643
+
+14:35:54.858 :: MFAPP :: *** Read 2733
+
+14:35:54.896 :: MFAPP :: *** Read 2625
+
+14:35:54.937 :: MFAPP :: *** Read 2717
+
+14:35:54.971 :: MFAPP :: *** Read 2641
+
+14:35:55.016 :: MFAPP :: *** Read 2777
+
+14:35:55.061 :: MFAPP :: *** Read 2775
+
+14:35:55.109 :: MFAPP :: *** Read 2871
+
+14:35:55.156 :: MFAPP :: *** Read 2651
+
+14:35:55.204 :: MFAPP :: *** Read 2887
+
+14:35:55.240 :: MFAPP :: *** Read 2659
+
+14:35:55.283 :: MFAPP :: *** Read 2961
+
+14:35:55.327 :: MFAPP :: *** Read 2707
+
+14:35:55.376 :: MFAPP :: *** Read 2903
+
+14:35:55.409 :: MFAPP :: *** Read 2699
+
+14:35:55.456 :: MFAPP :: *** Read 2879
+
+14:35:55.496 :: MFAPP :: *** Read 2667
+
+14:35:55.549 :: MFAPP :: *** Read 2945
+
+14:35:55.590 :: MFAPP :: *** Read 2623
+
+14:35:55.641 :: MFAPP :: *** Read 2877
+
+14:35:55.677 :: MFAPP :: *** Read 2579
+
+14:35:55.730 :: MFAPP :: *** Read 2859
+
+14:35:55.771 :: MFAPP :: *** Read 2613
+
+14:35:55.813 :: MFAPP :: *** Read 2907
+
+14:35:55.846 :: MFAPP :: *** Read 2679
+
+14:35:55.892 :: MFAPP :: *** Read 2957
+
+14:35:55.931 :: MFAPP :: *** Read 2651
+
+14:35:55.987 :: MFAPP :: *** Read 2951
+
+14:35:56.026 :: MFAPP :: *** Read 2687
+
+14:35:56.078 :: MFAPP :: *** Read 2899
+
+14:35:56.119 :: MFAPP :: *** Read 2649
+
+14:35:56.173 :: MFAPP :: *** Read 2915
+
+14:35:56.207 :: MFAPP :: *** Read 2647
+
+14:35:56.266 :: MFAPP :: *** Read 2871
+
+14:35:56.299 :: MFAPP :: *** Read 2653
+
+14:35:56.343 :: MFAPP :: *** Read 2899
+
+14:35:56.384 :: MFAPP :: *** Read 2679
+
+14:35:56.423 :: MFAPP :: *** Read 2891
+
+14:35:56.465 :: MFAPP :: *** Read 2657
+
+14:35:56.515 :: MFAPP :: *** Read 2891
+
+14:35:56.549 :: MFAPP :: *** Read 2615
+
+14:35:56.594 :: MFAPP :: *** Read 2981
+
+14:35:56.637 :: MFAPP :: *** Read 2615
+
+14:35:56.687 :: MFAPP :: *** Read 2925
+
+14:35:56.734 :: MFAPP :: *** Read 2599
+
+14:35:56.782 :: MFAPP :: *** Read 2919
+
+14:35:56.822 :: MFAPP :: *** Read 2585
+
+14:35:56.875 :: MFAPP :: *** Read 2889
+
+14:35:56.910 :: MFAPP :: *** Read 2631
+
+14:35:56.954 :: MFAPP :: *** Read 2901
+
+14:35:56.999 :: MFAPP :: *** Read 2647
+
+14:35:57.046 :: MFAPP :: *** Read 2889
+
+14:35:57.085 :: MFAPP :: *** Read 2601
+
+14:35:57.140 :: MFAPP :: *** Read 2905
+
+14:35:57.187 :: MFAPP :: *** Read 2613
+
+14:35:57.249 :: MFAPP :: *** Read 2763
+
+14:35:57.284 :: MFAPP :: *** Read 2611
+
+14:35:57.343 :: MFAPP :: *** Read 2771
+
+14:35:57.385 :: MFAPP :: *** Read 2607
+
+14:35:57.438 :: MFAPP :: *** Read 2857
+
+14:35:57.478 :: MFAPP :: *** Read 2627
+
+14:35:57.530 :: MFAPP :: *** Read 2849
+
+14:35:57.566 :: MFAPP :: *** Read 2683
+
+14:35:57.610 :: MFAPP :: *** Read 2837
+
+14:35:57.645 :: MFAPP :: *** Read 2709
+
+14:35:57.702 :: MFAPP :: *** Read 2807
+
+14:35:57.746 :: MFAPP :: *** Read 2619
+
+14:35:57.796 :: MFAPP :: *** Read 2741
+
+14:35:57.838 :: MFAPP :: *** Read 2611
+
+14:35:57.889 :: MFAPP :: *** Read 2709
+
+14:35:57.933 :: MFAPP :: *** Read 2619
+
+14:35:57.987 :: MFAPP :: *** Read 2741
+
+14:35:58.025 :: MFAPP :: *** Read 2561
+
+14:35:58.067 :: MFAPP :: *** Read 2765
+
+14:35:58.107 :: MFAPP :: *** Read 2597
+
+14:35:58.156 :: MFAPP :: *** Read 2791
+
+14:35:58.190 :: MFAPP :: *** Read 2577
+
+14:35:58.237 :: MFAPP :: *** Read 2717
+
+14:35:58.286 :: MFAPP :: *** Read 2617
+
+14:35:58.343 :: MFAPP :: *** Read 2743
+
+14:35:58.376 :: MFAPP :: *** Read 2707
+
+14:35:58.422 :: MFAPP :: *** Read 2731
+
+14:35:58.458 :: MFAPP :: *** Read 2727
+
+14:35:58.517 :: MFAPP :: *** Read 2769
+
+14:35:58.559 :: MFAPP :: *** Read 2647
+
+14:35:58.610 :: MFAPP :: *** Read 2741
+
+14:35:58.648 :: MFAPP :: *** Read 2699
+
+14:35:58.705 :: MFAPP :: *** Read 2791
+
+14:35:58.743 :: MFAPP :: *** Read 2659
+
+14:35:58.798 :: MFAPP :: *** Read 2693
+
+14:35:58.841 :: MFAPP :: *** Read 2623
+
+14:35:58.890 :: MFAPP :: *** Read 2729
+
+14:35:58.927 :: MFAPP :: *** Read 2635
+
+14:35:58.985 :: MFAPP :: *** Read 2733
+
+14:35:59.030 :: MFAPP :: *** Read 2639
+
+14:35:59.079 :: MFAPP :: *** Read 2657
+
+14:35:59.118 :: MFAPP :: *** Read 2715
+
+14:35:59.174 :: MFAPP :: *** Read 2685
+
+14:35:59.216 :: MFAPP :: *** Read 2703
+
+14:35:59.266 :: MFAPP :: *** Read 2773
+
+14:35:59.300 :: MFAPP :: *** Read 2635
+
+14:35:59.359 :: MFAPP :: *** Read 2753
+
+14:35:59.394 :: MFAPP :: *** Read 2747
+
+14:35:59.438 :: MFAPP :: *** Read 2735
+
+14:35:59.484 :: MFAPP :: *** Read 2759
+
+14:35:59.546 :: MFAPP :: *** Read 2727
+
+14:35:59.581 :: MFAPP :: *** Read 2759
+
+14:35:59.625 :: MFAPP :: *** Read 2695
+
+14:35:59.666 :: MFAPP :: *** Read 2717
+
+14:35:59.718 :: MFAPP :: *** Read 2675
+
+14:35:59.760 :: MFAPP :: *** Read 2707
+
+14:35:59.813 :: MFAPP :: *** Read 2659
+
+14:35:59.859 :: MFAPP :: *** Read 2667
+
+14:35:59.921 :: MFAPP :: *** Read 2747
+
+14:35:59.959 :: MFAPP :: *** Read 2653
+
+14:36:00.000 :: MFAPP :: *** Read 2679
+
+14:36:00.040 :: MFAPP :: *** Read 2629
+
+14:36:00.095 :: MFAPP :: *** Read 2699
+
+14:36:00.142 :: MFAPP :: *** Read 2625
+
+14:36:00.187 :: MFAPP :: *** Read 2655
+
+14:36:00.234 :: MFAPP :: *** Read 2639
+
+14:36:00.282 :: MFAPP :: *** Read 2677
+
+14:36:00.323 :: MFAPP :: *** Read 2699
+
+14:36:00.376 :: MFAPP :: *** Read 2693
+
+14:36:00.418 :: MFAPP :: *** Read 2761
+
+14:36:00.469 :: MFAPP :: *** Read 2633
+
+14:36:00.509 :: MFAPP :: *** Read 2663
+
+14:36:00.562 :: MFAPP :: *** Read 2673
+
+14:36:00.597 :: MFAPP :: *** Read 2713
+
+14:36:00.639 :: MFAPP :: *** Read 2693
+
+14:36:00.681 :: MFAPP :: *** Read 2719
+
+14:36:00.730 :: MFAPP :: *** Read 2713
+
+14:36:00.769 :: MFAPP :: *** Read 2679
+
+14:36:00.811 :: MFAPP :: *** Read 2681
+
+14:36:00.854 :: MFAPP :: *** Read 2717
+
+14:36:00.937 :: MFAPP :: *** Read 2687
+
+14:36:00.972 :: MFAPP :: *** Read 2675
+
+14:36:01.015 :: MFAPP :: *** Read 2643
+
+14:36:01.053 :: MFAPP :: *** Read 2679
+
+14:36:01.109 :: MFAPP :: *** Read 2687
+
+14:36:01.148 :: MFAPP :: *** Read 2733
+
+14:36:01.203 :: MFAPP :: *** Read 2721
+
+14:36:01.244 :: MFAPP :: *** Read 2731
+
+14:36:01.297 :: MFAPP :: *** Read 2707
+
+14:36:01.334 :: MFAPP :: *** Read 2725
+
+14:36:01.393 :: MFAPP :: *** Read 2721
+
+14:36:01.428 :: MFAPP :: *** Read 2727
+
+14:36:01.487 :: MFAPP :: *** Read 2679
+
+14:36:01.548 :: MFAPP :: *** Read 2715
+
+14:36:01.609 :: MFAPP :: *** Read 2631
+
+14:36:01.653 :: MFAPP :: *** Read 2697
+
+14:36:01.703 :: MFAPP :: *** Read 2695
+
+14:36:01.746 :: MFAPP :: *** Read 2683
+
+14:36:01.798 :: MFAPP :: *** Read 2701
+
+14:36:01.838 :: MFAPP :: *** Read 2663
+
+14:36:01.890 :: MFAPP :: *** Read 2649
+
+14:36:01.929 :: MFAPP :: *** Read 2687
+
+14:36:01.986 :: MFAPP :: *** Read 2631
+
+14:36:02.045 :: MFAPP :: *** Read 2689
+
+14:36:02.095 :: MFAPP :: *** Read 2675
+
+14:36:02.135 :: MFAPP :: *** Read 2763
+
+14:36:02.189 :: MFAPP :: *** Read 2617
+
+14:36:02.237 :: MFAPP :: *** Read 2695
+
+14:36:02.298 :: MFAPP :: *** Read 2647
+
+14:36:02.336 :: MFAPP :: *** Read 2755
+
+14:36:02.392 :: MFAPP :: *** Read 2605
+
+14:36:02.435 :: MFAPP :: *** Read 2771
+
+14:36:02.485 :: MFAPP :: *** Read 2585
+
+14:36:02.527 :: MFAPP :: *** Read 2737
+
+14:36:02.578 :: MFAPP :: *** Read 2601
+
+14:36:02.620 :: MFAPP :: *** Read 2727
+
+14:36:02.671 :: MFAPP :: *** Read 2669
+
+14:36:02.717 :: MFAPP :: *** Read 2755
+
+14:36:02.768 :: MFAPP :: *** Read 2593
+
+14:36:02.811 :: MFAPP :: *** Read 2793
+
+14:36:02.860 :: MFAPP :: *** Read 2615
+
+14:36:02.903 :: MFAPP :: *** Read 2769
+
+14:36:02.954 :: MFAPP :: *** Read 2625
+
+14:36:03.002 :: MFAPP :: *** Read 2763
+
+14:36:03.047 :: MFAPP :: *** Read 2677
+
+14:36:03.090 :: MFAPP :: *** Read 2701
+
+14:36:03.155 :: MFAPP :: *** Read 2551
+
+14:36:03.195 :: MFAPP :: *** Read 2807
+
+14:36:03.251 :: MFAPP :: *** Read 2643
+
+14:36:03.288 :: MFAPP :: *** Read 2811
+
+14:36:03.345 :: MFAPP :: *** Read 2627
+
+14:36:03.385 :: MFAPP :: *** Read 2771
+
+14:36:03.437 :: MFAPP :: *** Read 2663
+
+14:36:03.487 :: MFAPP :: *** Read 2799
+
+14:36:03.532 :: MFAPP :: *** Read 2657
+
+14:36:03.583 :: MFAPP :: *** Read 2781
+
+14:36:03.639 :: MFAPP :: *** Read 2641
+
+14:36:03.680 :: MFAPP :: *** Read 2703
+
+14:36:03.734 :: MFAPP :: *** Read 2705
+
+14:36:03.778 :: MFAPP :: *** Read 2731
+
+14:36:03.829 :: MFAPP :: *** Read 2681
+
+14:36:03.868 :: MFAPP :: *** Read 2811
+
+14:36:03.922 :: MFAPP :: *** Read 2691
+
+14:36:03.960 :: MFAPP :: *** Read 2843
+
+14:36:04.049 :: MFAPP :: *** Read 2679
+
+14:36:04.085 :: MFAPP :: *** Read 2871
+
+14:36:04.129 :: MFAPP :: *** Read 2681
+
+14:36:04.185 :: MFAPP :: *** Read 2887
+
+14:36:04.237 :: MFAPP :: *** Read 2659
+
+14:36:04.282 :: MFAPP :: *** Read 2839
+
+14:36:04.330 :: MFAPP :: *** Read 2657
+
+14:36:04.372 :: MFAPP :: *** Read 2791
+
+14:36:04.422 :: MFAPP :: *** Read 2697
+
+14:36:04.461 :: MFAPP :: *** Read 2737
+
+14:36:04.516 :: MFAPP :: *** Read 2691
+
+14:36:04.554 :: MFAPP :: *** Read 2821
+
+14:36:04.611 :: MFAPP :: *** Read 2641
+
+14:36:04.649 :: MFAPP :: *** Read 2841
+
+14:36:04.704 :: MFAPP :: *** Read 2619
+
+14:36:04.748 :: MFAPP :: *** Read 2827
+
+14:36:04.798 :: MFAPP :: *** Read 2583
+
+14:36:04.843 :: MFAPP :: *** Read 2855
+
+14:36:04.891 :: MFAPP :: *** Read 2611
+
+14:36:04.929 :: MFAPP :: *** Read 2785
+
+14:36:04.985 :: MFAPP :: *** Read 2733
+
+14:36:05.024 :: MFAPP :: *** Read 2863
+
+14:36:05.078 :: MFAPP :: *** Read 2751
+
+14:36:05.115 :: MFAPP :: *** Read 2851
+
+14:36:05.173 :: MFAPP :: *** Read 2673
+
+14:36:05.220 :: MFAPP :: *** Read 2825
+
+14:36:05.280 :: MFAPP :: *** Read 2685
+
+14:36:05.324 :: MFAPP :: *** Read 2803
+
+14:36:05.376 :: MFAPP :: *** Read 2673
+
+14:36:05.418 :: MFAPP :: *** Read 2785
+
+14:36:05.469 :: MFAPP :: *** Read 2637
+
+14:36:05.517 :: MFAPP :: *** Read 2791
+
+14:36:05.577 :: MFAPP :: *** Read 2745
+
+14:36:05.614 :: MFAPP :: *** Read 2783
+
+14:36:05.671 :: MFAPP :: *** Read 2825
+
+14:36:05.719 :: MFAPP :: *** Read 2827
+
+14:36:05.782 :: MFAPP :: *** Read 2695
+
+14:36:05.826 :: MFAPP :: *** Read 2865
+
+14:36:05.875 :: MFAPP :: *** Read 2737
+
+14:36:05.915 :: MFAPP :: *** Read 2873
+
+14:36:05.970 :: MFAPP :: *** Read 2777
+
+14:36:06.017 :: MFAPP :: *** Read 2843
+
+14:36:06.077 :: MFAPP :: *** Read 2711
+
+14:36:06.119 :: MFAPP :: *** Read 2811
+
+14:36:06.172 :: MFAPP :: *** Read 2771
+
+14:36:06.210 :: MFAPP :: *** Read 2781
+
+14:36:06.282 :: MFAPP :: *** Read 2693
+
+14:36:06.329 :: MFAPP :: *** Read 2755
+
+14:36:06.375 :: MFAPP :: *** Read 2711
+
+14:36:06.414 :: MFAPP :: *** Read 2761
+
+14:36:06.470 :: MFAPP :: *** Read 2717
+
+14:36:06.522 :: MFAPP :: *** Read 2759
+
+14:36:06.579 :: MFAPP :: *** Read 2729
+
+14:36:06.617 :: MFAPP :: *** Read 2821
+
+14:36:06.673 :: MFAPP :: *** Read 2739
+
+14:36:06.720 :: MFAPP :: *** Read 2763
+
+14:36:06.782 :: MFAPP :: *** Read 2791
+
+14:36:06.825 :: MFAPP :: *** Read 2729
+
+14:36:06.876 :: MFAPP :: *** Read 2801
+
+14:36:06.915 :: MFAPP :: *** Read 2867
+
+14:36:06.969 :: MFAPP :: *** Read 2713
+
+14:36:07.015 :: MFAPP :: *** Read 2861
+
+14:36:07.062 :: MFAPP :: *** Read 2705
+
+14:36:07.101 :: MFAPP :: *** Read 2839
+
+14:36:07.158 :: MFAPP :: *** Read 2763
+
+14:36:07.199 :: MFAPP :: *** Read 2843
+
+14:36:07.267 :: MFAPP :: *** Read 2809
+
+14:36:07.304 :: MFAPP :: *** Read 2875
+
+14:36:07.376 :: MFAPP :: *** Read 2859
+
+14:36:07.423 :: MFAPP :: *** Read 2931
+
+14:36:07.468 :: MFAPP :: *** Read 2907
+
+14:36:07.513 :: MFAPP :: *** Read 2871
+
+14:36:07.562 :: MFAPP :: *** Read 2805
+
+14:36:07.600 :: MFAPP :: *** Read 2821
+
+14:36:07.656 :: MFAPP :: *** Read 2821
+
+14:36:07.694 :: MFAPP :: *** Read 2811
+
+14:36:07.749 :: MFAPP :: *** Read 2881
+
+14:36:07.797 :: MFAPP :: *** Read 2875
+
+14:36:07.859 :: MFAPP :: *** Read 2857
+
+14:36:07.913 :: MFAPP :: *** Read 2879
+
+14:36:07.968 :: MFAPP :: *** Read 2837
+
+14:36:08.021 :: MFAPP :: *** Read 2875
+
+14:36:08.078 :: MFAPP :: *** Read 2837
+
+14:36:08.124 :: MFAPP :: *** Read 2815
+
+14:36:08.187 :: MFAPP :: *** Read 2831
+
+14:36:08.232 :: MFAPP :: *** Read 2839
+
+14:36:08.296 :: MFAPP :: *** Read 2873
+
+14:36:08.339 :: MFAPP :: *** Read 2833
+
+14:36:08.390 :: MFAPP :: *** Read 2859
+
+14:36:08.438 :: MFAPP :: *** Read 2871
+
+14:36:08.499 :: MFAPP :: *** Read 2811
+
+14:36:08.549 :: MFAPP :: *** Read 2811
+
+14:36:08.608 :: MFAPP :: *** Read 2859
+
+14:36:08.649 :: MFAPP :: *** Read 2755
+
+14:36:08.702 :: MFAPP :: *** Read 2805
+
+14:36:08.751 :: MFAPP :: *** Read 2817
+
+14:36:08.798 :: MFAPP :: *** Read 2849
+
+14:36:08.837 :: MFAPP :: *** Read 2739
+
+14:36:08.892 :: MFAPP :: *** Read 2875
+
+14:36:08.952 :: MFAPP :: *** Read 2761
+
+14:36:08.999 :: MFAPP :: *** Read 2927
+
+14:36:09.041 :: MFAPP :: *** Read 2787
+
+14:36:09.094 :: MFAPP :: *** Read 2901
+
+14:36:09.137 :: MFAPP :: *** Read 2807
+
+14:36:09.186 :: MFAPP :: *** Read 2861
+
+14:36:09.231 :: MFAPP :: *** Read 2801
+
+14:36:09.280 :: MFAPP :: *** Read 2841
+
+14:36:09.317 :: MFAPP :: *** Read 2709
+
+14:36:09.376 :: MFAPP :: *** Read 2847
+
+14:36:09.420 :: MFAPP :: *** Read 2751
+
+14:36:09.483 :: MFAPP :: *** Read 2821
+
+14:36:09.536 :: MFAPP :: *** Read 2729
+
+14:36:09.594 :: MFAPP :: *** Read 2843
+
+14:36:09.637 :: MFAPP :: *** Read 2675
+
+14:36:09.689 :: MFAPP :: *** Read 2715
+
+14:36:09.737 :: MFAPP :: *** Read 2757
+
+14:36:09.796 :: MFAPP :: *** Read 2833
+
+14:36:09.835 :: MFAPP :: *** Read 2815
+
+14:36:09.890 :: MFAPP :: *** Read 2845
+
+14:36:09.929 :: MFAPP :: *** Read 2705
+
+14:36:09.987 :: MFAPP :: *** Read 2769
+
+14:36:10.031 :: MFAPP :: *** Read 2681
+
+14:36:10.080 :: MFAPP :: *** Read 2771
+
+14:36:10.121 :: MFAPP :: *** Read 2687
+
+14:36:10.187 :: MFAPP :: *** Read 2819
+
+14:36:10.230 :: MFAPP :: *** Read 2661
+
+14:36:10.281 :: MFAPP :: *** Read 2837
+
+14:36:10.324 :: MFAPP :: *** Read 2707
+
+14:36:10.390 :: MFAPP :: *** Read 2755
+
+14:36:10.435 :: MFAPP :: *** Read 2733
+
+14:36:10.499 :: MFAPP :: *** Read 2739
+
+14:36:10.547 :: MFAPP :: *** Read 2709
+
+14:36:10.609 :: MFAPP :: *** Read 2705
+
+14:36:10.648 :: MFAPP :: *** Read 2739
+
+14:36:10.702 :: MFAPP :: *** Read 2675
+
+14:36:10.750 :: MFAPP :: *** Read 2777
+
+14:36:10.796 :: MFAPP :: *** Read 2689
+
+14:36:10.842 :: MFAPP :: *** Read 2753
+
+14:36:10.890 :: MFAPP :: *** Read 2681
+
+14:36:10.936 :: MFAPP :: *** Read 2697
+
+14:36:10.986 :: MFAPP :: *** Read 2745
+
+14:36:11.034 :: MFAPP :: *** Read 2729
+
+14:36:11.084 :: MFAPP :: *** Read 2715
+
+14:36:11.134 :: MFAPP :: *** Read 2695
+
+14:36:11.187 :: MFAPP :: *** Read 2695
+
+14:36:11.242 :: MFAPP :: *** Read 2649
+
+14:36:11.297 :: MFAPP :: *** Read 2713
+
+14:36:11.341 :: MFAPP :: *** Read 2643
+
+14:36:11.390 :: MFAPP :: *** Read 2749
+
+14:36:11.432 :: MFAPP :: *** Read 2675
+
+14:36:11.484 :: MFAPP :: *** Read 2823
+
+14:36:11.529 :: MFAPP :: *** Read 2787
+
+14:36:11.579 :: MFAPP :: *** Read 2693
+
+14:36:11.625 :: MFAPP :: *** Read 2703
+
+14:36:11.686 :: MFAPP :: *** Read 2643
+
+14:36:11.729 :: MFAPP :: *** Read 2691
+
+14:36:11.796 :: MFAPP :: *** Read 2645
+
+14:36:11.842 :: MFAPP :: *** Read 2767
+
+14:36:11.889 :: MFAPP :: *** Read 2599
+
+14:36:11.934 :: MFAPP :: *** Read 2767
+
+14:36:11.999 :: MFAPP :: *** Read 2561
+
+14:36:12.041 :: MFAPP :: *** Read 2785
+
+14:36:12.095 :: MFAPP :: *** Read 2589
+
+14:36:12.138 :: MFAPP :: *** Read 2745
+
+14:36:12.204 :: MFAPP :: *** Read 2657
+
+14:36:12.252 :: MFAPP :: *** Read 2731
+
+14:36:12.299 :: MFAPP :: *** Read 2717
+
+14:36:12.346 :: MFAPP :: *** Read 2721
+
+14:36:12.408 :: MFAPP :: *** Read 2673
+
+14:36:12.451 :: MFAPP :: *** Read 2753
+
+14:36:12.515 :: MFAPP :: *** Read 2693
+
+14:36:12.559 :: MFAPP :: *** Read 2767
+
+14:36:12.610 :: MFAPP :: *** Read 2659
+
+14:36:12.652 :: MFAPP :: *** Read 2769
+
+14:36:12.720 :: MFAPP :: *** Read 2611
+
+14:36:12.762 :: MFAPP :: *** Read 2809
+
+14:36:12.813 :: MFAPP :: *** Read 2609
+
+14:36:12.870 :: MFAPP :: *** Read 2759
+
+14:36:12.937 :: MFAPP :: *** Read 2611
+
+14:36:12.989 :: MFAPP :: *** Read 2775
+
+14:36:13.046 :: MFAPP :: *** Read 2669
+
+14:36:13.095 :: MFAPP :: *** Read 2709
+
+14:36:13.156 :: MFAPP :: *** Read 2661
+
+14:36:13.201 :: MFAPP :: *** Read 2739
+
+14:36:13.283 :: MFAPP :: *** Read 2645
+
+14:36:13.331 :: MFAPP :: *** Read 2799
+
+14:36:13.391 :: MFAPP :: *** Read 2629
+
+14:36:13.438 :: MFAPP :: *** Read 2747
+
+14:36:13.486 :: MFAPP :: *** Read 2641
+
+14:36:13.536 :: MFAPP :: *** Read 2763
+
+14:36:13.595 :: MFAPP :: *** Read 2645
+
+14:36:13.635 :: MFAPP :: *** Read 2787
+
+14:36:13.690 :: MFAPP :: *** Read 2619
+
+14:36:13.731 :: MFAPP :: *** Read 2835
+
+14:36:13.798 :: MFAPP :: *** Read 2661
+
+14:36:13.847 :: MFAPP :: *** Read 2851
+
+14:36:13.906 :: MFAPP :: *** Read 2679
+
+14:36:13.955 :: MFAPP :: *** Read 2809
+
+14:36:14.017 :: MFAPP :: *** Read 2685
+
+14:36:14.073 :: MFAPP :: *** Read 2715
+
+14:36:14.141 :: MFAPP :: *** Read 2717
+
+14:36:14.191 :: MFAPP :: *** Read 2807
+
+14:36:14.249 :: MFAPP :: *** Read 2743
+
+14:36:14.297 :: MFAPP :: *** Read 2835
+
+14:36:14.374 :: MFAPP :: *** Read 2727
+
+14:36:14.418 :: MFAPP :: *** Read 2833
+
+14:36:14.470 :: MFAPP :: *** Read 2691
+
+14:36:14.520 :: MFAPP :: *** Read 2809
+
+14:36:14.578 :: MFAPP :: *** Read 2641
+
+14:36:14.622 :: MFAPP :: *** Read 2819
+
+14:36:14.675 :: MFAPP :: *** Read 2729
+
+14:36:14.731 :: MFAPP :: *** Read 2747
+
+14:36:14.796 :: MFAPP :: *** Read 2673
+
+14:36:14.846 :: MFAPP :: *** Read 2791
+
+14:36:14.905 :: MFAPP :: *** Read 2705
+
+14:36:14.954 :: MFAPP :: *** Read 2833
+
+14:36:15.016 :: MFAPP :: *** Read 2789
+
+14:36:15.061 :: MFAPP :: *** Read 2813
+
+14:36:15.108 :: MFAPP :: *** Read 2821
+
+14:36:15.155 :: MFAPP :: *** Read 2821
+
+14:36:15.203 :: MFAPP :: *** Read 2829
+
+14:36:15.253 :: MFAPP :: *** Read 2871
+
+14:36:15.345 :: MFAPP :: *** Read 2785
+
+14:36:15.418 :: MFAPP :: *** Read 2857
+
+14:36:15.502 :: MFAPP :: *** Read 2741
+
+14:36:15.582 :: MFAPP :: *** Read 2801
+
+14:36:15.640 :: MFAPP :: *** Read 2751
+
+14:36:15.703 :: MFAPP :: *** Read 2889
+
+14:36:15.784 :: MFAPP :: *** Read 2815
+
+14:36:15.857 :: MFAPP :: *** Read 2797
+
+14:36:15.937 :: MFAPP :: *** Read 2809
+
+14:36:16.011 :: MFAPP :: *** Read 2809
+
+14:36:16.093 :: MFAPP :: *** Read 2809
+
+14:36:16.181 :: MFAPP :: *** Read 2809
+
+14:36:16.251 :: MFAPP :: *** Read 2821
+
+14:36:16.301 :: MFAPP :: *** Read 2791
+
+14:36:16.375 :: MFAPP :: *** Read 2815
+
+14:36:16.435 :: MFAPP :: *** Read 2781
+
+14:36:16.515 :: MFAPP :: *** Read 2903
+
+14:36:16.556 :: MFAPP :: *** Read 2779
+
+14:36:16.610 :: MFAPP :: *** Read 2845
+
+14:36:16.659 :: MFAPP :: *** Read 2815
+
+14:36:16.734 :: MFAPP :: *** Read 2865
+
+14:36:16.782 :: MFAPP :: *** Read 2851
+
+14:36:16.843 :: MFAPP :: *** Read 2935
+
+14:36:16.885 :: MFAPP :: *** Read 2811
+
+14:36:16.952 :: MFAPP :: *** Read 2901
+
+14:36:17.014 :: MFAPP :: *** Read 2729
+
+14:36:17.064 :: MFAPP :: *** Read 2929
+
+14:36:17.115 :: MFAPP :: *** Read 2803
+
+14:36:17.173 :: MFAPP :: *** Read 2873
+
+14:36:17.234 :: MFAPP :: *** Read 2807
+
+14:36:17.297 :: MFAPP :: *** Read 2953
+
+14:36:17.344 :: MFAPP :: *** Read 2745
+
+14:36:17.405 :: MFAPP :: *** Read 2927
+
+14:36:17.451 :: MFAPP :: *** Read 2763
+
+14:36:17.531 :: MFAPP :: *** Read 2871
+
+14:36:17.577 :: MFAPP :: *** Read 2765
+
+14:36:17.639 :: MFAPP :: *** Read 2835
+
+14:36:17.700 :: MFAPP :: *** Read 2729
+
+14:36:17.764 :: MFAPP :: *** Read 2903
+
+14:36:17.824 :: MFAPP :: *** Read 2747
+
+14:36:17.907 :: MFAPP :: *** Read 2881
+
+14:36:17.953 :: MFAPP :: *** Read 2753
+
+14:36:18.015 :: MFAPP :: *** Read 2827
+
+14:36:18.068 :: MFAPP :: *** Read 2649
+
+14:36:18.158 :: MFAPP :: *** Read 2805
+
+14:36:18.205 :: MFAPP :: *** Read 2667
+
+14:36:18.267 :: MFAPP :: *** Read 2817
+
+14:36:18.309 :: MFAPP :: *** Read 2663
+
+14:36:18.382 :: MFAPP :: *** Read 2931
+
+14:36:18.427 :: MFAPP :: *** Read 2713
+
+14:36:18.487 :: MFAPP :: *** Read 2911
+
+14:36:18.534 :: MFAPP :: *** Read 2723
+
+14:36:18.594 :: MFAPP :: *** Read 2861
+
+14:36:18.654 :: MFAPP :: *** Read 2737
+
+14:36:18.718 :: MFAPP :: *** Read 2841
+
+14:36:18.775 :: MFAPP :: *** Read 2671
+
+14:36:18.829 :: MFAPP :: *** Read 2823
+
+14:36:18.873 :: MFAPP :: *** Read 2679
+
+14:36:18.927 :: MFAPP :: *** Read 2827
+
+14:36:18.971 :: MFAPP :: *** Read 2633
+
+14:36:19.031 :: MFAPP :: *** Read 2841
+
+14:36:19.082 :: MFAPP :: *** Read 2653
+
+14:36:19.141 :: MFAPP :: *** Read 2747
+
+14:36:19.192 :: MFAPP :: *** Read 2645
+
+14:36:19.250 :: MFAPP :: *** Read 2757
+
+14:36:19.292 :: MFAPP :: *** Read 2643
+
+14:36:19.359 :: MFAPP :: *** Read 2715
+
+14:36:19.404 :: MFAPP :: *** Read 2601
+
+14:36:19.468 :: MFAPP :: *** Read 2723
+
+14:36:19.522 :: MFAPP :: *** Read 2577
+
+14:36:19.594 :: MFAPP :: *** Read 2845
+
+14:36:19.657 :: MFAPP :: *** Read 2631
+
+14:36:19.719 :: MFAPP :: *** Read 2745
+
+14:36:19.781 :: MFAPP :: *** Read 2671
+
+14:36:19.843 :: MFAPP :: *** Read 2769
+
+14:36:19.893 :: MFAPP :: *** Read 2579
+
+14:36:19.952 :: MFAPP :: *** Read 2785
+
+14:36:20.006 :: MFAPP :: *** Read 2563
+
+14:36:20.093 :: MFAPP :: *** Read 2763
+
+14:36:20.146 :: MFAPP :: *** Read 2523
+
+14:36:20.203 :: MFAPP :: *** Read 2745
+
+14:36:20.251 :: MFAPP :: *** Read 2559
+
+14:36:20.312 :: MFAPP :: *** Read 2755
+
+14:36:20.361 :: MFAPP :: *** Read 2559
+
+14:36:20.422 :: MFAPP :: *** Read 2713
+
+14:36:20.466 :: MFAPP :: *** Read 2573
+
+14:36:20.532 :: MFAPP :: *** Read 2725
+
+14:36:20.576 :: MFAPP :: *** Read 2609
+
+14:36:20.625 :: MFAPP :: *** Read 2709
+
+14:36:20.677 :: MFAPP :: *** Read 2551
+
+14:36:20.734 :: MFAPP :: *** Read 2673
+
+14:36:20.778 :: MFAPP :: *** Read 2623
+
+14:36:20.842 :: MFAPP :: *** Read 2675
+
+14:36:20.891 :: MFAPP :: *** Read 2599
+
+14:36:20.955 :: MFAPP :: *** Read 2697
+
+14:36:21.009 :: MFAPP :: *** Read 2503
+
+14:36:21.064 :: MFAPP :: *** Read 2625
+
+14:36:21.118 :: MFAPP :: *** Read 2553
+
+14:36:21.188 :: MFAPP :: *** Read 2637
+
+14:36:21.240 :: MFAPP :: *** Read 2579
+
+14:36:21.297 :: MFAPP :: *** Read 2687
+
+14:36:21.339 :: MFAPP :: *** Read 2491
+
+14:36:21.407 :: MFAPP :: *** Read 2629
+
+14:36:21.464 :: MFAPP :: *** Read 2547
+
+14:36:21.533 :: MFAPP :: *** Read 2631
+
+14:36:21.616 :: MFAPP :: *** Read 2525
+
+14:36:21.736 :: MFAPP :: *** Read 2633
+
+14:36:21.796 :: MFAPP :: *** Read 2539
+
+14:36:21.860 :: MFAPP :: *** Read 2645
+
+14:36:21.917 :: MFAPP :: *** Read 2549
+
+14:36:22.000 :: MFAPP :: *** Read 2693
+
+14:36:22.082 :: MFAPP :: *** Read 2475
+
+14:36:22.190 :: MFAPP :: *** Read 2657
+
+14:36:22.259 :: MFAPP :: *** Read 2537
+
+14:36:22.343 :: MFAPP :: *** Read 2631
+
+14:36:22.398 :: MFAPP :: *** Read 2553
+
+14:36:22.468 :: MFAPP :: *** Read 2643
+
+14:36:22.527 :: MFAPP :: *** Read 2537
+
+14:36:22.581 :: MFAPP :: *** Read 2677
+
+14:36:22.632 :: MFAPP :: *** Read 2575
+
+14:36:22.687 :: MFAPP :: *** Read 2649
+
+14:36:22.740 :: MFAPP :: *** Read 2579
+
+14:36:22.802 :: MFAPP :: *** Read 2613
+
+14:36:22.864 :: MFAPP :: *** Read 2565
+
+14:36:22.922 :: MFAPP :: *** Read 2661
+
+14:36:22.971 :: MFAPP :: *** Read 2579
+
+14:36:23.031 :: MFAPP :: *** Read 2637
+
+14:36:23.078 :: MFAPP :: *** Read 2587
+
+14:36:23.140 :: MFAPP :: *** Read 2609
+
+14:36:23.196 :: MFAPP :: *** Read 2585
+
+14:36:23.265 :: MFAPP :: *** Read 2641
+
+14:36:23.324 :: MFAPP :: *** Read 2551
+
+14:36:23.405 :: MFAPP :: *** Read 2621
+
+14:36:23.453 :: MFAPP :: *** Read 2595
+
+14:36:23.515 :: MFAPP :: *** Read 2633
+
+14:36:23.562 :: MFAPP :: *** Read 2621
+
+14:36:23.626 :: MFAPP :: *** Read 2619
+
+14:36:23.686 :: MFAPP :: *** Read 2535
+
+14:36:23.750 :: MFAPP :: *** Read 2641
+
+14:36:23.802 :: MFAPP :: *** Read 2531
+
+14:36:23.860 :: MFAPP :: *** Read 2643
+
+14:36:23.910 :: MFAPP :: *** Read 2535
+
+14:36:23.970 :: MFAPP :: *** Read 2595
+
+14:36:24.025 :: MFAPP :: *** Read 2519
+
+14:36:24.078 :: MFAPP :: *** Read 2607
+
+14:36:24.126 :: MFAPP :: *** Read 2579
+
+14:36:24.203 :: MFAPP :: *** Read 2619
+
+14:36:24.260 :: MFAPP :: *** Read 2613
+
+14:36:24.329 :: MFAPP :: *** Read 2615
+
+14:36:24.381 :: MFAPP :: *** Read 2621
+
+14:36:24.453 :: MFAPP :: *** Read 2653
+
+14:36:24.503 :: MFAPP :: *** Read 2529
+
+14:36:24.564 :: MFAPP :: *** Read 2637
+
+14:36:24.613 :: MFAPP :: *** Read 2555
+
+14:36:24.673 :: MFAPP :: *** Read 2617
+
+14:36:24.734 :: MFAPP :: *** Read 2679
+
+14:36:24.796 :: MFAPP :: *** Read 2653
+
+14:36:24.844 :: MFAPP :: *** Read 2619
+
+14:36:24.908 :: MFAPP :: *** Read 2613
+
+14:36:24.968 :: MFAPP :: *** Read 2627
+
+14:36:25.048 :: MFAPP :: *** Read 2683
+
+14:36:25.107 :: MFAPP :: *** Read 2673
+
+14:36:25.173 :: MFAPP :: *** Read 2633
+
+14:36:25.219 :: MFAPP :: *** Read 2625
+
+14:36:25.281 :: MFAPP :: *** Read 2651
+
+14:36:25.327 :: MFAPP :: *** Read 2587
+
+14:36:25.391 :: MFAPP :: *** Read 2667
+
+14:36:25.436 :: MFAPP :: *** Read 2603
+
+14:36:25.500 :: MFAPP :: *** Read 2701
+
+14:36:25.554 :: MFAPP :: *** Read 2667
+
+14:36:25.624 :: MFAPP :: *** Read 2683
+
+14:36:25.670 :: MFAPP :: *** Read 2667
+
+14:36:25.730 :: MFAPP :: *** Read 2661
+
+14:36:25.782 :: MFAPP :: *** Read 2647
+
+14:36:25.843 :: MFAPP :: *** Read 2583
+
+14:36:25.891 :: MFAPP :: *** Read 2715
+
+14:36:25.953 :: MFAPP :: *** Read 2595
+
+14:36:26.007 :: MFAPP :: *** Read 2713
+
+14:36:26.077 :: MFAPP :: *** Read 2733
+
+14:36:26.138 :: MFAPP :: *** Read 2785
+
+14:36:26.204 :: MFAPP :: *** Read 2751
+
+14:36:26.258 :: MFAPP :: *** Read 2835
+
+14:36:26.311 :: MFAPP :: *** Read 2787
+
+14:36:26.362 :: MFAPP :: *** Read 2755
+
+14:36:26.427 :: MFAPP :: *** Read 2741
+
+14:36:26.479 :: MFAPP :: *** Read 2721
+
+14:36:26.548 :: MFAPP :: *** Read 2701
+
+14:36:26.601 :: MFAPP :: *** Read 2759
+
+14:36:26.657 :: MFAPP :: *** Read 2681
+
+14:36:26.707 :: MFAPP :: *** Read 2755
+
+14:36:26.766 :: MFAPP :: *** Read 2605
+
+14:36:26.810 :: MFAPP :: *** Read 2665
+
+14:36:26.875 :: MFAPP :: *** Read 2621
+
+14:36:26.935 :: MFAPP :: *** Read 2639
+
+14:36:27.000 :: MFAPP :: *** Read 2725
+
+14:36:27.047 :: MFAPP :: *** Read 2705
+
+14:36:27.111 :: MFAPP :: *** Read 2765
+
+14:36:27.169 :: MFAPP :: *** Read 2739
+
+14:36:27.266 :: MFAPP :: *** Read 2709
+
+14:36:27.332 :: MFAPP :: *** Read 2755
+
+14:36:27.392 :: MFAPP :: *** Read 2687
+
+14:36:27.440 :: MFAPP :: *** Read 2755
+
+14:36:27.499 :: MFAPP :: *** Read 2659
+
+14:36:27.553 :: MFAPP :: *** Read 2715
+
+14:36:27.609 :: MFAPP :: *** Read 2721
+
+14:36:27.668 :: MFAPP :: *** Read 2707
+
+14:36:27.739 :: MFAPP :: *** Read 2753
+
+14:36:27.794 :: MFAPP :: *** Read 2665
+
+14:36:27.859 :: MFAPP :: *** Read 2731
+
+14:36:27.908 :: MFAPP :: *** Read 2735
+
+14:36:27.981 :: MFAPP :: *** Read 2679
+
+14:36:28.040 :: MFAPP :: *** Read 2767
+
+14:36:28.110 :: MFAPP :: *** Read 2715
+
+14:36:28.175 :: MFAPP :: *** Read 2771
+
+14:36:28.265 :: MFAPP :: *** Read 2695
+
+14:36:28.337 :: MFAPP :: *** Read 2769
+
+14:36:28.407 :: MFAPP :: *** Read 2673
+
+14:36:28.450 :: MFAPP :: *** Read 2679
+
+14:36:28.516 :: MFAPP :: *** Read 2693
+
+14:36:28.566 :: MFAPP :: *** Read 2679
+
+14:36:28.625 :: MFAPP :: *** Read 2745
+
+14:36:28.673 :: MFAPP :: *** Read 2683
+
+14:36:28.749 :: MFAPP :: *** Read 2655
+
+14:36:28.795 :: MFAPP :: *** Read 2665
+
+14:36:28.845 :: MFAPP :: *** Read 2661
+
+14:36:28.895 :: MFAPP :: *** Read 2651
+
+14:36:28.968 :: MFAPP :: *** Read 2643
+
+14:36:29.026 :: MFAPP :: *** Read 2653
+
+14:36:29.079 :: MFAPP :: *** Read 2605
+
+14:36:29.124 :: MFAPP :: *** Read 2707
+
+14:36:29.186 :: MFAPP :: *** Read 2589
+
+14:36:29.232 :: MFAPP :: *** Read 2651
+
+14:36:29.297 :: MFAPP :: *** Read 2741
+
+14:36:29.343 :: MFAPP :: *** Read 2597
+
+14:36:29.406 :: MFAPP :: *** Read 2739
+
+14:36:29.463 :: MFAPP :: *** Read 2667
+
+14:36:29.531 :: MFAPP :: *** Read 2723
+
+14:36:29.575 :: MFAPP :: *** Read 2661
+
+14:36:29.642 :: MFAPP :: *** Read 2663
+
+14:36:29.693 :: MFAPP :: *** Read 2567
+
+14:36:29.766 :: MFAPP :: *** Read 2599
+
+14:36:29.823 :: MFAPP :: *** Read 2583
+
+14:36:29.880 :: MFAPP :: Started  36:29.880
+
+14:36:29.955 :: MFAPP :: Callback #2, time 74, mean time 64, max time allowed 2000
+
+14:36:30.009 :: MFAPP :: 
+
+14:36:30.063 :: MFAPP :: *** Read 2605
+
+14:36:30.112 :: MFAPP :: *** Read 2587
+
+14:36:30.189 :: MFAPP :: *** Read 2643
+
+14:36:30.242 :: MFAPP :: *** Read 2609
+
+14:36:30.298 :: MFAPP :: *** Read 2677
+
+14:36:30.359 :: MFAPP :: *** Read 2623
+
+14:36:30.423 :: MFAPP :: *** Read 2705
+
+14:36:30.472 :: MFAPP :: *** Read 2635
+
+14:36:30.533 :: MFAPP :: *** Read 2693
+
+14:36:30.582 :: MFAPP :: *** Read 2571
+
+14:36:30.641 :: MFAPP :: *** Read 2589
+
+14:36:30.691 :: MFAPP :: *** Read 2527
+
+14:36:30.750 :: MFAPP :: *** Read 2595
+
+14:36:30.800 :: MFAPP :: *** Read 2505
+
+14:36:30.861 :: MFAPP :: *** Read 2589
+
+14:36:30.930 :: MFAPP :: *** Read 2517
+
+14:36:30.999 :: MFAPP :: *** Read 2545
+
+14:36:31.048 :: MFAPP :: *** Read 2651
+
+14:36:31.108 :: MFAPP :: *** Read 2555
+
+14:36:31.160 :: MFAPP :: *** Read 2611
+
+14:36:31.220 :: MFAPP :: *** Read 2561
+
+14:36:31.270 :: MFAPP :: *** Read 2585
+
+14:36:31.328 :: MFAPP :: *** Read 2625
+
+14:36:31.384 :: MFAPP :: *** Read 2539
+
+14:36:31.453 :: MFAPP :: *** Read 2567
+
+14:36:31.502 :: MFAPP :: *** Read 2579
+
+14:36:31.561 :: MFAPP :: *** Read 2613
+
+14:36:31.606 :: MFAPP :: *** Read 2559
+
+14:36:31.657 :: MFAPP :: *** Read 2681
+
+14:36:31.723 :: MFAPP :: *** Read 2619
+
+14:36:31.782 :: MFAPP :: *** Read 2687
+
+14:36:31.828 :: MFAPP :: *** Read 2603
+
+14:36:31.890 :: MFAPP :: *** Read 2707
+
+14:36:32.012 :: CORE :: Emulation Ended
+14:36:32.015 :: MFAPP :: Done.
+

@@ -7,11 +7,11 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
         /// <summary>
         /// Displacement detection state values
         /// </summary>
-        public enum DisplacementState {
-            /// <summary>No displacement is happening</summary>
+        public enum ConfirmedDisplacementState {
+            /// <summary>Confirmed that no displacement is happening</summary>
             Inactive = 0,
 
-            /// <summary>Displacement is happening</summary>
+            /// <summary>Confirmed that displacement is happening</summary>
             Displacing = 1,
         }
 

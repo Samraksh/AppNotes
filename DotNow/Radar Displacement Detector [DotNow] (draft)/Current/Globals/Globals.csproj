@@ -36,8 +36,11 @@
     <Compile Include="Globals.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Hardware" />
+    <Reference Include="Microsoft.SPOT.Hardware">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.SPOT.Native">
+      <Private>False</Private>
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow">
       <HintPath>..\Radar Displacement Detector\eMote\Dlls\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>

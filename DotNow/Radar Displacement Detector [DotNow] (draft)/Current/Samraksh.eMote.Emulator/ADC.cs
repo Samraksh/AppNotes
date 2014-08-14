@@ -27,7 +27,7 @@ namespace Samraksh.eMote.Emulator {
         ADC_SampleTime_239_5_Cycles = 7,
     }
 
-    public delegate void AdcCallback(bool Status);
+    public delegate void AdcCallback(bool status);
 
 }
 /// <summary>
@@ -35,20 +35,20 @@ namespace Samraksh.eMote.Emulator {
 /// </summary>
 public class ADC {
     //ADC_Configuration Config;
-    ushort NumberOfChannels = 3;
-    SerialPort ADCPort;
-    ushort[] ADCValue;
-    uint SamplingTime = 100000;
-    Thread SamplingThread;
+    ushort _numberOfChannels = 3;
+    SerialPort _adcPort;
+    ushort[] _adcValue;
+    uint _samplingTime = 100000;
+    Thread _samplingThread;
 
     //Batch/Continous mode parameters
-    bool BatchMode = false;
-    bool ContinuousMode = false;
-    uint NumberOfSamples = 0;
-    AdcCallback AppCallback;
-    ushort[] BatchBuffer;
-    ushort[] ContinuousBuffer;
-    uint CurSampleNumber = 0;
+    bool _batchMode;
+    bool _continuousMode;
+    uint _numberOfSamples;
+    AdcCallback _appCallback;
+    ushort[] _batchBuffer;
+    ushort[] _continuousBuffer;
+    uint _curSampleNumber;
 
 
     /*public ADC(ushort NumberOfChannels, AdcSampleTime SampleTime)
@@ -57,14 +57,14 @@ public class ADC {
         ADCValue = new ushort[Config.NumberOfChannels];
     }*/
 
-    public int Init(AdcSampleTime SampleTime, int _NumberOfChannels) {
+    public int Init(AdcSampleTime sampleTime, int numberOfChannels) {
         Debug.Print("Initializing ADC...");
         try {
-            NumberOfChannels = (ushort)_NumberOfChannels;
-            ADCValue = new ushort[NumberOfChannels];
-            SamplingThread = new Thread(ReadChannels);
-            ADCPort = new SerialPort("COM1") { ReadTimeout = 0 };
-            ADCPort.Open();
+            _numberOfChannels = (ushort)numberOfChannels;
+            _adcValue = new ushort[_numberOfChannels];
+            _samplingThread = new Thread(ReadChannels);
+            _adcPort = new SerialPort("COM1") { ReadTimeout = 0 };
+            _adcPort.Open();
             //ADCPort.DataReceived += new SerialDataReceivedEventHandler(ADCPort_DataReceived);
         }
         catch (Exception e) {
@@ -72,7 +72,7 @@ public class ADC {
             return 0;
         }
 
-        SamplingThread.Start();
+        _samplingThread.Start();
         return 1;
     }
 
@@ -80,11 +80,11 @@ public class ADC {
     /// Stop ADC sampling
     /// </summary>
     public void Stop() {
-        SamplingThread.Suspend();
-        BatchMode = false;
-        ContinuousMode = false;
-        AppCallback = null;
-        NumberOfSamples = 0;
+        _samplingThread.Suspend();
+        _batchMode = false;
+        _continuousMode = false;
+        _appCallback = null;
+        _numberOfSamples = 0;
     }
 
     /// <summary>
@@ -98,34 +98,34 @@ public class ADC {
         if (startChannel > 2 || (startChannel + numChannels > 3))
             return 0;
 
-        if (!ADCPort.IsOpen) {
+        if (!_adcPort.IsOpen) {
             Debug.Print("Opening ADCPort");
-            ADCPort.Open();
+            _adcPort.Open();
         }
 
         for (int i = (int)startChannel; i < (int)startChannel + numChannels; i++)
-            currSample[i] = ADCValue[i];
+            currSample[i] = _adcValue[i];
         return 1;
     }
 
-    public int ConfigureBatchMode(ushort[] SampleBuff, uint StartChannel, uint NumChannels, uint NumSamples, uint _SamplingTime, AdcCallback Callback) {
-        if (StartChannel > 2 || (StartChannel + NumChannels > 3))
+    public int ConfigureBatchMode(ushort[] sampleBuff, uint startChannel, uint numChannels, uint numSamples, uint samplingTime, AdcCallback callback) {
+        if (startChannel > 2 || (startChannel + numChannels > 3))
             return 0;
 
-        if (ContinuousMode) return 0; //Check if continuous mode is already running
+        if (_continuousMode) return 0; //Check if continuous mode is already running
 
-        BatchMode = true;
-        NumberOfSamples = NumSamples;
-        SamplingTime = _SamplingTime;
-        AppCallback = Callback;
-        BatchBuffer = SampleBuff;
+        _batchMode = true;
+        _numberOfSamples = numSamples;
+        _samplingTime = samplingTime;
+        _appCallback = callback;
+        _batchBuffer = sampleBuff;
 
-        if (!SamplingThread.IsAlive) SamplingThread.Start();
-        if (SamplingThread.ThreadState == ThreadState.Suspended) SamplingThread.Resume();
+        if (!_samplingThread.IsAlive) _samplingThread.Start();
+        if (_samplingThread.ThreadState == ThreadState.Suspended) _samplingThread.Resume();
 
-        if (!ADCPort.IsOpen) {
+        if (!_adcPort.IsOpen) {
             Debug.Print("Opening ADCPort");
-            ADCPort.Open();
+            _adcPort.Open();
         }
         return 1;
     }
@@ -134,37 +134,37 @@ public class ADC {
         if (startChannel > 2 || (startChannel + numChannels > 3))
             return 0;
 
-        if (BatchMode) return 0; //Check if continuous mode is already running
+        if (_batchMode) return 0; //Check if continuous mode is already running
 
-        if (!SamplingThread.IsAlive) SamplingThread.Start();
-        if (SamplingThread.ThreadState == ThreadState.Suspended) SamplingThread.Resume();
+        if (!_samplingThread.IsAlive) _samplingThread.Start();
+        if (_samplingThread.ThreadState == ThreadState.Suspended) _samplingThread.Resume();
 
-        ContinuousMode = true;
-        NumberOfSamples = numSamples;
-        SamplingTime = samplingTime;
-        AppCallback = callback;
-        BatchBuffer = sampleBuff;
-        ContinuousBuffer = new ushort[numChannels * numSamples];
+        _continuousMode = true;
+        _numberOfSamples = numSamples;
+        _samplingTime = samplingTime;
+        _appCallback = callback;
+        _batchBuffer = sampleBuff;
+        _continuousBuffer = new ushort[numChannels * numSamples];
 
-        if (!ADCPort.IsOpen) {
+        if (!_adcPort.IsOpen) {
             Debug.Print("Opening ADCPort");
-            ADCPort.Open();
+            _adcPort.Open();
         }
         return 1;
     }
 
     void ReadChannels() {
-        var readBuffer = new byte[NumberOfChannels * 2];
+        var readBuffer = new byte[_numberOfChannels * 2];
         Debug.Print("Staring to sample ADC port...");
 
         while (true) {
-            if (ADCPort.IsOpen) {
-                if (ADCPort.BytesToRead >= readBuffer.Length) {
-                    var bytesRead = ADCPort.Read(readBuffer, 0, 2 * NumberOfChannels);
+            if (_adcPort.IsOpen) {
+                if (_adcPort.BytesToRead >= readBuffer.Length) {
+                    var bytesRead = _adcPort.Read(readBuffer, 0, 2 * _numberOfChannels);
                     //Debug.Print("Thread: Reading...");
                     if (bytesRead > 0) {
                         try {
-                            ByteArrayToUShortArray(readBuffer, ADCValue, readBuffer.Length);
+                            ByteArrayToUShortArray(readBuffer, _adcValue, readBuffer.Length);
 
                             //if ((_inputCtr % 100) == 0) {
                             //    var adcValsStr = string.Empty;
@@ -175,18 +175,18 @@ public class ADC {
                             //}
                             //_inputCtr++;
 
-                            if (BatchMode || ContinuousMode) {
-                                for (var i = 0; i < NumberOfChannels; i++) {
-                                    ContinuousBuffer[CurSampleNumber * NumberOfChannels + i] = ADCValue[i];
+                            if (_batchMode || _continuousMode) {
+                                for (var i = 0; i < _numberOfChannels; i++) {
+                                    _continuousBuffer[(int)(_curSampleNumber * _numberOfChannels) + i] = _adcValue[i];
                                 }
-                                CurSampleNumber++;
-                                if (CurSampleNumber == NumberOfSamples) {
-                                    CurSampleNumber = 0;
-                                    ContinuousBuffer.CopyTo(BatchBuffer, 0);
-                                    Array.Clear(ContinuousBuffer, 0, ContinuousBuffer.Length);
-                                    AppCallback(true);
+                                _curSampleNumber++;
+                                if (_curSampleNumber == _numberOfSamples) {
+                                    _curSampleNumber = 0;
+                                    _continuousBuffer.CopyTo(_batchBuffer, 0);
+                                    Array.Clear(_continuousBuffer, 0, _continuousBuffer.Length);
+                                    _appCallback(true);
                                 }
-                                if (BatchMode) Stop();
+                                if (_batchMode) Stop();
                             }
                         }
                         catch (Exception e) {
@@ -205,15 +205,15 @@ public class ADC {
             }
             else { Debug.Print("ADC Port not open."); }
 
-            Thread.Sleep((int)(SamplingTime / 1000));
+            Thread.Sleep((int)(_samplingTime / 1000));
             //Thread.Sleep((int)(SamplingTime));
         }
     }
-    private int _inputCtr;
+    //private int _inputCtr;
 
     // Helper Functions
     void ByteArrayToUShortArray(byte[] x, ushort[] ret, int byteLength) {
-        for (int i = 0; i < byteLength / 2; i++) {
+        for (var i = 0; i < byteLength / 2; i++) {
             ret[i] = (ushort)(x[i * 2] << 8);
             ret[i] += x[i * 2 + 1];
         }

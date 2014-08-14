@@ -68,9 +68,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Graphics" />
-    <Reference Include="Microsoft.SPOT.Hardware" />
+    <Reference Include="Microsoft.SPOT.Graphics">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.SPOT.Hardware">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.SPOT.Native">
+      <Private>False</Private>
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow">
       <HintPath>eMote\DLLs\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
