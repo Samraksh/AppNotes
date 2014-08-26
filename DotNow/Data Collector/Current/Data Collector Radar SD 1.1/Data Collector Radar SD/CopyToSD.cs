@@ -3,7 +3,7 @@ using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
 using Samraksh.eMote.NonVolatileMemory;
 
-namespace Samraksh.Library.DataCollector.Radar {
+namespace Samraksh.AppNote.DataCollector.Radar {
     public partial class Program {
 
         /// <summary>

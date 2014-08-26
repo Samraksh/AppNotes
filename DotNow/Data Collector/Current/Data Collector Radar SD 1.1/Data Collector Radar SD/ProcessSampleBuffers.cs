@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Threading;
 using Microsoft.SPOT;
-using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
+using Samraksh.eMote.DotNow;
 
-namespace Samraksh.Library.DataCollector.Radar {
+namespace Samraksh.AppNote.DataCollector.Radar {
     public partial class Program {
 
         // ---------------------------------------------
