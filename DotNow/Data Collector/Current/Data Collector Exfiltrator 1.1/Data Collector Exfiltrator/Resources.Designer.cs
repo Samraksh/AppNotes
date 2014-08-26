@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Samraksh.Library.DataCollector.Exfiltrator
+namespace Samraksh.AppNote.DataCollector.Exfiltrator
 {
     
     internal partial class Resources
@@ -20,7 +20,7 @@ namespace Samraksh.Library.DataCollector.Exfiltrator
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("Samraksh.Library.DataCollector.Exfiltrator.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("Samraksh.AppNote.DataCollector.Exfiltrator.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }

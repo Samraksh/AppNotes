@@ -1,6 +1,10 @@
-﻿// note that after you see the EHFL on the lcd of emote, then click enter in the command window and input the port number and the filename 
-// (there are 15 seconds between the EHFL showing on the lcd, and the starting of real exfiltration, and this 15 seconds can be used to type in the command window)
-
+﻿/***************************************************
+ * eMote .NOW Data Collector Exfiltrator
+ *      Exfiltrate data from Data Collector Radar or Microphone to PC via serial port
+ *      Reads collected data from SD card
+ *  Versions
+ *      1.1 Initial release (1.0 was a very early version and was not released)
+ **************************************************/
 
 using System;
 using System.IO;
@@ -13,15 +17,27 @@ using Samraksh.eMote.DotNow;
 
 using Samraksh.AppNote.Utility;
 
-namespace Samraksh.Library.DataCollector.Exfiltrator {
+namespace Samraksh.AppNote.DataCollector.Exfiltrator {
+    /// <summary>
+    /// The main program
+    /// </summary>
     public class Program {
 
-        //private const byte Eof = 0xC;
-        private const byte Eof = 0xF0;
+        // End of file value
+        //  This must be the same value across all Data Collector programs 
+        private const byte Eof = 0xF0;  // A ushort of F0F0 (2 bytes of Eof) is larger than a 12-bit sample (max 0FFF)
+
+        // The blocksize used by the collector
+        //  Used for giving spot-check info
         private const int BlockSizeBytes = 512;
 
+        // Misc definitions
         private static readonly EnhancedEmoteLcd EnhancedLCD = new EnhancedEmoteLcd();
 
+        /// <summary>
+        /// The main program
+        /// </summary>
+        /// <exception cref="IOException"></exception>
         public static void Main() {
             Debug.EnableGCMessages(false);
 
@@ -32,17 +48,21 @@ namespace Samraksh.Library.DataCollector.Exfiltrator {
             Debug.Print("Version " + VersionInfo.Version + ", build " + VersionInfo.BuildDateTime);
             Debug.Print("");
 
+            // Set up the serial buffer
             var serialBuffer = new byte[BlockSizeBytes];
+
+            // Initialize the final message
             var finalMsg = string.Empty;
 
             try {
                 // ReSharper disable once ObjectCreationAsStatement
-                new SD(status => { });
+                new SD(status => { });  // Even though this seems to be a do-nothing method call, it's still necessary before initializing the SD card
 
                 if (!SD.Initialize()) {
                     throw new IOException("SD Card Initialization failed");
                 }
 
+                // Set up the serial port
                 var serialPort = new SerialPort("COM1") {
                     BaudRate = 115200,
                     Parity = Parity.None,
@@ -52,15 +72,22 @@ namespace Samraksh.Library.DataCollector.Exfiltrator {
                 };
                 serialPort.Open();
 
+                // Show user that now is the time to start the PC host program
                 EnhancedLCD.Display("conn");
-
+                // Wait a few seconds
                 Thread.Sleep(10000);
-
+                // Show the user that we're exfiltrating
                 EnhancedLCD.Display("ex");
 
                 // ReSharper disable once NotAccessedVariable
                 var rdCnt = 0;
+
+                // Set flag for EOF
+                var foundEof = false;
+
+                // Read from the SD card and write to the serial port till done
                 while (true) {
+                    // read a buffer's worth of data
                     if (!SD.Read(serialBuffer, 0, (ushort)serialBuffer.Length)) {
                         throw new IOException("SD read failed");
                     }
@@ -70,7 +97,7 @@ namespace Samraksh.Library.DataCollector.Exfiltrator {
                     //            + " / last: " + BitConverter.ToInt16(serialBuffer, serialBuffer.Length - 4) + ", " +
                     //            BitConverter.ToInt16(serialBuffer, serialBuffer.Length - 2));
 
-                    var foundEof = false;
+                    // Check for EOF
                     for (var i = 0; i < serialBuffer.Length - 4; i = i + 4) {
                         if (
                             !(serialBuffer[i] == Eof && serialBuffer[i + 1] == Eof && serialBuffer[i + 2] == Eof &&
@@ -78,8 +105,10 @@ namespace Samraksh.Library.DataCollector.Exfiltrator {
                             continue;
                         }
                         foundEof = true;
+                        // Write the buffer
                         serialPort.Write(serialBuffer, 0, serialBuffer.Length);
                         serialPort.Flush();
+                        // For good measure, write a buffer's worth of EOF
                         for (var j = 0; j < serialBuffer.Length; j++) {
                             serialBuffer[j] = Eof;
                         }
@@ -92,11 +121,11 @@ namespace Samraksh.Library.DataCollector.Exfiltrator {
                         break;
                     }
 
+                    // Write the buffer
                     AlertSerialWrite(true);
                     serialPort.Write(serialBuffer, 0, serialBuffer.Length);
                     serialPort.Flush();
                     AlertSerialWrite(false);
-
 
                     rdCnt++;
                 }
@@ -124,16 +153,5 @@ namespace Samraksh.Library.DataCollector.Exfiltrator {
             // Note that LCD char numbers are right to left; 0 is right-most
             EnhancedLCD.WriteN(1, (alert ? LCD.CHAR_1 : LCD.CHAR_NULL));
         }
-
-        //static void SerialPortHandler(object sender, SerialDataReceivedEventArgs e) {
-        //    byte[] m_recvBuffer = new byte[100];
-        //    SerialPort serialPort = (SerialPort)sender;
-
-        //    int numBytes = serialPort.BytesToRead;
-        //    serialPort.Read(m_recvBuffer, 0, numBytes);
-        //    serialPort.Write(m_recvBuffer, 0, numBytes);
-        //    serialPort.Flush();
-
-        //}
     }
 }

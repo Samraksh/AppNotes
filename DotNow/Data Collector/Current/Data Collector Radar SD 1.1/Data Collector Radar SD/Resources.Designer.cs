@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Samraksh.Library.DataCollector.Radar
+namespace Samraksh.AppNote.DataCollector.Radar
 {
     
     internal partial class Resources
@@ -20,7 +20,7 @@ namespace Samraksh.Library.DataCollector.Radar
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("Samraksh.Library.DataCollector.Radar.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("Samraksh.AppNote.DataCollector.Radar.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }

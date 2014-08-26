@@ -1,12 +1,7 @@
-﻿/*************************************************************
- * eMote .NOW Data Collector Host
- *      Receives data from Data Collector Exfiltrator and stores it to a binary file
- * Versions
- *      1.1 Initial release (1.0 was a very early version and was not released)
- ***********************************************************/
-
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -14,7 +9,7 @@ using Samraksh.AppNote.Utility;
 using _DBG = Microsoft.SPOT.Debugger;
 using _WP = Microsoft.SPOT.Debugger.WireProtocol;
 
-namespace Samraksh.AppNote.DataCollector.Host {
+namespace Samraksh.Library.DataCollector.Host {
 
     internal class Program {
 
@@ -22,8 +17,9 @@ namespace Samraksh.AppNote.DataCollector.Host {
         private static Stream _serialStream;
         private const int SerialBitRate = 115200;
 
-        // The output file steam
+        // The output file steams
         private static BinaryWriter _binaryFileStream;
+        private static StreamWriter _csvFileStream;
 
         // Size of the data collect buffer
         //  Used to give data for spot check
@@ -87,6 +83,16 @@ namespace Samraksh.AppNote.DataCollector.Host {
                     Console.WriteLine("Enter again.");
                     continue;
                 }
+                try {
+                    Debug.Assert(outputFileName != null, "outputFileName != null");
+                    csvFileName = outputFileName.Trim() + ".csv";
+                    _csvFileStream = new StreamWriter(File.Open(csvFileName, FileMode.Create));
+                }
+                catch (Exception ex) {
+                    Console.WriteLine("Cannot open \"" + csvFileName + "\" for write\n" + ex.Message);
+                    Console.WriteLine("Enter again.");
+                    continue;
+                }
                 break;
             }
 
@@ -110,6 +116,7 @@ namespace Samraksh.AppNote.DataCollector.Host {
             (new Thread(() => _serialStream.Close())).Start();
             // Close the file stream
             _binaryFileStream.Close();
+            _csvFileStream.Close();
 
             // Report on the results
             var fileSizeUshorts = _fileSize / sizeof(ushort);
@@ -196,6 +203,7 @@ namespace Samraksh.AppNote.DataCollector.Host {
                 // Write up to but not including the EOF
                 if (i <= 1) { return; }
                 _binaryFileStream.Write(buffer, 0, i - 1);
+                CsvWrite(buffer, 0, i - 1);
                 _fileSize += (i - 1);
                 return;
             }
@@ -205,6 +213,7 @@ namespace Samraksh.AppNote.DataCollector.Host {
             //  If so, just return
             try {
                 _binaryFileStream.Write(buffer, 0, actualLength);
+                CsvWrite(buffer, 0, actualLength);
             }
             catch (ObjectDisposedException) {
                 return;
@@ -242,6 +251,21 @@ namespace Samraksh.AppNote.DataCollector.Host {
         }
         private static int _ushortCntr;
         private static int _bufferCntr;
+
+        /// <summary>
+        /// Write a buffer in CSV format
+        /// </summary>
+        /// <remarks>Assumes the size of the buffer is even</remarks>
+        /// <param name="buffer"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        private static void CsvWrite(byte[] buffer, int start, int length) {
+            for (var i = start; i < Math.Max(buffer.Length, length); i += 2) {
+                var valueUshort = BitConverter.ToInt16(buffer, i);
+                _csvFileStream.Write(valueUshort.ToString(CultureInfo.CurrentCulture));
+                _csvFileStream.Write(i % 4 == 2 ? "\n" : ",");
+            }
+        }
     }
 
 }
