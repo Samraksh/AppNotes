@@ -1,0 +1,13 @@
+13:49:18.407 :: CORE :: Starting Emulation...
+13:49:18.408 :: CORE :: /******Samraksh NETMF4.3 Emulator, verion 0.3******/
+13:49:18.463 :: CORE :: Found Emulator ADC port : Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+13:49:18.464 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+13:49:18.464 :: CORE :: I can write to ADC
+13:49:18.465 :: CORE :: Found Emulator USART port : Usart2
+13:49:18.465 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+13:49:18.465 :: CORE :: I can write to Emulator Serial Port
+13:49:18.471 :: CORE :: Watching for communication from Model..
+13:49:18.472 :: PHYCOMM :: The server is running at port: 47000...
+13:49:18.472 :: PHYCOMM :: The local End point is  :127.0.0.1:47000
+13:49:18.472 :: PHYCOMM :: Starting thread to accept connections.....
+13:49:18.473 :: PHYCOMM :: Waiting for connection...

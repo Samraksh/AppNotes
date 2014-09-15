@@ -1,0 +1,563 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samraksh_eMote</name>
+    </assembly>
+    <members>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.StorageType">
+            <summary>
+            Block device type
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreError">
+            <summary>
+            DataStore error values 
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.ReferenceDataType">
+            <summary>
+            Data types allowed in the DataStore
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreReturnStatus">
+            <summary>
+            DataStore return types
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataReference">
+            <summary>
+            DataReference class. Provides functions to write, read and delete data from DataStore. 
+            Provides a reference/handle to the data stored in the block storage device to the user.
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.NonVolatileMemory.DataReference.dataType">
+            <summary>
+            DataType of reference
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.#ctor(Samraksh.eMote.NonVolatileMemory.DataStore,System.Int32,Samraksh.eMote.NonVolatileMemory.ReferenceDataType)">
+            <summary>
+            Default data class constructor. Possible to create max of 256 active data objects.
+            </summary>
+            <param name="dStore">DataStore object</param>
+            <param name="m_Size">Size of the data object to be stored in data store. 
+            Max size is (2^32 - 1) if type is bytes; (2^31 - 1) if type is uint16; (2^30 - 1) if type is uint32</param>
+            <param name="referenceDataType">Type of data to be stored in data store</param>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.#ctor(Samraksh.eMote.NonVolatileMemory.DataStore,System.Int32)">
+            <summary>
+            Returns a data object corresponding to the input parameter dataId.
+            Possible to create max of 256 active data objects.
+            </summary>Rea
+            <param name="dStore">DataStore object</param>
+            <param name="dataId">ID of data for which the user wants a reference/handle</param>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Write a byte array into the data store from offset. Amount of data to be written is given by numData
+            </summary>
+            <param name="data">Byte array to be written to data store</param>
+            <param name="offset">Offset from which to write to data store. Recommended to be an even value (only for byte data type)</param>
+            <param name="numData">Count of data to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.UInt16[],System.Int32,System.Int32)">
+            <summary>
+            Write a UInt16 array into the data store from offset. Amount of data to be written is given by numData
+            </summary>
+            <param name="data">UInt16 array to be written to data store</param>
+            <param name="offset">Offset within the data array from which to write to data store</param>
+            <param name="numData">Count of data to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.UInt32[],System.Int32,System.Int32)">
+            <summary>
+            Write a UInt32 array into the data store from offset. Amount of data to be written is given by numData
+            </summary>
+            <param name="data">UInt32 array to be written to data store</param>
+            <param name="offset">Offset within the data array from which to write to data store</param>
+            <param name="numData">Count of data to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.Byte[],System.Int32)">
+            <summary>
+            Write a byte array into the data store from offset = 0. Amount of data to be written is given by numData
+            </summary>
+            <param name="data">Byte array to be written to data store</param>
+            <param name="numData">Count of data to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.UInt16[],System.Int32)">
+            <summary>
+            Write a UInt16 array into the data store from offset = 0. Amount of data to be written is given by numData
+            </summary>
+            <param name="data">UInt16 array to be written to data store</param>
+            <param name="numData">Count of data to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.UInt32[],System.Int32)">
+            <summary>
+            Write a UInt32 array into the data store from offset = 0. Amount of data to be written is given by numData
+            </summary>
+            <param name="data">UInt32 array to be written to data store</param>
+            <param name="numData">Count of data to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.Byte[])">
+            <summary>
+            Write a byte array into the data store starting from offset = 0. Amount of data to be written is size of the array.
+            </summary>
+            <param name="data">Byte array to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.UInt16[])">
+            <summary>
+            Write a UInt16 array into the data store starting from offset = 0. Amount of data to be written is size of the array.
+            </summary>
+            <param name="data">UInt16 array to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.UInt32[])">
+            <summary>
+            Write a UInt32 array into the data store starting from offset = 0. Amount of data to be written is size of the array.
+            </summary>
+            <param name="data">UInt32 array to be written to data store</param>
+            <returns>Returns DataStoreReturnStatus</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Read a byte array from the data store starting at offset, into the array passed as parameter. Amount of data to be read is given by numData.
+            </summary>
+            <param name="data">Array to be filled up with data for the corresponding data object</param>
+            <param name="offset">Offset from source from which to read</param>
+            <param name="numData">Count of data to be read</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.UInt16[],System.Int32,System.Int32)">
+            <summary>
+            Read a UInt16 array from the data store starting at offset, into the array passed as parameter. Amount of data to be read is given by numData.
+            </summary>
+            <param name="data">Array to be filled up with UInt16 data</param>
+            <param name="offset">Offset from source from which to read</param>
+            <param name="numData">Count of data to be read</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.UInt32[],System.Int32,System.Int32)">
+            <summary>
+            Read a UInt32 array from the data store starting at offset, into the array passed as parameter. Amount of data to be read is given by numData.
+            </summary>
+            <param name="data">Array to be filled up with UInt32 data</param>
+            <param name="offset">Offset from source from which to read</param>
+            <param name="numData">Count of data to be read</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.Byte[],System.Int32)">
+            <summary>
+            Read a byte array from the data store starting at offset = 0, into the array passed as parameter. Amount of data to be read is given by numData.
+            </summary>
+            <param name="data">Array to be filled up with data for the corresponding data object</param>
+            <param name="numData">Count of data to be read</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.UInt16[],System.Int32)">
+            <summary>
+            Read a UInt16 array from the data store starting at offset = 0, into the array passed as parameter. Amount of data to be read is given by numData.
+            </summary>
+            <param name="data">Array to be filled up with UInt16 data</param>
+            <param name="numData">Count of data to be read</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.UInt32[],System.Int32)">
+            <summary>
+            Read a UInt32 array from the data store starting at offset = 0, into the array passed as parameter. Amount of data to be read is given by numData.
+            </summary>
+            <param name="data">Array to be filled up with UInt32 data</param>
+            <param name="numData">Count of data to be read</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.Byte[])">
+            <summary>
+            Read a byte array from the data store starting at offset = 0, into the array passed as parameter. Amount of data to be read is size of the array.
+            </summary>
+            <param name="data">Array to be filled up with data for the corresponding data object</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.UInt16[])">
+            <summary>
+            Read a UInt16 array from the data store starting at offset = 0, into the array passed as parameter. Amount of data to be read is size of the array.
+            </summary>
+            <param name="data">Array to be filled up with UInt16 data</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.UInt32[])">
+            <summary>
+            Read a UInt32 array from the data store starting at offset = 0, into the array passed as parameter. Amount of data to be read is size of the array.
+            </summary>
+            <param name="data">Array to be filled up with UInt32 data</param>
+            <returns>Returns if read was a success or a failure (DataStoreReturnStatus)</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Delete">
+            <summary>
+            Delete data from data store
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.GetDataReference(System.UInt32)">
+            <summary>
+            Get address of dataID from the data store
+            </summary>
+            <param name="dataId">ID of the data to be looked up</param>
+            <returns>Returns address/reference to the dataID</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.LookupDataType(System.UInt32)">
+            <summary>
+            Get the data type of dataID
+            </summary>
+            <param name="dataId">ID of the data to be looked up</param>
+            <returns>Returns data type</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.LookupDataSize(System.UInt32)">
+            <summary>
+            Get the allocation size for dataID
+            </summary>
+            <param name="dataId">ID of the data to be looked up</param>
+            <returns>Returns allocation size</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.DeleteData(System.UInt32)">
+            <summary>
+            Delete the data represented by the dataId from data store.
+            </summary>
+            <param name="dataId">ID of the data to be deleted</param>
+            <returns>Returns true or false</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.CreateData(System.UInt32,System.Byte)">
+            <summary>
+            Creates data for the specified size in the block storage device. Allocates space, assigns a reference which is returned back to the user
+            </summary>
+            <param name="Size">Size of the data</param>
+            <param name="dataTypeByte">Data type - byte</param>
+            <returns>Reference to the created data</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.CreateData(System.UInt32,System.UInt16)">
+            <summary>
+            Creates data for the specified size in the block storage device. Allocates space, assigns a reference which is returned back to the user
+            </summary>
+            <param name="Size">Size of the data</param>
+            <param name="dataTypeUInt16">Data type - UInt16</param>
+            <returns>Reference to the created data</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.CreateData(System.UInt32,System.UInt32)">
+            <summary>
+            Creates data for the specified size in the block storage device. Allocates space, assigns a reference which is returned back to the user
+            </summary>
+            <param name="Size">Size of the data</param>
+            <param name="dataTypeUInt32">Data type - UInt32</param>
+            <returns>Reference to the created data</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.GetDataID">
+            <summary>
+            Returns the current dataID 
+            </summary>
+            <returns>Current dataID</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.DisposeNativeMemoryPointer(System.UInt32)">
+            <summary>
+            Native call that destroys data created on the flash
+            </summary>
+            <param name="dataId"></param>
+            <returns>Returns true or false</returns>
+        </member>
+        <member name="P:Samraksh.eMote.NonVolatileMemory.DataReference.getDataReferenceType">
+            <summary>
+            Return data reference type 
+            </summary>
+        </member>
+        <member name="P:Samraksh.eMote.NonVolatileMemory.DataReference.getDataReferenceSize">
+            <summary>
+            Return data reference size 
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStore">
+            <summary>
+            DataStore class that holds data. 
+            DataStore can be any block storage device (eg. NOR, SD card)
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.NonVolatileMemory.DataStore.storageType">
+            <summary>
+            The block storage device type
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.NonVolatileMemory.DataStore.DSInstance">
+            <summary>
+            The only instance of DataStore.
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.NonVolatileMemory.DataStore.syncObject">
+            <summary>
+            For synchronization between multiple threads
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.NonVolatileMemory.DataStore.dataStoreInstances">
+            <summary>
+            HashTable for storing multiple instances of DataStore initialized to different block storage devices
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.#ctor">
+            <summary>
+            Private constructor so that only one instance of DataStore exists.
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Instance(Samraksh.eMote.NonVolatileMemory.StorageType,System.Boolean)">
+            <summary>
+            Multiton pattern. This allows the DataStore to be initialized with different block storage devices such as NOR, NAND etc.
+            http://en.wikipedia.org/wiki/Multiton_pattern
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.InitDataStore(Samraksh.eMote.NonVolatileMemory.StorageType,System.Boolean)">
+            <summary>
+            Takes a storageType as parameter and initializes the data store with that storageType.
+            </summary>
+            <param name="storageType">storageType can be NOR, SD card or any other block storage device</param>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.ReadAllDataReferences(Samraksh.eMote.NonVolatileMemory.DataReference[],System.Int32)">
+            <summary>
+            Fills up the array (passed as first parameter) with the dataIDs starting from offset (passed as second parameter)
+            </summary>
+            <param name="dataRefArray">Array that holds the references to the data</param>
+            <param name="dataIdOffset">Offset from which the array references are to be fetched</param>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.DeleteAllData">
+            <summary>
+            Deletes all dataIDs from the data store. Does not actually erase the data, but marks them as inactive.
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GC">
+            <summary>
+            Performs garbage collection on the data store. This is done internally by data store when there is not enough space to add new data.
+            GC rearranges data internally so that all active data are grouped together. Then the inactive data are erased one block at a time.
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.EraseAllData">
+            <summary>
+            Deletes all dataIDs as well as erases all data from data store.
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Write(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte)">
+            <summary>
+            Write data array to the data store starting from the address (passed as first parameter)
+            </summary>
+            <param name="address">Starting address from which to start writing the data</param>
+            <param name="data">Data to be written to data store</param>
+            <param name="offset">Offset from which to start writing</param>
+            <param name="numBytes">Count of bytes to be written</param>
+            <param name="dataType">Data type to be written</param>
+            <returns>Returns true if successful and false if not</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Read(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte)">
+            <summary>
+            Read a byte array from the data store into data array starting from address (first parameter)
+            </summary>
+            <param name="address">Starting address from which to start reading</param>
+            <param name="data">Byte array to be filled up with data from data store</param>
+            <param name="offset">Offset from which to start reading</param>
+            <param name="numBytes">Number of bytes to be read</param>
+            <param name="dataType">Data type of the data to be read</param>
+            <returns>Returns true if successful and false if not</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Finalize">
+            <summary>
+            Destroys the data in the data store
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.CreateDataStore(System.Boolean)">
+            <summary>
+            Initializes the data store. Performs a scan of the device and builds up the list of active data inside the data store.
+            </summary>
+            <returns>True or false</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GetMaxAllocationSize">
+            <summary>
+            Method that returns maximum allocation size possible in data store
+            </summary>
+            <returns>Maximum allocation size possible in data store</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GetTotalSpace">
+            <summary>
+            Get total available space 
+            </summary>
+            <returns>Amount of total space</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GetUsedBytes">
+            <summary>
+            Get amount of used space 
+            </summary>
+            <returns>Amount of used space</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GetFreeBytes">
+            <summary>
+            Get amount of free space
+            </summary>
+            <returns>Amount of free space</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GetReadAllDataIds(System.Int32[],System.Int32,System.Int32)">
+            <summary>
+            Returns valid data currently stored in the data store
+            </summary>
+            <returns>Returns array with valid data as unsigned integer</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GetCountOfDataIds">
+            <summary>
+            Get the count of valid data currently stored in the data store
+            </summary>
+            <returns>Returns the count of valid data as unsigned integer</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.DeleteAll">
+            <summary>
+            Delete all references to data in the data store
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.EraseAllBlocks">
+            <summary>
+            Erases all data in the data store
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.DataStoreGC">
+            <summary>
+            Garbage collects inactive data in data store
+            </summary>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GetReadWriteStatus">
+            <summary>
+            Gets read/write status of the data store
+            </summary>
+            <returns>Returns status of read/write on data store</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.GetLastErrorStatus">
+            <summary>
+            Gets error status of data Store
+            </summary>
+            <returns>Returns error status of data store</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Write(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte,System.Int32)">
+            <summary>
+            Write data present in buffer starting from address and amount equal to numBytes. 
+            </summary>
+            <param name="address">Address from which to start writing data</param>
+            <param name="data">Buffer holding data to be written</param>
+            <param name="offset"></param>
+            <param name="numBytes">Amount of data to be written</param>
+            <param name="dataType">Data type of the data to be written</param>
+            <param name="storageType">Block storage type</param>
+            <returns>Returns success or failure</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Read(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte,System.Int32)">
+            <summary>
+            Read from data into the buffer starting from address.
+            </summary>
+            <param name="address">Address of data to be read from</param>
+            <param name="buffer">Buffer into which the data will be read</param>
+            <param name="offset">Offset from which to start reading</param>
+            <param name="numBytes">Number of bytes to be read</param>
+            <param name="dataType">Data type of the data to be read</param>
+            <param name="storageType">Block storage type</param>
+            <returns>Returns number of bytes read, returns -1 if operation fails</returns>
+        </member>
+        <member name="P:Samraksh.eMote.NonVolatileMemory.DataStore.MaxAllocationSize">
+            <summary>
+            Maximum allocation size possible in bytes
+            </summary>
+        </member>
+        <member name="P:Samraksh.eMote.NonVolatileMemory.DataStore.Size">
+            <summary>
+            Size of the DataStore in bytes
+            </summary>
+        </member>
+        <member name="P:Samraksh.eMote.NonVolatileMemory.DataStore.UsedBytes">
+            <summary>
+            Number of bytes of space already occupied by data
+            </summary>
+        </member>
+        <member name="P:Samraksh.eMote.NonVolatileMemory.DataStore.FreeBytes">
+            <summary>
+            Number of bytes of space available to store data
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.GC">
+            <summary>
+            Garbage Collector class
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.GC.GetUsedKBytes">
+            <summary>
+            Get amount of used heap space in kilo bytes
+            </summary>
+            <returns>Returns amount of used heap in kilo bytes</returns>
+        </member>
+        <member name="M:Samraksh.eMote.GC.GetFreeKBytes">
+            <summary>
+            Get amount of free heap space in kilo bytes
+            </summary>
+            <returns>Returns amount of free heap space in kilo bytes</returns>
+        </member>
+        <member name="M:Samraksh.eMote.GC.IsGCSamExtensionsEnabled">
+            <summary>
+            Check if Samraksh's Garbage Collection Extensions are enabled or not
+            </summary>
+            <returns>Returns true if enabled, false otherwise</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Samraksh.eMote.GC.EnableIncrementalCleaning" -->
+        <member name="M:Samraksh.eMote.GC.EnableIncrementalCompaction">
+            <summary>
+            Enable incremental Compaction of heap in GC
+            </summary>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Samraksh.eMote.GC.DisableIncrementalCleaning" -->
+        <member name="M:Samraksh.eMote.GC.DisableIncrementalCompaction">
+            <summary>
+            Disable incremental Compaction of heap in GC
+            </summary>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <member name="M:Samraksh.eMote.GC.CleanBeforeSleep(System.UInt32)">
+            <summary>
+            Instruct GC to clean the heap and create the amount of space specified, before putting CPU to sleep
+            </summary>
+            <param name="KBytesToFree">Amount of free space to be created</param>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <member name="M:Samraksh.eMote.GC.CleanNow(System.UInt32)">
+            <summary>
+            Instruct GC to clean the heap now (Suspend managed code execution) and create the amount of space specified
+            </summary>
+            <param name="KBytesToFree">Amount of free space to be created</param>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <member name="M:Samraksh.eMote.GC.CleanNow">
+            <summary>
+            Instruct GC to clean the heap now and create as much space as possible, without compaction
+            </summary>
+            <returns>Returns true if operation is success, false otherwise</returns>
+        </member>
+        <member name="M:Samraksh.eMote.GC.AvgTimeForCleaning">
+            <summary>
+            Average time for the Mark and Sweep operation. Implements weighted (0.5 weight) moving average.
+            </summary>
+            <returns>Returns the average time as number of microseconds.</returns>
+        </member>
+        <member name="M:Samraksh.eMote.GC.AvgTimeForCompaction">
+            <summary>
+            Average time for the Compaction operation. Implements weighted (0.5 weight) moving average.
+            </summary>
+            <returns>Returns the average time as number of microseconds.</returns>
+        </member>
+    </members>
+</doc>

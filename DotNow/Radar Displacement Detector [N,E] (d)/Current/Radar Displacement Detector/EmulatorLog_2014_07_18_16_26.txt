@@ -1,0 +1,1149 @@
+16:26:57.783 :: CORE :: Starting Emulation...
+16:26:57.784 :: CORE :: /******Samraksh NETMF4.3 Emulator, verion 0.3******/
+16:26:57.817 :: MFAPP :: 
+TinyCLR (Build 4.3.0.0)
+
+
+16:26:57.817 :: MFAPP :: Starting...
+
+16:26:57.821 :: MFAPP :: Created EE.
+
+16:26:57.823 :: MFAPP :: Started Hardware.
+
+16:26:57.855 :: CORE :: Found Emulator ADC port : Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+16:26:57.856 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+16:26:57.856 :: CORE :: I can write to ADC
+16:26:57.856 :: CORE :: Found Emulator USART port : Usart2
+16:26:57.857 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+16:26:57.857 :: CORE :: I can write to Emulator Serial Port
+16:26:57.858 :: CORE :: Watching for communication from Model..
+16:26:57.858 :: PHYCOMM :: The server is running at port: 47000...
+16:26:57.858 :: PHYCOMM :: The local End point is  :127.0.0.1:47000
+16:26:57.858 :: PHYCOMM :: Starting thread to accept connections.....
+16:26:57.859 :: PHYCOMM :: Waiting for connection...
+16:26:57.902 :: MFAPP :: Found debugger!
+
+16:26:59.611 :: MFAPP ::    Assembly: Microsoft.SPOT.Graphics (4.3.0.0)   (392 RAM - 2268 ROM - 1357 METADATA)
+
+
+16:26:59.620 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+16:26:59.626 :: MFAPP ::    TypeRef        =       24 bytes (       6 elements)
+
+16:26:59.632 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+16:26:59.638 :: MFAPP ::    MethodRef      =       20 bytes (       5 elements)
+
+16:26:59.643 :: MFAPP ::    TypeDef        =       40 bytes (       5 elements)
+
+16:26:59.648 :: MFAPP ::    FieldDef       =       16 bytes (       8 elements)
+
+16:26:59.654 :: MFAPP ::    MethodDef      =       96 bytes (      48 elements)
+
+16:26:59.660 :: MFAPP :: 
+
+16:26:59.666 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:26:59.671 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:26:59.675 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+16:26:59.678 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+16:26:59.682 :: MFAPP ::    Resources Data  =        0 bytes
+
+16:26:59.686 :: MFAPP ::    Strings         =      537 bytes
+
+16:26:59.690 :: MFAPP ::    Signatures      =      293 bytes
+
+16:26:59.694 :: MFAPP ::    ByteCode        =      242 bytes
+
+16:26:59.699 :: MFAPP :: 
+
+
+16:26:59.703 :: MFAPP ::    Assembly: Microsoft.SPOT.Hardware.SerialPort (4.3.0.0)   (548 RAM - 3608 ROM - 1697 METADATA)
+
+
+16:26:59.708 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+16:26:59.712 :: MFAPP ::    TypeRef        =      100 bytes (      25 elements)
+
+16:26:59.717 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+16:26:59.722 :: MFAPP ::    MethodRef      =       88 bytes (      22 elements)
+
+16:26:59.726 :: MFAPP ::    TypeDef        =       16 bytes (       2 elements)
+
+16:26:59.730 :: MFAPP ::    FieldDef       =       32 bytes (      16 elements)
+
+16:26:59.735 :: MFAPP ::    MethodDef      =      108 bytes (      54 elements)
+
+16:26:59.741 :: MFAPP :: 
+
+16:26:59.745 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:26:59.750 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:26:59.754 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+16:26:59.758 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+16:26:59.763 :: MFAPP ::    Resources Data  =        0 bytes
+
+16:26:59.767 :: MFAPP ::    Strings         =      667 bytes
+
+16:26:59.772 :: MFAPP ::    Signatures      =      257 bytes
+
+16:26:59.776 :: MFAPP ::    ByteCode        =     1114 bytes
+
+16:26:59.780 :: MFAPP :: 
+
+
+16:26:59.786 :: MFAPP ::    Assembly: Microsoft.SPOT.Hardware (4.3.0.0)   (1996 RAM - 14288 ROM - 8587 METADATA)
+
+
+16:26:59.790 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+16:26:59.795 :: MFAPP ::    TypeRef        =      132 bytes (      33 elements)
+
+16:26:59.800 :: MFAPP ::    FieldRef       =       24 bytes (       6 elements)
+
+16:26:59.805 :: MFAPP ::    MethodRef      =      132 bytes (      33 elements)
+
+16:26:59.809 :: MFAPP ::    TypeDef        =      536 bytes (      67 elements)
+
+16:26:59.815 :: MFAPP ::    FieldDef       =      208 bytes (     104 elements)
+
+16:26:59.821 :: MFAPP ::    MethodDef      =      544 bytes (     272 elements)
+
+16:26:59.826 :: MFAPP :: 
+
+16:26:59.831 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:26:59.837 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:26:59.841 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+16:26:59.846 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+16:26:59.851 :: MFAPP ::    Resources Data  =        0 bytes
+
+16:26:59.857 :: MFAPP ::    Strings         =     2061 bytes
+
+16:26:59.864 :: MFAPP ::    Signatures      =     1195 bytes
+
+16:26:59.871 :: MFAPP ::    ByteCode        =     3511 bytes
+
+16:26:59.877 :: MFAPP :: 
+
+
+16:26:59.883 :: MFAPP ::    Assembly: Microsoft.SPOT.Native (4.3.0.0)   (1248 RAM - 7468 ROM - 4862 METADATA)
+
+
+16:26:59.888 :: MFAPP ::    AssemblyRef    =        4 bytes (       1 elements)
+
+16:26:59.894 :: MFAPP ::    TypeRef        =       88 bytes (      22 elements)
+
+16:26:59.901 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+16:26:59.907 :: MFAPP ::    MethodRef      =       60 bytes (      15 elements)
+
+16:26:59.916 :: MFAPP ::    TypeDef        =      368 bytes (      46 elements)
+
+16:26:59.923 :: MFAPP ::    FieldDef       =      220 bytes (     110 elements)
+
+16:26:59.931 :: MFAPP ::    MethodDef      =      244 bytes (     122 elements)
+
+16:26:59.937 :: MFAPP :: 
+
+16:26:59.943 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:26:59.949 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:26:59.955 :: MFAPP ::    Resources       =       72 bytes (       9 elements)
+
+16:26:59.961 :: MFAPP ::    Resources Files =        8 bytes (       1 elements)
+
+16:26:59.967 :: MFAPP ::    Resources Data  =      747 bytes
+
+16:26:59.973 :: MFAPP ::    Strings         =     1099 bytes
+
+16:26:59.978 :: MFAPP ::    Signatures      =      618 bytes
+
+16:26:59.984 :: MFAPP ::    ByteCode        =      535 bytes
+
+16:26:59.990 :: MFAPP :: 
+
+
+16:26:59.995 :: MFAPP ::    Assembly: mscorlib (4.3.0.0)   (4256 RAM - 41324 ROM - 21846 METADATA)
+
+
+16:27:00.001 :: MFAPP ::    AssemblyRef    =        0 bytes (       0 elements)
+
+16:27:00.008 :: MFAPP ::    TypeRef        =        0 bytes (       0 elements)
+
+16:27:00.013 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+16:27:00.020 :: MFAPP ::    MethodRef      =        0 bytes (       0 elements)
+
+16:27:00.027 :: MFAPP ::    TypeDef        =     1152 bytes (     144 elements)
+
+16:27:00.034 :: MFAPP ::    FieldDef       =      300 bytes (     149 elements)
+
+16:27:00.041 :: MFAPP ::    MethodDef      =     1776 bytes (     888 elements)
+
+16:27:00.047 :: MFAPP :: 
+
+16:27:00.055 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:27:00.061 :: MFAPP ::    TypeSpec        =       16 bytes (       4 elements)
+
+16:27:00.069 :: MFAPP ::    Resources       =      232 bytes (      29 elements)
+
+16:27:00.076 :: MFAPP ::    Resources Files =       16 bytes (       2 elements)
+
+16:27:00.084 :: MFAPP ::    Resources Data  =      437 bytes
+
+16:27:00.090 :: MFAPP ::    Strings         =     2643 bytes
+
+16:27:00.096 :: MFAPP ::    Signatures      =     2974 bytes
+
+16:27:00.103 :: MFAPP ::    ByteCode        =    15985 bytes
+
+16:27:00.109 :: MFAPP :: 
+
+
+16:27:00.118 :: MFAPP ::    Assembly: Radar Displacement Detector (1.1.5312.27254)   (560 RAM - 3632 ROM - 1272 METADATA)
+
+
+16:27:00.124 :: MFAPP ::    AssemblyRef    =       24 bytes (       6 elements)
+
+16:27:00.130 :: MFAPP ::    TypeRef        =      124 bytes (      31 elements)
+
+16:27:00.137 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+16:27:00.144 :: MFAPP ::    MethodRef      =      160 bytes (      40 elements)
+
+16:27:00.151 :: MFAPP ::    TypeDef        =       48 bytes (       6 elements)
+
+16:27:00.158 :: MFAPP ::    FieldDef       =       32 bytes (      16 elements)
+
+16:27:00.164 :: MFAPP ::    MethodDef      =       20 bytes (      10 elements)
+
+16:27:00.171 :: MFAPP :: 
+
+16:27:00.177 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:27:00.184 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:27:00.190 :: MFAPP ::    Resources       =       16 bytes (       2 elements)
+
+16:27:00.197 :: MFAPP ::    Resources Files =        8 bytes (       1 elements)
+
+16:27:00.204 :: MFAPP ::    Resources Data  =       13 bytes
+
+16:27:00.210 :: MFAPP ::    Strings         =     1348 bytes
+
+16:27:00.217 :: MFAPP ::    Signatures      =      200 bytes
+
+16:27:00.225 :: MFAPP ::    ByteCode        =      829 bytes
+
+16:27:00.232 :: MFAPP :: 
+
+
+16:27:00.239 :: MFAPP ::    Assembly: Samraksh_eMote_DotNow (1.0.0.1)   (608 RAM - 4408 ROM - 2157 METADATA)
+
+
+16:27:00.245 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+16:27:00.253 :: MFAPP ::    TypeRef        =       48 bytes (      12 elements)
+
+16:27:00.260 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+16:27:00.268 :: MFAPP ::    MethodRef      =       32 bytes (       8 elements)
+
+16:27:00.276 :: MFAPP ::    TypeDef        =      120 bytes (      15 elements)
+
+16:27:00.285 :: MFAPP ::    FieldDef       =       56 bytes (      27 elements)
+
+16:27:00.293 :: MFAPP ::    MethodDef      =      136 bytes (      68 elements)
+
+16:27:00.302 :: MFAPP :: 
+
+16:27:00.311 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:27:00.321 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:27:00.331 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+16:27:00.339 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+16:27:00.346 :: MFAPP ::    Resources Data  =        0 bytes
+
+16:27:00.353 :: MFAPP ::    Strings         =      895 bytes
+
+16:27:00.360 :: MFAPP ::    Signatures      =      309 bytes
+
+16:27:00.367 :: MFAPP ::    ByteCode        =     1228 bytes
+
+16:27:00.374 :: MFAPP :: 
+
+
+16:27:00.382 :: MFAPP ::    Assembly: RadarDisplacementAnalysis (1.0.0.0)   (360 RAM - 2544 ROM - 822 METADATA)
+
+
+16:27:00.389 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+16:27:00.397 :: MFAPP ::    TypeRef        =       40 bytes (      10 elements)
+
+16:27:00.404 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+16:27:00.412 :: MFAPP ::    MethodRef      =       16 bytes (       4 elements)
+
+16:27:00.420 :: MFAPP ::    TypeDef        =       64 bytes (       8 elements)
+
+16:27:00.429 :: MFAPP ::    FieldDef       =       44 bytes (      21 elements)
+
+16:27:00.436 :: MFAPP ::    MethodDef      =       32 bytes (      15 elements)
+
+16:27:00.444 :: MFAPP :: 
+
+16:27:00.453 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:27:00.461 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:27:00.469 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+16:27:00.478 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+16:27:00.487 :: MFAPP ::    Resources Data  =        0 bytes
+
+16:27:00.496 :: MFAPP ::    Strings         =      637 bytes
+
+16:27:00.507 :: MFAPP ::    Signatures      =       86 bytes
+
+16:27:00.514 :: MFAPP ::    ByteCode        =      956 bytes
+
+16:27:00.521 :: MFAPP :: 
+
+
+16:27:00.537 :: MFAPP ::    Assembly: Samraksh.eMote.Emulator (4.3.0.0)   (520 RAM - 3352 ROM - 1369 METADATA)
+
+
+16:27:00.546 :: MFAPP ::    AssemblyRef    =       12 bytes (       3 elements)
+
+16:27:00.555 :: MFAPP ::    TypeRef        =       76 bytes (      19 elements)
+
+16:27:00.563 :: MFAPP ::    FieldRef       =        4 bytes (       1 elements)
+
+16:27:00.571 :: MFAPP ::    MethodRef      =       96 bytes (      24 elements)
+
+16:27:00.580 :: MFAPP ::    TypeDef        =       72 bytes (       9 elements)
+
+16:27:00.588 :: MFAPP ::    FieldDef       =       52 bytes (      25 elements)
+
+16:27:00.597 :: MFAPP ::    MethodDef      =       44 bytes (      22 elements)
+
+16:27:00.607 :: MFAPP :: 
+
+16:27:00.618 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+16:27:00.629 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:27:00.638 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+16:27:00.647 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+16:27:00.655 :: MFAPP ::    Resources Data  =        0 bytes
+
+16:27:00.664 :: MFAPP ::    Strings         =      840 bytes
+
+16:27:00.677 :: MFAPP ::    Signatures      =      213 bytes
+
+16:27:00.687 :: MFAPP ::    ByteCode        =     1014 bytes
+
+16:27:00.699 :: MFAPP :: 
+
+
+16:27:00.709 :: MFAPP ::    Assembly: Utility (0.0.5309.24937)   (332 RAM - 1736 ROM - 623 METADATA)
+
+
+16:27:00.718 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+16:27:00.729 :: MFAPP ::    TypeRef        =       48 bytes (      12 elements)
+
+16:27:00.739 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+16:27:00.747 :: MFAPP ::    MethodRef      =       84 bytes (      21 elements)
+
+16:27:00.757 :: MFAPP ::    TypeDef        =       24 bytes (       3 elements)
+
+16:27:00.765 :: MFAPP ::    FieldDef       =        4 bytes (       1 elements)
+
+16:27:00.773 :: MFAPP ::    MethodDef      =       16 bytes (       8 elements)
+
+16:27:00.782 :: MFAPP :: 
+
+16:27:00.790 :: MFAPP ::    Attributes      =       16 bytes (       2 elements)
+
+16:27:00.798 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+16:27:00.807 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+16:27:00.816 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+16:27:00.825 :: MFAPP ::    Resources Data  =        0 bytes
+
+16:27:00.834 :: MFAPP ::    Strings         =      236 bytes
+
+16:27:00.843 :: MFAPP ::    Signatures      =      111 bytes
+
+16:27:00.852 :: MFAPP ::    ByteCode        =      752 bytes
+
+16:27:00.861 :: MFAPP :: 
+
+
+16:27:00.869 :: MFAPP :: Loading Deployment Assemblies.
+
+16:27:00.879 :: MFAPP :: ERROR: Could not find device for DEPLOYMENT usage
+
+16:27:00.889 :: MFAPP :: Resolving.
+
+16:27:00.902 :: MFAPP :: 
+Total: (9304 RAM - 84628 ROM - 44592 METADATA)
+
+
+16:27:00.914 :: MFAPP ::    AssemblyRef    =       88 bytes (      22 elements)
+
+16:27:00.924 :: MFAPP ::    TypeRef        =      680 bytes (     170 elements)
+
+16:27:00.937 :: MFAPP ::    FieldRef       =       28 bytes (       7 elements)
+
+16:27:00.949 :: MFAPP ::    MethodRef      =      688 bytes (     172 elements)
+
+16:27:00.959 :: MFAPP ::    TypeDef        =     2440 bytes (     305 elements)
+
+16:27:00.968 :: MFAPP ::    FieldDef       =      964 bytes (     477 elements)
+
+16:27:00.978 :: MFAPP ::    MethodDef      =     3016 bytes (    1507 elements)
+
+16:27:00.987 :: MFAPP :: 
+
+16:27:00.997 :: MFAPP ::    DebuggingInfo  =     1516 bytes
+
+16:27:01.006 :: MFAPP :: 
+
+16:27:01.016 :: MFAPP ::    Attributes      =       16 bytes (       2 elements)
+
+16:27:01.025 :: MFAPP ::    TypeSpec        =       16 bytes (       4 elements)
+
+16:27:01.035 :: MFAPP ::    Resources Files =       96 bytes (       4 elements)
+
+16:27:01.045 :: MFAPP ::    Resources       =      320 bytes (      40 elements)
+
+16:27:01.054 :: MFAPP ::    Resources Data  =     1197 bytes
+
+16:27:01.090 :: MFAPP ::    Strings         =    10963 bytes
+
+16:27:01.113 :: MFAPP ::    Signatures      =     6256 bytes
+
+16:27:01.123 :: MFAPP ::    ByteCode        =    26166 bytes
+
+16:27:01.137 :: MFAPP :: 
+
+
+16:27:01.155 :: MFAPP :: Ready.
+
+16:27:06.387 :: MFAPP :: Radar Motion Detection 1.1 (07/18/2014 15:08:28)
+
+16:27:06.409 :: MFAPP :: Power Level: 16 (16=High, 32=Med, 48=Low
+
+16:27:06.427 :: MFAPP :: Bytes free: 501120
+
+16:27:06.446 :: MFAPP :: Parameters
+
+16:27:06.458 :: MFAPP ::    SamplingIntervalMilliSec 4000
+
+16:27:06.467 :: MFAPP ::    BufferSize 500
+
+16:27:06.479 :: MFAPP ::    SamplesPerSecond 250
+
+16:27:06.494 :: MFAPP ::    CallbackIntervalMs 2000
+
+16:27:06.514 :: MFAPP ::    M 2
+
+16:27:06.528 :: MFAPP ::    N 8
+
+16:27:06.551 :: MFAPP ::    MinCumCuts 6
+
+16:27:06.566 :: MFAPP ::    CutDistCm 2.5999999
+
+16:27:06.582 :: MFAPP :: 
+
+16:27:07.036 :: PHYCOMM :: Connection accepted from 127.0.0.1:63629
+16:27:07.060 :: PHYCOMM :: Recieved...
+16:27:07.075 :: PHYCOMM :: Sent Acknowledgement
+16:27:11.507 :: MFAPP :: Initializing ADC...
+
+16:27:12.314 :: MFAPP :: Staring to sample ADC port...
+
+16:27:12.362 :: MFAPP :: *** 0 2729 2777 
+
+16:27:12.384 :: MFAPP :: Completed ConfigureContinuousModeDualChannel 1
+
+16:27:12.979 :: MFAPP :: *** 100 2727 2657 
+
+16:27:13.542 :: MFAPP :: *** 200 2727 2635 
+
+16:27:14.069 :: MFAPP :: *** 300 2693 2687 
+
+16:27:14.605 :: MFAPP :: *** 400 2761 2767 
+
+16:27:15.141 :: MFAPP :: *** 500 2777 2739 
+
+16:27:15.185 :: MFAPP :: Started  27:15.184
+
+16:27:15.199 :: MFAPP :: @@@ 0 2715 2759
+
+16:27:15.213 :: MFAPP :: # 0; (0,0); (0,0)
+
+16:27:15.224 :: MFAPP :: # 0; (-8,0); (-9,0)
+
+16:27:15.236 :: MFAPP :: @@@ 25 2583 2695
+
+16:27:15.248 :: MFAPP :: @@@ 50 2795 2677
+
+16:27:15.260 :: MFAPP :: # 0; (32,0); (29,0)
+
+16:27:15.272 :: MFAPP :: @@@ 75 2747 2813
+
+16:27:15.283 :: MFAPP :: @@@ 100 2709 2641
+
+16:27:15.296 :: MFAPP :: @@@ 125 2643 2731
+
+16:27:15.308 :: MFAPP :: @@@ 150 2617 2723
+
+16:27:15.321 :: MFAPP :: @@@ 175 2633 2747
+
+16:27:15.334 :: MFAPP :: @@@ 200 2753 2633
+
+16:27:15.346 :: MFAPP :: @@@ 225 2673 2583
+
+16:27:15.359 :: MFAPP :: *
+
+16:27:15.370 :: MFAPP :: @@@ 250 2727 2675
+
+16:27:15.382 :: MFAPP :: @@@ 275 2711 2725
+
+16:27:15.395 :: MFAPP :: @@@ 300 2723 2715
+
+16:27:15.406 :: MFAPP :: # 1260; (24,45); (-28,0)
+
+16:27:15.418 :: MFAPP :: @@@ 325 2729 2647
+
+16:27:15.434 :: MFAPP :: @@@ 350 2637 2639
+
+16:27:15.448 :: MFAPP :: @@@ 375 2683 2777
+
+16:27:15.460 :: MFAPP :: @@@ 400 2787 2735
+
+16:27:15.472 :: MFAPP :: @@@ 425 2715 2711
+
+16:27:15.484 :: MFAPP :: @@@ 450 2805 2721
+
+16:27:15.498 :: MFAPP :: @@@ 475 2707 2791
+
+16:27:15.510 :: MFAPP :: *
+
+16:27:15.520 :: MFAPP :: Callback #1, time 335, mean time 335, max time allowed 2000
+
+16:27:15.535 :: MFAPP :: 
+
+16:27:16.020 :: MFAPP :: *** 600 2693 2651 
+
+16:27:16.568 :: MFAPP :: *** 700 2593 2807 
+
+16:27:17.117 :: MFAPP :: *** 800 2779 2567 
+
+16:27:17.659 :: MFAPP :: *** 900 2613 2731 
+
+16:27:18.217 :: MFAPP :: *** 1000 2611 2815 
+
+16:27:18.239 :: MFAPP :: Started  27:18.238
+
+16:27:18.250 :: MFAPP :: @@@ 500 2757 2717
+
+16:27:18.263 :: MFAPP :: @@@ 525 2753 2831
+
+16:27:18.276 :: MFAPP :: @@@ 550 2665 2593
+
+16:27:18.289 :: MFAPP :: @@@ 575 2709 2657
+
+16:27:18.302 :: MFAPP :: # -546; (-14,26); (21,0)
+
+16:27:18.314 :: MFAPP :: @@@ 600 2691 2643
+
+16:27:18.327 :: MFAPP :: @@@ 625 2729 2737
+
+16:27:18.340 :: MFAPP :: @@@ 650 2677 2655
+
+16:27:18.352 :: MFAPP :: @@@ 675 2505 2743
+
+16:27:18.365 :: MFAPP :: # -7316; (-82,-62); (-118,0)
+
+16:27:18.378 :: MFAPP :: @@@ 700 2643 2825
+
+16:27:18.392 :: MFAPP :: @@@ 725 2647 2623
+
+16:27:18.404 :: MFAPP :: *
+
+16:27:18.416 :: MFAPP :: @@@ 750 2705 2671
+
+16:27:18.430 :: MFAPP :: @@@ 775 2761 2769
+
+16:27:18.443 :: MFAPP :: @@@ 800 2771 2511
+
+16:27:18.457 :: MFAPP :: @@@ 825 2593 2541
+
+16:27:18.470 :: MFAPP :: @@@ 850 2677 2811
+
+16:27:18.483 :: MFAPP :: @@@ 875 2699 2731
+
+16:27:18.497 :: MFAPP :: # -1748; (-49,19); (92,0)
+
+16:27:18.509 :: MFAPP :: @@@ 900 2587 2711
+
+16:27:18.521 :: MFAPP :: @@@ 925 2611 2737
+
+16:27:18.543 :: MFAPP :: # -34; (1,-17); (-2,0)
+
+16:27:18.556 :: MFAPP :: 
++= 1 943
+
+16:27:18.567 :: MFAPP :: 
+
+16:27:18.581 :: MFAPP :: @@@ 950 2649 2711
+
+16:27:18.594 :: MFAPP :: @@@ 975 2653 2743
+
+16:27:18.606 :: MFAPP :: *
+
+16:27:18.619 :: MFAPP :: Callback #2, time 380, mean time 357, max time allowed 2000
+
+16:27:18.630 :: MFAPP :: 
+
+16:27:19.115 :: MFAPP :: *** 1100 2637 2639 
+
+16:27:19.642 :: MFAPP :: *** 1200 2703 2793 
+
+16:27:20.197 :: MFAPP :: *** 1300 2609 2337 
+
+16:27:20.717 :: MFAPP :: *** 1400 2671 2941 
+
+16:27:21.259 :: MFAPP :: *** 1500 2335 2799 
+
+16:27:21.278 :: MFAPP :: Started  27:21.278
+
+16:27:21.298 :: MFAPP :: @@@ 1000 2593 2725
+
+16:27:21.313 :: MFAPP :: # -7885; (-65,-83); (-95,0)
+
+16:27:21.326 :: MFAPP :: @@@ 1025 2673 2781
+
+16:27:21.341 :: MFAPP :: @@@ 1050 2685 2553
+
+16:27:21.354 :: MFAPP :: @@@ 1075 2837 2809
+
+16:27:21.368 :: MFAPP :: @@@ 1100 2643 2631
+
+16:27:21.381 :: MFAPP :: # 726; (103,33); (-22,0)
+
+16:27:21.394 :: MFAPP :: @@@ 1125 2809 2803
+
+16:27:21.407 :: MFAPP :: @@@ 1150 2919 2711
+
+16:27:21.421 :: MFAPP :: @@@ 1175 2747 2679
+
+16:27:21.437 :: MFAPP :: @@@ 1200 2719 2811
+
+16:27:21.451 :: MFAPP :: @@@ 1225 2685 2777
+
+16:27:21.465 :: MFAPP :: *
+
+16:27:21.478 :: MFAPP :: @@@ 1250 2573 2795
+
+16:27:21.491 :: MFAPP :: @@@ 1275 2807 2449
+
+16:27:21.504 :: MFAPP :: @@@ 1300 2449 2405
+
+16:27:21.518 :: MFAPP :: @@@ 1325 2691 2663
+
+16:27:21.530 :: MFAPP :: @@@ 1350 2869 2433
+
+16:27:21.549 :: MFAPP :: @@@ 1375 2357 2749
+
+16:27:21.563 :: MFAPP :: @@@ 1400 2785 2913
+
+16:27:21.578 :: MFAPP :: @@@ 1425 2561 2741
+
+16:27:21.592 :: MFAPP :: @@@ 1450 2623 2807
+
+16:27:21.605 :: MFAPP :: @@@ 1475 3053 2903
+
+16:27:21.619 :: MFAPP :: *
+
+16:27:21.631 :: MFAPP :: Callback #3, time 353, mean time 356, max time allowed 2000
+
+16:27:21.643 :: MFAPP :: 
+
+16:27:22.118 :: MFAPP :: *** 1600 2635 2379 
+
+16:27:22.671 :: MFAPP :: *** 1700 2373 2781 
+
+16:27:23.238 :: MFAPP :: *** 1800 4095 2539 
+
+16:27:23.793 :: MFAPP :: *** 1900 2283 3001 
+
+16:27:24.374 :: MFAPP :: *** 2000 2705 1337 
+
+16:27:24.404 :: MFAPP :: Started  27:24.404
+
+16:27:24.417 :: MFAPP :: @@@ 1500 2361 2867
+
+16:27:24.432 :: MFAPP :: @@@ 1525 2885 3021
+
+16:27:24.446 :: MFAPP :: @@@ 1550 2587 2477
+
+16:27:24.461 :: MFAPP :: @@@ 1575 2913 2143
+
+16:27:24.475 :: MFAPP :: @@@ 1600 2605 2409
+
+16:27:24.489 :: MFAPP :: @@@ 1625 2471 2757
+
+16:27:24.503 :: MFAPP :: @@@ 1650 2995 2547
+
+16:27:24.517 :: MFAPP :: @@@ 1675 2433 2313
+
+16:27:24.531 :: MFAPP :: @@@ 1700 2491 3031
+
+16:27:24.551 :: MFAPP :: @@@ 1725 3519 3043
+
+16:27:24.565 :: MFAPP :: *
+
+16:27:24.579 :: MFAPP :: @@@ 1750 3017 3903
+
+16:27:24.594 :: MFAPP :: @@@ 1775 3473 2479
+
+16:27:24.609 :: MFAPP :: @@@ 1800 4051 2489
+
+16:27:24.623 :: MFAPP :: @@@ 1825 2329 3363
+
+16:27:24.638 :: MFAPP :: @@@ 1850 2119 2351
+
+16:27:24.652 :: MFAPP :: @@@ 1875 2241 2927
+
+16:27:24.666 :: MFAPP :: @@@ 1900 2275 3005
+
+16:27:24.683 :: MFAPP :: @@@ 1925 3899 2711
+
+16:27:24.698 :: MFAPP :: @@@ 1950 3709 2843
+
+16:27:24.713 :: MFAPP :: @@@ 1975 2579 3653
+
+16:27:24.728 :: MFAPP :: *
+
+16:27:24.741 :: MFAPP :: Callback #4, time 335, mean time 350, max time allowed 2000
+
+16:27:24.753 :: MFAPP :: 
+
+16:27:25.260 :: MFAPP :: *** 2100 2823 1953 
+
+16:27:25.811 :: MFAPP :: *** 2200 3273 3193 
+
+16:27:26.363 :: MFAPP :: *** 2300 2475 2117 
+
+16:27:26.895 :: MFAPP :: *** 2400 2101 2659 
+
+16:27:27.457 :: MFAPP :: *** 2500 2961 2617 
+
+16:27:27.478 :: MFAPP :: Started  27:27.478
+
+16:27:27.493 :: MFAPP :: @@@ 2000 2737 1413
+
+16:27:27.510 :: MFAPP :: @@@ 2025 2507 1685
+
+16:27:27.526 :: MFAPP :: @@@ 2050 3187 3029
+
+16:27:27.545 :: MFAPP :: @@@ 2075 2425 2389
+
+16:27:27.565 :: MFAPP :: @@@ 2100 2805 1949
+
+16:27:27.581 :: MFAPP :: @@@ 2125 2303 3073
+
+16:27:27.596 :: MFAPP :: @@@ 2150 2805 2895
+
+16:27:27.610 :: MFAPP :: @@@ 2175 3089 2611
+
+16:27:27.625 :: MFAPP :: @@@ 2200 3327 3257
+
+16:27:27.639 :: MFAPP :: @@@ 2225 3157 2935
+
+16:27:27.654 :: MFAPP :: *
+
+16:27:27.667 :: MFAPP :: @@@ 2250 2645 2355
+
+16:27:27.685 :: MFAPP :: @@@ 2275 1879 2227
+
+16:27:27.700 :: MFAPP :: # 1014; (-87,-13); (78,0)
+
+16:27:27.715 :: MFAPP :: @@@ 2300 2647 2101
+
+16:27:27.731 :: MFAPP :: @@@ 2325 2629 2489
+
+16:27:27.749 :: MFAPP :: @@@ 2350 2577 3325
+
+16:27:27.765 :: MFAPP :: @@@ 2375 2355 3369
+
+16:27:27.779 :: MFAPP :: @@@ 2400 2097 2627
+
+16:27:27.796 :: MFAPP :: @@@ 2425 2897 2803
+
+16:27:27.810 :: MFAPP :: @@@ 2450 3293 2563
+
+16:27:27.826 :: MFAPP :: @@@ 2475 2483 2347
+
+16:27:27.841 :: MFAPP :: *
+
+16:27:27.855 :: MFAPP :: Callback #5, time 375, mean time 355, max time allowed 2000
+
+16:27:27.868 :: MFAPP :: 
+
+16:27:28.378 :: MFAPP :: *** 2600 2487 2355 
+
+16:27:28.919 :: MFAPP :: *** 2700 2605 2729 
+
+16:27:29.492 :: MFAPP :: *** 2800 2545 2453 
+
+16:27:30.072 :: MFAPP :: *** 2900 2631 2721 
+
+16:27:30.624 :: MFAPP :: *** 3000 2633 2763 
+
+16:27:30.644 :: MFAPP :: Started  27:30.644
+
+16:27:30.659 :: MFAPP :: @@@ 2500 2883 2669
+
+16:27:30.677 :: MFAPP :: # 2160; (-84,-72); (30,0)
+
+16:27:30.693 :: MFAPP :: @@@ 2525 2687 2573
+
+16:27:30.708 :: MFAPP :: @@@ 2550 2981 2545
+
+16:27:30.724 :: MFAPP :: @@@ 2575 2357 3175
+
+16:27:30.740 :: MFAPP :: @@@ 2600 2571 2349
+
+16:27:30.765 :: MFAPP :: @@@ 2625 2847 2459
+
+16:27:30.780 :: MFAPP :: @@@ 2650 2641 2465
+
+16:27:30.796 :: MFAPP :: @@@ 2675 2685 2521
+
+16:27:30.812 :: MFAPP :: @@@ 2700 2551 2683
+
+16:27:30.827 :: MFAPP :: @@@ 2725 2585 2519
+
+16:27:30.843 :: MFAPP :: *
+
+16:27:30.857 :: MFAPP :: @@@ 2750 2759 2627
+
+16:27:30.873 :: MFAPP :: @@@ 2775 2659 2585
+
+16:27:30.888 :: MFAPP :: # 2904; (-6,-44); (66,0)
+
+16:27:30.903 :: MFAPP :: @@@ 2800 2611 2339
+
+16:27:30.918 :: MFAPP :: # -3008; (-69,47); (64,0)
+
+16:27:30.936 :: MFAPP :: @@@ 2825 2565 2801
+
+16:27:30.953 :: MFAPP :: @@@ 2850 2809 2835
+
+16:27:30.968 :: MFAPP :: @@@ 2875 2579 2615
+
+16:27:30.984 :: MFAPP :: @@@ 2900 2643 2593
+
+16:27:31.000 :: MFAPP :: @@@ 2925 2645 2721
+
+16:27:31.016 :: MFAPP :: # -432; (-52,-12); (-36,0)
+
+16:27:31.031 :: MFAPP :: @@@ 2950 2863 2631
+
+16:27:31.048 :: MFAPP :: @@@ 2975 2657 2577
+
+16:27:31.062 :: MFAPP :: *
+
+16:27:31.077 :: MFAPP :: Callback #6, time 432, mean time 368, max time allowed 2000
+
+16:27:31.091 :: MFAPP :: 
+
+16:27:31.578 :: MFAPP :: *** 3100 2697 2715 
+
+16:27:32.109 :: MFAPP :: *** 3200 2851 2803 
+
+16:27:32.638 :: MFAPP :: *** 3300 2685 2691 
+
+16:27:33.208 :: MFAPP :: *** 3400 2655 2595 
+
+16:27:33.773 :: MFAPP :: *** 3500 2769 2727 
+
+16:27:33.845 :: MFAPP :: Started  27:33.844
+
+16:27:33.872 :: MFAPP :: @@@ 3000 2615 2793
+
+16:27:33.887 :: MFAPP :: # -5106; (47,69); (74,0)
+
+16:27:33.903 :: MFAPP :: # -2; (13,1); (2,0)
+
+16:27:33.919 :: MFAPP :: @@@ 3025 2605 2813
+
+16:27:33.942 :: MFAPP :: @@@ 3050 2623 2795
+
+16:27:33.969 :: MFAPP :: @@@ 3075 2625 2701
+
+16:27:33.986 :: MFAPP :: @@@ 3100 2729 2779
+
+16:27:34.001 :: MFAPP :: @@@ 3125 2695 2693
+
+16:27:34.017 :: MFAPP :: @@@ 3150 2713 2751
+
+16:27:34.033 :: MFAPP :: @@@ 3175 2737 2707
+
+16:27:34.049 :: MFAPP :: @@@ 3200 2771 2803
+
+16:27:34.066 :: MFAPP :: @@@ 3225 2781 2759
+
+16:27:34.082 :: MFAPP :: *
+
+16:27:34.099 :: MFAPP :: @@@ 3250 2745 2663
+
+16:27:34.114 :: MFAPP :: @@@ 3275 2749 2663
+
+16:27:34.132 :: MFAPP :: @@@ 3300 2717 2739
+
+16:27:34.148 :: MFAPP :: @@@ 3325 2685 2643
+
+16:27:34.165 :: MFAPP :: @@@ 3350 2717 2727
+
+16:27:34.183 :: MFAPP :: @@@ 3375 2661 2707
+
+16:27:34.199 :: MFAPP :: @@@ 3400 2635 2637
+
+16:27:34.216 :: MFAPP :: @@@ 3425 2719 2687
+
+16:27:34.234 :: MFAPP :: @@@ 3450 2653 2711
+
+16:27:34.250 :: MFAPP :: @@@ 3475 2713 2627
+
+16:27:34.267 :: MFAPP :: *
+
+16:27:34.282 :: MFAPP :: Callback #7, time 436, mean time 378, max time allowed 2000
+
+16:27:34.296 :: MFAPP :: 
+
+16:27:34.788 :: MFAPP :: *** 3600 2717 2723 
+
+16:27:35.375 :: MFAPP :: *** 3700 2709 2669 
+
+16:27:36.753 :: MFAPP :: *** 3800 2813 2721 
+
+16:27:38.360 :: MFAPP :: *** 3900 2833 2707 
+
+16:27:39.908 :: MFAPP :: *** 4000 2705 2687 
+
+16:27:39.961 :: MFAPP :: Started  27:39.960
+
+16:27:39.980 :: MFAPP :: @@@ 3500 2711 2709
+
+16:27:39.998 :: MFAPP :: @@@ 3525 2773 2705
+
+16:27:40.014 :: MFAPP :: @@@ 3550 2745 2693
+
+16:27:40.030 :: MFAPP :: @@@ 3575 2667 2693
+
+16:27:40.047 :: MFAPP :: @@@ 3600 2687 2725
+
+16:27:40.063 :: MFAPP :: @@@ 3625 2767 2849
+
+16:27:40.079 :: MFAPP :: @@@ 3650 2893 2759
+
+16:27:40.096 :: MFAPP :: # 162; (1,9); (-18,0)
+
+16:27:40.112 :: MFAPP :: @@@ 3675 2769 2717
+
+16:27:40.128 :: MFAPP :: @@@ 3700 2753 2649
+
+16:27:40.146 :: MFAPP :: @@@ 3725 2595 2617
+
+16:27:40.162 :: MFAPP :: *
+
+16:27:40.177 :: MFAPP :: @@@ 3750 2669 2619
+
+16:27:40.193 :: MFAPP :: @@@ 3775 2745 2641
+
+16:27:40.210 :: MFAPP :: @@@ 3800 2827 2699
+
+16:27:40.226 :: MFAPP :: @@@ 3825 2615 2835
+
+16:27:40.244 :: MFAPP :: @@@ 3850 2623 2531
+
+16:27:40.260 :: MFAPP :: @@@ 3875 2673 2811
+
+16:27:40.277 :: MFAPP :: @@@ 3900 2805 2683
+
+16:27:40.294 :: MFAPP :: @@@ 3925 2659 2615
+
+16:27:40.310 :: MFAPP :: @@@ 3950 2705 2739
+
+16:27:40.327 :: MFAPP :: @@@ 3975 2733 2695
+
+16:27:40.343 :: MFAPP :: *
+
+16:27:40.359 :: MFAPP :: Callback #8, time 397, mean time 380, max time allowed 2000
+
+16:27:40.373 :: MFAPP :: 
+
+16:27:41.797 :: MFAPP :: *** 4100 2753 2685 
+
+16:27:43.392 :: MFAPP :: *** 4200 2771 2657 
+
+16:27:44.969 :: MFAPP :: *** 4300 2709 2755 
+
+16:27:46.600 :: MFAPP :: *** 4400 2663 2671 
+
+16:27:48.190 :: MFAPP :: *** 4500 2681 2649 
+
+16:27:48.242 :: MFAPP :: Started  27:48.241
+
+16:27:48.258 :: MFAPP :: @@@ 4000 2743 2735
+
+16:27:48.276 :: MFAPP :: @@@ 4025 2845 2703
+
+16:27:48.293 :: MFAPP :: @@@ 4050 2707 2649
+
+16:27:48.310 :: MFAPP :: @@@ 4075 2617 2731
+
+16:27:48.326 :: MFAPP :: # 1680; (122,56); (-30,0)
+
+16:27:48.344 :: MFAPP :: @@@ 4100 2747 2715
+
+16:27:48.362 :: MFAPP :: # -156; (62,-6); (-26,0)
+
+16:27:48.380 :: MFAPP :: 
++= 1 4119
+
+16:27:48.396 :: MFAPP :: 
+
+16:27:48.413 :: MFAPP :: # 1344; (14,56); (-24,0)
+
+16:27:48.431 :: MFAPP :: @@@ 4125 2731 2695
+
+16:27:48.448 :: MFAPP :: @@@ 4150 2631 2683
+
+16:27:48.466 :: MFAPP :: @@@ 4175 2649 2609
+
+16:27:48.485 :: MFAPP :: @@@ 4200 2783 2645
+
+16:27:48.504 :: MFAPP :: @@@ 4225 2663 2627
+
+16:27:48.522 :: MFAPP :: *
+
+16:27:48.543 :: MFAPP :: @@@ 4250 2651 2707
+
+16:27:48.564 :: MFAPP :: @@@ 4275 2673 2681
+
+16:27:48.584 :: MFAPP :: @@@ 4300 2657 2793
+
+16:27:48.601 :: MFAPP :: @@@ 4325 2653 2839
+
+16:27:48.618 :: MFAPP :: @@@ 4350 2625 2761
+
+16:27:48.636 :: MFAPP :: @@@ 4375 2721 2739
+
+16:27:48.653 :: MFAPP :: @@@ 4400 2725 2731
+
+16:27:48.670 :: MFAPP :: @@@ 4425 2717 2639
+
+16:27:48.692 :: MFAPP :: @@@ 4450 2677 2553
+
+16:27:48.709 :: MFAPP :: @@@ 4475 2699 2593
+
+16:27:48.726 :: MFAPP :: *
+
+16:27:48.746 :: MFAPP :: Callback #9, time 503, mean time 394, max time allowed 2000
+
+16:27:48.763 :: MFAPP :: 
+
+16:27:50.187 :: MFAPP :: *** 4600 2751 2725 
+
+16:27:51.750 :: MFAPP :: *** 4700 2673 2741 
+
+16:27:53.315 :: MFAPP :: *** 4800 2705 2713 
+
+16:27:54.876 :: MFAPP :: *** 4900 2677 2735 
+
+16:27:56.438 :: MFAPP :: *** 5000 2641 2681 
+
+16:27:56.508 :: MFAPP :: Started  27:56.507
+
+16:27:56.539 :: MFAPP :: @@@ 4500 2673 2627
+
+16:27:56.584 :: MFAPP :: @@@ 4525 2713 2649
+
+16:27:56.602 :: MFAPP :: @@@ 4550 2657 2695
+
+16:27:56.622 :: MFAPP :: @@@ 4575 2719 2635
+
+16:27:56.640 :: MFAPP :: @@@ 4600 2687 2675
+
+16:27:56.661 :: MFAPP :: @@@ 4625 2615 2759
+
+16:27:56.678 :: MFAPP :: @@@ 4650 2685 2785
+
+16:27:56.696 :: MFAPP :: @@@ 4675 2761 2739
+
+16:27:56.719 :: MFAPP :: @@@ 4700 2681 2705
+
+16:27:56.740 :: MFAPP :: @@@ 4725 2785 2667
+
+16:27:56.757 :: MFAPP :: *
+
+16:27:56.773 :: MFAPP :: @@@ 4750 2695 2675
+
+16:27:56.791 :: MFAPP :: @@@ 4775 2711 2721
+
+16:27:56.809 :: MFAPP :: # -38; (97,1); (38,0)
+
+16:27:56.827 :: MFAPP :: @@@ 4800 2729 2749
+
+16:27:56.846 :: MFAPP :: @@@ 4825 2773 2739
+
+16:27:56.870 :: MFAPP :: @@@ 4850 2767 2673
+
+16:27:56.890 :: MFAPP :: @@@ 4875 2807 2683
+
+16:27:56.909 :: MFAPP :: @@@ 4900 2683 2713
+
+16:27:56.928 :: MFAPP :: @@@ 4925 2697 2593
+
+16:27:56.947 :: MFAPP :: @@@ 4950 2693 2557
+
+16:27:56.965 :: MFAPP :: @@@ 4975 2705 2795
+
+16:27:56.983 :: MFAPP :: *
+
+16:27:57.002 :: MFAPP :: Callback #10, time 494, mean time 404, max time allowed 2000
+
+16:27:57.023 :: MFAPP :: 
+
+16:27:58.453 :: MFAPP :: *** 5100 2721 2737 
+

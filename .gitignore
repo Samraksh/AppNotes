@@ -1,4 +1,6 @@
 # Ignore binaries at any level
 bin/
 obj/
+EmulatorLog/
 ~*
+/DotNow/xOldStuff

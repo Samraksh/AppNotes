@@ -1,0 +1,27 @@
+% Used for 2013 data collection
+% 
+
+function IQPlotter2013(FileNameBase, SampIntervalMilli)
+
+IFileName = [FileNameBase,'_I.data'];
+QFileName = [FileNameBase,'_Q.data'];
+
+iFile = fopen(IFileName, 'r');
+qFile = fopen(QFileName, 'r');
+iinput = fread(iFile, '*uint16');
+qinput = fread(qFile, '*uint16');
+
+for i=1:length(qinput)
+    qinput(i) = qinput(i) - 4001;
+end;
+
+sampRate = 1000000 / SampIntervalMilli;
+Index = (1:N)/sampRate;
+
+figure('name',fileNameBase);
+plot(Index,iinput,'r'), hold o;
+hold on;
+plot(Index,qinput,'g'), hold off;
+title('Radar I and Q');
+
+
