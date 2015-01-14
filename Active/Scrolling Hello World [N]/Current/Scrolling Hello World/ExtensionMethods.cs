@@ -3,7 +3,7 @@ using Microsoft.SPOT;
 
 // You might get an error on the reference to this assembly the first time you compile this. 
 // If so, delete the reference and recreate it where you've stored the Samraksh DLL's.
-using Samraksh.SPOT.Hardware.EmoteDotNow;
+using Samraksh.eMote.DotNow;
 
 namespace ExtensionMethods {
     // Extend the char class with a method that converts to LCD

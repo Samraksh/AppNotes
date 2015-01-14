@@ -34,7 +34,7 @@ namespace Samraksh.AppNote.Utility {
         }
 
         /// <summary>
-        /// Initialize assembly value and return a text string with version & build info
+        /// Initialize assembly value and return a text string with version and build info
         /// </summary>
         /// <returns></returns>
         public static string VersionBuild(Assembly theAssembly) {
@@ -43,7 +43,7 @@ namespace Samraksh.AppNote.Utility {
         }
 
         /// <summary>
-        /// Return a text string with version & build info
+        /// Return a text string with version and build info
         /// </summary>
         /// <returns></returns>
         public static string VersionBuild() {

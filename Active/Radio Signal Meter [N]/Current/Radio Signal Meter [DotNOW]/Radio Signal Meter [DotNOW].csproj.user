@@ -10,6 +10,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'On-Board Radio|AnyCPU'">
     <DeployTransport>Serial</DeployTransport>
-    <DeployDevice>COM15</DeployDevice>
+    <DeployDevice>COM20</DeployDevice>
   </PropertyGroup>
 </Project>

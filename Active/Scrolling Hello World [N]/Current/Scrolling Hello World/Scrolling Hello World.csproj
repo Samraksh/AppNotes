@@ -43,8 +43,8 @@
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_SPOT_Hardware">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Samraksh\eMote.NOW\2013.01.23 eMote.NOW Executables\eMote.NOW Hardware DLL 1.0.0.0\Samraksh_SPOT_Hardware.dll</HintPath>
+    <Reference Include="Samraksh_eMote_DotNow">
+      <HintPath>..\eMote\eMote 4.3_1.0.11.2\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

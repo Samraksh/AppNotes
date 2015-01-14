@@ -6,7 +6,7 @@
  *  1.1 Made Display more efficient
 =========================*/
 
-using Samraksh.SPOT.Hardware.EmoteDotNow;
+using Samraksh.eMote.DotNow;
 
 namespace Samraksh.AppNote.Utility {
 

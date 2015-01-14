@@ -4,14 +4,15 @@
  * Versions
  *  1.0 Initial version
  *  1.1 Added parameter for type of radio
+ *  1.2 Revised for eMote namespace
  *********************************************************/
 using System;
 using System.Threading;
 using Microsoft.SPOT;
 
-using Samraksh.SPOT.Net;
-using Samraksh.SPOT.Net.Mac;
-using Samraksh.SPOT.Net.Radio;
+using Samraksh.eMote.Net;
+using Samraksh.eMote.Net.Mac;
+using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh.AppNote.Utility {
     /// <summary>

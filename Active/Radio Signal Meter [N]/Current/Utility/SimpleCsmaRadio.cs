@@ -8,10 +8,9 @@
 using System;
 using System.Threading;
 using Microsoft.SPOT;
-
-using Samraksh.SPOT.Net;
-using Samraksh.SPOT.Net.Mac;
-using Samraksh.SPOT.Net.Radio;
+using Samraksh.eMote.Net;
+using Samraksh.eMote.Net.Mac;
+using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh.AppNote.Utility {
     /// <summary>

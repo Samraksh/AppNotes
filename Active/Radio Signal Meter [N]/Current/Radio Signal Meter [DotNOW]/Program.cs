@@ -14,13 +14,12 @@
 
 using System;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 
 using Microsoft.SPOT;
-
-using Samraksh.SPOT.Net.Radio;
-using Samraksh.SPOT.Net.Mac;
-
+using Samraksh.eMote.Net.Mac;
+using Samraksh.eMote.Net.Radio;
 using Samraksh.AppNote.Utility;
 
 namespace Samraksh.AppNote.DotNow {
@@ -79,7 +78,7 @@ namespace Samraksh.AppNote.DotNow {
             while (true) {
                 try {
                     // Send a probe
-                    var toSendByte = System.Text.Encoding.UTF8.GetBytes(Header + " " + _sendCounter++);
+                    var toSendByte = Encoding.UTF8.GetBytes(Header + " " + _sendCounter++);
                     _csmaRadio.Send(Addresses.BROADCAST, toSendByte);
                     Thread.Sleep(SendDelay);
                 }
@@ -88,6 +87,7 @@ namespace Samraksh.AppNote.DotNow {
                     Thread.Sleep(Timeout.Infinite);
                 }
             }
+            // ReSharper disable once FunctionNeverReturns
         }
 
         /// <summary>
@@ -97,14 +97,22 @@ namespace Samraksh.AppNote.DotNow {
         static void RadioReceive(CSMA csma) {
             var rcvMsg = csma.GetNextPacket();
             var rcvPayloadBytes = rcvMsg.GetMessage();
-            var rcvPayloadChar = System.Text.Encoding.UTF8.GetChars(rcvPayloadBytes);
+            Debug.Print("\nReceived " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src + ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
             try {
-                Debug.Print("Received " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src + ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
-                Debug.Print("   Payload: [" + new string(rcvPayloadChar) + "]");
+                var rcvPayloadChar = Encoding.UTF8.GetChars(rcvPayloadBytes);
+                Debug.Print("   " + new string(rcvPayloadChar));
             }
-            catch (Exception e) {
-                Debug.Print(e.ToString());
+            // Catch and ignore any exceptions. This can happen when payloads contain binary data.
+            // ReSharper disable once EmptyGeneralCatchClause
+            catch (Exception ex) {
+                Debug.Print("Except");
             }
+            var rcvPayloadStrBldr = new StringBuilder();
+            foreach (var theByte in rcvPayloadBytes) {
+                rcvPayloadStrBldr.Append(theByte.ToString());
+                rcvPayloadStrBldr.Append(" ");
+            }
+            Debug.Print("   " + rcvPayloadStrBldr);
         }
 
     }

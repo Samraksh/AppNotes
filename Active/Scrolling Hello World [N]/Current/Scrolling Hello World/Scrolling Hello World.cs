@@ -6,7 +6,7 @@ using System.Threading;
 
 // You might get an error on the reference to this assembly the first time you compile this. 
 // If so, delete the reference and recreate it where you've stored the Samraksh DLL's.
-using Samraksh.SPOT.Hardware.EmoteDotNow;
+using Samraksh.eMote.DotNow;
 
 // Use extension methods. See the definition at the end of this file.
 using ExtensionMethods;
