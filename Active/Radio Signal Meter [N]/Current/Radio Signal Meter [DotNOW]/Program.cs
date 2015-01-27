@@ -50,7 +50,7 @@ namespace Samraksh.AppNote.DotNow {
         /// </summary>
         public static void Main() {
 
-            Debug.EnableGCMessages(false); // We don't want to see garbage collector messages in the Output window
+            //Debug.EnableGCMessages(false); // We don't want to see garbage collector messages in the Output window
 
             // Print out the program name and version
             var currVersion = Assembly.GetExecutingAssembly().GetName().Version;
@@ -98,22 +98,26 @@ namespace Samraksh.AppNote.DotNow {
             var rcvMsg = csma.GetNextPacket();
             var rcvPayloadBytes = rcvMsg.GetMessage();
             Debug.Print("\nReceived " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src + ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
-            try {
-                var rcvPayloadChar = Encoding.UTF8.GetChars(rcvPayloadBytes);
-                Debug.Print("   " + new string(rcvPayloadChar));
-            }
-            // Catch and ignore any exceptions. This can happen when payloads contain binary data.
-            // ReSharper disable once EmptyGeneralCatchClause
-            catch (Exception ex) {
-                Debug.Print("Except");
-            }
+            //try {
+            //    var rcvPayloadChar = Encoding.UTF8.GetChars(rcvPayloadBytes);
+            //    Debug.Print("   " + new string(rcvPayloadChar));
+            //}
+            //// Catch and ignore any exceptions. This can happen when payloads contain binary data.
+            //// ReSharper disable once EmptyGeneralCatchClause
+            //catch (Exception ex) {
+            //    Debug.Print("Except");
+            //}
             var rcvPayloadStrBldr = new StringBuilder();
             foreach (var theByte in rcvPayloadBytes) {
                 rcvPayloadStrBldr.Append(theByte.ToString());
                 rcvPayloadStrBldr.Append(" ");
             }
             Debug.Print("   " + rcvPayloadStrBldr);
+
+            Lcd.Display(_rcvCntr++);
         }
+
+        private static int _rcvCntr;
 
     }
 }
