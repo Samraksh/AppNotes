@@ -20,7 +20,7 @@ namespace Samraksh.AppNote.LowDutyCycle {
     /// </summary>
     public static class Program {
 
-        private const int DutyCycleIntervalMilliSec = 5000;
+        private const int DutyCycleIntervalMilliSec = 5 * 1000;
         private const int RadioPowerTimerTimeoutMilliSec = 100;
 
         private static EnhancedEmoteLcd _lcd;
@@ -72,6 +72,8 @@ namespace Samraksh.AppNote.LowDutyCycle {
             _radio.Send(Addresses.BROADCAST, _commonItems.MessageBuffer);
             _radioPowerTimer.Change(0, RadioPowerTimerTimeoutMilliSec);    // Start the timer to turn the radio power off if acknowledgment not received soon enuf
 
+            Debug.Print("Send # " + _counter);
+
             // Update the counter
             _counter++;
         }
@@ -83,7 +85,9 @@ namespace Samraksh.AppNote.LowDutyCycle {
             // Turn the radio off
             _radio.SetRadioState(SimpleCsmaRadio.RadioStates.Off);
             // Stop the timer
-            _radioPowerTimer.Change(Timeout.Infinite, RadioPowerTimerTimeoutMilliSec);
+            _radioPowerTimer.Change(Timeout.Infinite, int.MaxValue);
+
+            Debug.Print("Turned ack timer off");
         }
 
 
@@ -108,6 +112,8 @@ namespace Samraksh.AppNote.LowDutyCycle {
 
             // Is for us: consider it an acknowledgement and turn the radio & timer off
             TurnRadioAndTimerOff();
+
+            Debug.Print("Received ack");
         }
 
         //var timer = new eMote.RealTime.Timer("RealTimeInteropTimer", 10000, 0);

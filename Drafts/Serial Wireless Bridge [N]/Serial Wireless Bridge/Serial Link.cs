@@ -35,25 +35,30 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
         /// <param name="buffer"></param>
         /// <param name="bytesToSend"></param>
         public void Write(byte[] buffer, int bytesToSend) {
+            Debug.Print("# Send " + _sndCnt++);
             _port.WriteByte(MessageBegin);
             _port.Write(buffer, 0, bytesToSend);
             _port.WriteByte(MessageEnd);
             _port.Flush();
         }
+        private int _sndCnt;
 
         private void DataReceived(object sender, SerialDataReceivedEventArgs e) {
             Global.ToggleLcd.Toggle(3, '3');
+            Debug.Print("  * Receive " + _rcvCnt++ + ", Bytes to read " + _port.BytesToRead);
             //var bytesRead = _port.Read(_byteBuffer, 0, _byteBuffer.Length);
+            return;
             while (_port.BytesToRead > 0) {
                 var bytesRead = _port.Read(_byteBuffer, 0, Math.Max(_port.BytesToRead, _byteBuffer.Length));
                 Debug.Print("BytesToRead: " + _port.BytesToRead + ", bytesRead: " + bytesRead);
-                _circularBuffer.Put(_byteBuffer,bytesRead);
+                _circularBuffer.Put(_byteBuffer, bytesRead);
                 //for (var i = 0; i < bytesRead; i++) {
                 //    _circularBuffer.Put(_byteBuffer[i]);
                 //}
                 _newData.Set();
             }
         }
+        private int _rcvCnt;
 
         private enum ProcessState {
             Idle,

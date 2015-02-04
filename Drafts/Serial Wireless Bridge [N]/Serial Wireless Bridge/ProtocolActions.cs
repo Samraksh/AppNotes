@@ -14,11 +14,13 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
             public static Timer SndSerialElectionTimer = null;
             public static void SndSerialElection() {
                 Global.ToggleLcd.Toggle(0, '0');
+                Debug.Print("$ Send Serial Election " + _sndElectionCnt++);
                 SndSerialElectionMessage[Messages.Field.Election.Type] = (byte)Messages.MessageType.Election;
                 BitConverter.InsertValueIntoArray(SndSerialElectionMessage, Messages.Field.Election.NodeId, Global.NodeId);
                 SndSerialElectionMessage[Messages.Field.Election.ElectStatus] = (byte)Global.LdrStatus;
                 Global.SrlLink.Write(SndSerialElectionMessage, Messages.Field.Election.MsgLen);
             }
+            private static int _sndElectionCnt;
         }
 
         /// <summary>
