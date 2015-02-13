@@ -1,18 +1,39 @@
+using System.Text;
+
 namespace Samraksh.AppNote.SerialWirelessBridge {
     internal static class Messages {
+        ///// <summary>Types of messages</summary>
+        //internal enum MessageType : byte {
+        //    /// <summary>Leader election</summary>
+        //    Election,
+        //    /// <summary>Outgoing message</summary>
+        //    Outgoing,
+        //    /// <summary>Return message</summary>
+        //    Return,
+        //    /// <summary>Confirmation message</summary>
+        //    Confirm,
+        //    /// <summary>Error message</summary>
+        //    Error,
+        //}
+
         /// <summary>Types of messages</summary>
-        internal enum MessageType : byte {
+        internal static class MessageType {
             /// <summary>Leader election</summary>
-            Election,
+            internal static byte[] Election = Encoding.UTF8.GetBytes("E");
+
             /// <summary>Outgoing message</summary>
-            Outgoing,
+            internal static byte[] Outgoing = Encoding.UTF8.GetBytes("O");
+
             /// <summary>Return message</summary>
-            Return,
+            internal static byte[] Return = Encoding.UTF8.GetBytes("R");
+
             /// <summary>Confirmation message</summary>
-            Confirm,
+            internal static byte[] Confirm = Encoding.UTF8.GetBytes("C");
+
             /// <summary>Error message</summary>
-            Error,
+            internal static byte[] Error = Encoding.UTF8.GetBytes("E");
         }
+
 
         /// <summary>
         /// Fields for messages
@@ -24,7 +45,7 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
             internal static class Election {
                 public const int Type = 0; // byte
                 public const int NodeId = Type + 1; // byte[8]
-                public const int ElectStatus = NodeId + 8; // byte
+                public const int ElectStatus = NodeId + Global.NodeIdBytesLength; // byte
                 public const int MsgLen = ElectStatus + 1; // Length of message
             }
 

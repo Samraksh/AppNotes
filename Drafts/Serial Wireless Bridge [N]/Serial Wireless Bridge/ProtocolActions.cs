@@ -11,12 +11,20 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
         /// </summary>
         internal static class SndSerialElectionClass {
             private static readonly byte[] SndSerialElectionMessage = new byte[Messages.Field.Election.MsgLen];
-            public static Timer SndSerialElectionTimer = null;
-            public static void SndSerialElection() {
+            internal static Timer SndSerialElectionTimer = null;
+
+            internal static void SndSerialElection() {
                 Global.ToggleLcd.Toggle(0, '0');
                 Debug.Print("$ Send Serial Election " + _sndElectionCnt++);
-                SndSerialElectionMessage[Messages.Field.Election.Type] = (byte)Messages.MessageType.Election;
-                BitConverter.InsertValueIntoArray(SndSerialElectionMessage, Messages.Field.Election.NodeId, Global.NodeId);
+
+                // Copy in the message type
+                Array.Copy(Messages.MessageType.Election, 0, SndSerialElectionMessage, Messages.Field.Election.Type, Messages.MessageType.Election.Length);
+                //SndSerialElectionMessage[Messages.Field.Election.Type] = (byte)Messages.MessageType.Election;
+
+                // Copy in the node ID
+                Array.Copy(Global.NodeIdBytes, 0, SndSerialElectionMessage, Messages.Field.Election.NodeId, Global.NodeIdBytesLength);
+
+                //BitConverter.InsertValueIntoArray(SndSerialElectionMessage, Messages.Field.Election.NodeId, Global.NodeIdLong);
                 SndSerialElectionMessage[Messages.Field.Election.ElectStatus] = (byte)Global.LdrStatus;
                 Global.SrlLink.Write(SndSerialElectionMessage, Messages.Field.Election.MsgLen);
             }
@@ -28,7 +36,7 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
         /// </summary>
         /// <param name="messageBytes"></param>
         /// <param name="messageLen"></param>
-        public static void RcvSerialElection(byte[] messageBytes, int messageLen) {
+        internal static void RcvSerialElection(byte[] messageBytes, int messageLen) {
             Global.ToggleLcd.Toggle(1, '1');
             switch ((Global.LeaderStatus)messageBytes[Messages.Field.Election.ElectStatus]) {
                 case Global.LeaderStatus.Leader:
@@ -41,7 +49,7 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
                     break;
                 case Global.LeaderStatus.Undecided:
                     var otherNodeId = BitConverter.ToInt64(messageBytes, Messages.Field.Election.NodeId);
-                    Global.LdrStatus = (otherNodeId > Global.NodeId) ? Global.LeaderStatus.Follower : Global.LeaderStatus.Leader;
+                    Global.LdrStatus = (otherNodeId > Global.NodeIdLong) ? Global.LeaderStatus.Follower : Global.LeaderStatus.Leader;
                     break;
             }
             if (Global.LdrStatus == Global.LeaderStatus.Leader && SndSerialElectionClass.SndSerialElectionTimer == null) {

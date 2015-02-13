@@ -23,7 +23,8 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
                 BaudRate = 115200,
                 Parity = Parity.None,
                 DataBits = 8,
-                StopBits = StopBits.None,
+                StopBits = StopBits.One,
+                Handshake = Handshake.None,
             };
             _port.DataReceived += DataReceived;
             _port.Open();
@@ -46,7 +47,7 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
         private void DataReceived(object sender, SerialDataReceivedEventArgs e) {
             Global.ToggleLcd.Toggle(3, '3');
             Debug.Print("  * Receive " + _rcvCnt++ + ", Bytes to read " + _port.BytesToRead);
-            //var bytesRead = _port.Read(_byteBuffer, 0, _byteBuffer.Length);
+            var bytesReadx = _port.Read(_byteBuffer, 0, Math.Max(_port.BytesToRead, _byteBuffer.Length));
             return;
             while (_port.BytesToRead > 0) {
                 var bytesRead = _port.Read(_byteBuffer, 0, Math.Max(_port.BytesToRead, _byteBuffer.Length));

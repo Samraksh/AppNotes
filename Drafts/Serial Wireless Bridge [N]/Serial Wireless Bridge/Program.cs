@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using Microsoft.SPOT;
 using Samraksh.AppNote.Utility;
@@ -48,7 +49,8 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
             Debug.Print("");
 
             // This serves as the node id. Improbable that both nodes would choose the same value
-            Global.NodeId = DateTime.Now.Ticks;
+            Global.NodeIdLong = DateTime.Now.Ticks;
+            Global.NodeIdBytes = Encoding.UTF8.GetBytes(Global.NodeIdLong.ToString("X" + Global.NodeIdBytesLength));
 
             // Set initial status value
             Global.LdrStatus = Global.LeaderStatus.Undecided;
@@ -63,7 +65,7 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
             ProtocolActions.SndSerialElectionClass.SndSerialElectionTimer =
                 new Timer(_ => ProtocolActions.SndSerialElectionClass.SndSerialElection(), null, 0, Global.TimedActionIntervalMicrosec); // Starts immediately
         }
-        
+
         private static void RadioReceive(CSMA csma) {
 
         }

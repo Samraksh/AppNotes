@@ -1,3 +1,4 @@
+using System.Text;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
 
@@ -7,16 +8,24 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
         internal const int SerialCircBuffSize = 512;
 
         internal static SimpleCsmaRadio CsmaRadio;
-        
-        internal  enum LeaderStatus : byte {
-            Undecided = 0,
-            Leader = 1,
-            Follower = 2,
+
+        internal enum LeaderStatus : byte {
+            Undecided = 85, // U
+            Leader = 76,    // L
+            Follower = 70,  // F
         }
+
+        //internal static class LeaderStatus {
+        //    internal static byte[] Undecided = Encoding.UTF8.GetBytes("U");
+        //    internal static byte[] Leader = Encoding.UTF8.GetBytes("L");
+        //    internal static byte[] Follower = Encoding.UTF8.GetBytes("F");
+        //}
 
         internal const int TimedActionIntervalMicrosec = 3000;
 
-        internal static long NodeId;
+        internal static long NodeIdLong;
+        internal static byte[] NodeIdBytes;
+        internal const int NodeIdBytesLength = sizeof(long) * 2;
         internal static LeaderStatus LdrStatus;
         internal static SerialLink SrlLink;
 
