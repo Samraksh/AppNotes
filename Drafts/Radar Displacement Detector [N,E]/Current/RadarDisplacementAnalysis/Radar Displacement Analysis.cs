@@ -201,9 +201,9 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis {
         /// </summary>
         /// <remarks>
         /// Buff is a circular buffer of size M. 
-        ///     It is initialized to values guaranteed to be sufficiently distant in the past so as to not trigger a detection event.
+        ///     It is initialized to values guaranteed to be sufficiently distant in the past so as to not trigger confirmation.
         /// UpdateDetectionState is called once per snippet (once per second). 
-        ///     It checks to see if the current buffer value is sufficiently recent or not and sets the detection state accordingly.
+        ///     It checks to see if the current buffer value is sufficiently recent or not and sets the confirmation state accordingly.
         /// If displacement occurred during this snippet, 
         ///     then the snippet number is saved and the buffer pointer advances.
         /// When we do a comparison in UpdateDetectionState, the current buffer entry is the oldest snippet where displacement occurred.

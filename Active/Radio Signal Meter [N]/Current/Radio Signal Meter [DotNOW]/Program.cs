@@ -6,14 +6,13 @@
  *      1.0: initial release
  *      1.1: Corrected an issue with reporting on the length of the message
  *      1.2: Added build profiles for on-board and long-range radios
- *      1.3: *** tbd
+ *      1.3: Added option to choose the radio channel
+ *      1.3: Added option to choose the radio channel
  *      
  *  Remarks
  *      Choose "Long Range" or "On Board" solution configuration depending on which radio you're using.
 ---------------------------------------------------------------------*/
 
-using System;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -30,6 +29,8 @@ namespace Samraksh.AppNote.DotNow {
     /// It can help you debug another program by "sniffing" what's coming over the radio.
     /// </summary>
     public class Program {
+
+        const Channels RadioChannel = Channels.Channel_11;
 
         static SimpleCsmaRadio _csmaRadio;
         static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
@@ -53,9 +54,7 @@ namespace Samraksh.AppNote.DotNow {
             //Debug.EnableGCMessages(false); // We don't want to see garbage collector messages in the Output window
 
             // Print out the program name and version
-            var currVersion = Assembly.GetExecutingAssembly().GetName().Version;
-            Debug.Print(Resources.GetString(Resources.StringResources.ProgramName) + ", Version " + currVersion.Major +
-                        "." + currVersion.Minor);
+            Debug.Print(VersionInfo.VersionBuild());
 
             // Set up LCD and display a welcome message
             Lcd.Display("Strt");
@@ -63,9 +62,10 @@ namespace Samraksh.AppNote.DotNow {
             // Set up the radio for CSMA interaction
             //  The first argument specifies the radio
             //  The next two arguments are fairly standard but you're free to try changing them
-            //  The last argument is the method to call when a message is received
+            //  The fourth argument is the method to call when a message is received
+            //  The last argument is an optional radio channel
             try {
-                _csmaRadio = new SimpleCsmaRadio(TheRadioName, 140, TxPowerValue.Power_0Point7dBm, RadioReceive);
+                _csmaRadio = new SimpleCsmaRadio(TheRadioName, 140, TxPowerValue.Power_0Point7dBm, RadioReceive, RadioChannel);
             }
             catch {
                 Lcd.Display("Err");

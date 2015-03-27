@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDC Battery Mote", "LDC Battery Mote\LDC Battery Mote.csproj", "{9FA191CD-F426-40FC-AE2B-0940A19DB43B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{6E835B78-92DB-4562-995E-A0D26C745306}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common\Common.csproj", "{3F1E84C4-E463-43C7-9832-9479880F1B9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "..\Utility\Utility.csproj", "{6E835B78-92DB-4562-995E-A0D26C745306}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{9FA191CD-F426-40FC-AE2B-0940A19DB43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FA191CD-F426-40FC-AE2B-0940A19DB43B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FA191CD-F426-40FC-AE2B-0940A19DB43B}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{6E835B78-92DB-4562-995E-A0D26C745306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E835B78-92DB-4562-995E-A0D26C745306}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E835B78-92DB-4562-995E-A0D26C745306}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E835B78-92DB-4562-995E-A0D26C745306}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F1E84C4-E463-43C7-9832-9479880F1B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F1E84C4-E463-43C7-9832-9479880F1B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F1E84C4-E463-43C7-9832-9479880F1B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F1E84C4-E463-43C7-9832-9479880F1B9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E835B78-92DB-4562-995E-A0D26C745306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E835B78-92DB-4562-995E-A0D26C745306}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E835B78-92DB-4562-995E-A0D26C745306}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E835B78-92DB-4562-995E-A0D26C745306}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

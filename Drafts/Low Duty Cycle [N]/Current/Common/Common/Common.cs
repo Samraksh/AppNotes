@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+using Microsoft.SPOT;
 
 namespace Samraksh.AppNote.LowDutyCycle {
     public class Common {
@@ -23,6 +25,13 @@ namespace Samraksh.AppNote.LowDutyCycle {
 
             // Copy the app identifier to the beginning of the message buffer
             Array.Copy(appBytes, 0, MessageBuffer, AppPos, AppLen);
+
+            var hex = new StringBuilder(": ");
+            foreach (var theByte in MessageBuffer) {
+                hex.Append(theByte.ToString("x2"));
+                hex.Append(' ');
+            }
+            Debug.Print("Message Buffer bytes: " + hex);
 
         }
     }

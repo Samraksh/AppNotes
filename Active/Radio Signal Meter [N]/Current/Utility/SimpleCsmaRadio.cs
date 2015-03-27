@@ -4,10 +4,15 @@
  * Versions
  *  1.0 Initial version
  *  1.1 Added parameter for type of radio
+ *  1.2 Revised for eMote namespace
+ *  1.3 Minor changes and corrections
+ *  1.4 Added optional parameter for radio channel
  *********************************************************/
+
 using System;
 using System.Threading;
 using Microsoft.SPOT;
+
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
@@ -19,7 +24,10 @@ namespace Samraksh.AppNote.Utility {
     /// </summary>
     public class SimpleCsmaRadio {
 
-        // Set up for callback to user method to handle incoming packets
+        /// <summary>
+        /// Callback delegate for user method to handle incoming packets
+        /// </summary>
+        /// <param name="csma"></param>
         public delegate void RadioReceivedData(CSMA csma);
 
         readonly RadioReceivedData _userReceivedDataCallback;
@@ -28,22 +36,34 @@ namespace Samraksh.AppNote.Utility {
         readonly CSMA _csma;
 
         /// <summary>
-        /// CSMA radio constructor with neighbor change callback
+        /// Radio states
+        /// </summary>
+        public enum RadioStates {
+            /// <summary>Radio on</summary>
+            On,
+
+            /// <summary>Radio off</summary>
+            Off
+        };
+
+        /// <summary>
+        /// CSMA radio constructor 
         /// </summary>
         /// <param name="radioName">Name of the radio (internal, long range)</param>
         /// <param name="ccaSensetime">CCA sense time, in ms</param>
         /// <param name="txPowerValue">Power level</param>
         /// <param name="radioReceivedData">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
-        public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData) {
+        /// <param name="channel">The channel to use</param>
+        public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData, Channels channel = Channels.Channel_26) {
             var macConfig = new MacConfiguration { NeighbourLivelinesDelay = 100, CCASenseTime = ccaSensetime };
             macConfig.radioConfig.SetTxPower(txPowerValue);
             macConfig.radioConfig.SetRadioName(radioName);
+            macConfig.radioConfig.SetChannel(channel);
             _userReceivedDataCallback = radioReceivedData;
 
             try {
-                DeviceStatus retVal;
-                retVal = CSMA.Configure(macConfig, Receive, NeighborChange);
-                    // Set up CSMA with the MAC configuration, receive callback and neighbor change callback (which does nothing)
+                var retVal = MACBase.Configure(macConfig, Receive, NeighborChange);
+                // Set up CSMA with the MAC configuration, receive callback and neighbor change callback (which does nothing)
                 if (retVal != DeviceStatus.Success) {
                     var lcd = new EnhancedEmoteLcd();
                     lcd.Display("5555");
@@ -75,12 +95,37 @@ namespace Samraksh.AppNote.Utility {
         /// <param name="msgType">Message type: broadcast or CSMA address of recipient</param>
         /// <param name="message">Message to be sent, as a byte array</param>
         public void Send(Addresses msgType, byte[] message) {
-            var lcd = new EnhancedEmoteLcd();
+            //var lcd = new EnhancedEmoteLcd();
             //lcd.Display("3333");
             _csma.Send((ushort)msgType, message, 0, (ushort)message.Length);
             //Thread.Sleep(100);
             //lcd.Display("4444");
         }
+
+        /// <summary>
+        /// Set radio state
+        /// </summary>
+        /// <param name="radioState">Desired radio state</param>
+        /// <returns>Device status: Success, Fail, Ready, Busy</returns>
+        public DeviceStatus SetRadioState(RadioStates radioState) {
+            DeviceStatus resultStatus;
+            switch (radioState) {
+                case RadioStates.On: {
+                        resultStatus = _csma.GetRadio().TurnOn();
+                        break;
+                    }
+                case RadioStates.Off: {
+                        resultStatus = _csma.GetRadio().Sleep(0);
+                        break;
+                    }
+                default: {
+                        throw new Exception("Undefined RadioState: " + radioState);
+                    }
+            }
+            return resultStatus;
+        }
+
+
 
         /// <summary>
         /// Callback when neighborhood changes

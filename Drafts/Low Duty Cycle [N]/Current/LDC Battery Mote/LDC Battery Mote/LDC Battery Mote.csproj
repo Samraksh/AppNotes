@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>Samraksh.AppNote.LowDutyCycle</AssemblyName>
+    <AssemblyName>Samraksh.AppNote.LowDutyCycle.Battery</AssemblyName>
     <OutputType>Exe</OutputType>
     <RootNamespace>Samraksh.AppNote.LowDutyCycle</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -19,7 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Samraksh.AppNote.LowDutyCycle.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Samraksh.AppNote.LowDutyCycle.Battery.xml</DocumentationFile>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
@@ -32,7 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Samraksh.AppNote.LowDutyCycle.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
@@ -70,7 +71,7 @@
       <Project>{3F1E84C4-E463-43C7-9832-9479880F1B9D}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Utility\Utility.csproj">
+    <ProjectReference Include="..\..\Utility\Utility.csproj">
       <Project>{6E835B78-92DB-4562-995E-A0D26C745306}</Project>
       <Name>Utility</Name>
     </ProjectReference>
