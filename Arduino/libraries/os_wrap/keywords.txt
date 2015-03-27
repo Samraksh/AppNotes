@@ -1,0 +1,237 @@
+#######################################
+# Syntax Coloring Map For osw_mini, osw_min, os_wrap
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+osw_mem_t       	KEYWORD1
+osw_tick_t      	KEYWORD1
+osw_delay       	KEYWORD1
+osw_dt_timer    	KEYWORD1
+osw_semaphore   	KEYWORD1
+osw_counting_sem	KEYWORD1
+osw_message_q   	KEYWORD1
+osw_packed_q    	KEYWORD1
+osw_priority_q	        KEYWORD1
+osw_eventFucnPtr	KEYWORD1
+osw_shared_mem  	KEYWORD1
+osw_funcptr	        KEYWORD1
+osw_task        	KEYWORD1
+osw_log	                KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+osw_version	KEYWORD2
+osw_error	KEYWORD2
+memoryFree	KEYWORD2
+printP		KEYWORD2
+err2str		KEYWORD2
+
+odometer_main_loop	KEYWORD2
+
+eepromRead8	KEYWORD2
+eepromWrite8	KEYWORD2
+eepromRead16	KEYWORD2
+eepromWrite16	KEYWORD2
+eepromRead32	KEYWORD2
+eepromWrite32	KEYWORD2
+xdumpEEPROM	KEYWORD2
+clearEEPROM	KEYWORD2
+
+osw_malloc	KEYWORD2
+osw_free        KEYWORD2
+osw_mem_check	KEYWORD2
+osw_print_mem_free	KEYWORD2
+
+osw_getTick	KEYWORD2
+osw_diffTime_ms	KEYWORD2
+osw_ttoa	KEYWORD2
+delay   	KEYWORD2
+getDuration    	KEYWORD2
+setDuration     KEYWORD2
+isPaused	KEYWORD2
+start   	KEYWORD2
+stop    	KEYWORD2
+pause   	KEYWORD2
+resume  	KEYWORD2
+engaged	        KEYWORD2
+timedOut	KEYWORD2
+msTimeLeft	KEYWORD2
+msAge   	KEYWORD2
+
+osw_interrupt_enable	KEYWORD2
+osw_interrupt_disable	KEYWORD2
+
+osw_watchdog_enable	KEYWORD2
+osw_watchdog_reset	KEYWORD2
+
+semCreate	KEYWORD2
+semTake	        KEYWORD2
+semGive	        KEYWORD2
+semTee	        KEYWORD2
+semUntee	KEYWORD2
+getCount	KEYWORD2
+semFlush	KEYWORD2
+
+msgQcreate	KEYWORD2
+msgQtee	        KEYWORD2
+msgQuntee	KEYWORD2
+msgQreceive	KEYWORD2
+msgQsend	KEYWORD2
+msgQcount	KEYWORD2
+msgQflush	KEYWORD2
+
+pkdQcreate	KEYWORD2
+pkdQtee	        KEYWORD2
+pkdQuntee	KEYWORD2
+pkdQreceive	KEYWORD2
+pkdQsend	KEYWORD2
+pkdQcount	KEYWORD2
+pkdQflush	KEYWORD2
+
+priQcreate	KEYWORD2
+priQreceive	KEYWORD2
+priQsend	KEYWORD2
+priQcount	KEYWORD2
+priQflush	KEYWORD2
+
+osw_evt_register	KEYWORD2
+osw_evt_publish	        KEYWORD2
+osw_event_service_loop	KEYWORD2
+
+init_mem	KEYWORD2
+write   	KEYWORD2
+read    	KEYWORD2
+int_write	KEYWORD2
+
+taskCreate	KEYWORD2
+taskDelete	KEYWORD2
+getName	        KEYWORD2
+getTid	        KEYWORD2
+getInterval	KEYWORD2
+getTrace	KEYWORD2
+getActive	KEYWORD2
+osw_tasks_go	KEYWORD2
+osw_first_time_thru	KEYWORD2
+osw_done	KEYWORD2
+osw_exit	KEYWORD2
+osw_task_name	KEYWORD2
+osw_list_tasks	KEYWORD2
+idle_task	KEYWORD2
+
+osw_trace_inject        KEYWORD2
+osw_trace_on		KEYWORD2
+osw_trace_off	        KEYWORD2
+osw_dump_EEPROM_trace	KEYWORD2
+osw_trace_flush		KEYWORD2
+
+init    	KEYWORD2
+logc    	KEYWORD2
+logs    	KEYWORD2
+logi    	KEYWORD2
+logx    	KEYWORD2
+flush   	KEYWORD2
+mem2file	KEYWORD2
+dumpLog		KEYWORD2
+
+align4	KEYWORD2
+xdump	KEYWORD2
+reverse	KEYWORD2
+itoa	KEYWORD2
+strlen	KEYWORD2
+strcpy	KEYWORD2
+strncpy	KEYWORD2
+strcat	KEYWORD2
+strncat	KEYWORD2
+memcpy	KEYWORD2
+
+osw_banner	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+OS_WRAP_VERSION			LITERAL1
+
+OSW_SINGLE_THREAD		LITERAL1
+OSW_WAIT_FOREVER		LITERAL1
+OSW_NO_WAIT			LITERAL1
+OSW_NULL			LITERAL1
+OSW_USE_PREVIOUS_VALUE		LITERAL1
+
+OSW_STARTUP_BANNER		LITERAL1
+OSW_USE_SERIAL_IO		LITERAL1
+OSW_PRINT_ERRORS		LITERAL1
+OSW_USE_STDMEM			LITERAL1
+OSW_USE_STDSTRING		LITERAL1
+OSW_USE_INTERRUPTS_ARDUINO	LITERAL1
+OSW_USE_HW_WATCHDOG_ARDUINO	LITERAL1
+OSW_USE_IDLE_TASK		LITERAL1
+OSW_USE_PIN13_ARDUINO		LITERAL1
+OSW_USE_EVENTS			LITERAL1
+OSW_EVENT_USE_TASK		LITERAL1
+OSW_USE_ODOMETER_ARDUINO	LITERAL1
+OSW_ODOMETER_PRINT_6MIN		LITERAL1
+OSW_ODOMETER_USE_TASK		LITERAL1
+OSW_USE_TRACE			LITERAL1
+OSW_TRACE_DUMP_PREV_RUN		LITERAL1
+OSW_TRACE_TIME			LITERAL1
+OSW_TRACE_TICK			LITERAL1
+OSW_TRACE_ECHO			LITERAL1
+
+OSW_MAX_TEES			LITERAL1
+
+OSW_OK				LITERAL1
+OSW_MEM_ALLOC_FAILED		LITERAL1
+OSW_UNALLOCATED_MEM		LITERAL1
+OSW_EXCEED_MAX_SIZE		LITERAL1
+OSW_TOO_MANY_TEES		LITERAL1
+OSW_UNTEE_ERROR			LITERAL1
+OSW_MSG_Q_FULL_BUMP		LITERAL1
+OSW_MSG_Q_FULL_REJECT		LITERAL1
+OSW_PKD_Q_FULL			LITERAL1
+OSW_TOO_MANY_TASKS		LITERAL1
+OSW_TASK_NOT_FOUND		LITERAL1
+OSW_UNDER_MIN_SIZE		LITERAL1
+OSW_INVALID_PARAMETER 		LITERAL1
+OSW_TOO_MANY_EVENT_PAIRS	LITERAL1
+OSW_MEM_VALID_FAIL		LITERAL1
+OSW_TIMEOUT			LITERAL1
+OSW_ALREADY_INITIALIZED		LITERAL1
+OSW_SHARED_MEM_NULL 		LITERAL1
+OSW_SHARED_MEM_BUSY		LITERAL1
+OSW_EVENT_SEND_FAIL 		LITERAL1
+OSW_PRI_Q_FULL_REJECT		LITERAL1
+OSW_PRI_Q_PRI_NOT_FOUND		LITERAL1
+OSW_PRI_Q_FREE_NOT_FOUND	LITERAL1
+OSW_PRI_Q_BUMP_PRI_HEAD		LITERAL1
+OSW_PRI_Q_BUMP_LOW_HEAD		LITERAL1
+OSW_PRI_Q_BUMP_LOW_TAIL		LITERAL1
+OSW_PRI_Q_TOO_MANY_PRI		LITERAL1
+OSW_GENERAL_ERROR 		LITERAL1
+
+OSW_ODOMETER_EEPROM_ADDRESS	LITERAL1
+
+uptime_tenths_of_hours		LITERAL1	
+odometer_tenths_of_hours	LITERAL1
+
+OSW_MS_PER_TIC			LITERAL1
+
+OSW_BUMP_ON_FULL		LITERAL1
+OSW_REJECT_ON_FULL		LITERAL1
+OSW_ALL_PRIOIRITIES 		LITERAL1
+OSW_PRIQ_BUMP_LOW_HEAD_FULL 	LITERAL1
+OSW_PRIQ_BUMP_LOW_TAIL_FULL	LITERAL1
+OSW_PRIQ_BUMP_PRI_HEAD_FULL	LITERAL1
+OSW_PRIQ_REJECT_ON_FULL		LITERAL1
+
+OSW_MAX_EVENT_PAIRS		LITERAL1
+OSW_EVENT_Q_DEPTH		LITERAL1
+
+OSW_MAX_TASKS			LITERAL1
+
+OSW_TRACE_EEPROM_START		LITERAL1
+OSW_TRACE_EEPROM_END		LITERAL1

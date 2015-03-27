@@ -1,0 +1,156 @@
+#######################################
+# Syntax Coloring Map For osw_mini, osw_min, os_wrap
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+osw_mem_t       	KEYWORD1
+osw_memory      	KEYWORD1
+osw_log	                KEYWORD1
+osw_tick_t      	KEYWORD1
+osw_delay       	KEYWORD1
+osw_dt_timer    	KEYWORD1
+osw_semaphore   	KEYWORD1
+osw_counting_sem	KEYWORD1
+osw_message_q   	KEYWORD1
+osw_packed_q    	KEYWORD1
+osw_priority_q	        KEYWORD1
+osw_eventFucnPtr	KEYWORD1
+osw_shared_mem  	KEYWORD1
+osw_funcptr	        KEYWORD1
+osw_task        	KEYWORD1
+osw_trace_enum	        KEYWORD1
+osw_trace       	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+osw_version	KEYWORD2
+memoryFree	KEYWORD2
+printP		KEYWORD2
+eepromRead8	KEYWORD2
+eepromWrite8	KEYWORD2
+eepromRead16	KEYWORD2
+eepromWrite16	KEYWORD2
+eepromRead32	KEYWORD2
+eepromWrite32	KEYWORD2
+xdumpEEPROM	KEYWORD2
+
+odometer_tenths_of_hours	KEYWORD2
+
+get     	KEYWORD2
+cancel	        KEYWORD2
+checkMem	KEYWORD2
+printFreeList	KEYWORD2
+
+init    	KEYWORD2
+mem2file	KEYWORD2
+flush   	KEYWORD2
+logc    	KEYWORD2
+logs    	KEYWORD2
+logi    	KEYWORD2
+logx    	KEYWORD2
+
+getTick	        KEYWORD2
+diffTime_ms    	KEYWORD2
+ttoa		KEYWORD2
+delay   	KEYWORD2
+getDuration    	KEYWORD2
+setDuration     KEYWORD2
+isPaused	KEYWORD2
+start   	KEYWORD2
+stop    	KEYWORD2
+pause   	KEYWORD2
+resume  	KEYWORD2
+engaged	        KEYWORD2
+timedOut	KEYWORD2
+msTimeLeft	KEYWORD2
+msAge   	KEYWORD2
+
+osw_interrupt_enable	KEYWORD2
+osw_interrupt_disable	KEYWORD2
+
+osw_watchdog_enable	KEYWORD2
+osw_watchdog_reset	KEYWORD2
+
+semCreate	KEYWORD2
+semTake	        KEYWORD2
+semGive	        KEYWORD2
+semTee	        KEYWORD2
+semUntee	KEYWORD2
+getCount	KEYWORD2
+semFlush	KEYWORD2
+
+msgQcreate	KEYWORD2
+msgQtee	        KEYWORD2
+msgQuntee	KEYWORD2
+msgQreceive	KEYWORD2
+msgQsend	KEYWORD2
+msgQcount	KEYWORD2
+msgQflush	KEYWORD2
+
+pkdQcreate	KEYWORD2
+pkdQtee	        KEYWORD2
+pkdQuntee	KEYWORD2
+pkdQreceive	KEYWORD2
+pkdQsend	KEYWORD2
+pkdQcount	KEYWORD2
+pkdQflush	KEYWORD2
+
+priQcreate	KEYWORD2
+priQreceive	KEYWORD2
+priQsend	KEYWORD2
+priQcount	KEYWORD2
+priQflush	KEYWORD2
+
+osw_evt_register	KEYWORD2
+osw_evt_publish	        KEYWORD2
+
+init_mem	KEYWORD2
+write   	KEYWORD2
+read    	KEYWORD2
+int_write	KEYWORD2
+
+taskCreate	KEYWORD2
+taskDelete	KEYWORD2
+osw_tasks_go	KEYWORD2
+deactivateTask	KEYWORD2
+activateTask	KEYWORD2
+getName	        KEYWORD2
+getTrace	KEYWORD2
+osw_done	KEYWORD2
+osw_exit	KEYWORD2
+osw_version	KEYWORD2
+osw_task_name	KEYWORD2
+osw_list_tasks	KEYWORD2
+idle_task	KEYWORD2
+
+trace	        KEYWORD2
+traceInject	KEYWORD2
+traceOn	        KEYWORD2
+traceForceOn	KEYWORD2
+traceOff	KEYWORD2
+traceHeader	KEYWORD2
+printBlock	KEYWORD2
+flush   	KEYWORD2
+trace_flush	KEYWORD2
+
+align4	KEYWORD2
+reverse	KEYWORD2
+itoa	KEYWORD2
+strlen	KEYWORD2
+strcpy	KEYWORD2
+strncpy	KEYWORD2
+strcat	KEYWORD2
+strncat	KEYWORD2
+memcpy	KEYWORD2
+
+osw_banner	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
