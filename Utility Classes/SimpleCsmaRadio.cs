@@ -53,13 +53,13 @@ namespace Samraksh.AppNote.Utility {
         /// <param name="txPowerValue">Power level</param>
         /// <param name="radioReceivedData">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
         public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData) {
-            var macConfig = new MacConfiguration { NeighbourLivelinesDelay = 100, CCASenseTime = ccaSensetime };
+            var macConfig = new MacConfiguration { NeighborLivenessDelay = 100, CCASenseTime = ccaSensetime };
             macConfig.radioConfig.SetTxPower(txPowerValue);
             macConfig.radioConfig.SetRadioName(radioName);
             _userReceivedDataCallback = radioReceivedData;
 
             try {
-                var retVal = MACBase.Configure(macConfig, Receive, NeighborChange);
+                var retVal = MACBase.Configure(macConfig, Receive, (Samraksh.eMote.Net.NeighborhoodChangeCallBack) NeighborChange);
                     // Set up CSMA with the MAC configuration, receive callback and neighbor change callback (which does nothing)
                 if (retVal != DeviceStatus.Success) {
                     var lcd = new EnhancedEmoteLcd();
