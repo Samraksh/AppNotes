@@ -42,13 +42,12 @@
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_eMote_DotNow, Version=4.3.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\eMote\eMote_dev\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+    <Reference Include="Samraksh_eMote_DotNow">
+      <HintPath>..\eMote\eMote_dev\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net, Version=4.3.0.12, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\eMote\eMote_dev\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>..\eMote\eMote_dev\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
