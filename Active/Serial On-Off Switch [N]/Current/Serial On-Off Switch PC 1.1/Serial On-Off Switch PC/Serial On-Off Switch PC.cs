@@ -86,6 +86,7 @@ namespace Serial_On_Off_Switch_PC {
                 // Try to start. If cannot open, give error message.
                 if (!serialComm.Start()) {
                     ErrorMessages.AppendText("Cannot open serial port " + portName + "\n");
+	                StartStop.Enabled = true;
                     return;
                 }
                 // Note that started and change control

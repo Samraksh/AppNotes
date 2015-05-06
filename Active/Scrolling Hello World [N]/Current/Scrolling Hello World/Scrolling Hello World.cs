@@ -31,15 +31,18 @@ namespace Scrolling_Hello_World {
         public static void Main() {
             Debug.Print(Resources.GetString(Resources.StringResources.String1));
             // Set up the LCD instance
-            EmoteLCD lcd = new EmoteLCD();
+            var lcd = new EmoteLCD();
             lcd.Initialize();
             // Define the string to be displayed
             // The display can hold 4 characters
-            LCD char1, char2, char3, char4;
-            // Scroll loop
-            for (int index = 0; index < 10000; index++) {
+	        // Scroll loop
+            for (var index = 0; index < 10000; index++) {
                 // Get the next four characters based on the message string and an index
-                GetFour(msg, index, out char1, out char2, out char3, out char4);
+	            LCD char1;
+	            LCD char2;
+	            LCD char3;
+	            LCD char4;
+	            GetFour(msg, index, out char1, out char2, out char3, out char4);
                 // Write the next four characters
                 lcd.Write(char1, char2, char3, char4);
                 // Pause a bit
@@ -57,14 +60,14 @@ namespace Scrolling_Hello_World {
         /// <param name="char3">Output: The LCD value of the third character.</param>
         /// <param name="char4">Output: The LCD value of the fourth character.</param>
         static void GetFour(string msg, int index, out LCD char1, out LCD char2, out LCD char3, out LCD char4) {
-            int msglen = msg.Length;
+            var msglen = msg.Length;
             // If string is empty, return null
             if (msglen == 0) {
                 char1 = char2 = char3 = char4 = LCD.CHAR_NULL;
                 return;
             }
             // Quadruple the string to make sure we have at least 4 characters
-            string msg4 = msg + msg + msg + msg;
+            var msg4 = msg + msg + msg + msg;
             // Trim the index to the modulo value 
             index = index % msglen;
             // Get the 4 characters
