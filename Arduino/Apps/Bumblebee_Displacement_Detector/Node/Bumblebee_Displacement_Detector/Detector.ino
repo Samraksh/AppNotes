@@ -20,45 +20,45 @@ int checkForCut() {
 	static int prevIValue = -1;
 
 	// Increment sums
-	sumQValue += currQValue;
 	sumIValue += currIValue;
+	sumQValue += currQValue;
 	// Adjust by running mean
-	compQValue = currQValue - (sumQValue / sampNum);
-	compIValue = currIValue - (sumIValue / sampNum);
+	meanIValue = currIValue - (sumIValue / sampNum);
+	meanQValue = currQValue - (sumQValue / sampNum);
 
 	//Serial.print("FT "); Serial.println(firstTime);
 	// If not first time, check for cut
 	int isCut = 0;	// flag for whether a cut occurred or not
 	if (!firstTime) {
-		//int crossProduct = (compQValue * prevIValue) - (compIValue * prevQValue);
-		int crossProduct = (prevQValue * compIValue) - (prevIValue * compQValue);
+		//int crossProduct = (meanQValue * prevIValue) - (meanIValue * prevQValue);
+		int crossProduct = (prevQValue * meanIValue) - (prevIValue * meanQValue);
 	
 		//Serial.print("#x3"); 
 		//Serial.print(","); Serial.print(sampIValue); Serial.print(","); Serial.print(sampQValue);
 		//Serial.print(","); Serial.print(sumIValue); Serial.print(","); Serial.print(sumQValue);
-		//Serial.print(","); Serial.print(compIValue); Serial.print(","); Serial.print(compQValue);
+		//Serial.print(","); Serial.print(meanIValue); Serial.print(","); Serial.print(meanQValue);
 		//Serial.print(","); Serial.print(crossProduct); 
 		//Serial.print(","); Serial.print(sampNum); 
 		//Serial.println();
 		//Serial.print("dP "); Serial.println(crossProduct);
 
-		// Check for clockwise cut
-		//if (crossProduct < 0 && prevQValue < 0 && compQValue > 0) {
-		if (crossProduct < 0 && prevIValue > 0 && compIValue < 0) {
+		// Check for clockwise cut (towards radar)
+		//if (crossProduct < 0 && prevQValue < 0 && meanQValue > 0) {
+		if (crossProduct < 0 && prevIValue > 0 && meanIValue < 0) {
 			isCut = +1;
 			currCuts = currCuts + 1;
 			runCuts = runCuts + 1;
 			}
-		// Check for counter-clockwise cut
-		//else if (crossProduct > 0 && prevQValue > 0 && compQValue < 0) {
-		else if (crossProduct > 0 && prevIValue < 0 && compIValue > 0) {
+		// Check for counter-clockwise cut (away from radar)
+		//else if (crossProduct > 0 && prevQValue > 0 && meanQValue < 0) {
+		else if (crossProduct > 0 && prevIValue < 0 && meanIValue > 0) {
 			isCut = -1;
 			currCuts = currCuts - 1;
 			runCuts = runCuts - 1;
 			}
 		}
-	prevQValue = compQValue;
-	prevIValue = compIValue;
+	prevIValue = meanIValue;
+	prevQValue = meanQValue;
 	firstTime = false;
 
 	if (isCut == 0)	{

@@ -26,10 +26,10 @@
 			this.RefreshSerialPortList = new System.Windows.Forms.PictureBox();
 			this.StartStop = new System.Windows.Forms.Button();
 			this.SerialPortList = new System.Windows.Forms.ComboBox();
-			this.Messages = new System.Windows.Forms.TextBox();
+			this.MessagesTextBox = new System.Windows.Forms.TextBox();
 			this.ClearMessages = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
-			this.FromMote = new System.Windows.Forms.TextBox();
+			this.FromMoteTextBox = new System.Windows.Forms.TextBox();
 			this.ClearFromMote = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
 			this.Disp = new System.Windows.Forms.Label();
@@ -97,14 +97,14 @@
 			// 
 			// Messages
 			// 
-			this.Messages.Location = new System.Drawing.Point(499, 251);
-			this.Messages.Margin = new System.Windows.Forms.Padding(4);
-			this.Messages.Multiline = true;
-			this.Messages.Name = "Messages";
-			this.Messages.ReadOnly = true;
-			this.Messages.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.Messages.Size = new System.Drawing.Size(269, 233);
-			this.Messages.TabIndex = 14;
+			this.MessagesTextBox.Location = new System.Drawing.Point(499, 251);
+			this.MessagesTextBox.Margin = new System.Windows.Forms.Padding(4);
+			this.MessagesTextBox.Multiline = true;
+			this.MessagesTextBox.Name = "MessagesTextBox";
+			this.MessagesTextBox.ReadOnly = true;
+			this.MessagesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.MessagesTextBox.Size = new System.Drawing.Size(269, 233);
+			this.MessagesTextBox.TabIndex = 14;
 			// 
 			// ClearMessages
 			// 
@@ -129,14 +129,14 @@
 			// 
 			// FromMote
 			// 
-			this.FromMote.Location = new System.Drawing.Point(96, 252);
-			this.FromMote.Margin = new System.Windows.Forms.Padding(4);
-			this.FromMote.Multiline = true;
-			this.FromMote.Name = "FromMote";
-			this.FromMote.ReadOnly = true;
-			this.FromMote.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.FromMote.Size = new System.Drawing.Size(356, 233);
-			this.FromMote.TabIndex = 17;
+			this.FromMoteTextBox.Location = new System.Drawing.Point(96, 252);
+			this.FromMoteTextBox.Margin = new System.Windows.Forms.Padding(4);
+			this.FromMoteTextBox.Multiline = true;
+			this.FromMoteTextBox.Name = "FromMoteTextBox";
+			this.FromMoteTextBox.ReadOnly = true;
+			this.FromMoteTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.FromMoteTextBox.Size = new System.Drawing.Size(356, 233);
+			this.FromMoteTextBox.TabIndex = 17;
 			// 
 			// ClearFromMote
 			// 
@@ -390,10 +390,10 @@
 			this.Controls.Add(this.Disp);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.FromMote);
+			this.Controls.Add(this.FromMoteTextBox);
 			this.Controls.Add(this.ClearFromMote);
 			this.Controls.Add(this.ClearMessages);
-			this.Controls.Add(this.Messages);
+			this.Controls.Add(this.MessagesTextBox);
 			this.Controls.Add(this.RefreshSerialPortList);
 			this.Controls.Add(this.StartStop);
 			this.Controls.Add(this.SerialPortList);
@@ -419,10 +419,10 @@
 		private System.Windows.Forms.PictureBox RefreshSerialPortList;
 		private System.Windows.Forms.Button StartStop;
 		private System.Windows.Forms.ComboBox SerialPortList;
-		private System.Windows.Forms.TextBox Messages;
+		private System.Windows.Forms.TextBox MessagesTextBox;
 		private System.Windows.Forms.Button ClearMessages;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox FromMote;
+		private System.Windows.Forms.TextBox FromMoteTextBox;
 		private System.Windows.Forms.Button ClearFromMote;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label Disp;

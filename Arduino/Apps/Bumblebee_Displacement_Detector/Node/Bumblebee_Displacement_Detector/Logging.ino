@@ -5,6 +5,9 @@ void serialSnippetLog(bool displacementDetected){
 	if(serialLog != serialSnippet) { 
 		return; 
 		} 
+
+	//unsigned long startTime = micros();
+
 	setLed(profileSerialLed, true);
 	Serial.print(outSnippetDataMsgPrefix);
 	Serial.print(sampNum); 
@@ -13,6 +16,14 @@ void serialSnippetLog(bool displacementDetected){
 	Serial.print(','); Serial.print(ConfState == Yes);
 	Serial.println();
 	setLed(profileSerialLed, false);
+
+	//unsigned long stopTime = micros();
+	//Serial.print("#S,");
+	//Serial.print(startTime); Serial.print(",");
+	//Serial.print(stopTime); Serial.print(",");
+	//Serial.print(stopTime - startTime);
+	//Serial.println();
+
 	}
 
 void serialDetailLogger(int isCut, bool displacementDetected) {
@@ -21,16 +32,19 @@ void serialDetailLogger(int isCut, bool displacementDetected) {
 	if (serialLog != serialDetail) { 
 		return; 
 		}
+
+	//unsigned long startTime = micros();
+
 	setLed(profileSerialLed, true);
-	Serial.print("$2,");
+	Serial.print(outDetailDataShortMsgPrefix);
 	Serial.print(sampNum); 
 	Serial.print(','); Serial.print(currIValue); 
 	Serial.print(','); Serial.print(currQValue); 
 	// Debugging values
 	Serial.print(','); Serial.print(sumIValue); 
 	Serial.print(','); Serial.print(sumQValue); 
-	Serial.print(','); Serial.print(compIValue); 
-	Serial.print(','); Serial.print(compQValue); 
+	Serial.print(','); Serial.print(sampledVals.I); 
+	Serial.print(','); Serial.print(sampledVals.Q); 
 
 	Serial.print(','); Serial.print(isCut);
 	Serial.print(','); Serial.print(currCuts);
@@ -39,7 +53,46 @@ void serialDetailLogger(int isCut, bool displacementDetected) {
 	Serial.print(','); Serial.print(ConfState == Yes);
 	Serial.println();
 	setLed(profileSerialLed, false);
+
+	//unsigned long stopTime = micros();
+	//Serial.print("#D,");
+	//Serial.print(startTime); Serial.print(",");
+	//Serial.print(stopTime); Serial.print(",");
+	//Serial.print(stopTime - startTime);
+	//Serial.println();
+
 	}
+
+void serialDetailShortLogger(int isCut, bool displacementDetected) {
+
+	// Log detail sample & results to serial
+	if (serialLog != serialDetailShort) { 
+		return; 
+		}
+
+	//unsigned long startTime = micros();
+
+	setLed(profileSerialLed, true);
+	Serial.print(outDetailDataShortMsgPrefix);
+	Serial.print(sampNum); 
+	Serial.print(','); Serial.print(sampledVals.I); 
+	Serial.print(','); Serial.print(sampledVals.Q); 
+	Serial.print(','); Serial.print(isCut);
+	Serial.print(','); Serial.print(displacementDetected);
+	Serial.print(','); Serial.print(ConfState == Yes);
+	Serial.println();
+	setLed(profileSerialLed, false);
+
+	//unsigned long stopTime = micros();
+	//Serial.print("#D,");
+	//Serial.print(startTime); Serial.print(",");
+	//Serial.print(stopTime); Serial.print(",");
+	//Serial.print(stopTime - startTime);
+	//Serial.println();
+
+	}
+
+
 
 void sdInitialize()	{
 	if (!sdLog) { return; }

@@ -9,7 +9,7 @@ void serialInputInitialize(int amountToPreallocate) {
 ///
 // Called when there's serial input
 ///
-void serialInputReceive() {
+void serialEvent() {
 	while (Serial.available()) {
 		char nextChar = (char)Serial.read();
 		//Serial.print("$$1 "); Serial.print(serialInputString); Serial.print(" "); Serial.println(nextCharInt);

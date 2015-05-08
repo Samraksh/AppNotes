@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Ports;
 using System.Media;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -19,6 +20,8 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 			public const string ColumnNames = "#1";
 			public const string SnippetDataMsg = "#2";
 			public const string ParamMsg = "#3";
+			public const string DetailDataMsg = "#4";
+			public const string DetailDataShortMsg = "#5";
 		}
 
 		private static class OutMsgPrefix {
@@ -50,7 +53,11 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 			SerialPortList.DataSource = SerialPort.GetPortNames();
 
 			LogToFileButton.Tag = false;
-			LogToFileFolder.Text = Settings.Default.LogFolder;
+			//LogToFileFolder.Text =  Settings.Default.LogFolder;
+
+			// Redundant qualifier: http://www.codeproject.com/Articles/17659/How-To-Use-the-Settings-Class-in-C
+			// ReSharper disable once RedundantNameQualifier
+			LogToFileFolder.Text = Samraksh.AppNotes.Arduino.DisplacementDetection.Properties.Settings.Default.LogFolder;
 
 			_playDisp.Play();
 			Thread.Sleep(1000);
@@ -92,7 +99,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 				// Try to start. If cannot open, give error message.
 				Exception ex;
 				if ((ex = _serialComm.Start()) != null) {
-					Messages.AppendText("Cannot open serial port " + portName + "\n" + ex + "\n");
+					MessagesTextBox.AppendText("Cannot open serial port " + portName + "\n" + ex + "\n");
 					StartStop.Enabled = true;
 					RefreshParams.Enabled = false;
 					return;
@@ -113,14 +120,34 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 		private void ProcessInput(string input) {
 			var isDisp = false;
 			var isConf = false;
-			MethodInvoker m;
 			foreach (var theChar in input.ToCharArray()) {
 				if (theChar == '\n') {
 					var foundString = FoundStringB.ToString().Trim('\r').Trim('\n');
 					var lineItems = foundString.Split(',');
 					if (lineItems.Length == 5 && lineItems[0] == InMsgPrefix.SnippetDataMsg) {
-						isDisp = (lineItems[3] == "1");
-						isConf = (lineItems[4] == "1");
+						isDisp = (lineItems[lineItems.Length - 2] == "1");
+						isConf = (lineItems[lineItems.Length - 1] == "1");
+					}
+					if (lineItems.Length == 13 && lineItems[0] == InMsgPrefix.DetailDataMsg) {
+						isDisp = (lineItems[lineItems.Length - 2] == "1");
+						isConf = (lineItems[lineItems.Length - 1] == "1");
+					}
+					MethodInvoker m;
+					if (lineItems.Length == 7 && lineItems[0] == InMsgPrefix.DetailDataShortMsg) {
+						try {
+							var sampleNo = Convert.ToInt32(lineItems[1]);
+							var sampI = Convert.ToInt32(lineItems[2]);
+							var sampQ = Convert.ToInt32(lineItems[3]);
+							if ((sampI < 0 && sampQ < 0) || (sampI >= 0 && sampQ >= 0)) {
+								m = () => MessagesTextBox.AppendText(string.Format("Error: Bad sample values. Sample No {0}, I = {1}, Q = {2}\n", sampleNo, sampI, sampQ));
+								if (InvokeRequired) { Invoke(m); }
+								else { m(); }
+							}
+							isDisp = (lineItems[lineItems.Length - 2] == "1");
+							isConf = (lineItems[lineItems.Length - 1] == "1");
+						}
+						// ReSharper disable once EmptyGeneralCatchClause
+						catch { }
 					}
 					//Debug.Print(lineItems[0] + "," + lineItems.Length);
 					if (lineItems.Length == 3 && lineItems[0] == InMsgPrefix.ParamMsg) {
@@ -160,7 +187,22 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 					var conf = isConf;
 					m = () => {
 						var logString = DateTime.Now.ToString("hh:mm:ss,") + foundString;
-						FromMote.AppendText(logString + "\n");
+						// If detail message, only put to text box for the first sample of a snippet (assume 250 samples/snippet)
+						//	This speeds things up and helps prevent data loss
+						if (lineItems[0] == InMsgPrefix.DetailDataMsg || lineItems[0] == InMsgPrefix.DetailDataShortMsg) {
+							try {
+								int sampNum;
+								Int32.TryParse(lineItems[1], out sampNum);
+								if (Int32.TryParse(lineItems[1], out sampNum) && sampNum % 250 == 1) {
+									FromMoteTextBox.AppendText(logString + "\n");
+								}
+							}
+							// ReSharper disable once EmptyGeneralCatchClause
+							catch { }
+						}
+						else {
+							FromMoteTextBox.AppendText(logString + "\n");
+						}
 						if ((bool)LogToFileButton.Tag) {
 							_logFile.Write(logString + "\r\n");
 						}
@@ -185,7 +227,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 							Conf.BackColor = SystemColors.Control;
 						}
 					};
-					if (FromMote.InvokeRequired) { FromMote.Invoke(m); }
+					if (FromMoteTextBox.InvokeRequired) { FromMoteTextBox.Invoke(m); }
 					else { m(); }
 					FoundStringB.Clear();
 					return;
@@ -200,14 +242,14 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 		/// Clear the messages
 		/// </summary>
 		private void ClearMessages_Click(object sender, EventArgs e) {
-			Messages.Clear();
+			MessagesTextBox.Clear();
 		}
 
 		/// <summary>
 		/// Clear data received from mote
 		/// </summary>
 		private void ClearFromMote_Click(object sender, EventArgs e) {
-			FromMote.Clear();
+			FromMoteTextBox.Clear();
 		}
 
 		private void RefreshParams_Click(object sender, EventArgs e) {
@@ -216,9 +258,12 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 
 		private void LogToFileBrowse_Click(object sender, EventArgs e) {
 			folderBrowserDialog1.SelectedPath = LogToFileFolder.Text;
-			if (folderBrowserDialog1.ShowDialog() == DialogResult.OK) {
-				LogToFileFolder.Text = folderBrowserDialog1.SelectedPath;
-			}
+			if (folderBrowserDialog1.ShowDialog() != DialogResult.OK) return;
+			LogToFileFolder.Text = folderBrowserDialog1.SelectedPath;
+			// ReSharper disable once RedundantNameQualifier
+			Samraksh.AppNotes.Arduino.DisplacementDetection.Properties.Settings.Default.LogFolder = LogToFileFolder.Text;
+			// ReSharper disable once RedundantNameQualifier
+			Samraksh.AppNotes.Arduino.DisplacementDetection.Properties.Settings.Default.Save();
 		}
 
 		private void LogToFileButton_Click(object sender, EventArgs e) {
@@ -232,9 +277,11 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 					MessageBox.Show("Folder is invalid");
 					return;
 				}
-				Settings.Default.LogFolder = LogToFileFolder.Text;
-				Settings.Default.Save();
-				var newFile = Path.Combine(LogToFileFolder.Text, DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") + " Displacement Detection Log");
+				// ReSharper disable once RedundantNameQualifier
+				Samraksh.AppNotes.Arduino.DisplacementDetection.Properties.Settings.Default.LogFolder = LogToFileFolder.Text;
+				// ReSharper disable once RedundantNameQualifier
+				Samraksh.AppNotes.Arduino.DisplacementDetection.Properties.Settings.Default.Save();
+				var newFile = Path.Combine(LogToFileFolder.Text, DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") + " Arduino Displacement Detector.log");
 				_logFile = new StreamWriter(newFile);
 
 				LogToFileButton.Tag = true;

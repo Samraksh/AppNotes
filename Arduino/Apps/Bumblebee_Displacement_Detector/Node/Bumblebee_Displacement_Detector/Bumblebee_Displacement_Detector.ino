@@ -3,6 +3,7 @@
 #include <TimerOne.h>
 
 //***** Sample Rate **************************
+//const int sampRate = 250;	// Samples per second
 const int sampRate = 250;	// Samples per second
 
 //***** Cut Analysis *************************
@@ -13,20 +14,17 @@ const int snippetSize = sampRate;	// Number of samples in a snippet
 const int ConfM = 2;	// Minimum number of displacements required for confirmation
 const int ConfN = 8;	// Lifetime of a displacement, in seconds
 
-//// ***** Current sample ***********************
-//int sampIValue = 0;
-//int sampQValue = 0;
-
 //*********************************************
 
 
 // Values for serial logging
-enum serialLogging {serialNone, serialDetail, serialSnippet};
+enum serialLogging {serialNone, serialDetail, serialDetailShort, serialSnippet,};
 
 // Uncomment exactly one of these
 //
 //const serialLogging serialLog = serialNone;		// Do not write to serial
-const serialLogging serialLog = serialDetail;		// Write detail to serial
+//const serialLogging serialLog = serialDetail;		// Write detail to serial
+const serialLogging serialLog = serialDetailShort;		// Write short detail to serial
 //const serialLogging serialLog = serialSnippet;		// Write summary to serial
 
 // Uncomment exactly one of these
@@ -69,20 +67,28 @@ const int debugLedOut = 13;			// GPIO pin for general debugging
 static File sdDataFile;			// SD card datafile
 bool receivedSampleSemaphore = false;	// Simulated semaphore
 
+typedef struct PowerValuePair {
+	long I;
+	long Q;
+	};
+
 //***** Current Sample variables *************
 static int currIValue;	// Current I value
 static int currQValue;	// Current Q value
 static long sampNum = 0;	// Sample number
 static long sumIValue = 0;	// Sum of I values to date
 static long sumQValue = 0;	// Sum of Q values to date
-static long compQValue;
-static long compIValue;
+static long meanIValue;	// Mean-adjusted I value
+static long meanQValue;	// Mean-adjusted Q value
+static PowerValuePair sampledVals;	// Value actually sampled
 //*********************************************
 
 //******* Message prefixes ***********
 const String outColumnNamesMsgPrefix = "#1,";
 const String outSnippetDataMsgPrefix = "#2,";
 const String outParamMsgPrefix = "#3,";
+const String outDetailDataMsgPrefix = "#4,";
+const String outDetailDataShortMsgPrefix = "#5,";
 
 const String inReqParamPrefix = "*1";
 
@@ -126,7 +132,12 @@ void setup() {
 	if(serialLog == serialDetail) {
 		Serial.println("Logging to serial (detail)");
 		Serial.print(outColumnNamesMsgPrefix);
-		Serial.println("Sample,I,Q,SumI,SumQ,CompI,CompQ,IsCut,CurrCuts,RunCuts,Disp,Conf");
+		Serial.println("Sample,I,Q,SumI,SumQ,SampI,SampQ,IsCut,CurrCuts,RunCuts,Disp,Conf");
+		}
+	else if(serialLog == serialDetailShort) {
+		Serial.println("Logging to serial (short detail)");
+		Serial.print(outColumnNamesMsgPrefix);
+		Serial.println("Sample,SampI,SampQ,IsCut,Disp,Conf");
 		}
 	else if (serialLog == serialSnippet) {
 		Serial.println("Logging to serial (shippet)");
@@ -159,7 +170,12 @@ void loop() {
 	//	It is set in the timer callback and reset here.
 	//	As contrasted with a real semaphore, this has to be set and reset in the code.
 	//	This separates the callback logic from the loop processing logic.
+	
 	if (receivedSampleSemaphore) {
+
+		//unsigned long startTime = micros();
+		//unsigned long stopTime;
+
 		setLed(loopReceivedSamplePin, true);
 		receivedSampleSemaphore = false;	// Reset the semaphore
 
@@ -172,15 +188,40 @@ void loop() {
 		// Check for displacement
 		bool displacementDetected = DetectDisplacement();
 
+		//stopTime = micros();
+		//String timing = "#T0,";
+		//timing = timing + startTime;
+		//timing = timing + ",";
+		//timing = timing + stopTime;
+		//timing = timing + ",";
+		//timing = timing + (stopTime - startTime);
+		//Serial.println(timing);
+		
+		//Serial.print("#T0,");
+		//Serial.print(startTime); Serial.print(",");
+		//Serial.print(stopTime); Serial.print(",");
+		//Serial.print(stopTime - startTime);
+		//Serial.println();
+
 		// Log detail to serial, if enabled
 		serialDetailLogger(isCut, displacementDetected);
+
+		// Log short detail to serial, if enabled
+		serialDetailShortLogger(isCut, displacementDetected);
 
 		// Log detail to SD, if enabled
 		sdLogger(isCut, displacementDetected);
 
+		setLed(loopReceivedSamplePin, false);
+
+		//stopTime = micros();
+		//Serial.print("#T,");
+		//Serial.print(startTime); Serial.print(",");
+		//Serial.print(stopTime); Serial.print(",");
+		//Serial.print(stopTime - startTime);
+		//Serial.println();
 		}
 
-	setLed(loopReceivedSamplePin, false);
 
 	// Need delay else timer won't fire
 	delay(1);
@@ -225,7 +266,9 @@ void sampleTimer_tick() {
 	static short prevReadIValue = -1;
 
 	// If we haven't finished processing the previous sample yet, don't take another
-	if(receivedSampleSemaphore) { return; }
+	if(receivedSampleSemaphore) { 
+		return; 
+		}
 
 	// Send strobe output
 	setLed(strobePin, true);
@@ -236,6 +279,17 @@ void sampleTimer_tick() {
 		case bumbleBeeQPin:
 			// Sample the Q channel
 			justReadQValue = analogRead(channel);
+
+			// Save the value just read for logging
+			//	Unread channel value is set to negative
+			sampledVals.I = -1;
+			sampledVals.Q = justReadQValue;
+
+			//Serial.print("#Q ");
+			//Serial.print(channel); Serial.print(" ");
+			//Serial.print(sampledVals.I); Serial.print(" ");
+			//Serial.print(sampledVals.Q); Serial.print(" ");
+			//Serial.println();
 
 			// Return the previous I value
 			currIValue = justReadIValue;
@@ -267,6 +321,17 @@ void sampleTimer_tick() {
 			// Sample the I channel
 			justReadIValue = analogRead(channel);
 
+			// Save the value just read for logging
+			//	Unread channel value is set to negative
+			sampledVals.I = justReadIValue;
+			sampledVals.Q = -1;
+
+			//Serial.print("#I ");
+			//Serial.print(channel); Serial.print(" ");
+			//Serial.print(sampledVals.I); Serial.print(" ");
+			//Serial.print(sampledVals.Q); Serial.print(" ");
+			//Serial.println();
+
 			// Interpolate this I value and the last one
 			currIValue = interpolate(justReadIValue, prevReadIValue);
 
@@ -294,7 +359,7 @@ void sampleTimer_tick() {
 			channel = bumbleBeeQPin;
 			break;
 		}
-	// If we don't yet have real I and Q values, return
+	// If we're waiting on interpolation, return
 	if (currIValue < 0 || currQValue < 0) { 
 		return; 
 		}

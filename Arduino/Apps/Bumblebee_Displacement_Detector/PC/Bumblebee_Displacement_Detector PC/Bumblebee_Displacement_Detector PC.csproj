@@ -83,7 +83,7 @@
     <None Include="Resources\RefreshButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Utility\Utility.csproj">
+    <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{da2d77d1-6036-4843-a4b2-4fdc28821177}</Project>
       <Name>Utility</Name>
     </ProjectReference>
