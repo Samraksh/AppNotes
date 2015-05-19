@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
+using System.Linq.Expressions;
 using System.Media;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -15,6 +16,8 @@ using Samraksh.AppNotes.Arduino.DisplacementDetection.Properties;
 namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 
 	public partial class DisplacementDetection : Form {
+
+		private const int SerialBitRate = 230400;
 
 		private static class InMsgPrefix {
 			public const string ColumnNames = "#1";
@@ -95,7 +98,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 			// If serial stopped, start it
 			else {
 				var portName = SerialPortList.SelectedItem.ToString();
-				_serialComm = new SerialComm(ProcessInput, portName);
+				_serialComm = new SerialComm(ProcessInput, portName, SerialBitRate);
 				// Try to start. If cannot open, give error message.
 				Exception ex;
 				if ((ex = _serialComm.Start()) != null) {
@@ -128,9 +131,17 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 						isDisp = (lineItems[lineItems.Length - 2] == "1");
 						isConf = (lineItems[lineItems.Length - 1] == "1");
 					}
-					if (lineItems.Length == 13 && lineItems[0] == InMsgPrefix.DetailDataMsg) {
-						isDisp = (lineItems[lineItems.Length - 2] == "1");
-						isConf = (lineItems[lineItems.Length - 1] == "1");
+					if (lineItems.Length == 15 && lineItems[0] == InMsgPrefix.DetailDataMsg) {
+						try {
+							isDisp = (lineItems[lineItems.Length - 2] == "1");
+							isConf = (lineItems[lineItems.Length - 1] == "1");
+							var sampleNo = Convert.ToInt32(lineItems[1]);
+							var sampI = Convert.ToInt32(lineItems[6]);
+							var sampQ = Convert.ToInt32(lineItems[7]);
+							CheckSampleValue(sampI, sampQ, sampleNo);
+						}
+						// ReSharper disable once EmptyGeneralCatchClause
+						catch { }
 					}
 					MethodInvoker m;
 					if (lineItems.Length == 7 && lineItems[0] == InMsgPrefix.DetailDataShortMsg) {
@@ -138,11 +149,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 							var sampleNo = Convert.ToInt32(lineItems[1]);
 							var sampI = Convert.ToInt32(lineItems[2]);
 							var sampQ = Convert.ToInt32(lineItems[3]);
-							if ((sampI < 0 && sampQ < 0) || (sampI >= 0 && sampQ >= 0)) {
-								m = () => MessagesTextBox.AppendText(string.Format("Error: Bad sample values. Sample No {0}, I = {1}, Q = {2}\n", sampleNo, sampI, sampQ));
-								if (InvokeRequired) { Invoke(m); }
-								else { m(); }
-							}
+							CheckSampleValue(sampI, sampQ, sampleNo);
 							isDisp = (lineItems[lineItems.Length - 2] == "1");
 							isConf = (lineItems[lineItems.Length - 1] == "1");
 						}
@@ -235,6 +242,21 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 				FoundStringB.Append(theChar);
 			}
 		}
+
+		private void CheckSampleValue(int sampI, int sampQ, int sampleNo) {
+			if ((sampI >= 0 || sampQ >= 0) && (sampI < 0 || sampQ < 0)) { return; }
+			MethodInvoker m =
+				() =>
+					MessagesTextBox.AppendText(string.Format("Error: Bad sample values. Sample No {0}, I = {1}, Q = {2}\n", sampleNo,
+						sampI, sampQ));
+			if (InvokeRequired) {
+				Invoke(m);
+			}
+			else {
+				m();
+			}
+		}
+
 		private static readonly StringBuilder FoundStringB = new StringBuilder();
 
 

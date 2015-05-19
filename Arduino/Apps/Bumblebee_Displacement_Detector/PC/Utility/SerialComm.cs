@@ -76,7 +76,6 @@ namespace Samraksh.AppNote.Utility {
 				++_count;
 			}
 			catch (InvalidOperationException) { }
-
 		}
 
 	}

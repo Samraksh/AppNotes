@@ -2,13 +2,17 @@
 #include <SPI.h>
 #include <TimerOne.h>
 
+//***** Serial Bit Rate **************************
+unsigned long const SerialBitRate = 230400;
+
 //***** Sample Rate **************************
-//const int sampRate = 250;	// Samples per second
 const int sampRate = 250;	// Samples per second
 
 //***** Cut Analysis *************************
 const int MinCumCuts = 6;			// Number of net cuts (positive or negative) for displacement
 const int snippetSize = sampRate;	// Number of samples in a snippet
+static int snippetCntr = 0;			// Sample counter within snippet
+static int snippetNum = 0;			// Snippet number
 
 //***** M of N Confirmation *******************
 const int ConfM = 2;	// Minimum number of displacements required for confirmation
@@ -23,8 +27,8 @@ enum serialLogging {serialNone, serialDetail, serialDetailShort, serialSnippet,}
 // Uncomment exactly one of these
 //
 //const serialLogging serialLog = serialNone;		// Do not write to serial
-//const serialLogging serialLog = serialDetail;		// Write detail to serial
-const serialLogging serialLog = serialDetailShort;		// Write short detail to serial
+const serialLogging serialLog = serialDetail;		// Write detail to serial
+//const serialLogging serialLog = serialDetailShort;		// Write short detail to serial
 //const serialLogging serialLog = serialSnippet;		// Write summary to serial
 
 // Uncomment exactly one of these
@@ -80,6 +84,7 @@ static long sumIValue = 0;	// Sum of I values to date
 static long sumQValue = 0;	// Sum of Q values to date
 static long meanIValue;	// Mean-adjusted I value
 static long meanQValue;	// Mean-adjusted Q value
+static PowerValuePair prevValues;
 static PowerValuePair sampledVals;	// Value actually sampled
 //*********************************************
 
@@ -104,7 +109,7 @@ const String paramN = "N";
 /// Setup
 ///
 void setup() {
-	Serial.begin(115200);
+	Serial.begin(SerialBitRate);
 	serialInputInitialize(200);
 
 	// Initialize all the GPIOs
@@ -132,7 +137,7 @@ void setup() {
 	if(serialLog == serialDetail) {
 		Serial.println("Logging to serial (detail)");
 		Serial.print(outColumnNamesMsgPrefix);
-		Serial.println("Sample,I,Q,SumI,SumQ,SampI,SampQ,IsCut,CurrCuts,RunCuts,Disp,Conf");
+		Serial.println("Sample,I,Q,SumI,SumQ,SampI,SampQ,AdjI,AdjQ,PrevAdjQ,PrevAdjI,IsCut,CurrCuts,RunCuts,Disp,Conf");
 		}
 	else if(serialLog == serialDetailShort) {
 		Serial.println("Logging to serial (short detail)");
@@ -170,7 +175,7 @@ void loop() {
 	//	It is set in the timer callback and reset here.
 	//	As contrasted with a real semaphore, this has to be set and reset in the code.
 	//	This separates the callback logic from the loop processing logic.
-	
+
 	if (receivedSampleSemaphore) {
 
 		//unsigned long startTime = micros();
@@ -196,7 +201,7 @@ void loop() {
 		//timing = timing + ",";
 		//timing = timing + (stopTime - startTime);
 		//Serial.println(timing);
-		
+
 		//Serial.print("#T0,");
 		//Serial.print(startTime); Serial.print(",");
 		//Serial.print(stopTime); Serial.print(",");
@@ -220,6 +225,13 @@ void loop() {
 		//Serial.print(stopTime); Serial.print(",");
 		//Serial.print(stopTime - startTime);
 		//Serial.println();
+
+		// If snippet boundary, ncrement snippet number & reset for next one
+		//	Do this AFTER logging
+		if (snippetCntr == snippetSize) { 
+			snippetNum = snippetNum + 1;
+			resetSnippet();
+			}
 		}
 
 

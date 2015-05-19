@@ -36,7 +36,7 @@ void serialDetailLogger(int isCut, bool displacementDetected) {
 	//unsigned long startTime = micros();
 
 	setLed(profileSerialLed, true);
-	Serial.print(outDetailDataShortMsgPrefix);
+	Serial.print(outDetailDataMsgPrefix);
 	Serial.print(sampNum); 
 	Serial.print(','); Serial.print(currIValue); 
 	Serial.print(','); Serial.print(currQValue); 
@@ -45,6 +45,10 @@ void serialDetailLogger(int isCut, bool displacementDetected) {
 	Serial.print(','); Serial.print(sumQValue); 
 	Serial.print(','); Serial.print(sampledVals.I); 
 	Serial.print(','); Serial.print(sampledVals.Q); 
+	Serial.print(','); Serial.print(meanIValue); 
+	Serial.print(','); Serial.print(meanQValue); 
+	Serial.print(','); Serial.print(prevValues.I); 
+	Serial.print(','); Serial.print(prevValues.Q); 
 
 	Serial.print(','); Serial.print(isCut);
 	Serial.print(','); Serial.print(currCuts);

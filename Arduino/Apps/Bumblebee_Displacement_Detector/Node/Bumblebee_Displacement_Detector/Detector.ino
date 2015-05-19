@@ -1,8 +1,6 @@
 // Cut analysis variables
 static int currCuts = 0;
 static int runCuts = 0; // Running total of cuts
-static int snippetCntr = 0;
-static int snippetNum = 0;
 
 // M of N confirmation state
 enum Conf{No, Yes};
@@ -16,8 +14,11 @@ static Conf ConfState = No;	// Initially no confirmation
 /// </summary>
 int checkForCut() {
 	static boolean firstTime = true;
-	static int prevQValue = -1;
 	static int prevIValue = -1;
+	static int prevQValue = -1;
+
+	prevValues.I = prevIValue;
+	prevValues.Q = prevQValue;
 
 	// Increment sums
 	sumIValue += currIValue;
@@ -32,7 +33,7 @@ int checkForCut() {
 	if (!firstTime) {
 		//int crossProduct = (meanQValue * prevIValue) - (meanIValue * prevQValue);
 		int crossProduct = (prevQValue * meanIValue) - (prevIValue * meanQValue);
-	
+
 		//Serial.print("#x3"); 
 		//Serial.print(","); Serial.print(sampIValue); Serial.print(","); Serial.print(sampQValue);
 		//Serial.print(","); Serial.print(sumIValue); Serial.print(","); Serial.print(sumQValue);
@@ -43,15 +44,13 @@ int checkForCut() {
 		//Serial.print("dP "); Serial.println(crossProduct);
 
 		// Check for clockwise cut (towards radar)
-		//if (crossProduct < 0 && prevQValue < 0 && meanQValue > 0) {
-		if (crossProduct < 0 && prevIValue > 0 && meanIValue < 0) {
+		if (crossProduct < 0 && prevIValue < 0 && meanIValue > 0) {
 			isCut = +1;
 			currCuts = currCuts + 1;
 			runCuts = runCuts + 1;
 			}
 		// Check for counter-clockwise cut (away from radar)
-		//else if (crossProduct > 0 && prevQValue > 0 && meanQValue < 0) {
-		else if (crossProduct > 0 && prevIValue < 0 && meanIValue > 0) {
+		else if (crossProduct > 0 && prevIValue > 0 && meanIValue < 0) {
 			isCut = -1;
 			currCuts = currCuts - 1;
 			runCuts = runCuts - 1;
@@ -93,10 +92,6 @@ int DetectDisplacement() {
 	checkMofN(snippetNum, displacementDetected);
 	//	Set displaceConfLed according to whether displacement confirmation was made
 	setLed(displaceConfLed, ConfState == Yes);
-
-	// Increment snippet number & reset for next one
-	snippetNum = snippetNum + 1;
-	resetSnippet();
 
 	// Log snippet to serial, if enabled
 	serialSnippetLog(displacementDetected);
