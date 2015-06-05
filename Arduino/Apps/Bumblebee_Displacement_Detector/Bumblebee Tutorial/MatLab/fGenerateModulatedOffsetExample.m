@@ -13,7 +13,7 @@ for S = [0 2]
     ylim([-(Scale*Scale) (Scale*Scale)]);
     title('Reference Wave');
     
-    Ret = CalcRetOffset(X, S, Freq, Scale);
+    Ret = fCalcRetOffset(X, S, Freq, Scale);
     
     subplot(PlotRows,PlotCols,CurrPlot);
     CurrPlot = CurrPlot + 1;

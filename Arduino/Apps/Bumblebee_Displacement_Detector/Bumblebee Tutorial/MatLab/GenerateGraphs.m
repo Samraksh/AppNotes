@@ -14,7 +14,7 @@ Scale = 2;
 IRef = sin(2*pi*Freq*X)*Scale;
 QRef = cos(2*pi*Freq*X)*Scale;
 
-%fGenerateModulatedOffsetExample(X, IRef, Scale, Freq, PlotPath);
+fGenerateModulatedOffsetExample(X, IRef, Scale, Freq, PlotPath);
 
 %fGeneratePowerValuesOneWavelength(X, Freq, Scale, IRef);
 

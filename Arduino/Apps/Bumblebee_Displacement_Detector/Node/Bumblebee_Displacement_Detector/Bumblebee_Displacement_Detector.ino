@@ -3,10 +3,12 @@
 #include <TimerOne.h>
 
 //***** Serial Bit Rate **************************
-unsigned long const SerialBitRate = 230400;
+//unsigned long const SerialBitRate = 230400;
+unsigned long const SerialBitRate = 400000;
 
 //***** Sample Rate **************************
 const int sampRate = 250;	// Samples per second
+//const int sampRate = 100;	// Samples per second
 
 //***** Cut Analysis *************************
 const int MinCumCuts = 6;			// Number of net cuts (positive or negative) for displacement
@@ -22,14 +24,14 @@ const int ConfN = 8;	// Lifetime of a displacement, in seconds
 
 
 // Values for serial logging
-enum serialLogging {serialNone, serialDetail, serialDetailShort, serialSnippet,};
+enum serialLogging {serialNone, serialValidationInputs, serialInputsDetects, serialDetects,};
 
 // Uncomment exactly one of these
 //
 //const serialLogging serialLog = serialNone;		// Do not write to serial
-const serialLogging serialLog = serialDetail;		// Write detail to serial
-//const serialLogging serialLog = serialDetailShort;		// Write short detail to serial
-//const serialLogging serialLog = serialSnippet;		// Write summary to serial
+//const serialLogging serialLog = serialValidationInputs;		// Write inputs to serial. NOTE: this produces too much data for 250 Hz. Must run lower. Only useful for evaluating interpolation and averaging.
+const serialLogging serialLog = serialInputsDetects;		// Write short detail to serial
+//const serialLogging serialLog = serialDetects;		// Write summary to serial
 
 // Uncomment exactly one of these
 //
@@ -90,10 +92,10 @@ static PowerValuePair sampledVals;	// Value actually sampled
 
 //******* Message prefixes ***********
 const String outColumnNamesMsgPrefix = "#1,";
-const String outSnippetDataMsgPrefix = "#2,";
+const String outDetectsPrefix = "#2,";
 const String outParamMsgPrefix = "#3,";
-const String outDetailDataMsgPrefix = "#4,";
-const String outDetailDataShortMsgPrefix = "#5,";
+const String outValidationInputsPrefix = "#4,";
+const String outInputDetectsPrefix = "#5,";
 
 const String inReqParamPrefix = "*1";
 
@@ -134,23 +136,26 @@ void setup() {
 	else {
 		Serial.println("Not logging to SD card");
 		}
-	if(serialLog == serialDetail) {
-		Serial.println("Logging to serial (detail)");
-		Serial.print(outColumnNamesMsgPrefix);
-		Serial.println("Sample,I,Q,SumI,SumQ,SampI,SampQ,AdjI,AdjQ,PrevAdjQ,PrevAdjI,IsCut,CurrCuts,RunCuts,Disp,Conf");
-		}
-	else if(serialLog == serialDetailShort) {
-		Serial.println("Logging to serial (short detail)");
-		Serial.print(outColumnNamesMsgPrefix);
-		Serial.println("Sample,SampI,SampQ,IsCut,Disp,Conf");
-		}
-	else if (serialLog == serialSnippet) {
-		Serial.println("Logging to serial (shippet)");
-		Serial.print(outColumnNamesMsgPrefix);
-		Serial.println("Sample,RunCuts,Disp,Conf");
-		}
-	else {
-		Serial.println("Not logging to serial");
+
+	switch (serialLog){
+		case serialValidationInputs:
+			Serial.println("Logging to serial (Inputs for Validation)");
+			Serial.print(outColumnNamesMsgPrefix);
+			Serial.println("Sample,I,Q,SumI,SumQ,SampI,SampQ,AdjI,AdjQ,PrevAdjQ,PrevAdjI");
+			break;
+		case serialInputsDetects:
+			Serial.println("Logging to serial (Inputs and Detections)");
+			Serial.print(outColumnNamesMsgPrefix);
+			Serial.println("Sample,SampI,SampQ,IsCut,Disp,Conf");
+			break;
+		case serialDetects:
+			Serial.println("Logging to serial (Detections)");
+			Serial.print(outColumnNamesMsgPrefix);
+			Serial.println("Sample,RunCuts,Disp,Conf");
+			break;
+		default:
+			Serial.println("Not logging to serial");
+			break;
 		}
 
 	Timer1.initialize(sampIntUSec);
@@ -163,6 +168,8 @@ void setup() {
 /// Main loop
 ///
 void loop() {
+	static bool displacementDetected;
+
 	if (digitalRead(stopForSdPin) == LOW) {
 		Timer1.stop();
 		sdDataFile.flush();
@@ -187,46 +194,21 @@ void loop() {
 		// Check for a cut
 		int isCut = checkForCut();
 
-		//Serial.print("#x1,"); Serial.print(currIValue); Serial.print(","); Serial.print(currQValue);
-		//Serial.println();
-
-		// Check for displacement
-		bool displacementDetected = DetectDisplacement();
-
-		//stopTime = micros();
-		//String timing = "#T0,";
-		//timing = timing + startTime;
-		//timing = timing + ",";
-		//timing = timing + stopTime;
-		//timing = timing + ",";
-		//timing = timing + (stopTime - startTime);
-		//Serial.println(timing);
-
-		//Serial.print("#T0,");
-		//Serial.print(startTime); Serial.print(",");
-		//Serial.print(stopTime); Serial.print(",");
-		//Serial.print(stopTime - startTime);
-		//Serial.println();
-
 		// Log detail to serial, if enabled
-		serialDetailLogger(isCut, displacementDetected);
+		serialInputsLogger(isCut, displacementDetected);
 
 		// Log short detail to serial, if enabled
-		serialDetailShortLogger(isCut, displacementDetected);
+		serialInputsDetectsLogger(isCut, displacementDetected);
 
 		// Log detail to SD, if enabled
 		sdLogger(isCut, displacementDetected);
-
+		
+		// Check for displacement
+		displacementDetected = DetectDisplacement();
+		
 		setLed(loopReceivedSamplePin, false);
 
-		//stopTime = micros();
-		//Serial.print("#T,");
-		//Serial.print(startTime); Serial.print(",");
-		//Serial.print(stopTime); Serial.print(",");
-		//Serial.print(stopTime - startTime);
-		//Serial.println();
-
-		// If snippet boundary, ncrement snippet number & reset for next one
+		// If snippet boundary, increment snippet number & reset for next one
 		//	Do this AFTER logging
 		if (snippetCntr == snippetSize) { 
 			snippetNum = snippetNum + 1;

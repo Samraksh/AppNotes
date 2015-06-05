@@ -80,7 +80,9 @@ int DetectDisplacement() {
 	// See if we've reached a snippet boundary
 	snippetCntr = snippetCntr + 1;
 	static bool displacementDetected = false;
-	if (snippetCntr < snippetSize) { return displacementDetected; }
+	if (snippetCntr < snippetSize) { 
+		return displacementDetected; 
+		}
 
 	// If so, see if a snippet displacement has occurred
 	displacementDetected = (abs(currCuts) >= MinCumCuts);
@@ -94,7 +96,7 @@ int DetectDisplacement() {
 	setLed(displaceConfLed, ConfState == Yes);
 
 	// Log snippet to serial, if enabled
-	serialSnippetLog(displacementDetected);
+	serialDetectsLog(displacementDetected);
 
 	return displacementDetected;
 	}
@@ -117,29 +119,29 @@ void resetSnippet() {
 /// When we do a comparison in UpdateDetectionState, the current buffer entry is the oldest snippet where displacement occurred.
 ///     Since all the other snippets are more recent, it suffices to see if the current one occurred within N snippets.
 /// </remarks>
-/// <param name="snippetNum">Snippet Number</param>
+/// <param name="snippetN">Snippet Number</param>
 /// <param name="displacementDetected">true iff displacement detection has occurred</param>
-void checkMofN(int snippetNum, bool displacementDetected) {
+void checkMofN(int snippetN, bool displacementDetected) {
 	static bool firstTime = true;
 	static int MofNBuff[ConfM];
 	static int MofNBuffPtr = 0;
 	// Initialize buffer if first time thru
 	if (firstTime) {
-		for (int i = 0; i < ConfM; i = i + 2) {
+		for (int i = 0; i < ConfM; i = i + 1) {
 			MofNBuff[i] = -ConfN;
 			}
 		firstTime = false;
 		}
+	// If displacement detected, record it
+	if (displacementDetected) { 
+		MofNBuff[MofNBuffPtr] = snippetN;
+		MofNBuffPtr = (MofNBuffPtr + 1) % ConfM;
+		}
 	// Check if the snippet number occurred sufficiently recently
 	ConfState = No;
-	if (snippetNum - MofNBuff[MofNBuffPtr] < ConfN) {
+	if (snippetN - MofNBuff[MofNBuffPtr] < ConfN) {
 		ConfState = Yes;
 		}
-	// If no displacement occurred then return
-	if (!displacementDetected) { return; }
-	// Otherwise, record the snippet number and advance the buffer pointer
-	MofNBuff[MofNBuffPtr] = snippetNum;
-	MofNBuffPtr = (MofNBuffPtr + 1) % ConfM;
 	}
 
 

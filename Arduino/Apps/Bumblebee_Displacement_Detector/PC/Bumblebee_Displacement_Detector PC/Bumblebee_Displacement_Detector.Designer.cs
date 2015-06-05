@@ -95,20 +95,23 @@
 			this.SerialPortList.Size = new System.Drawing.Size(160, 24);
 			this.SerialPortList.TabIndex = 11;
 			// 
-			// Messages
+			// MessagesTextBox
 			// 
-			this.MessagesTextBox.Location = new System.Drawing.Point(499, 251);
+			this.MessagesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.MessagesTextBox.Location = new System.Drawing.Point(755, 251);
 			this.MessagesTextBox.Margin = new System.Windows.Forms.Padding(4);
 			this.MessagesTextBox.Multiline = true;
 			this.MessagesTextBox.Name = "MessagesTextBox";
 			this.MessagesTextBox.ReadOnly = true;
 			this.MessagesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.MessagesTextBox.Size = new System.Drawing.Size(269, 233);
+			this.MessagesTextBox.Size = new System.Drawing.Size(322, 233);
 			this.MessagesTextBox.TabIndex = 14;
 			// 
 			// ClearMessages
 			// 
-			this.ClearMessages.Location = new System.Drawing.Point(499, 502);
+			this.ClearMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ClearMessages.Location = new System.Drawing.Point(753, 508);
 			this.ClearMessages.Margin = new System.Windows.Forms.Padding(4);
 			this.ClearMessages.Name = "ClearMessages";
 			this.ClearMessages.Size = new System.Drawing.Size(100, 28);
@@ -120,27 +123,30 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(92, 228);
+			this.label1.Location = new System.Drawing.Point(20, 228);
 			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(134, 17);
 			this.label1.TabIndex = 18;
 			this.label1.Text = "Received from Mote";
 			// 
-			// FromMote
+			// FromMoteTextBox
 			// 
-			this.FromMoteTextBox.Location = new System.Drawing.Point(96, 252);
+			this.FromMoteTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.FromMoteTextBox.Location = new System.Drawing.Point(24, 252);
 			this.FromMoteTextBox.Margin = new System.Windows.Forms.Padding(4);
 			this.FromMoteTextBox.Multiline = true;
 			this.FromMoteTextBox.Name = "FromMoteTextBox";
 			this.FromMoteTextBox.ReadOnly = true;
 			this.FromMoteTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.FromMoteTextBox.Size = new System.Drawing.Size(356, 233);
+			this.FromMoteTextBox.Size = new System.Drawing.Size(695, 233);
 			this.FromMoteTextBox.TabIndex = 17;
 			// 
 			// ClearFromMote
 			// 
-			this.ClearFromMote.Location = new System.Drawing.Point(96, 508);
+			this.ClearFromMote.Location = new System.Drawing.Point(24, 508);
 			this.ClearFromMote.Margin = new System.Windows.Forms.Padding(4);
 			this.ClearFromMote.Name = "ClearFromMote";
 			this.ClearFromMote.Size = new System.Drawing.Size(100, 28);
@@ -151,8 +157,9 @@
 			// 
 			// label2
 			// 
+			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(496, 228);
+			this.label2.Location = new System.Drawing.Point(752, 228);
 			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(72, 17);
@@ -162,24 +169,28 @@
 			// Disp
 			// 
 			this.Disp.AutoSize = true;
-			this.Disp.Enabled = false;
-			this.Disp.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.Disp.Location = new System.Drawing.Point(96, 68);
+			this.Disp.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+			this.Disp.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Disp.ForeColor = System.Drawing.Color.DarkOrchid;
+			this.Disp.Location = new System.Drawing.Point(85, 68);
 			this.Disp.Name = "Disp";
-			this.Disp.Size = new System.Drawing.Size(64, 29);
+			this.Disp.Size = new System.Drawing.Size(104, 48);
 			this.Disp.TabIndex = 20;
 			this.Disp.Text = "Disp";
+			this.Disp.Visible = false;
 			// 
 			// Conf
 			// 
 			this.Conf.AutoSize = true;
-			this.Conf.Enabled = false;
-			this.Conf.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Conf.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+			this.Conf.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Conf.ForeColor = System.Drawing.Color.OrangeRed;
 			this.Conf.Location = new System.Drawing.Point(206, 68);
 			this.Conf.Name = "Conf";
-			this.Conf.Size = new System.Drawing.Size(66, 29);
+			this.Conf.Size = new System.Drawing.Size(108, 48);
 			this.Conf.TabIndex = 21;
 			this.Conf.Text = "Conf";
+			this.Conf.Visible = false;
 			// 
 			// Parameters
 			// 
@@ -353,16 +364,16 @@
 			// 
 			// LogToFileFolder
 			// 
-			this.LogToFileFolder.Location = new System.Drawing.Point(538, 17);
+			this.LogToFileFolder.Location = new System.Drawing.Point(620, 16);
 			this.LogToFileFolder.Name = "LogToFileFolder";
 			this.LogToFileFolder.Size = new System.Drawing.Size(180, 22);
 			this.LogToFileFolder.TabIndex = 32;
 			// 
 			// LogToFileButton
 			// 
-			this.LogToFileButton.Location = new System.Drawing.Point(446, 17);
+			this.LogToFileButton.Location = new System.Drawing.Point(489, 16);
 			this.LogToFileButton.Name = "LogToFileButton";
-			this.LogToFileButton.Size = new System.Drawing.Size(83, 26);
+			this.LogToFileButton.Size = new System.Drawing.Size(122, 26);
 			this.LogToFileButton.TabIndex = 33;
 			this.LogToFileButton.Text = "Log to file";
 			this.LogToFileButton.UseVisualStyleBackColor = true;
@@ -370,7 +381,7 @@
 			// 
 			// LogToFileBrowse
 			// 
-			this.LogToFileBrowse.Location = new System.Drawing.Point(735, 15);
+			this.LogToFileBrowse.Location = new System.Drawing.Point(817, 14);
 			this.LogToFileBrowse.Name = "LogToFileBrowse";
 			this.LogToFileBrowse.Size = new System.Drawing.Size(54, 28);
 			this.LogToFileBrowse.TabIndex = 34;
@@ -382,7 +393,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(834, 613);
+			this.ClientSize = new System.Drawing.Size(1090, 613);
 			this.Controls.Add(this.LogToFileBrowse);
 			this.Controls.Add(this.LogToFileButton);
 			this.Controls.Add(this.LogToFileFolder);

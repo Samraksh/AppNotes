@@ -3,28 +3,44 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Ports;
-using System.Linq.Expressions;
 using System.Media;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
 using Samraksh.AppNote.Utility;
-using Samraksh.AppNotes.Arduino.DisplacementDetection.Properties;
 
 namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 
 	public partial class DisplacementDetection : Form {
 
-		private const int SerialBitRate = 230400;
+		//private const int SerialBitRate = 230400;
+		private const int SerialBitRate = 400000;
 
-		private static class InMsgPrefix {
-			public const string ColumnNames = "#1";
-			public const string SnippetDataMsg = "#2";
-			public const string ParamMsg = "#3";
-			public const string DetailDataMsg = "#4";
-			public const string DetailDataShortMsg = "#5";
+		private static class InMsg {
+			public static class ColumnNames {
+				public const string Prefix = "#1";
+			}
+
+			public static class Detects {
+				public const string Prefix = "#2";
+				public const int Length = 5;
+			}
+
+			public static class ParamMsg {
+				public const string Prefix = "#3";
+				public const int Length = 3;
+			}
+
+			public static class ValidationInputs {
+				public const string Prefix = "#4";
+				public const int Length = 12;
+			}
+
+			public static class InputsDetects {
+				public const string Prefix = "#5";
+				public const int Length = 7;
+			}
 		}
 
 		private static class OutMsgPrefix {
@@ -82,6 +98,10 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 		/// </summary>
 		private void StartStop_Click(object sender, EventArgs e) {
 			StartStop.Enabled = false;
+			// Hide Disp & Conf (using MethodInvoker to avoid cross-thread issues)
+			MethodInvoker m = () => Disp.Visible = Conf.Visible = false;
+			if (InvokeRequired) { m.Invoke(); }
+			else { m(); }
 			// If serial started, stop it
 			if (_serialStarted) {
 				// Note that stopped
@@ -112,6 +132,8 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 				StartStop.Text = "Click to Disable Serial";
 				StartStop.BackColor = Color.YellowGreen;
 				RefreshParams.Enabled = true;
+				// Request parameters
+				_serialComm.Write(OutMsgPrefix.ReqParam + "\n");
 			}
 			StartStop.Enabled = true;
 		}
@@ -123,71 +145,112 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 		private void ProcessInput(string input) {
 			var isDisp = false;
 			var isConf = false;
+			MethodInvoker m;
 			foreach (var theChar in input.ToCharArray()) {
 				if (theChar == '\n') {
 					var foundString = FoundStringB.ToString().Trim('\r').Trim('\n');
 					var lineItems = foundString.Split(',');
-					if (lineItems.Length == 5 && lineItems[0] == InMsgPrefix.SnippetDataMsg) {
+					if (lineItems.Length == InMsg.Detects.Length && lineItems[0] == InMsg.Detects.Prefix) {
 						isDisp = (lineItems[lineItems.Length - 2] == "1");
 						isConf = (lineItems[lineItems.Length - 1] == "1");
 					}
-					if (lineItems.Length == 15 && lineItems[0] == InMsgPrefix.DetailDataMsg) {
-						try {
-							isDisp = (lineItems[lineItems.Length - 2] == "1");
-							isConf = (lineItems[lineItems.Length - 1] == "1");
-							var sampleNo = Convert.ToInt32(lineItems[1]);
-							var sampI = Convert.ToInt32(lineItems[6]);
-							var sampQ = Convert.ToInt32(lineItems[7]);
-							CheckSampleValue(sampI, sampQ, sampleNo);
-						}
-						// ReSharper disable once EmptyGeneralCatchClause
-						catch { }
-					}
-					MethodInvoker m;
-					if (lineItems.Length == 7 && lineItems[0] == InMsgPrefix.DetailDataShortMsg) {
-						try {
-							var sampleNo = Convert.ToInt32(lineItems[1]);
-							var sampI = Convert.ToInt32(lineItems[2]);
-							var sampQ = Convert.ToInt32(lineItems[3]);
-							CheckSampleValue(sampI, sampQ, sampleNo);
-							isDisp = (lineItems[lineItems.Length - 2] == "1");
-							isConf = (lineItems[lineItems.Length - 1] == "1");
-						}
-						// ReSharper disable once EmptyGeneralCatchClause
-						catch { }
-					}
-					//Debug.Print(lineItems[0] + "," + lineItems.Length);
-					if (lineItems.Length == 3 && lineItems[0] == InMsgPrefix.ParamMsg) {
-						var label = lineItems[1];
-						var val = lineItems[2];
-						m = null;
-						switch (label) {
-							case MsgParamName.SampRate:
-								m = () => { SampleRate.Text = val; };
-								break;
-							case MsgParamName.MinCumCuts:
-								m = () => { MinCumCuts.Text = val; };
-								break;
-							case MsgParamName.ConfM:
-								m = () => { ConfM.Text = val; };
-								break;
-							case MsgParamName.ConfN:
-								m = () => { ConfN.Text = val; };
-								break;
-						}
-						if (m != null) {
-							if (InvokeRequired) { Invoke(m); }
-							else { m(); }
-						}
+					// Process the message types
+					switch (lineItems[0]) {
+						case InMsg.ValidationInputs.Prefix:
+							try {
+								if (lineItems.Length == InMsg.ValidationInputs.Length) {
+									//isDisp = (lineItems[lineItems.Length - 2] == "1");
+									//isConf = (lineItems[lineItems.Length - 1] == "1");
+									var sampleNo = Convert.ToInt32(lineItems[1]);
+									var sampI = Convert.ToInt32(lineItems[6]);
+									var sampQ = Convert.ToInt32(lineItems[7]);
+									CheckSampleValue(sampI, sampQ, sampleNo);
+								}
+								else {
+									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.ValidationInputs.Length));
+								}
+							}
+							catch (Exception ex) {
+								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+								if (InvokeRequired) { Invoke(m); }
+								else { m(); }
+							}
+							break;
+
+						case InMsg.InputsDetects.Prefix:
+							try {
+								if (lineItems.Length == InMsg.InputsDetects.Length) {
+									//var sampleNo = Convert.ToInt32(lineItems[1]);
+									//var sampI = Convert.ToInt32(lineItems[2]);
+									//var sampQ = Convert.ToInt32(lineItems[3]);
+									//CheckSampleValue(sampI, sampQ, sampleNo);
+									isDisp = (lineItems[lineItems.Length - 2] == "1");
+									isConf = (lineItems[lineItems.Length - 1] == "1");
+								}
+								else {
+									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.InputsDetects.Length));
+								}
+							}
+							catch (Exception ex) {
+								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+								if (InvokeRequired) { Invoke(m); }
+								else { m(); }
+							}
+							break;
+
+						case InMsg.ParamMsg.Prefix:
+							try {
+								if (lineItems.Length == InMsg.ParamMsg.Length) {
+									var label = lineItems[1];
+									var val = lineItems[2];
+									m = null;
+									switch (label) {
+										case MsgParamName.SampRate:
+											m = () => { SampleRate.Text = val; };
+											break;
+										case MsgParamName.MinCumCuts:
+											m = () => { MinCumCuts.Text = val; };
+											break;
+										case MsgParamName.ConfM:
+											m = () => { ConfM.Text = val; };
+											break;
+										case MsgParamName.ConfN:
+											m = () => { ConfN.Text = val; };
+											break;
+									}
+									if (m != null) {
+										if (InvokeRequired) {
+											Invoke(m);
+										}
+										else {
+											m();
+										}
+									}
+								}
+								else {
+									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.ValidationInputs.Length));
+								}
+							}
+							catch (Exception ex) {
+								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+								if (InvokeRequired) {
+									Invoke(m);
+								}
+								else {
+									m();
+								}
+							}
+							break;
 					}
 
+
 					// Give audio alerts
-					if (isDisp) {
-						_playDisp.Play();
-					}
-					if (isConf) {
-						_playConf.Play();
-					}
+					//if (isDisp) {
+					//	_playDisp.Play();
+					//}
+					//if (isConf) {
+					//	_playConf.Play();
+					//}
 
 					// We use a method invoker to avoid cross-thread issues
 					var disp = isDisp;
@@ -196,7 +259,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 						var logString = DateTime.Now.ToString("hh:mm:ss,") + foundString;
 						// If detail message, only put to text box for the first sample of a snippet (assume 250 samples/snippet)
 						//	This speeds things up and helps prevent data loss
-						if (lineItems[0] == InMsgPrefix.DetailDataMsg || lineItems[0] == InMsgPrefix.DetailDataShortMsg) {
+						if (lineItems[0] == InMsg.ValidationInputs.Prefix || lineItems[0] == InMsg.InputsDetects.Prefix) {
 							try {
 								int sampNum;
 								Int32.TryParse(lineItems[1], out sampNum);
@@ -213,26 +276,9 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 						if ((bool)LogToFileButton.Tag) {
 							_logFile.Write(logString + "\r\n");
 						}
-						if (disp) {
-							Disp.ForeColor = Color.GreenYellow;
-							Disp.BackColor = Color.LightGray;
-							Disp.Enabled = true;
-						}
-						else {
-							Disp.Enabled = false;
-							Disp.ForeColor = SystemColors.ControlText;
-							Disp.BackColor = SystemColors.Control;
-						}
-						if (conf) {
-							Conf.ForeColor = Color.MediumPurple;
-							Conf.BackColor = Color.LightGray;
-							Conf.Enabled = true;
-						}
-						else {
-							Conf.Enabled = false;
-							Conf.ForeColor = SystemColors.ControlText;
-							Conf.BackColor = SystemColors.Control;
-						}
+						Disp.Visible = disp;
+						Conf.Visible = conf;
+						//Debug.Print("{0}, {1}", Conf.Enabled, Conf.ForeColor);
 					};
 					if (FromMoteTextBox.InvokeRequired) { FromMoteTextBox.Invoke(m); }
 					else { m(); }

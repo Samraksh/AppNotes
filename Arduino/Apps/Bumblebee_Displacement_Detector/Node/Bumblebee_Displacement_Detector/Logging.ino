@@ -1,15 +1,15 @@
 // Logging functions
 
-void serialSnippetLog(bool displacementDetected){			
+void serialDetectsLog(bool displacementDetected){			
 	// Log snippet results to serial
-	if(serialLog != serialSnippet) { 
+	if(serialLog != serialDetects) { 
 		return; 
 		} 
 
 	//unsigned long startTime = micros();
 
 	setLed(profileSerialLed, true);
-	Serial.print(outSnippetDataMsgPrefix);
+	Serial.print(outDetectsPrefix);
 	Serial.print(sampNum); 
 	Serial.print(','); Serial.print(runCuts);
 	Serial.print(','); Serial.print(displacementDetected);
@@ -26,17 +26,17 @@ void serialSnippetLog(bool displacementDetected){
 
 	}
 
-void serialDetailLogger(int isCut, bool displacementDetected) {
+void serialInputsLogger(int isCut, bool displacementDetected) {
 
 	// Log detail sample & results to serial
-	if (serialLog != serialDetail) { 
+	if (serialLog != serialValidationInputs) { 
 		return; 
 		}
 
 	//unsigned long startTime = micros();
 
 	setLed(profileSerialLed, true);
-	Serial.print(outDetailDataMsgPrefix);
+	Serial.print(outValidationInputsPrefix);
 	Serial.print(sampNum); 
 	Serial.print(','); Serial.print(currIValue); 
 	Serial.print(','); Serial.print(currQValue); 
@@ -50,11 +50,11 @@ void serialDetailLogger(int isCut, bool displacementDetected) {
 	Serial.print(','); Serial.print(prevValues.I); 
 	Serial.print(','); Serial.print(prevValues.Q); 
 
-	Serial.print(','); Serial.print(isCut);
-	Serial.print(','); Serial.print(currCuts);
-	Serial.print(','); Serial.print(runCuts);
-	Serial.print(','); Serial.print(displacementDetected);
-	Serial.print(','); Serial.print(ConfState == Yes);
+	//Serial.print(','); Serial.print(isCut);
+	//Serial.print(','); Serial.print(currCuts);
+	//Serial.print(','); Serial.print(runCuts);
+	//Serial.print(','); Serial.print(displacementDetected);
+	//Serial.print(','); Serial.print(ConfState == Yes);
 	Serial.println();
 	setLed(profileSerialLed, false);
 
@@ -67,23 +67,24 @@ void serialDetailLogger(int isCut, bool displacementDetected) {
 
 	}
 
-void serialDetailShortLogger(int isCut, bool displacementDetected) {
+void serialInputsDetectsLogger(int isCut, bool displacementDetected) {
 
 	// Log detail sample & results to serial
-	if (serialLog != serialDetailShort) { 
+	if (serialLog != serialInputsDetects) { 
 		return; 
 		}
 
 	//unsigned long startTime = micros();
 
 	setLed(profileSerialLed, true);
-	Serial.print(outDetailDataShortMsgPrefix);
+	Serial.print(outInputDetectsPrefix);
 	Serial.print(sampNum); 
-	Serial.print(','); Serial.print(sampledVals.I); 
-	Serial.print(','); Serial.print(sampledVals.Q); 
+	Serial.print(','); Serial.print(meanIValue); 
+	Serial.print(','); Serial.print(meanQValue); 
 	Serial.print(','); Serial.print(isCut);
 	Serial.print(','); Serial.print(displacementDetected);
 	Serial.print(','); Serial.print(ConfState == Yes);
+	//Serial.print(','); Serial.print(snippetNum);
 	Serial.println();
 	setLed(profileSerialLed, false);
 
