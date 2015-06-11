@@ -66,6 +66,9 @@ const int profileSerialLed = 10;
 const int sdChipSelectPin = 4;		// Select SD Card
 const int defaultChipSelectPin = 10;
 
+// Send sync message input GPIO
+const int syncPin = 11; 
+
 const int debugLedOut = 13;			// GPIO pin for general debugging
 
 // **************************** Global variables
@@ -96,6 +99,7 @@ const String outDetectsPrefix = "#2,";
 const String outParamMsgPrefix = "#3,";
 const String outValidationInputsPrefix = "#4,";
 const String outInputDetectsPrefix = "#5,";
+const String outSyncPrefix = "#s";
 
 const String inReqParamPrefix = "*1";
 
@@ -162,6 +166,9 @@ void setup() {
 	Timer1.attachInterrupt(sampleTimer_tick);
 
 	resetSnippet();
+
+	Serial.flush();
+
 	}
 
 ///
@@ -202,10 +209,10 @@ void loop() {
 
 		// Log detail to SD, if enabled
 		sdLogger(isCut, displacementDetected);
-		
+
 		// Check for displacement
 		displacementDetected = DetectDisplacement();
-		
+
 		setLed(loopReceivedSamplePin, false);
 
 		// If snippet boundary, increment snippet number & reset for next one
@@ -216,6 +223,23 @@ void loop() {
 			}
 		}
 
+	// Check for sync button press
+	static bool lastSyncPinInput = HIGH;
+	bool syncPinInput = digitalRead(syncPin);
+	if(syncPinInput == LOW && lastSyncPinInput == HIGH) {
+		Serial.println(outSyncPrefix);
+		Serial.flush();
+		//setLed(cutPin, true);
+		//setLed(displaceLed, true);
+		//setLed(displaceConfLed, true);
+		//delay(1000);
+		//setLed(cutPin, false);
+		//setLed(displaceLed, false);
+		//setLed(displaceConfLed, false);
+		}
+	lastSyncPinInput = syncPinInput;
+
+
 
 	// Need delay else timer won't fire
 	delay(1);
@@ -225,6 +249,7 @@ void sendResponse (String hdr, String label, int value) {
 	Serial.print(hdr);
 	Serial.print(label); Serial.print(",");
 	Serial.println(value);
+	Serial.flush();
 	}
 
 void setLed(int theLed, bool val) {

@@ -47,6 +47,9 @@ void initializeGpios() {
 	// Initialize pin for program stop
 	pinMode(stopForSdPin, INPUT_PULLUP);
 
+	// Initialize pin for sync message
+	pinMode(syncPin, INPUT_PULLUP);
+
 	}
 
 void printParameter(String tag, long val, String suffix) {

@@ -15,6 +15,7 @@ void serialDetectsLog(bool displacementDetected){
 	Serial.print(','); Serial.print(displacementDetected);
 	Serial.print(','); Serial.print(ConfState == Yes);
 	Serial.println();
+	Serial.flush();
 	setLed(profileSerialLed, false);
 
 	//unsigned long stopTime = micros();
@@ -56,6 +57,7 @@ void serialInputsLogger(int isCut, bool displacementDetected) {
 	//Serial.print(','); Serial.print(displacementDetected);
 	//Serial.print(','); Serial.print(ConfState == Yes);
 	Serial.println();
+	Serial.flush();
 	setLed(profileSerialLed, false);
 
 	//unsigned long stopTime = micros();
@@ -86,6 +88,7 @@ void serialInputsDetectsLogger(int isCut, bool displacementDetected) {
 	Serial.print(','); Serial.print(ConfState == Yes);
 	//Serial.print(','); Serial.print(snippetNum);
 	Serial.println();
+	Serial.flush();
 	setLed(profileSerialLed, false);
 
 	//unsigned long stopTime = micros();

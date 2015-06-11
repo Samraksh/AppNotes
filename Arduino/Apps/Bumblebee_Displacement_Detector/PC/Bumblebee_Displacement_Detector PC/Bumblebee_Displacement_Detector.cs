@@ -41,6 +41,11 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 				public const string Prefix = "#5";
 				public const int Length = 7;
 			}
+
+			public static class Sync {
+				public const string Prefix = "#s";
+				public const int Length = 1;
+			}
 		}
 
 		private static class OutMsgPrefix {
@@ -143,6 +148,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 		/// </summary>
 		/// <param name="input">The data received</param>
 		private void ProcessInput(string input) {
+			var receivedTime = DateTime.Now;
 			var isDisp = false;
 			var isConf = false;
 			MethodInvoker m;
@@ -150,12 +156,23 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 				if (theChar == '\n') {
 					var foundString = FoundStringB.ToString().Trim('\r').Trim('\n');
 					var lineItems = foundString.Split(',');
-					if (lineItems.Length == InMsg.Detects.Length && lineItems[0] == InMsg.Detects.Prefix) {
-						isDisp = (lineItems[lineItems.Length - 2] == "1");
-						isConf = (lineItems[lineItems.Length - 1] == "1");
-					}
+					var msgPrefix = lineItems[0];
+
 					// Process the message types
-					switch (lineItems[0]) {
+					switch (msgPrefix) {
+						case InMsg.Sync.Prefix:
+							try {
+								if (lineItems.Length == InMsg.Sync.Length) {
+									break;	// All we have to do here is log it
+								}
+								throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.Sync.Length));
+							}
+							catch (Exception ex) {
+								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+								if (InvokeRequired) { Invoke(m); }
+								else { m(); }
+							}
+							break;
 						case InMsg.ValidationInputs.Prefix:
 							try {
 								if (lineItems.Length == InMsg.ValidationInputs.Length) {
@@ -256,7 +273,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 					var disp = isDisp;
 					var conf = isConf;
 					m = () => {
-						var logString = DateTime.Now.ToString("hh:mm:ss,") + foundString;
+						var logString = receivedTime.ToString("HH:mm:ss.fff,") + foundString;
 						// If detail message, only put to text box for the first sample of a snippet (assume 250 samples/snippet)
 						//	This speeds things up and helps prevent data loss
 						if (lineItems[0] == InMsg.ValidationInputs.Prefix || lineItems[0] == InMsg.InputsDetects.Prefix) {
