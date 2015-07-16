@@ -19,27 +19,32 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 
 		private static class InMsg {
 			public static class ColumnNames {
-				public const string Prefix = "#1";
+				public const string Prefix = "#c";
 			}
 
 			public static class Detects {
-				public const string Prefix = "#2";
+				public const string Prefix = "#d";
 				public const int Length = 5;
 			}
 
-			public static class ParamMsg {
-				public const string Prefix = "#3";
+			public static class ConfigMsg {
+				public const string Prefix = "#p";
 				public const int Length = 3;
 			}
 
-			public static class ValidationInputs {
-				public const string Prefix = "#4";
+			public static class AllInputs {
+				public const string Prefix = "#i";
 				public const int Length = 12;
 			}
 
-			public static class InputsDetects {
-				public const string Prefix = "#5";
+			public static class AdjustedInputsAndDetection {
+				public const string Prefix = "#j";
 				public const int Length = 7;
+			}
+
+			public static class RawInputs {
+				public const string Prefix = "#r";
+				public const int Length = 4;
 			}
 
 			public static class Sync {
@@ -48,8 +53,10 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 			}
 		}
 
-		private static class OutMsgPrefix {
-			public const string ReqParam = "*1";
+		private static class OutMsg {
+			public static class ReqParam {
+				public const string Prefix = "*p";
+			}
 		}
 
 		private static class MsgParamName {
@@ -138,7 +145,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 				StartStop.BackColor = Color.YellowGreen;
 				RefreshParams.Enabled = true;
 				// Request parameters
-				_serialComm.Write(OutMsgPrefix.ReqParam + "\n");
+				_serialComm.Write(OutMsg.ReqParam.Prefix + "\n");
 			}
 			StartStop.Enabled = true;
 		}
@@ -173,9 +180,9 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 								else { m(); }
 							}
 							break;
-						case InMsg.ValidationInputs.Prefix:
+						case InMsg.AllInputs.Prefix:
 							try {
-								if (lineItems.Length == InMsg.ValidationInputs.Length) {
+								if (lineItems.Length == InMsg.AllInputs.Length) {
 									//isDisp = (lineItems[lineItems.Length - 2] == "1");
 									//isConf = (lineItems[lineItems.Length - 1] == "1");
 									var sampleNo = Convert.ToInt32(lineItems[1]);
@@ -184,7 +191,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 									CheckSampleValue(sampI, sampQ, sampleNo);
 								}
 								else {
-									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.ValidationInputs.Length));
+									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.AllInputs.Length));
 								}
 							}
 							catch (Exception ex) {
@@ -194,18 +201,14 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 							}
 							break;
 
-						case InMsg.InputsDetects.Prefix:
+						case InMsg.AdjustedInputsAndDetection.Prefix:
 							try {
-								if (lineItems.Length == InMsg.InputsDetects.Length) {
-									//var sampleNo = Convert.ToInt32(lineItems[1]);
-									//var sampI = Convert.ToInt32(lineItems[2]);
-									//var sampQ = Convert.ToInt32(lineItems[3]);
-									//CheckSampleValue(sampI, sampQ, sampleNo);
+								if (lineItems.Length == InMsg.AdjustedInputsAndDetection.Length) {
 									isDisp = (lineItems[lineItems.Length - 2] == "1");
 									isConf = (lineItems[lineItems.Length - 1] == "1");
 								}
 								else {
-									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.InputsDetects.Length));
+									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.AdjustedInputsAndDetection.Length));
 								}
 							}
 							catch (Exception ex) {
@@ -215,9 +218,22 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 							}
 							break;
 
-						case InMsg.ParamMsg.Prefix:
+						case InMsg.RawInputs.Prefix:
 							try {
-								if (lineItems.Length == InMsg.ParamMsg.Length) {
+								if (lineItems.Length != InMsg.RawInputs.Length) {
+									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.AdjustedInputsAndDetection.Length));
+								}
+							}
+							catch (Exception ex) {
+								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+								if (InvokeRequired) { Invoke(m); }
+								else { m(); }
+							}
+							break;
+
+						case InMsg.ConfigMsg.Prefix:
+							try {
+								if (lineItems.Length == InMsg.ConfigMsg.Length) {
 									var label = lineItems[1];
 									var val = lineItems[2];
 									m = null;
@@ -245,7 +261,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 									}
 								}
 								else {
-									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.ValidationInputs.Length));
+									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.AllInputs.Length));
 								}
 							}
 							catch (Exception ex) {
@@ -276,7 +292,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 						var logString = receivedTime.ToString("HH:mm:ss.fff,") + foundString;
 						// If detail message, only put to text box for the first sample of a snippet (assume 250 samples/snippet)
 						//	This speeds things up and helps prevent data loss
-						if (lineItems[0] == InMsg.ValidationInputs.Prefix || lineItems[0] == InMsg.InputsDetects.Prefix) {
+						if (lineItems[0] == InMsg.AllInputs.Prefix || lineItems[0] == InMsg.AdjustedInputsAndDetection.Prefix) {
 							try {
 								int sampNum;
 								Int32.TryParse(lineItems[1], out sampNum);
@@ -338,7 +354,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 		}
 
 		private void RefreshParams_Click(object sender, EventArgs e) {
-			_serialComm.Write(OutMsgPrefix.ReqParam + "\n");
+			_serialComm.Write(OutMsg.ReqParam.Prefix + "\n");
 		}
 
 		private void LogToFileBrowse_Click(object sender, EventArgs e) {
