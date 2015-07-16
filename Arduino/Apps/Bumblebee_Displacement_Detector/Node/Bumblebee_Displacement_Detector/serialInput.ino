@@ -28,12 +28,22 @@ void serialEvent() {
 		// We've hit a new line ... check what we need to do
 		if (serialInputString == inReqParamPrefix) {
 			setLed(debugLedOut, !digitalRead(debugLedOut));
-			sendResponse(outParamMsgPrefix,paramSampRate,sampRate);
-			sendResponse(outParamMsgPrefix,paramMinCumCuts,MinCumCuts);
-			sendResponse(outParamMsgPrefix,paramM,ConfM);
-			sendResponse(outParamMsgPrefix,paramN,ConfN);
-			}
+			SendParamAllResponses();			}
 		serialInputString = "";
 		}
+	}
+
+void SendParamAllResponses() {
+	SendParamResponse(outConfMsgPrefix,paramSampRate,sampRate);
+	SendParamResponse(outConfMsgPrefix,confMinCumCuts,MinCumCuts);
+	SendParamResponse(outConfMsgPrefix,confM,ConfM);
+	SendParamResponse(outConfMsgPrefix,confN,ConfN);
+	}
+
+void SendParamResponse (const char *hdr, const char *label, int value) {
+	char respLine[100];
+	sprintf(respLine,"%s,%s,%i\n", hdr, label, value);
+	Serial.print(respLine);
+	Serial.flush();
 	}
 

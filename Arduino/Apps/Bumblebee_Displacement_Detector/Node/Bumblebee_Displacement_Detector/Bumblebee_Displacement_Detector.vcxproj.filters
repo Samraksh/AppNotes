@@ -20,15 +20,19 @@
     <None Include="serialInput.ino" />
     <None Include="Misc.ino" />
     <None Include="Bumblebee_Displacement_Detector.ino" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="SerialLogging.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <None Include="Utility.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Visual Micro\.Bumblebee_Displacement_Detector.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataStructs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SerialLogging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

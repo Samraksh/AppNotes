@@ -1,13 +1,10 @@
 // Logging functions
 
-void serialDetectsLog(bool displacementDetected){			
+void serialDetectsLogger(bool displacementDetected){			
 	// Log snippet results to serial
 	if(serialLog != serialDetects) { 
 		return; 
 		} 
-
-	//unsigned long startTime = micros();
-
 	setLed(profileSerialLed, true);
 	Serial.print(outDetectsPrefix);
 	Serial.print(sampNum); 
@@ -17,89 +14,70 @@ void serialDetectsLog(bool displacementDetected){
 	Serial.println();
 	Serial.flush();
 	setLed(profileSerialLed, false);
-
-	//unsigned long stopTime = micros();
-	//Serial.print("#S,");
-	//Serial.print(startTime); Serial.print(",");
-	//Serial.print(stopTime); Serial.print(",");
-	//Serial.print(stopTime - startTime);
-	//Serial.println();
-
 	}
 
-void serialInputsLogger(int isCut, bool displacementDetected) {
+void serialRawInputsLogger() {
+	// Log raw samples, if enabled
+	if (serialLog != serialRawInputs) {
+		return;
+		}
+	char logLine[100];
+	sprintf(logLine,"%s,%li,%i,%i\n",outRawInputsPrefix,sampNum,sampledVal.I,sampledVal.Q);
+	Serial.print(logLine);
+	Serial.flush();
+	}
 
+void serialAllInputsLogger(int isCut, bool displacementDetected) {
 	// Log detail sample & results to serial
-	if (serialLog != serialValidationInputs) { 
+	if (serialLog != serialAllInputs) { 
 		return; 
 		}
-
-	//unsigned long startTime = micros();
-
 	setLed(profileSerialLed, true);
-	Serial.print(outValidationInputsPrefix);
-	Serial.print(sampNum); 
-	Serial.print(','); Serial.print(currIValue); 
-	Serial.print(','); Serial.print(currQValue); 
-	// Debugging values
-	Serial.print(','); Serial.print(sumIValue); 
-	Serial.print(','); Serial.print(sumQValue); 
-	Serial.print(','); Serial.print(sampledVals.I); 
-	Serial.print(','); Serial.print(sampledVals.Q); 
-	Serial.print(','); Serial.print(meanIValue); 
-	Serial.print(','); Serial.print(meanQValue); 
-	Serial.print(','); Serial.print(prevValues.I); 
-	Serial.print(','); Serial.print(prevValues.Q); 
 
+	Serial.print(outAllInputsPrefix);
+	Serial.print(sampNum); 
+	Serial.print(','); Serial.print(interpolatedVal.I); 
+	Serial.print(','); Serial.print(interpolatedVal.Q); 
+
+	Serial.print(','); SerialLLPrint(sumVal.I,10); 
+	Serial.print(','); SerialLLPrint(sumVal.Q,10); 
+	//Serial.print(','); Serial.print(meanVal.I); 
+	//Serial.print(','); Serial.print(meanVal.Q); 
+
+	Serial.print(','); Serial.print(sampledVal.I); 
+	Serial.print(','); Serial.print(sampledVal.Q); 
+	Serial.print(','); Serial.print(currVal.I); 
+	Serial.print(','); Serial.print(currVal.Q); 
+	Serial.print(','); Serial.print(prevVal.I); 
+	Serial.print(','); Serial.print(prevVal.Q); 
+	Serial.println();
+	Serial.flush();
+	setLed(profileSerialLed, false);
+	}
+
+void serialAdjustedInputsAndDetectionsLogger(int isCut, bool displacementDetected) {
+	// Log detail sample & results to serial
+	if (serialLog != serialAdjustedInputsAndDetections) { 
+		return; 
+		}
+	setLed(profileSerialLed, true);
+
+	char logLine[100];
+	sprintf(logLine,"%s,%li,%i,%i,%i,%i,%i\n",outAdjustedInputsAndDetectionsPrefix,sampNum,currVal.I,currVal.Q,isCut,displacementDetected,ConfState==Yes);
+	Serial.print(logLine);
+
+	//Serial.print(outAdjustedInputsAndDetectionsPrefix); Serial.print("*,");
+	//Serial.print(sampNum); 
+	//Serial.print(','); Serial.print(currVal.I); 
+	//Serial.print(','); Serial.print(currVal.Q); 
 	//Serial.print(','); Serial.print(isCut);
-	//Serial.print(','); Serial.print(currCuts);
-	//Serial.print(','); Serial.print(runCuts);
 	//Serial.print(','); Serial.print(displacementDetected);
 	//Serial.print(','); Serial.print(ConfState == Yes);
-	Serial.println();
-	Serial.flush();
-	setLed(profileSerialLed, false);
-
-	//unsigned long stopTime = micros();
-	//Serial.print("#D,");
-	//Serial.print(startTime); Serial.print(",");
-	//Serial.print(stopTime); Serial.print(",");
-	//Serial.print(stopTime - startTime);
 	//Serial.println();
 
-	}
-
-void serialInputsDetectsLogger(int isCut, bool displacementDetected) {
-
-	// Log detail sample & results to serial
-	if (serialLog != serialInputsDetects) { 
-		return; 
-		}
-
-	//unsigned long startTime = micros();
-
-	setLed(profileSerialLed, true);
-	Serial.print(outInputDetectsPrefix);
-	Serial.print(sampNum); 
-	Serial.print(','); Serial.print(meanIValue); 
-	Serial.print(','); Serial.print(meanQValue); 
-	Serial.print(','); Serial.print(isCut);
-	Serial.print(','); Serial.print(displacementDetected);
-	Serial.print(','); Serial.print(ConfState == Yes);
-	//Serial.print(','); Serial.print(snippetNum);
-	Serial.println();
 	Serial.flush();
 	setLed(profileSerialLed, false);
-
-	//unsigned long stopTime = micros();
-	//Serial.print("#D,");
-	//Serial.print(startTime); Serial.print(",");
-	//Serial.print(stopTime); Serial.print(",");
-	//Serial.print(stopTime - startTime);
-	//Serial.println();
-
 	}
-
 
 
 void sdInitialize()	{
@@ -158,8 +136,8 @@ void sdLogger(int isCut, bool displacementDetected){
 	if(!sdLog) { return; }
 	setLed(profileSdPin, true);
 	packet.typed.sampNum = sampNum;
-	packet.typed.iValue = currIValue;
-	packet.typed.qValue = currQValue;
+	packet.typed.iValue = interpolatedVal.I;
+	packet.typed.qValue = interpolatedVal.Q;
 	packet.typed.isCut = isCut;
 	if (displacementDetected) { packet.typed.disp = 1; }
 	else {packet.typed.disp = 0;}

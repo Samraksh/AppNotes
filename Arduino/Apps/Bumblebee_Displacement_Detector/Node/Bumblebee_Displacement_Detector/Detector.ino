@@ -14,50 +14,43 @@ static Conf ConfState = No;	// Initially no confirmation
 /// </summary>
 int checkForCut() {
 	static boolean firstTime = true;
-	static int prevIValue = -1;
-	static int prevQValue = -1;
 
-	prevValues.I = prevIValue;
-	prevValues.Q = prevQValue;
+	//SampleValPair mean = WindowedMean(interpolatedVal);
+	//currVal.I = interpolatedVal.I - mean.I;
+	//currVal.Q = interpolatedVal.Q - mean.Q;
+
 
 	// Increment sums
-	sumIValue += currIValue;
-	sumQValue += currQValue;
+	sumVal.I += interpolatedVal.I;
+	sumVal.Q += interpolatedVal.Q;
 	// Adjust by running mean
-	meanIValue = currIValue - (sumIValue / sampNum);
-	meanQValue = currQValue - (sumQValue / sampNum);
+	currVal.I = interpolatedVal.I - (sumVal.I / sampNum);
+	currVal.Q = interpolatedVal.Q - (sumVal.Q / sampNum);
 
 	//Serial.print("FT "); Serial.println(firstTime);
 	// If not first time, check for cut
 	int isCut = 0;	// flag for whether a cut occurred or not
 	if (!firstTime) {
-		//int crossProduct = (meanQValue * prevIValue) - (meanIValue * prevQValue);
-		int crossProduct = (prevQValue * meanIValue) - (prevIValue * meanQValue);
+		// Calculate the cross-product of the vectors.
+		//	Negative is counter-clockwise, positive is clockwise
+		int crossProduct = (prevVal.Q * currVal.I) - (prevVal.I * currVal.Q);	
 
-		//Serial.print("#x3"); 
-		//Serial.print(","); Serial.print(sampIValue); Serial.print(","); Serial.print(sampQValue);
-		//Serial.print(","); Serial.print(sumIValue); Serial.print(","); Serial.print(sumQValue);
-		//Serial.print(","); Serial.print(meanIValue); Serial.print(","); Serial.print(meanQValue);
-		//Serial.print(","); Serial.print(crossProduct); 
-		//Serial.print(","); Serial.print(sampNum); 
-		//Serial.println();
-		//Serial.print("dP "); Serial.println(crossProduct);
-
-		// Check for clockwise cut (towards radar)
-		if (crossProduct < 0 && prevIValue < 0 && meanIValue > 0) {
+		// Check for counter-clockwise cut (towards radar)
+		//	Cut the negative Q axis iff the Q value changes from positive to negative
+		if (crossProduct < 0 && prevVal.Q > 0 && currVal.Q < 0) {
 			isCut = +1;
-			currCuts = currCuts + 1;
-			runCuts = runCuts + 1;
 			}
-		// Check for counter-clockwise cut (away from radar)
-		else if (crossProduct > 0 && prevIValue > 0 && meanIValue < 0) {
+		// Check for clockwise cut (away from radar)
+		//	Cut the negative Q axis iff the Q value changes from negative to positive
+		else if (crossProduct > 0 && prevVal.Q < 0 && currVal.Q > 0) {
 			isCut = -1;
-			currCuts = currCuts - 1;
-			runCuts = runCuts - 1;
 			}
+		// Sum the cuts
+		currCuts = currCuts + isCut;
+		runCuts = runCuts + isCut;
 		}
-	prevIValue = meanIValue;
-	prevQValue = meanQValue;
+
+	prevVal = currVal;
 	firstTime = false;
 
 	if (isCut == 0)	{
@@ -66,7 +59,6 @@ int checkForCut() {
 	else {
 		setLed(cutPin, true);
 		}
-
 	return isCut;
 	}
 
@@ -96,7 +88,7 @@ int DetectDisplacement() {
 	setLed(displaceConfLed, ConfState == Yes);
 
 	// Log snippet to serial, if enabled
-	serialDetectsLog(displacementDetected);
+	serialDetectsLogger(displacementDetected);
 
 	return displacementDetected;
 	}

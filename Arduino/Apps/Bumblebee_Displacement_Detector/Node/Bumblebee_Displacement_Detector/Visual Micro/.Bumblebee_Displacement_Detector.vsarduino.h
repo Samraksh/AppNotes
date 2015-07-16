@@ -81,9 +81,11 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 #include <Bumblebee_Displacement_Detector.ino>
+#include <DataStructs.h>
 #include <Detector.ino>
 #include <Logging.ino>
 #include <Misc.ino>
 #include <SerialLogging.cpp>
+#include <Utility.ino>
 #include <serialInput.ino>
 #endif

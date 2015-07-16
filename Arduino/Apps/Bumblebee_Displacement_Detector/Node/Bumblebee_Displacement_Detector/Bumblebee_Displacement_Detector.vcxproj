@@ -89,12 +89,16 @@
     <None Include="serialInput.ino">
       <FileType>CppCode</FileType>
     </None>
+    <None Include="Utility.ino">
+      <FileType>CppCode</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DataStructs.h" />
+    <ClInclude Include="Visual Micro\.Bumblebee_Displacement_Detector.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SerialLogging.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Visual Micro\.Bumblebee_Displacement_Detector.vsarduino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

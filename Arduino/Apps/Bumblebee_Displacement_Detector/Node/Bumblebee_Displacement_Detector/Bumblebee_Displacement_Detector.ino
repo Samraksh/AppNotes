@@ -1,14 +1,16 @@
+#include "DataStructs.h"
 #include <SD.h>
 #include <SPI.h>
 #include <TimerOne.h>
 
 //***** Serial Bit Rate **************************
 //unsigned long const SerialBitRate = 230400;
-unsigned long const SerialBitRate = 400000;
+unsigned long const SerialBitRate = 400000;	// A large value helps ensure that serial speed is not a bottleneck.
 
 //***** Sample Rate **************************
-const int sampRate = 250;	// Samples per second
-//const int sampRate = 100;	// Samples per second
+const int DefaultSampRate = 250;
+static int sampRate = DefaultSampRate;	// Samples per second
+static long sampIntUSec = 1000000 / sampRate; // sample interval in micro seconds
 
 //***** Cut Analysis *************************
 const int MinCumCuts = 6;			// Number of net cuts (positive or negative) for displacement
@@ -21,26 +23,27 @@ const int ConfM = 2;	// Minimum number of displacements required for confirmatio
 const int ConfN = 8;	// Lifetime of a displacement, in seconds
 
 //*********************************************
+//		Serial Logging Options
+//*********************************************
 
-
-// Values for serial logging
-enum serialLogging {serialNone, serialValidationInputs, serialInputsDetects, serialDetects,};
+enum serialLogging {serialNone, serialAllInputs, serialRawInputs, serialAdjustedInputsAndDetections, serialDetects, };
 
 // Uncomment exactly one of these
 //
-//const serialLogging serialLog = serialNone;		// Do not write to serial
-//const serialLogging serialLog = serialValidationInputs;		// Write inputs to serial. NOTE: this produces too much data for 250 Hz. Must run lower. Only useful for evaluating interpolation and averaging.
-const serialLogging serialLog = serialInputsDetects;		// Write short detail to serial
-//const serialLogging serialLog = serialDetects;		// Write summary to serial
+//const serialLogging serialLog = serialNone;		// Do not write to serial.
+//const serialLogging serialLog = serialAllInputs;	// Write all inputs to serial. Useful for validation of input interpolation and averaging. NOTE: this produces too much data for 250 Hz. Must run slower. Only useful for evaluating interpolation and averaging.
+const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
+//const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection outputs.
+//const serialLogging serialLog = serialDetects;	// Detection outputs only.
 
 // Uncomment exactly one of these
 //
 //const bool sdLog = true;		// Write detail to SD card
 const bool sdLog = false;		// Do not write to SD card
 
-// ****************************** I/O Definitions
-
-const long sampIntUSec = 1000000 / sampRate; // sample interval in micro seconds
+//*********************************************
+//		I/O Definitions
+//*********************************************
 
 // Bumblebee interface ports
 const int bumbleBeeQPin = 0;   // ADC port for Quadrature signal
@@ -71,43 +74,47 @@ const int syncPin = 11;
 
 const int debugLedOut = 13;			// GPIO pin for general debugging
 
-// **************************** Global variables
+//*********************************************
+//		Global Variables
+//*********************************************
 
 static File sdDataFile;			// SD card datafile
 bool receivedSampleSemaphore = false;	// Simulated semaphore
 
-typedef struct PowerValuePair {
-	long I;
-	long Q;
-	};
+//***** Sample variables *************
+static long sampNum = 0;				// Sample number
+static SampleValPair sampledVal;		// Value actually sampled
+static SampleValPair interpolatedVal;	// Interpolated value
+//static SampleValPair meanVal;			// Mean value
+static RunsumValPair sumVal;			// Sum of interpolated values to date
+static SampleValPair currVal;			// Current, mean-adjusted sample value
+static SampleValPair prevVal;			// Previous, mean-adjusted sample value
 
-//***** Current Sample variables *************
-static int currIValue;	// Current I value
-static int currQValue;	// Current Q value
-static long sampNum = 0;	// Sample number
-static long sumIValue = 0;	// Sum of I values to date
-static long sumQValue = 0;	// Sum of Q values to date
-static long meanIValue;	// Mean-adjusted I value
-static long meanQValue;	// Mean-adjusted Q value
-static PowerValuePair prevValues;
-static PowerValuePair sampledVals;	// Value actually sampled
 //*********************************************
+//		Message Prefixes
+//*********************************************
+//	Note: out # prefixes must be unique and lower case
+//		Similarly for in * prefixes
 
-//******* Message prefixes ***********
-const String outColumnNamesMsgPrefix = "#1,";
-const String outDetectsPrefix = "#2,";
-const String outParamMsgPrefix = "#3,";
-const String outValidationInputsPrefix = "#4,";
-const String outInputDetectsPrefix = "#5,";
-const String outSyncPrefix = "#s";
+//***** In: Info type prefixes
+const char outColumnNamesMsgPrefix[] = "#c";
+const char outSyncPrefix[] = "#s";
+const char outConfMsgPrefix[] = "#p";
 
-const String inReqParamPrefix = "*1";
+//***** Out: Logging type prefixes
+const char outAllInputsPrefix[] = "#i,";
+const char outRawInputsPrefix[] = "#r";
+const char outAdjustedInputsAndDetectionsPrefix[] = "#j";
+const char outDetectsPrefix[] = "#d,";
 
-const String paramSampRate = "SampRate";
-const String paramMinCumCuts = "MinCumCuts";
-const String paramM = "M";
-const String paramN = "N";
+//***** In: From PC
+const char inReqParamPrefix[] = "*p";
 
+//***** confMsg: parameters
+const char paramSampRate[] = "SampRate";
+const char confMinCumCuts[] = "MinCumCuts";
+const char confM[] = "M";
+const char confN[] = "N";
 
 //*********************************************
 
@@ -118,14 +125,42 @@ void setup() {
 	Serial.begin(SerialBitRate);
 	serialInputInitialize(200);
 
+	// Set ADC to use AREF (which is wired to 3.3 v)
+	analogReference(EXTERNAL);
+
 	// Initialize all the GPIOs
 	initializeGpios();
 
 	// Initialize SD, if enabled
 	sdInitialize();
 
-	Serial.println( "Compiled: " __DATE__ ", " __TIME__ ", ");
+	// Do this first since serialAllInputs changes the sample rate, which is reported below
+	char serialHeader[200];
+	switch (serialLog){
+		case serialNone:
+			//Serial.println("Not logging to serial");
+			sprintf(serialHeader, "Not logging to serial");
+			break;
+		case serialAllInputs:
+			sampRate = 100;	// force to a lower sample rate to avoid a race condition wrt serial logging
+			sampIntUSec = 1000000 / sampRate; // sample interval in micro seconds
+			sprintf(serialHeader,"Logging to serial (All Inputs, for Validation)\n%s,Sample,InterpolatedI,InterpolatedQ,SumI,SumQ,SampledI,SampledQ,CurrI,CurrQ,PrevI,PrevQ",outColumnNamesMsgPrefix);
+			break;
+		case serialRawInputs:
+			sprintf(serialHeader,"Logging to serial (Raw Inputs)\n%s,Sample,RawI,RawQ",outColumnNamesMsgPrefix);
+			break;
+		case serialAdjustedInputsAndDetections:
+			sprintf(serialHeader,"Logging to serial (Adjusted Inputs and Detections)\n%s,Sample,CurrI,CurrQ,IsCut,IsDisp,IsConf",outColumnNamesMsgPrefix);
+			break;
+		case serialDetects:
+			sprintf(serialHeader,"Logging to serial (Detections)\n%s,Sample,RunCuts,Disp,Conf",outColumnNamesMsgPrefix);
+			break;
+		default:
+			sprintf(serialHeader,"Invalid serial logging value");
+			break;
+		}
 
+	Serial.println( "Compiled: " __DATE__ ", " __TIME__ ", ");
 	printParameter("sampRate: ", sampRate, " ");
 	printParameter("sampIntUSec: ", sampIntUSec, " ");
 	Serial.println();
@@ -134,33 +169,14 @@ void setup() {
 	printParameter("ConfN (N): ", ConfN, " ");
 	Serial.println();
 	Serial.println();
-	if(sdLog) {
-		Serial.println("Logging to SD card");
-		}
-	else {
-		Serial.println("Not logging to SD card");
-		}
 
-	switch (serialLog){
-		case serialValidationInputs:
-			Serial.println("Logging to serial (Inputs for Validation)");
-			Serial.print(outColumnNamesMsgPrefix);
-			Serial.println("Sample,I,Q,SumI,SumQ,SampI,SampQ,AdjI,AdjQ,PrevAdjQ,PrevAdjI");
-			break;
-		case serialInputsDetects:
-			Serial.println("Logging to serial (Inputs and Detections)");
-			Serial.print(outColumnNamesMsgPrefix);
-			Serial.println("Sample,SampI,SampQ,IsCut,Disp,Conf");
-			break;
-		case serialDetects:
-			Serial.println("Logging to serial (Detections)");
-			Serial.print(outColumnNamesMsgPrefix);
-			Serial.println("Sample,RunCuts,Disp,Conf");
-			break;
-		default:
-			Serial.println("Not logging to serial");
-			break;
-		}
+	Serial.println((sdLog)?"Logging to SD card":"Not logging to SD card");
+
+	// Send parameters
+	SendParamAllResponses();
+	// Send header
+	Serial.println(serialHeader);
+
 
 	Timer1.initialize(sampIntUSec);
 	Timer1.attachInterrupt(sampleTimer_tick);
@@ -202,10 +218,13 @@ void loop() {
 		int isCut = checkForCut();
 
 		// Log detail to serial, if enabled
-		serialInputsLogger(isCut, displacementDetected);
+		serialAllInputsLogger(isCut, displacementDetected);
+
+		// Log raw detail to serial, if enabled
+		serialRawInputsLogger();
 
 		// Log short detail to serial, if enabled
-		serialInputsDetectsLogger(isCut, displacementDetected);
+		serialAdjustedInputsAndDetectionsLogger(isCut, displacementDetected);
 
 		// Log detail to SD, if enabled
 		sdLogger(isCut, displacementDetected);
@@ -238,18 +257,9 @@ void loop() {
 		//setLed(displaceConfLed, false);
 		}
 	lastSyncPinInput = syncPinInput;
-
-
-
+	
 	// Need delay else timer won't fire
 	delay(1);
-	}
-
-void sendResponse (String hdr, String label, int value) {
-	Serial.print(hdr);
-	Serial.print(label); Serial.print(",");
-	Serial.println(value);
-	Serial.flush();
 	}
 
 void setLed(int theLed, bool val) {
@@ -301,20 +311,20 @@ void sampleTimer_tick() {
 
 			// Save the value just read for logging
 			//	Unread channel value is set to negative
-			sampledVals.I = -1;
-			sampledVals.Q = justReadQValue;
+			sampledVal.I = -1;
+			sampledVal.Q = justReadQValue;
 
 			//Serial.print("#Q ");
 			//Serial.print(channel); Serial.print(" ");
-			//Serial.print(sampledVals.I); Serial.print(" ");
-			//Serial.print(sampledVals.Q); Serial.print(" ");
+			//Serial.print(sampledVal.I); Serial.print(" ");
+			//Serial.print(sampledVal.Q); Serial.print(" ");
 			//Serial.println();
 
 			// Return the previous I value
-			currIValue = justReadIValue;
+			interpolatedVal.I = justReadIValue;
 
 			// Interpolate this Q value and the last one
-			currQValue = interpolate(justReadQValue, prevReadQValue);
+			interpolatedVal.Q = interpolate(justReadQValue, prevReadQValue);
 
 			//Serial.print("#Q "); 
 			//Serial.print(sampNum); Serial.print(" ");
@@ -342,20 +352,14 @@ void sampleTimer_tick() {
 
 			// Save the value just read for logging
 			//	Unread channel value is set to negative
-			sampledVals.I = justReadIValue;
-			sampledVals.Q = -1;
-
-			//Serial.print("#I ");
-			//Serial.print(channel); Serial.print(" ");
-			//Serial.print(sampledVals.I); Serial.print(" ");
-			//Serial.print(sampledVals.Q); Serial.print(" ");
-			//Serial.println();
+			sampledVal.I = justReadIValue;
+			sampledVal.Q = -1;
 
 			// Interpolate this I value and the last one
-			currIValue = interpolate(justReadIValue, prevReadIValue);
+			interpolatedVal.I = interpolate(justReadIValue, prevReadIValue);
 
 			// Return the previous Q value
-			currQValue = justReadQValue;
+			interpolatedVal.Q = justReadQValue;
 
 			//Serial.print("#I "); 
 			//Serial.print(sampNum); Serial.print(" ");
@@ -379,10 +383,10 @@ void sampleTimer_tick() {
 			break;
 		}
 	// If we're waiting on interpolation, return
-	if (currIValue < 0 || currQValue < 0) { 
+	if (interpolatedVal.I < 0 || interpolatedVal.Q < 0) { 
 		return; 
 		}
 	// Indicate that the sample is ready
 	sampNum = sampNum + 1;
 	receivedSampleSemaphore = true;
-	}
+	} 
