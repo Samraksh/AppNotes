@@ -1,6 +1,6 @@
-function [ FigHandle ] = fGenerateIQPowerValsPlots(X, Freq, Scale, IRef, QRef)
+function [ FigHandle ] = fGenerateIQPowerValsPlots(PlotPath, X, Freq, Scale, IRef, QRef)
 
-figure;
+figure('units','normalized','outerposition',[0 0 1 1]);
 figtitle('I-Q Modulation and Power at 1/8 Wavelength Offsets');
 MaxS = 8;
 
@@ -11,7 +11,7 @@ fprintf('\nI-Q Power Values for One Wavelength\n');
 
 for S = 0:MaxS
     
-    Ret = CalcRetOffset(X, S, Freq, Scale);
+    Ret = fCalculateReturnOffset(X, Freq, Scale, S, MaxS);
 
     IMod = IRef .* Ret;
     QMod = QRef .* Ret;
@@ -46,11 +46,11 @@ figure;
 plot(IArray, QArray,'+-g');
 line([0 0], ylim);
 line(xlim, [0 0]);
-text(IArray, QArray, {'0,8','1','2','3','4','5','6','7',''}, ...
+text(QArray, IArray, {'0,8','1','2','3','4','5','6','7',''}, ...
     'VerticalAlignment','bottom', 'HorizontalAlignment','right');
 figtitle('I-Q Plot for Target at 1/8 Wavelength Offsets');
-ylabel('In-Phase Power');
-xlabel('Quadrature Power');
+xlabel('In-Phase Power');
+ylabel('Quadrature Power');
 
 filename = sprintf('200 I-Q Power Circle.png');
 FigHandle = gcf;

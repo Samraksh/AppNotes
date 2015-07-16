@@ -1,10 +1,10 @@
-function [ FigHandle ] = fCalculateAngleBetweenPoints( X, Freq, Scale, IRef, QRef )
+function [ FigHandle ] = fCalculateAngleBetweenPoints( PlotPath, X, Freq, Scale, IRef, QRef )
 
 Index = 0;
 IPwr = [];
 QPwr = [];
 for S = [1 7]
-    Ret = CalcRetOffset(X, S, Freq, Scale);
+    Ret = fCalculateReturnOffset(X, Freq, Scale, S, 8);
 
     IMod = IRef .* Ret;
     QMod = QRef .* Ret;
@@ -18,16 +18,16 @@ for S = [1 7]
 end
 
 figure;
-plot(IPwr, QPwr,'x');
-ylim([-ceil(max(abs(IAPwr))), ceil(max(abs(IAPwr)))]);
-xlim([-ceil(max(abs(QAPwr))), ceil(max(abs(QAPwr)))]);
+plot(IAPwr, QAPwr,'x');
+xlim([-ceil(max(abs(IAPwr))), ceil(max(abs(IAPwr)))]);
+ylim([-ceil(max(abs(QAPwr))), ceil(max(abs(QAPwr)))]);
 line([0 0], ylim);
 line(xlim, [0 0]);
 text(IAPwr, QAPwr, {'1','7'}, ...
     'VerticalAlignment','bottom', 'HorizontalAlignment','right');
 figtitle('I-Q Plot for Target at 1/8 Wavelength Offsets');
-ylabel('In-Phase Power');
-xlabel('Quadrature Power');
+xlabel('In-Phase Power');
+ylabel('Quadrature Power');
 for i=1:length(IAPwr)
     line([0 IAPwr(i)], [0, QAPwr(i)],'color','r','linestyle','--');
 end
