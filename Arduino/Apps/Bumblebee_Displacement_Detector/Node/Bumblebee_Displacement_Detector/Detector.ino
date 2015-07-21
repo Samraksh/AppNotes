@@ -27,22 +27,21 @@ int checkForCut() {
 	currVal.I = interpolatedVal.I - (sumVal.I / sampNum);
 	currVal.Q = interpolatedVal.Q - (sumVal.Q / sampNum);
 
-	//Serial.print("FT "); Serial.println(firstTime);
 	// If not first time, check for cut
 	int isCut = 0;	// flag for whether a cut occurred or not
 	if (!firstTime) {
 		// Calculate the cross-product of the vectors.
-		//	Negative is counter-clockwise, positive is clockwise
-		int crossProduct = (prevVal.Q * currVal.I) - (prevVal.I * currVal.Q);	
+		//	Positive is counter-clockwise, negative is clockwise
+		long crossProduct = (prevVal.Q * currVal.I) - (prevVal.I * currVal.Q);	
 
-		// Check for counter-clockwise cut (towards radar)
-		//	Cut the negative Q axis iff the Q value changes from positive to negative
-		if (crossProduct < 0 && prevVal.Q > 0 && currVal.Q < 0) {
+		// Check for clockwise cut (away from radar)
+		//	Cut the negative Q axis iff the I value changes from negative to positive
+		if (crossProduct < 0 && prevVal.I < 0 && currVal.I > 0) {
 			isCut = +1;
 			}
-		// Check for clockwise cut (away from radar)
-		//	Cut the negative Q axis iff the Q value changes from negative to positive
-		else if (crossProduct > 0 && prevVal.Q < 0 && currVal.Q > 0) {
+		// Check for clockwise cut (towards radar)
+		//	Cut the negative Q axis iff the I value changes from positive to negative
+		else if (crossProduct > 0 && prevVal.I > 0 && currVal.I < 0) {
 			isCut = -1;
 			}
 		// Sum the cuts
@@ -53,12 +52,8 @@ int checkForCut() {
 	prevVal = currVal;
 	firstTime = false;
 
-	if (isCut == 0)	{
-		setLed(cutPin, false);
-		}
-	else {
-		setLed(cutPin, true);
-		}
+	setLed(cutPin, isCut == 0);
+
 	return isCut;
 	}
 

@@ -21,8 +21,9 @@ void serialRawInputsLogger() {
 	if (serialLog != serialRawInputs) {
 		return;
 		}
+
 	char logLine[100];
-	sprintf(logLine,"%s,%li,%i,%i\n",outRawInputsPrefix,sampNum,sampledVal.I,sampledVal.Q);
+	sprintf(logLine,"%s,%li,%li,%li\n",outRawInputsPrefix,sampNum,sampledVal.I,sampledVal.Q);
 	Serial.print(logLine);
 	Serial.flush();
 	}
@@ -41,8 +42,6 @@ void serialAllInputsLogger(int isCut, bool displacementDetected) {
 
 	Serial.print(','); SerialLLPrint(sumVal.I,10); 
 	Serial.print(','); SerialLLPrint(sumVal.Q,10); 
-	//Serial.print(','); Serial.print(meanVal.I); 
-	//Serial.print(','); Serial.print(meanVal.Q); 
 
 	Serial.print(','); Serial.print(sampledVal.I); 
 	Serial.print(','); Serial.print(sampledVal.Q); 
@@ -63,17 +62,8 @@ void serialAdjustedInputsAndDetectionsLogger(int isCut, bool displacementDetecte
 	setLed(profileSerialLed, true);
 
 	char logLine[100];
-	sprintf(logLine,"%s,%li,%i,%i,%i,%i,%i\n",outAdjustedInputsAndDetectionsPrefix,sampNum,currVal.I,currVal.Q,isCut,displacementDetected,ConfState==Yes);
+	sprintf(logLine,"%s,%li,%li,%li,%i,%i,%i\n",outAdjustedInputsAndDetectionsPrefix,sampNum,currVal.I,currVal.Q,isCut,displacementDetected,ConfState==Yes);
 	Serial.print(logLine);
-
-	//Serial.print(outAdjustedInputsAndDetectionsPrefix); Serial.print("*,");
-	//Serial.print(sampNum); 
-	//Serial.print(','); Serial.print(currVal.I); 
-	//Serial.print(','); Serial.print(currVal.Q); 
-	//Serial.print(','); Serial.print(isCut);
-	//Serial.print(','); Serial.print(displacementDetected);
-	//Serial.print(','); Serial.print(ConfState == Yes);
-	//Serial.println();
 
 	Serial.flush();
 	setLed(profileSerialLed, false);

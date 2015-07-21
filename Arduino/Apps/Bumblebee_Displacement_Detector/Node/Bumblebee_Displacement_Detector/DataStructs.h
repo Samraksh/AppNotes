@@ -16,11 +16,11 @@
 //************************************
 
 	// Holds the I-Q pair for a sample
+	//	Altho a sample component at 10 bits fits into a 16 bit int, overflow can occur when computing the cross product since a multiply can take 20 bits.
+	//		Since there are only a few instances of this struct, it's easier to just use a long instead.
 	typedef struct SampleValPair {
-		//long I;
-		//long Q;
-		int I;
-		int Q;
+		long I;
+		long Q;
 		};
 
 	// Holds the I-Q pair for the running sum of sample values

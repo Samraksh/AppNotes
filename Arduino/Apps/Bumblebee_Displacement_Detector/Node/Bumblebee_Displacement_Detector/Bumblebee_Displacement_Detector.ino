@@ -32,8 +32,8 @@ enum serialLogging {serialNone, serialAllInputs, serialRawInputs, serialAdjusted
 //
 //const serialLogging serialLog = serialNone;		// Do not write to serial.
 //const serialLogging serialLog = serialAllInputs;	// Write all inputs to serial. Useful for validation of input interpolation and averaging. NOTE: this produces too much data for 250 Hz. Must run slower. Only useful for evaluating interpolation and averaging.
-const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
-//const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection outputs.
+//const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
+const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection outputs. This is the most common option
 //const serialLogging serialLog = serialDetects;	// Detection outputs only.
 
 // Uncomment exactly one of these
@@ -46,8 +46,8 @@ const bool sdLog = false;		// Do not write to SD card
 //*********************************************
 
 // Bumblebee interface ports
-const int bumbleBeeQPin = 0;   // ADC port for Quadrature signal
-const int bumbleBeeIPin = 1;   // ADC port for InPhase signal
+const int bumbleBeeIPin = 0;   // ADC port for InPhase signal
+const int bumbleBeeQPin = 1;   // ADC port for Quadrature signal
 
 // Displacement detection output GPIOs
 const int strobePin = 2;		// HIGH when sample received
@@ -85,7 +85,6 @@ bool receivedSampleSemaphore = false;	// Simulated semaphore
 static long sampNum = 0;				// Sample number
 static SampleValPair sampledVal;		// Value actually sampled
 static SampleValPair interpolatedVal;	// Interpolated value
-//static SampleValPair meanVal;			// Mean value
 static RunsumValPair sumVal;			// Sum of interpolated values to date
 static SampleValPair currVal;			// Current, mean-adjusted sample value
 static SampleValPair prevVal;			// Previous, mean-adjusted sample value
@@ -208,9 +207,6 @@ void loop() {
 
 	if (receivedSampleSemaphore) {
 
-		//unsigned long startTime = micros();
-		//unsigned long stopTime;
-
 		setLed(loopReceivedSamplePin, true);
 		receivedSampleSemaphore = false;	// Reset the semaphore
 
@@ -257,7 +253,7 @@ void loop() {
 		//setLed(displaceConfLed, false);
 		}
 	lastSyncPinInput = syncPinInput;
-	
+
 	// Need delay else timer won't fire
 	delay(1);
 	}
@@ -305,6 +301,46 @@ void sampleTimer_tick() {
 
 	// Get an I or Q sample
 	switch (channel) {
+		case bumbleBeeIPin:
+			// Sample the I channel
+			justReadIValue = analogRead(channel);
+
+			// Save the value just read for logging
+			//	Unread channel value is set to negative
+			sampledVal.I = justReadIValue;
+			sampledVal.Q = -1;
+
+			//Serial.print(channel); Serial.print(' ');
+			//Serial.print(sampledVal.I); Serial.print(' ');
+			//Serial.println(sampledVal.Q);
+
+			// Interpolate this I value and the last one
+			interpolatedVal.I = interpolate(justReadIValue, prevReadIValue);
+
+			// Return the previous Q value
+			interpolatedVal.Q = justReadQValue;
+
+			//Serial.print("#I "); 
+			//Serial.print(sampNum); Serial.print(" ");
+			//Serial.print(channel); Serial.print(" ");
+			////
+			//Serial.print(justReadIValue); Serial.print(" ");
+			//Serial.print(prevReadIValue); Serial.print(" ");
+			////
+			//Serial.print(justReadQValue); Serial.print(" ");
+			//Serial.print(prevReadQValue); Serial.print(" ");
+			////
+			//Serial.print(currIValue); Serial.print(" ");
+			//Serial.print(currQValue); Serial.print(" ");
+			//Serial.println();
+
+			// Save this value as the last one for future interpolation
+			prevReadIValue = justReadIValue;
+
+			// Switch channel
+			channel = bumbleBeeQPin;
+			break;
+
 		case bumbleBeeQPin:
 			// Sample the Q channel
 			justReadQValue = analogRead(channel);
@@ -313,6 +349,10 @@ void sampleTimer_tick() {
 			//	Unread channel value is set to negative
 			sampledVal.I = -1;
 			sampledVal.Q = justReadQValue;
+
+			//Serial.print(channel); Serial.print(' ');
+			//Serial.print(sampledVal.I); Serial.print(' ');
+			//Serial.println(sampledVal.Q);
 
 			//Serial.print("#Q ");
 			//Serial.print(channel); Serial.print(" ");
@@ -345,41 +385,6 @@ void sampleTimer_tick() {
 
 			// Switch channel
 			channel = bumbleBeeIPin;
-			break;
-		case bumbleBeeIPin:
-			// Sample the I channel
-			justReadIValue = analogRead(channel);
-
-			// Save the value just read for logging
-			//	Unread channel value is set to negative
-			sampledVal.I = justReadIValue;
-			sampledVal.Q = -1;
-
-			// Interpolate this I value and the last one
-			interpolatedVal.I = interpolate(justReadIValue, prevReadIValue);
-
-			// Return the previous Q value
-			interpolatedVal.Q = justReadQValue;
-
-			//Serial.print("#I "); 
-			//Serial.print(sampNum); Serial.print(" ");
-			//Serial.print(channel); Serial.print(" ");
-			////
-			//Serial.print(justReadIValue); Serial.print(" ");
-			//Serial.print(prevReadIValue); Serial.print(" ");
-			////
-			//Serial.print(justReadQValue); Serial.print(" ");
-			//Serial.print(prevReadQValue); Serial.print(" ");
-			////
-			//Serial.print(currIValue); Serial.print(" ");
-			//Serial.print(currQValue); Serial.print(" ");
-			//Serial.println();
-
-			// Save this value as the last one for future interpolation
-			prevReadIValue = justReadIValue;
-
-			// Switch channel
-			channel = bumbleBeeQPin;
 			break;
 		}
 	// If we're waiting on interpolation, return
