@@ -292,10 +292,10 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 						var logString = receivedTime.ToString("HH:mm:ss.fff,") + foundString;
 						// If detail message, only put to text box for the first sample of a snippet (assume 250 samples/snippet)
 						//	This speeds things up and helps prevent data loss
-						if (lineItems[0] == InMsg.AllInputs.Prefix || lineItems[0] == InMsg.AdjustedInputsAndDetection.Prefix) {
+						if (lineItems[0] == InMsg.AllInputs.Prefix || lineItems[0] == InMsg.AdjustedInputsAndDetection.Prefix || lineItems[0] == InMsg.RawInputs.Prefix) {
 							try {
 								int sampNum;
-								Int32.TryParse(lineItems[1], out sampNum);
+								//Int32.TryParse(lineItems[1], out sampNum);
 								if (Int32.TryParse(lineItems[1], out sampNum) && sampNum % 250 == 1) {
 									FromMoteTextBox.AppendText(logString + "\n");
 								}
