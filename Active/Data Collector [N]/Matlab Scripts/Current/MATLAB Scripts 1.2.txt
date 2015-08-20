@@ -1,0 +1,6 @@
+MATLAB Scripts 1.1
+
+1.0
+		- Initial release
+1.1	
+		- Simplified scripts, included sample data

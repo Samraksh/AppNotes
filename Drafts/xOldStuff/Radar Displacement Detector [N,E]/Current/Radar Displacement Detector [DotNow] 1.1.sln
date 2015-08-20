@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radar Displacement Detector", "Radar Displacement Detector\Radar Displacement Detector.csproj", "{6B3A5756-1A5B-4975-AC1B-37FA4831E489}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F} = {A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radar Displacement Analysis", "RadarDisplacementAnalysis\Radar Displacement Analysis.csproj", "{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Samraksh.eMote.Emulator", "Samraksh.eMote.Emulator\Samraksh.eMote.Emulator.csproj", "{CD833822-AD8D-4D13-9A4E-9329CB180828}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Globals", "Globals\Globals.csproj", "{899601D7-75E7-4213-8B91-D6F51D20DBA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DotNow|Any CPU = DotNow|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Sam Emulator|Any CPU = Sam Emulator|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.DotNow|Any CPU.ActiveCfg = DotNow|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.DotNow|Any CPU.Build.0 = DotNow|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.DotNow|Any CPU.Deploy.0 = DotNow|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Sam Emulator|Any CPU.ActiveCfg = Sam Emulator|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Sam Emulator|Any CPU.Build.0 = Sam Emulator|Any CPU
+		{6B3A5756-1A5B-4975-AC1B-37FA4831E489}.Sam Emulator|Any CPU.Deploy.0 = Sam Emulator|Any CPU
+		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.DotNow|Any CPU.ActiveCfg = DotNow|Any CPU
+		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.DotNow|Any CPU.Build.0 = DotNow|Any CPU
+		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Sam Emulator|Any CPU.ActiveCfg = Sam Emulator|Any CPU
+		{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}.Sam Emulator|Any CPU.Build.0 = Sam Emulator|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.DotNow|Any CPU.ActiveCfg = DotNow|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.DotNow|Any CPU.Build.0 = DotNow|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Sam Emulator|Any CPU.ActiveCfg = Sam Emulator|Any CPU
+		{A9F11EEF-2B1E-4AA7-A930-E46FF4C75E2F}.Sam Emulator|Any CPU.Build.0 = Sam Emulator|Any CPU
+		{CD833822-AD8D-4D13-9A4E-9329CB180828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD833822-AD8D-4D13-9A4E-9329CB180828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD833822-AD8D-4D13-9A4E-9329CB180828}.DotNow|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD833822-AD8D-4D13-9A4E-9329CB180828}.DotNow|Any CPU.Build.0 = Debug|Any CPU
+		{CD833822-AD8D-4D13-9A4E-9329CB180828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD833822-AD8D-4D13-9A4E-9329CB180828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD833822-AD8D-4D13-9A4E-9329CB180828}.Sam Emulator|Any CPU.ActiveCfg = Release|Any CPU
+		{CD833822-AD8D-4D13-9A4E-9329CB180828}.Sam Emulator|Any CPU.Build.0 = Release|Any CPU
+		{899601D7-75E7-4213-8B91-D6F51D20DBA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{899601D7-75E7-4213-8B91-D6F51D20DBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{899601D7-75E7-4213-8B91-D6F51D20DBA5}.DotNow|Any CPU.ActiveCfg = Debug|Any CPU
+		{899601D7-75E7-4213-8B91-D6F51D20DBA5}.DotNow|Any CPU.Build.0 = Debug|Any CPU
+		{899601D7-75E7-4213-8B91-D6F51D20DBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{899601D7-75E7-4213-8B91-D6F51D20DBA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{899601D7-75E7-4213-8B91-D6F51D20DBA5}.Sam Emulator|Any CPU.ActiveCfg = Release|Any CPU
+		{899601D7-75E7-4213-8B91-D6F51D20DBA5}.Sam Emulator|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

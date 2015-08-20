@@ -1,0 +1,14 @@
+14:07:37.351 :: CORE :: Starting Emulation...
+14:07:37.352 :: CORE :: /******Samraksh NETMF4.3 Emulator, verion 0.3******/
+14:07:37.409 :: CORE :: Found Emulator ADC port : Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+14:07:37.409 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+14:07:37.410 :: CORE :: I can write to ADC
+14:07:37.410 :: CORE :: Found Emulator USART port : Usart2
+14:07:37.410 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+14:07:37.410 :: CORE :: I can write to Emulator Serial Port
+14:07:37.411 :: CORE :: Watching for communication from Model..
+14:07:37.441 :: PHYCOMM :: Error.....    at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at System.Net.Sockets.TcpListener.Start(Int32 backlog)
+   at System.Net.Sockets.TcpListener.Start()
+   at SamrakshEmulator.PhysicalModelVirtCom.StartVirtComServer() in c:\Samraksh Git\Library\Samraksh Emulator\SourceCode\SamrakshEmulator\Current\SamrakshEmulator\PhysicalModelVirtCom.cs:line 62

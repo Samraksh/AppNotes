@@ -1,0 +1,3431 @@
+10:50:36.629 :: CORE :: Starting Emulation...
+10:50:36.630 :: CORE :: /******Samraksh NETMF4.3 Emulator, verion 0.3******/
+10:50:36.677 :: MFAPP :: 
+TinyCLR (Build 4.3.0.0)
+
+
+10:50:36.678 :: MFAPP :: Starting...
+
+10:50:36.682 :: MFAPP :: Created EE.
+
+10:50:36.683 :: MFAPP :: Started Hardware.
+
+10:50:36.695 :: CORE :: Found Emulator ADC port : Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+10:50:36.696 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+10:50:36.696 :: CORE :: I can write to ADC
+10:50:36.696 :: CORE :: Found Emulator USART port : Usart2
+10:50:36.696 :: CORE :: Microsoft.SPOT.Emulator.Sample.EmulatorSerialPort
+10:50:36.696 :: CORE :: I can write to Emulator Serial Port
+10:50:36.697 :: CORE :: Watching for communication from Model..
+10:50:36.697 :: PHYCOMM :: The server is running at port: 47000...
+10:50:36.698 :: PHYCOMM :: The local End point is  :127.0.0.1:47000
+10:50:36.698 :: PHYCOMM :: Starting thread to accept connections.....
+10:50:36.699 :: PHYCOMM :: Waiting for connection...
+10:50:36.825 :: MFAPP :: Found debugger!
+
+10:50:38.343 :: MFAPP ::    Assembly: Microsoft.SPOT.Graphics (4.3.0.0)   (392 RAM - 2268 ROM - 1357 METADATA)
+
+
+10:50:38.349 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+10:50:38.352 :: MFAPP ::    TypeRef        =       24 bytes (       6 elements)
+
+10:50:38.356 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+10:50:38.364 :: MFAPP ::    MethodRef      =       20 bytes (       5 elements)
+
+10:50:38.368 :: MFAPP ::    TypeDef        =       40 bytes (       5 elements)
+
+10:50:38.372 :: MFAPP ::    FieldDef       =       16 bytes (       8 elements)
+
+10:50:38.377 :: MFAPP ::    MethodDef      =       96 bytes (      48 elements)
+
+10:50:38.382 :: MFAPP :: 
+
+10:50:38.385 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:38.389 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:38.394 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+10:50:38.398 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+10:50:38.402 :: MFAPP ::    Resources Data  =        0 bytes
+
+10:50:38.406 :: MFAPP ::    Strings         =      537 bytes
+
+10:50:38.412 :: MFAPP ::    Signatures      =      293 bytes
+
+10:50:38.417 :: MFAPP ::    ByteCode        =      242 bytes
+
+10:50:38.421 :: MFAPP :: 
+
+
+10:50:38.425 :: MFAPP ::    Assembly: Microsoft.SPOT.Hardware.SerialPort (4.3.0.0)   (548 RAM - 3608 ROM - 1697 METADATA)
+
+
+10:50:38.429 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+10:50:38.433 :: MFAPP ::    TypeRef        =      100 bytes (      25 elements)
+
+10:50:38.438 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+10:50:38.442 :: MFAPP ::    MethodRef      =       88 bytes (      22 elements)
+
+10:50:38.448 :: MFAPP ::    TypeDef        =       16 bytes (       2 elements)
+
+10:50:38.453 :: MFAPP ::    FieldDef       =       32 bytes (      16 elements)
+
+10:50:38.458 :: MFAPP ::    MethodDef      =      108 bytes (      54 elements)
+
+10:50:38.464 :: MFAPP :: 
+
+10:50:38.469 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:38.474 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:38.479 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+10:50:38.486 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+10:50:38.492 :: MFAPP ::    Resources Data  =        0 bytes
+
+10:50:38.498 :: MFAPP ::    Strings         =      667 bytes
+
+10:50:38.503 :: MFAPP ::    Signatures      =      257 bytes
+
+10:50:38.510 :: MFAPP ::    ByteCode        =     1114 bytes
+
+10:50:38.516 :: MFAPP :: 
+
+
+10:50:38.521 :: MFAPP ::    Assembly: Microsoft.SPOT.Hardware (4.3.0.0)   (1996 RAM - 14288 ROM - 8587 METADATA)
+
+
+10:50:38.525 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+10:50:38.530 :: MFAPP ::    TypeRef        =      132 bytes (      33 elements)
+
+10:50:38.535 :: MFAPP ::    FieldRef       =       24 bytes (       6 elements)
+
+10:50:38.539 :: MFAPP ::    MethodRef      =      132 bytes (      33 elements)
+
+10:50:38.544 :: MFAPP ::    TypeDef        =      536 bytes (      67 elements)
+
+10:50:38.550 :: MFAPP ::    FieldDef       =      208 bytes (     104 elements)
+
+10:50:38.555 :: MFAPP ::    MethodDef      =      544 bytes (     272 elements)
+
+10:50:38.559 :: MFAPP :: 
+
+10:50:38.565 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:38.569 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:38.574 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+10:50:38.579 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+10:50:38.584 :: MFAPP ::    Resources Data  =        0 bytes
+
+10:50:38.589 :: MFAPP ::    Strings         =     2061 bytes
+
+10:50:38.601 :: MFAPP ::    Signatures      =     1195 bytes
+
+10:50:38.606 :: MFAPP ::    ByteCode        =     3511 bytes
+
+10:50:38.611 :: MFAPP :: 
+
+
+10:50:38.616 :: MFAPP ::    Assembly: Microsoft.SPOT.Native (4.3.0.0)   (1248 RAM - 7468 ROM - 4862 METADATA)
+
+
+10:50:38.621 :: MFAPP ::    AssemblyRef    =        4 bytes (       1 elements)
+
+10:50:38.626 :: MFAPP ::    TypeRef        =       88 bytes (      22 elements)
+
+10:50:38.631 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+10:50:38.636 :: MFAPP ::    MethodRef      =       60 bytes (      15 elements)
+
+10:50:38.644 :: MFAPP ::    TypeDef        =      368 bytes (      46 elements)
+
+10:50:38.653 :: MFAPP ::    FieldDef       =      220 bytes (     110 elements)
+
+10:50:38.660 :: MFAPP ::    MethodDef      =      244 bytes (     122 elements)
+
+10:50:38.667 :: MFAPP :: 
+
+10:50:38.674 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:38.680 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:38.686 :: MFAPP ::    Resources       =       72 bytes (       9 elements)
+
+10:50:38.693 :: MFAPP ::    Resources Files =        8 bytes (       1 elements)
+
+10:50:38.701 :: MFAPP ::    Resources Data  =      747 bytes
+
+10:50:38.708 :: MFAPP ::    Strings         =     1099 bytes
+
+10:50:38.716 :: MFAPP ::    Signatures      =      618 bytes
+
+10:50:38.727 :: MFAPP ::    ByteCode        =      535 bytes
+
+10:50:38.735 :: MFAPP :: 
+
+
+10:50:38.741 :: MFAPP ::    Assembly: mscorlib (4.3.0.0)   (4256 RAM - 41324 ROM - 21846 METADATA)
+
+
+10:50:38.746 :: MFAPP ::    AssemblyRef    =        0 bytes (       0 elements)
+
+10:50:38.756 :: MFAPP ::    TypeRef        =        0 bytes (       0 elements)
+
+10:50:38.766 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+10:50:38.772 :: MFAPP ::    MethodRef      =        0 bytes (       0 elements)
+
+10:50:38.777 :: MFAPP ::    TypeDef        =     1152 bytes (     144 elements)
+
+10:50:38.783 :: MFAPP ::    FieldDef       =      300 bytes (     149 elements)
+
+10:50:38.788 :: MFAPP ::    MethodDef      =     1776 bytes (     888 elements)
+
+10:50:38.793 :: MFAPP :: 
+
+10:50:38.799 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:38.805 :: MFAPP ::    TypeSpec        =       16 bytes (       4 elements)
+
+10:50:38.810 :: MFAPP ::    Resources       =      232 bytes (      29 elements)
+
+10:50:38.816 :: MFAPP ::    Resources Files =       16 bytes (       2 elements)
+
+10:50:38.823 :: MFAPP ::    Resources Data  =      437 bytes
+
+10:50:38.830 :: MFAPP ::    Strings         =     2643 bytes
+
+10:50:38.837 :: MFAPP ::    Signatures      =     2974 bytes
+
+10:50:38.845 :: MFAPP ::    ByteCode        =    15985 bytes
+
+10:50:38.854 :: MFAPP :: 
+
+
+10:50:38.864 :: MFAPP ::    Assembly: Globals (1.0.0.0)   (248 RAM - 756 ROM - 342 METADATA)
+
+
+10:50:38.871 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+10:50:38.880 :: MFAPP ::    TypeRef        =       24 bytes (       6 elements)
+
+10:50:38.889 :: MFAPP ::    FieldRef       =        4 bytes (       1 elements)
+
+10:50:38.898 :: MFAPP ::    MethodRef      =       28 bytes (       7 elements)
+
+10:50:38.906 :: MFAPP ::    TypeDef        =       16 bytes (       2 elements)
+
+10:50:38.912 :: MFAPP ::    FieldDef       =       16 bytes (       8 elements)
+
+10:50:38.918 :: MFAPP ::    MethodDef      =        8 bytes (       3 elements)
+
+10:50:38.924 :: MFAPP :: 
+
+10:50:38.929 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:38.936 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:38.942 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+10:50:38.948 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+10:50:38.955 :: MFAPP ::    Resources Data  =        0 bytes
+
+10:50:38.961 :: MFAPP ::    Strings         =      193 bytes
+
+10:50:38.968 :: MFAPP ::    Signatures      =       46 bytes
+
+10:50:38.974 :: MFAPP ::    ByteCode        =       89 bytes
+
+10:50:38.981 :: MFAPP :: 
+
+
+10:50:38.989 :: MFAPP ::    Assembly: Radar Displacement Detector (1.1.5330.15587)   (532 RAM - 3256 ROM - 1153 METADATA)
+
+
+10:50:38.995 :: MFAPP ::    AssemblyRef    =       28 bytes (       7 elements)
+
+10:50:39.002 :: MFAPP ::    TypeRef        =      124 bytes (      31 elements)
+
+10:50:39.008 :: MFAPP ::    FieldRef       =        8 bytes (       2 elements)
+
+10:50:39.015 :: MFAPP ::    MethodRef      =      144 bytes (      36 elements)
+
+10:50:39.022 :: MFAPP ::    TypeDef        =       40 bytes (       5 elements)
+
+10:50:39.029 :: MFAPP ::    FieldDef       =       16 bytes (       8 elements)
+
+10:50:39.037 :: MFAPP ::    MethodDef      =       20 bytes (       9 elements)
+
+10:50:39.045 :: MFAPP :: 
+
+10:50:39.056 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:39.066 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:39.073 :: MFAPP ::    Resources       =       16 bytes (       2 elements)
+
+10:50:39.081 :: MFAPP ::    Resources Files =        8 bytes (       1 elements)
+
+10:50:39.089 :: MFAPP ::    Resources Data  =       13 bytes
+
+10:50:39.097 :: MFAPP ::    Strings         =     1299 bytes
+
+10:50:39.105 :: MFAPP ::    Signatures      =      189 bytes
+
+10:50:39.113 :: MFAPP ::    ByteCode        =      618 bytes
+
+10:50:39.120 :: MFAPP :: 
+
+
+10:50:39.127 :: MFAPP ::    Assembly: Samraksh_eMote_DotNow (1.0.0.1)   (608 RAM - 4408 ROM - 2157 METADATA)
+
+
+10:50:39.134 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+10:50:39.141 :: MFAPP ::    TypeRef        =       48 bytes (      12 elements)
+
+10:50:39.148 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+10:50:39.157 :: MFAPP ::    MethodRef      =       32 bytes (       8 elements)
+
+10:50:39.165 :: MFAPP ::    TypeDef        =      120 bytes (      15 elements)
+
+10:50:39.172 :: MFAPP ::    FieldDef       =       56 bytes (      27 elements)
+
+10:50:39.179 :: MFAPP ::    MethodDef      =      136 bytes (      68 elements)
+
+10:50:39.186 :: MFAPP :: 
+
+10:50:39.195 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:39.204 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:39.213 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+10:50:39.222 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+10:50:39.230 :: MFAPP ::    Resources Data  =        0 bytes
+
+10:50:39.240 :: MFAPP ::    Strings         =      895 bytes
+
+10:50:39.249 :: MFAPP ::    Signatures      =      309 bytes
+
+10:50:39.262 :: MFAPP ::    ByteCode        =     1228 bytes
+
+10:50:39.270 :: MFAPP :: 
+
+
+10:50:39.277 :: MFAPP ::    Assembly: RadarDisplacementAnalysis (1.0.0.0)   (360 RAM - 2084 ROM - 824 METADATA)
+
+
+10:50:39.284 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+10:50:39.291 :: MFAPP ::    TypeRef        =       36 bytes (       9 elements)
+
+10:50:39.299 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+10:50:39.306 :: MFAPP ::    MethodRef      =       20 bytes (       5 elements)
+
+10:50:39.314 :: MFAPP ::    TypeDef        =       64 bytes (       8 elements)
+
+10:50:39.321 :: MFAPP ::    FieldDef       =       44 bytes (      21 elements)
+
+10:50:39.329 :: MFAPP ::    MethodDef      =       32 bytes (      15 elements)
+
+10:50:39.338 :: MFAPP :: 
+
+10:50:39.345 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:39.353 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:39.363 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+10:50:39.373 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+10:50:39.382 :: MFAPP ::    Resources Data  =        0 bytes
+
+10:50:39.392 :: MFAPP ::    Strings         =      478 bytes
+
+10:50:39.401 :: MFAPP ::    Signatures      =       88 bytes
+
+10:50:39.411 :: MFAPP ::    ByteCode        =      655 bytes
+
+10:50:39.421 :: MFAPP :: 
+
+
+10:50:39.432 :: MFAPP ::    Assembly: Samraksh.eMote.Emulator (4.3.0.0)   (508 RAM - 3196 ROM - 1328 METADATA)
+
+
+10:50:39.445 :: MFAPP ::    AssemblyRef    =       12 bytes (       3 elements)
+
+10:50:39.453 :: MFAPP ::    TypeRef        =       76 bytes (      19 elements)
+
+10:50:39.465 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+10:50:39.476 :: MFAPP ::    MethodRef      =       88 bytes (      22 elements)
+
+10:50:39.488 :: MFAPP ::    TypeDef        =       72 bytes (       9 elements)
+
+10:50:39.497 :: MFAPP ::    FieldDef       =       52 bytes (      25 elements)
+
+10:50:39.509 :: MFAPP ::    MethodDef      =       44 bytes (      22 elements)
+
+10:50:39.518 :: MFAPP :: 
+
+10:50:39.534 :: MFAPP ::    Attributes      =        0 bytes (       0 elements)
+
+10:50:39.547 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:39.564 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+10:50:39.579 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+10:50:39.592 :: MFAPP ::    Resources Data  =        0 bytes
+
+10:50:39.603 :: MFAPP ::    Strings         =      833 bytes
+
+10:50:39.617 :: MFAPP ::    Signatures      =      196 bytes
+
+10:50:39.627 :: MFAPP ::    ByteCode        =      905 bytes
+
+10:50:39.638 :: MFAPP :: 
+
+
+10:50:39.660 :: MFAPP ::    Assembly: Utility (0.0.5309.24937)   (332 RAM - 1736 ROM - 623 METADATA)
+
+
+10:50:39.672 :: MFAPP ::    AssemblyRef    =        8 bytes (       2 elements)
+
+10:50:39.682 :: MFAPP ::    TypeRef        =       48 bytes (      12 elements)
+
+10:50:39.694 :: MFAPP ::    FieldRef       =        0 bytes (       0 elements)
+
+10:50:39.703 :: MFAPP ::    MethodRef      =       84 bytes (      21 elements)
+
+10:50:39.712 :: MFAPP ::    TypeDef        =       24 bytes (       3 elements)
+
+10:50:39.721 :: MFAPP ::    FieldDef       =        4 bytes (       1 elements)
+
+10:50:39.732 :: MFAPP ::    MethodDef      =       16 bytes (       8 elements)
+
+10:50:39.743 :: MFAPP :: 
+
+10:50:39.758 :: MFAPP ::    Attributes      =       16 bytes (       2 elements)
+
+10:50:39.772 :: MFAPP ::    TypeSpec        =        0 bytes (       0 elements)
+
+10:50:39.789 :: MFAPP ::    Resources       =        0 bytes (       0 elements)
+
+10:50:39.797 :: MFAPP ::    Resources Files =        0 bytes (       0 elements)
+
+10:50:39.807 :: MFAPP ::    Resources Data  =        0 bytes
+
+10:50:39.817 :: MFAPP ::    Strings         =      236 bytes
+
+10:50:39.827 :: MFAPP ::    Signatures      =      111 bytes
+
+10:50:39.839 :: MFAPP ::    ByteCode        =      752 bytes
+
+10:50:39.851 :: MFAPP :: 
+
+
+10:50:39.864 :: MFAPP :: Loading Deployment Assemblies.
+
+10:50:39.876 :: MFAPP :: ERROR: Could not find device for DEPLOYMENT usage
+
+10:50:39.888 :: MFAPP :: Resolving.
+
+10:50:39.899 :: MFAPP :: 
+Total: (9508 RAM - 84392 ROM - 44776 METADATA)
+
+
+10:50:39.910 :: MFAPP ::    AssemblyRef    =      100 bytes (      25 elements)
+
+10:50:39.920 :: MFAPP ::    TypeRef        =      700 bytes (     175 elements)
+
+10:50:39.931 :: MFAPP ::    FieldRef       =       36 bytes (       9 elements)
+
+10:50:39.948 :: MFAPP ::    MethodRef      =      696 bytes (     174 elements)
+
+10:50:39.960 :: MFAPP ::    TypeDef        =     2448 bytes (     306 elements)
+
+10:50:39.973 :: MFAPP ::    FieldDef       =      964 bytes (     477 elements)
+
+10:50:39.989 :: MFAPP ::    MethodDef      =     3024 bytes (    1509 elements)
+
+10:50:40.006 :: MFAPP :: 
+
+10:50:40.025 :: MFAPP ::    DebuggingInfo  =     1520 bytes
+
+10:50:40.043 :: MFAPP :: 
+
+10:50:40.058 :: MFAPP ::    Attributes      =       16 bytes (       2 elements)
+
+10:50:40.073 :: MFAPP ::    TypeSpec        =       16 bytes (       4 elements)
+
+10:50:40.089 :: MFAPP ::    Resources Files =       96 bytes (       4 elements)
+
+10:50:40.103 :: MFAPP ::    Resources       =      320 bytes (      40 elements)
+
+10:50:40.115 :: MFAPP ::    Resources Data  =     1197 bytes
+
+10:50:40.127 :: MFAPP ::    Strings         =    10941 bytes
+
+10:50:40.181 :: MFAPP ::    Signatures      =     6276 bytes
+
+10:50:40.199 :: MFAPP ::    ByteCode        =    25634 bytes
+
+10:50:40.219 :: MFAPP :: 
+
+
+10:50:40.237 :: MFAPP :: Ready.
+
+10:50:40.663 :: PHYCOMM :: Connection accepted from 127.0.0.1:64294
+10:50:40.685 :: PHYCOMM :: Recieved...
+10:50:40.701 :: PHYCOMM :: Sent Acknowledgement
+10:50:45.517 :: MFAPP :: Radar Motion Detection 1.1 (08/05/2014 08:39:34)
+
+10:50:45.528 :: MFAPP :: Power Level: 16 (16=High, 32=Med, 48=Low
+
+10:50:45.539 :: MFAPP :: Bytes free: 500796
+
+10:50:45.550 :: MFAPP :: Parameters
+
+10:50:45.560 :: MFAPP ::    SamplingIntervalMilliSec 3000
+
+10:50:45.571 :: MFAPP ::    BufferSize 500
+
+10:50:45.581 :: MFAPP ::    SamplesPerSecond 333
+
+10:50:45.591 :: MFAPP ::    CallbackIntervalMs 1501
+
+10:50:45.602 :: MFAPP ::    M 2
+
+10:50:45.612 :: MFAPP ::    N 8
+
+10:50:45.624 :: MFAPP ::    MinCumCuts 6
+
+10:50:45.651 :: MFAPP ::    CutDistCm 2.5999999
+
+10:50:45.661 :: MFAPP :: 
+
+10:50:50.561 :: MFAPP :: Initializing ADC...
+
+10:50:51.458 :: MFAPP :: Staring to sample ADC port...
+
+10:50:51.470 :: MFAPP :: Completed ConfigureContinuousModeDualChannel 1
+
+10:51:02.842 :: MFAPP :: 0 -1
+
+10:51:05.456 :: MFAPP :: 1 1
+
+10:51:05.492 :: MFAPP :: 2 -4
+
+10:51:07.946 :: MFAPP :: 3 2
+
+10:51:10.460 :: MFAPP :: 4 -7
+
+10:51:10.494 :: MFAPP :: 5 1
+
+10:51:12.998 :: MFAPP :: 6 1
+
+10:51:15.513 :: MFAPP :: 7 -1
+
+10:51:15.548 :: MFAPP :: 8 -4
+
+10:51:18.063 :: MFAPP :: 9 2
+
+10:51:20.609 :: MFAPP :: 10 3
+
+10:51:20.641 :: MFAPP :: 11 -3
+
+10:51:23.236 :: MFAPP :: 12 -5
+
+10:51:25.706 :: MFAPP :: 13 -1
+
+10:51:25.743 :: MFAPP :: 14 -1
+
+10:51:28.406 :: MFAPP :: 15 0
+
+10:51:30.864 :: MFAPP :: 16 -1
+
+10:51:30.897 :: MFAPP :: 17 0
+
+10:51:33.397 :: MFAPP :: 18 -2
+
+10:51:35.930 :: MFAPP :: 19 2
+
+10:51:35.964 :: MFAPP :: 20 -3
+
+10:51:38.499 :: MFAPP :: 21 -1
+
+10:51:41.038 :: MFAPP :: 22 1
+
+10:51:41.071 :: MFAPP :: 23 0
+
+10:51:43.640 :: MFAPP :: 24 -1
+
+10:51:46.228 :: MFAPP :: 25 5
+
+10:51:46.267 :: MFAPP :: 26 4
+
+10:51:48.866 :: MFAPP :: 27 -1
+
+10:51:51.414 :: MFAPP :: 28 3
+
+10:51:51.447 :: MFAPP :: 29 5
+
+10:51:53.982 :: MFAPP :: 30 3
+
+10:51:56.604 :: MFAPP :: 31 -1
+
+10:51:56.637 :: MFAPP :: 32 -2
+
+10:51:59.224 :: MFAPP :: 33 3
+
+10:52:01.794 :: MFAPP :: 34 3
+
+10:52:01.828 :: MFAPP :: 35 -6
+
+10:52:04.429 :: MFAPP :: 36 -1
+
+10:52:06.968 :: MFAPP :: 37 -5
+
+10:52:07.005 :: MFAPP :: 38 0
+
+10:52:09.547 :: MFAPP :: 39 5
+
+10:52:12.091 :: MFAPP :: 40 -4
+
+10:52:12.128 :: MFAPP :: 41 0
+
+10:52:14.688 :: MFAPP :: 42 1
+
+10:52:17.296 :: MFAPP :: 43 3
+
+10:52:17.333 :: MFAPP :: 44 1
+
+10:52:19.829 :: MFAPP :: 45 -1
+
+10:52:22.385 :: MFAPP :: 46 -3
+
+10:52:22.425 :: MFAPP :: 47 0
+
+10:52:24.976 :: MFAPP :: 48 4
+
+10:52:27.549 :: MFAPP :: 49 1
+
+10:52:27.588 :: MFAPP :: 50 3
+
+10:52:30.156 :: MFAPP :: 51 9
+
+10:52:32.722 :: MFAPP :: 52 -5
+
+10:52:32.756 :: MFAPP :: 53 0
+
+10:52:35.333 :: MFAPP :: 54 1
+
+10:52:37.939 :: MFAPP :: 55 -2
+
+10:52:37.972 :: MFAPP :: 56 0
+
+10:52:40.540 :: MFAPP :: 57 -2
+
+10:52:43.120 :: MFAPP :: 58 -2
+
+10:52:43.154 :: MFAPP :: 59 -1
+
+10:52:45.734 :: MFAPP :: 60 0
+
+10:52:48.321 :: MFAPP :: 61 2
+
+10:52:48.365 :: MFAPP :: 62 0
+
+10:52:50.945 :: MFAPP :: 63 -3
+
+10:52:53.514 :: MFAPP :: 64 0
+
+10:52:53.551 :: MFAPP :: 65 0
+
+10:52:56.127 :: MFAPP :: 66 0
+
+10:52:58.687 :: MFAPP :: 67 1
+
+10:52:58.722 :: MFAPP :: 68 2
+
+10:53:01.296 :: MFAPP :: 69 0
+
+10:53:04.003 :: MFAPP :: 70 -2
+
+10:53:04.039 :: MFAPP :: 71 4
+
+10:53:06.637 :: MFAPP :: 72 -4
+
+10:53:09.149 :: MFAPP :: 73 -1
+
+10:53:09.184 :: MFAPP :: 74 1
+
+10:53:11.792 :: MFAPP :: 75 2
+
+10:53:14.430 :: MFAPP :: 76 -2
+
+10:53:14.469 :: MFAPP :: 77 -1
+
+10:53:17.104 :: MFAPP :: 78 2
+
+10:53:19.730 :: MFAPP :: 79 -2
+
+10:53:19.764 :: MFAPP :: 80 -1
+
+10:53:22.352 :: MFAPP :: 81 2
+
+10:53:25.003 :: MFAPP :: 82 -2
+
+10:53:25.042 :: MFAPP :: 83 -1
+
+10:53:27.599 :: MFAPP :: 84 2
+
+10:53:30.185 :: MFAPP :: 85 2
+
+10:53:30.224 :: MFAPP :: 86 -1
+
+10:53:32.822 :: MFAPP :: 87 1
+
+10:53:35.465 :: MFAPP :: 88 4
+
+10:53:35.501 :: MFAPP :: 89 -1
+
+10:53:38.116 :: MFAPP :: 90 2
+
+10:53:40.752 :: MFAPP :: 91 0
+
+10:53:40.791 :: MFAPP :: 92 1
+
+10:53:43.361 :: MFAPP :: 93 0
+
+10:53:45.967 :: MFAPP :: 94 -1
+
+10:53:46.010 :: MFAPP :: 95 0
+
+10:53:48.750 :: MFAPP :: 96 1
+
+10:53:51.260 :: MFAPP :: 97 -7
+
+10:53:51.295 :: MFAPP :: 98 -2
+
+10:53:53.951 :: MFAPP :: 99 3
+
+10:53:56.588 :: MFAPP :: 100 -2
+
+10:53:56.623 :: MFAPP :: 101 1
+
+10:53:59.264 :: MFAPP :: 102 2
+
+10:54:01.953 :: MFAPP :: 103 -2
+
+10:54:01.988 :: MFAPP :: 104 -1
+
+10:54:04.635 :: MFAPP :: 105 1
+
+10:54:07.326 :: MFAPP :: 106 -5
+
+10:54:07.360 :: MFAPP :: 107 -3
+
+10:54:10.025 :: MFAPP :: 108 1
+
+10:54:12.690 :: MFAPP :: 109 0
+
+10:54:12.725 :: MFAPP :: 110 1
+
+10:54:15.322 :: MFAPP :: 111 0
+
+10:54:17.968 :: MFAPP :: 112 -1
+
+10:54:18.007 :: MFAPP :: 113 0
+
+10:54:20.667 :: MFAPP :: 114 2
+
+10:54:23.277 :: MFAPP :: 115 3
+
+10:54:23.324 :: MFAPP :: 116 -1
+
+10:54:25.956 :: MFAPP :: 117 2
+
+10:54:28.618 :: MFAPP :: 118 4
+
+10:54:28.655 :: MFAPP :: 119 2
+
+10:54:31.344 :: MFAPP :: 120 -6
+
+10:54:34.027 :: MFAPP :: 121 0
+
+10:54:34.068 :: MFAPP :: 122 -2
+
+10:54:36.683 :: MFAPP :: 123 5
+
+10:54:39.333 :: MFAPP :: 124 0
+
+10:54:39.373 :: MFAPP :: 125 -1
+
+10:54:42.034 :: MFAPP :: 126 1
+
+10:54:44.704 :: MFAPP :: 127 1
+
+10:54:44.746 :: MFAPP :: 128 0
+
+10:54:47.415 :: MFAPP :: 129 1
+
+10:54:50.150 :: MFAPP :: 130 1
+
+10:54:50.187 :: MFAPP :: 131 0
+
+10:54:52.917 :: MFAPP :: 132 -2
+
+10:54:55.643 :: MFAPP :: 133 1
+
+10:54:55.678 :: MFAPP :: 134 -1
+
+10:54:58.300 :: MFAPP :: 135 0
+
+10:55:00.958 :: MFAPP :: 136 3
+
+10:55:00.993 :: MFAPP :: 137 -1
+
+10:55:03.669 :: MFAPP :: 138 1
+
+10:55:06.415 :: MFAPP :: 139 0
+
+10:55:06.450 :: MFAPP :: 140 1
+
+10:55:09.090 :: MFAPP :: 141 -2
+
+10:55:11.837 :: MFAPP :: 142 -1
+
+10:55:11.872 :: MFAPP :: 143 3
+
+10:55:14.530 :: MFAPP :: 144 0
+
+10:55:17.299 :: MFAPP :: 145 1
+
+10:55:17.337 :: MFAPP :: 146 2
+
+10:55:20.075 :: MFAPP :: 147 -3
+
+10:55:22.814 :: MFAPP :: 148 -2
+
+10:55:22.852 :: MFAPP :: 149 -1
+
+10:55:25.494 :: MFAPP :: 150 -1
+
+10:55:28.133 :: MFAPP :: 151 2
+
+10:55:28.177 :: MFAPP :: 152 -1
+
+10:55:30.795 :: MFAPP :: 153 3
+
+10:55:33.421 :: MFAPP :: 154 0
+
+10:55:33.463 :: MFAPP :: 155 3
+
+10:55:36.107 :: MFAPP :: 156 -3
+
+10:55:38.816 :: MFAPP :: 157 3
+
+10:55:38.851 :: MFAPP :: 158 1
+
+10:55:41.592 :: MFAPP :: 159 1
+
+10:55:44.339 :: MFAPP :: 160 2
+
+10:55:44.375 :: MFAPP :: 161 -1
+
+10:55:47.083 :: MFAPP :: 162 2
+
+10:55:49.806 :: MFAPP :: 163 0
+
+10:55:49.843 :: MFAPP :: 164 -1
+
+10:55:52.537 :: MFAPP :: 165 -1
+
+10:55:55.279 :: MFAPP :: 166 1
+
+10:55:55.318 :: MFAPP :: 167 -1
+
+10:55:58.023 :: MFAPP :: 168 -1
+
+10:56:00.733 :: MFAPP :: 169 0
+
+10:56:00.769 :: MFAPP :: 170 -2
+
+10:56:03.413 :: MFAPP :: 171 3
+
+10:56:06.137 :: MFAPP :: 172 0
+
+10:56:06.174 :: MFAPP :: 173 -1
+
+10:56:08.872 :: MFAPP :: 174 1
+
+10:56:11.616 :: MFAPP :: 175 1
+
+10:56:11.656 :: MFAPP :: 176 0
+
+10:56:14.396 :: MFAPP :: 177 -1
+
+10:56:17.135 :: MFAPP :: 178 0
+
+10:56:17.176 :: MFAPP :: 179 1
+
+10:56:19.912 :: MFAPP :: 180 -1
+
+10:56:22.564 :: MFAPP :: 181 2
+
+10:56:22.608 :: MFAPP :: 182 0
+
+10:56:25.418 :: MFAPP :: 183 0
+
+10:56:28.126 :: MFAPP :: 184 -1
+
+10:56:28.169 :: MFAPP :: 185 1
+
+10:56:30.931 :: MFAPP :: 186 -3
+
+10:56:33.671 :: MFAPP :: 187 2
+
+10:56:33.711 :: MFAPP :: 188 1
+
+10:56:36.408 :: MFAPP :: 189 0
+
+10:56:39.198 :: MFAPP :: 190 -2
+
+10:56:39.236 :: MFAPP :: 191 2
+
+10:56:42.023 :: MFAPP :: 192 -3
+
+10:56:44.829 :: MFAPP :: 193 -2
+
+10:56:44.871 :: MFAPP :: 194 -2
+
+10:56:47.603 :: MFAPP :: 195 0
+
+10:56:50.296 :: MFAPP :: 196 0
+
+10:56:50.338 :: MFAPP :: 197 1
+
+10:56:53.012 :: MFAPP :: 198 0
+
+10:56:55.761 :: MFAPP :: 199 -1
+
+10:56:55.801 :: MFAPP :: 200 -2
+
+10:56:58.704 :: MFAPP :: 201 -1
+
+10:57:01.570 :: MFAPP :: 202 0
+
+10:57:01.612 :: MFAPP :: 203 0
+
+10:57:04.364 :: MFAPP :: 204 2
+
+10:57:07.115 :: MFAPP :: 205 1
+
+10:57:07.160 :: MFAPP :: 206 1
+
+10:57:09.892 :: MFAPP :: 207 -1
+
+10:57:12.700 :: MFAPP :: 208 0
+
+10:57:12.744 :: MFAPP :: 209 2
+
+10:57:15.456 :: MFAPP :: 210 0
+
+10:57:18.308 :: MFAPP :: 211 2
+
+10:57:18.355 :: MFAPP :: 212 0
+
+10:57:21.158 :: MFAPP :: 213 -2
+
+10:57:23.819 :: MFAPP :: 214 1
+
+10:57:23.859 :: MFAPP :: 215 -2
+
+10:57:26.533 :: MFAPP :: 216 -1
+
+10:57:29.364 :: MFAPP :: 217 1
+
+10:57:29.406 :: MFAPP :: 218 0
+
+10:57:32.242 :: MFAPP :: 219 0
+
+10:57:34.975 :: MFAPP :: 220 -1
+
+10:57:35.014 :: MFAPP :: 221 0
+
+10:57:37.855 :: MFAPP :: 222 1
+
+10:57:40.705 :: MFAPP :: 223 0
+
+10:57:40.740 :: MFAPP :: 224 0
+
+10:57:43.449 :: MFAPP :: 225 -2
+
+10:57:46.219 :: MFAPP :: 226 1
+
+10:57:46.261 :: MFAPP :: 227 0
+
+10:57:49.033 :: MFAPP :: 228 -3
+
+10:57:51.872 :: MFAPP :: 229 2
+
+10:57:51.919 :: MFAPP :: 230 0
+
+10:57:54.698 :: MFAPP :: 231 1
+
+10:57:57.679 :: MFAPP :: 232 0
+
+10:57:57.716 :: MFAPP :: 233 0
+
+10:58:00.495 :: MFAPP :: 234 1
+
+10:58:03.267 :: MFAPP :: 235 1
+
+10:58:03.308 :: MFAPP :: 236 1
+
+10:58:06.084 :: MFAPP :: 237 0
+
+10:58:08.938 :: MFAPP :: 238 1
+
+10:58:08.983 :: MFAPP :: 239 0
+
+10:58:11.825 :: MFAPP :: 240 0
+
+10:58:14.663 :: MFAPP :: 241 0
+
+10:58:14.703 :: MFAPP :: 242 0
+
+10:58:17.399 :: MFAPP :: 243 -1
+
+10:58:20.233 :: MFAPP :: 244 1
+
+10:58:20.274 :: MFAPP :: 245 1
+
+10:58:23.073 :: MFAPP :: 246 1
+
+10:58:25.861 :: MFAPP :: 247 0
+
+10:58:25.896 :: MFAPP :: 248 3
+
+10:58:28.717 :: MFAPP :: 249 1
+
+10:58:31.539 :: MFAPP :: 250 0
+
+10:58:31.592 :: MFAPP :: 251 2
+
+10:58:34.371 :: MFAPP :: 252 1
+
+10:58:37.204 :: MFAPP :: 253 0
+
+10:58:37.249 :: MFAPP :: 254 1
+
+10:58:40.069 :: MFAPP :: 255 0
+
+10:58:42.946 :: MFAPP :: 256 3
+
+10:58:42.986 :: MFAPP :: 257 -1
+
+10:58:45.736 :: MFAPP :: 258 1
+
+10:58:48.616 :: MFAPP :: 259 -1
+
+10:58:48.659 :: MFAPP :: 260 1
+
+10:58:51.550 :: MFAPP :: 261 0
+
+10:58:54.263 :: MFAPP :: 262 0
+
+10:58:54.304 :: MFAPP :: 263 -1
+
+10:58:57.298 :: MFAPP :: 264 1
+
+10:59:00.092 :: MFAPP :: 265 0
+
+10:59:00.142 :: MFAPP :: 266 -1
+
+10:59:03.079 :: MFAPP :: 267 2
+
+10:59:05.836 :: MFAPP :: 268 -1
+
+10:59:05.880 :: MFAPP :: 269 -1
+
+10:59:08.845 :: MFAPP :: 270 0
+
+10:59:11.725 :: MFAPP :: 271 4
+
+10:59:11.767 :: MFAPP :: 272 0
+
+10:59:14.600 :: MFAPP :: 273 -1
+
+10:59:17.453 :: MFAPP :: 274 2
+
+10:59:17.496 :: MFAPP :: 275 -4
+
+10:59:20.274 :: MFAPP :: 276 0
+
+10:59:23.130 :: MFAPP :: 277 0
+
+10:59:23.181 :: MFAPP :: 278 -1
+
+10:59:26.042 :: MFAPP :: 279 1
+
+10:59:28.938 :: MFAPP :: 280 -1
+
+10:59:28.975 :: MFAPP :: 281 2
+
+10:59:31.969 :: MFAPP :: 282 -1
+
+10:59:34.771 :: MFAPP :: 283 2
+
+10:59:34.830 :: MFAPP :: 284 -1
+
+10:59:37.694 :: MFAPP :: 285 1
+
+10:59:40.632 :: MFAPP :: 286 -1
+
+10:59:40.674 :: MFAPP :: 287 1
+
+10:59:43.619 :: MFAPP :: 288 1
+
+10:59:46.381 :: MFAPP :: 289 0
+
+10:59:46.426 :: MFAPP :: 290 -1
+
+10:59:49.237 :: MFAPP :: 291 -1
+
+10:59:52.115 :: MFAPP :: 292 -2
+
+10:59:52.167 :: MFAPP :: 293 2
+
+10:59:55.043 :: MFAPP :: 294 0
+
+10:59:57.869 :: MFAPP :: 295 1
+
+10:59:57.919 :: MFAPP :: 296 -2
+
+11:00:00.787 :: MFAPP :: 297 2
+
+11:00:03.603 :: MFAPP :: 298 -1
+
+11:00:03.648 :: MFAPP :: 299 -1
+
+11:00:06.545 :: MFAPP :: 300 0
+
+11:00:09.468 :: MFAPP :: 301 1
+
+11:00:09.511 :: MFAPP :: 302 -2
+
+11:00:12.422 :: MFAPP :: 303 1
+
+11:00:15.279 :: MFAPP :: 304 4
+
+11:00:15.320 :: MFAPP :: 305 0
+
+11:00:18.227 :: MFAPP :: 306 -1
+
+11:00:21.177 :: MFAPP :: 307 -3
+
+11:00:21.216 :: MFAPP :: 308 0
+
+11:00:24.085 :: MFAPP :: 309 1
+
+11:00:27.074 :: MFAPP :: 310 2
+
+11:00:27.115 :: MFAPP :: 311 -2
+
+11:00:29.991 :: MFAPP :: 312 0
+
+11:00:32.944 :: MFAPP :: 313 0
+
+11:00:32.996 :: MFAPP :: 314 -2
+
+11:00:35.798 :: MFAPP :: 315 0
+
+11:00:38.798 :: MFAPP :: 316 -3
+
+11:00:38.847 :: MFAPP :: 317 -2
+
+11:00:41.691 :: MFAPP :: 318 4
+
+11:00:44.618 :: MFAPP :: 319 1
+
+11:00:44.661 :: MFAPP :: 320 0
+
+11:00:47.519 :: MFAPP :: 321 1
+
+11:00:50.373 :: MFAPP :: 322 0
+
+11:00:50.433 :: MFAPP :: 323 -5
+
+11:00:53.287 :: MFAPP :: 324 -1
+
+11:00:56.189 :: MFAPP :: 325 -1
+
+11:00:56.242 :: MFAPP :: 326 3
+
+11:00:59.032 :: MFAPP :: 327 0
+
+11:01:01.913 :: MFAPP :: 328 0
+
+11:01:01.956 :: MFAPP :: 329 0
+
+11:01:04.841 :: MFAPP :: 330 1
+
+11:01:07.650 :: MFAPP :: 331 -5
+
+11:01:07.704 :: MFAPP :: 332 1
+
+11:01:10.686 :: MFAPP :: 333 -1
+
+11:01:13.525 :: MFAPP :: 334 4
+
+11:01:13.571 :: MFAPP :: 335 -3
+
+11:01:16.478 :: MFAPP :: 336 1
+
+11:01:19.369 :: MFAPP :: 337 1
+
+11:01:19.415 :: MFAPP :: 338 -1
+
+11:01:22.479 :: MFAPP :: 339 -2
+
+11:01:25.382 :: MFAPP :: 340 -3
+
+11:01:25.435 :: MFAPP :: 341 -1
+
+11:01:28.396 :: MFAPP :: 342 -1
+
+11:01:31.402 :: MFAPP :: 343 0
+
+11:01:31.455 :: MFAPP :: 344 0
+
+11:01:34.294 :: MFAPP :: 345 0
+
+11:01:37.255 :: MFAPP :: 346 -2
+
+11:01:37.308 :: MFAPP :: 347 3
+
+11:01:40.199 :: MFAPP :: 348 1
+
+11:01:43.165 :: MFAPP :: 349 4
+
+11:01:43.216 :: MFAPP :: 350 2
+
+11:01:46.123 :: MFAPP :: 351 -1
+
+11:01:49.073 :: MFAPP :: 352 1
+
+11:01:49.123 :: MFAPP :: 353 2
+
+11:01:52.034 :: MFAPP :: 354 -2
+
+11:01:55.111 :: MFAPP :: 355 1
+
+11:01:55.153 :: MFAPP :: 356 -1
+
+11:01:57.990 :: MFAPP :: 357 1
+
+11:02:00.937 :: MFAPP :: 358 -1
+
+11:02:00.983 :: MFAPP :: 359 -1
+
+11:02:03.814 :: MFAPP :: 360 0
+
+11:02:06.778 :: MFAPP :: 361 1
+
+11:02:06.825 :: MFAPP :: 362 1
+
+11:02:09.818 :: MFAPP :: 363 2
+
+11:02:12.733 :: MFAPP :: 364 0
+
+11:02:12.781 :: MFAPP :: 365 2
+
+11:02:15.794 :: MFAPP :: 366 0
+
+11:02:18.838 :: MFAPP :: 367 1
+
+11:02:18.890 :: MFAPP :: 368 -1
+
+11:02:21.792 :: MFAPP :: 369 -1
+
+11:02:24.728 :: MFAPP :: 370 -4
+
+11:02:24.785 :: MFAPP :: 371 -4
+
+11:02:27.736 :: MFAPP :: 372 -3
+
+11:02:30.744 :: MFAPP :: 373 2
+
+11:02:30.789 :: MFAPP :: 374 -1
+
+11:02:33.754 :: MFAPP :: 375 -3
+
+11:02:36.641 :: MFAPP :: 376 4
+
+11:02:36.691 :: MFAPP :: 377 1
+
+11:02:39.677 :: MFAPP :: 378 -1
+
+11:02:42.816 :: MFAPP :: 379 0
+
+11:02:42.862 :: MFAPP :: 380 2
+
+11:02:45.748 :: MFAPP :: 381 5
+
+11:02:48.762 :: MFAPP :: 382 -2
+
+11:02:48.809 :: MFAPP :: 383 0
+
+11:02:51.833 :: MFAPP :: 384 0
+
+11:02:54.803 :: MFAPP :: 385 -1
+
+11:02:54.858 :: MFAPP :: 386 2
+
+11:02:57.711 :: MFAPP :: 387 -1
+
+11:03:00.658 :: MFAPP :: 388 1
+
+11:03:00.714 :: MFAPP :: 389 0
+
+11:03:03.578 :: MFAPP :: 390 -1
+
+11:03:06.476 :: MFAPP :: 391 0
+
+11:03:06.523 :: MFAPP :: 392 0
+
+11:03:09.418 :: MFAPP :: 393 0
+
+11:03:12.377 :: MFAPP :: 394 1
+
+11:03:12.432 :: MFAPP :: 395 0
+
+11:03:15.365 :: MFAPP :: 396 0
+
+11:03:18.234 :: MFAPP :: 397 1
+
+11:03:18.282 :: MFAPP :: 398 -2
+
+11:03:21.229 :: MFAPP :: 399 1
+
+11:03:24.129 :: MFAPP :: 400 -1
+
+11:03:24.181 :: MFAPP :: 401 1
+
+11:03:27.059 :: MFAPP :: 402 0
+
+11:03:30.174 :: MFAPP :: 403 -2
+
+11:03:30.218 :: MFAPP :: 404 0
+
+11:03:33.146 :: MFAPP :: 405 2
+
+11:03:36.040 :: MFAPP :: 406 0
+
+11:03:36.091 :: MFAPP :: 407 2
+
+11:03:38.979 :: MFAPP :: 408 -1
+
+11:03:41.934 :: MFAPP :: 409 0
+
+11:03:41.982 :: MFAPP :: 410 0
+
+11:03:44.914 :: MFAPP :: 411 -2
+
+11:03:47.962 :: MFAPP :: 412 1
+
+11:03:48.013 :: MFAPP :: 413 -1
+
+11:03:50.959 :: MFAPP :: 414 -1
+
+11:03:53.974 :: MFAPP :: 415 2
+
+11:03:54.016 :: MFAPP :: 416 -2
+
+11:03:56.939 :: MFAPP :: 417 1
+
+11:03:59.824 :: MFAPP :: 418 -1
+
+11:03:59.876 :: MFAPP :: 419 -2
+
+11:04:02.887 :: MFAPP :: 420 1
+
+11:04:05.948 :: MFAPP :: 421 1
+
+11:04:05.999 :: MFAPP :: 422 -1
+
+11:04:08.880 :: MFAPP :: 423 1
+
+11:04:11.844 :: MFAPP :: 424 3
+
+11:04:11.888 :: MFAPP :: 425 -2
+
+11:04:14.948 :: MFAPP :: 426 1
+
+11:04:17.894 :: MFAPP :: 427 -1
+
+11:04:17.944 :: MFAPP :: 428 2
+
+11:04:20.862 :: MFAPP :: 429 1
+
+11:04:23.882 :: MFAPP :: 430 1
+
+11:04:23.946 :: MFAPP :: 431 2
+
+11:04:26.955 :: MFAPP :: 432 -1
+
+11:04:29.969 :: MFAPP :: 433 2
+
+11:04:30.027 :: MFAPP :: 434 0
+
+11:04:33.020 :: MFAPP :: 435 -2
+
+11:04:35.994 :: MFAPP :: 436 0
+
+11:04:36.055 :: MFAPP :: 437 -1
+
+11:04:38.996 :: MFAPP :: 438 -3
+
+11:04:42.092 :: MFAPP :: 439 0
+
+11:04:42.149 :: MFAPP :: 440 0
+
+11:04:45.086 :: MFAPP :: 441 1
+
+11:04:48.017 :: MFAPP :: 442 2
+
+11:04:48.068 :: MFAPP :: 443 -1
+
+11:04:51.058 :: MFAPP :: 444 1
+
+11:04:54.100 :: MFAPP :: 445 0
+
+11:04:54.148 :: MFAPP :: 446 1
+
+11:04:57.165 :: MFAPP :: 447 -1
+
+11:05:00.112 :: MFAPP :: 448 -3
+
+11:05:00.172 :: MFAPP :: 449 -2
+
+11:05:03.159 :: MFAPP :: 450 -1
+
+11:05:06.197 :: MFAPP :: 451 0
+
+11:05:06.247 :: MFAPP :: 452 -2
+
+11:05:09.230 :: MFAPP :: 453 0
+
+11:05:12.306 :: MFAPP :: 454 -1
+
+11:05:12.366 :: MFAPP :: 455 0
+
+11:05:15.332 :: MFAPP :: 456 -1
+
+11:05:18.352 :: MFAPP :: 457 2
+
+11:05:18.424 :: MFAPP :: 458 2
+
+11:05:21.529 :: MFAPP :: 459 -1
+
+11:05:24.577 :: MFAPP :: 460 0
+
+11:05:24.629 :: MFAPP :: 461 1
+
+11:05:27.678 :: MFAPP :: 462 0
+
+11:05:30.693 :: MFAPP :: 463 -3
+
+11:05:30.744 :: MFAPP :: 464 1
+
+11:05:33.843 :: MFAPP :: 465 1
+
+11:05:36.971 :: MFAPP :: 466 -2
+
+11:05:37.017 :: MFAPP :: 467 -1
+
+11:05:40.047 :: MFAPP :: 468 -1
+
+11:05:43.110 :: MFAPP :: 469 1
+
+11:05:43.175 :: MFAPP :: 470 0
+
+11:05:46.229 :: MFAPP :: 471 -1
+
+11:05:49.305 :: MFAPP :: 472 1
+
+11:05:49.358 :: MFAPP :: 473 0
+
+11:05:52.417 :: MFAPP :: 474 -1
+
+11:05:55.529 :: MFAPP :: 475 0
+
+11:05:55.578 :: MFAPP :: 476 0
+
+11:05:58.550 :: MFAPP :: 477 -3
+
+11:06:01.618 :: MFAPP :: 478 -2
+
+11:06:01.670 :: MFAPP :: 479 0
+
+11:06:04.699 :: MFAPP :: 480 0
+
+11:06:07.739 :: MFAPP :: 481 1
+
+11:06:07.793 :: MFAPP :: 482 -1
+
+11:06:10.861 :: MFAPP :: 483 -4
+
+11:06:13.878 :: MFAPP :: 484 -1
+
+11:06:13.937 :: MFAPP :: 485 0
+
+11:06:16.949 :: MFAPP :: 486 1
+
+11:06:20.193 :: MFAPP :: 487 -1
+
+11:06:20.239 :: MFAPP :: 488 0
+
+11:06:23.233 :: MFAPP :: 489 -2
+
+11:06:26.304 :: MFAPP :: 490 1
+
+11:06:26.351 :: MFAPP :: 491 2
+
+11:06:29.382 :: MFAPP :: 492 -3
+
+11:06:32.457 :: MFAPP :: 493 0
+
+11:06:32.518 :: MFAPP :: 494 -1
+
+11:06:35.608 :: MFAPP :: 495 3
+
+11:06:38.644 :: MFAPP :: 496 -1
+
+11:06:38.693 :: MFAPP :: 497 0
+
+11:06:41.843 :: MFAPP :: 498 0
+
+11:06:41.892 :: MFAPP :: 499 0
+
+11:06:44.948 :: MFAPP :: 500 -1
+
+11:06:47.998 :: MFAPP :: 501 0
+
+11:06:48.044 :: MFAPP :: 502 0
+
+11:06:51.265 :: MFAPP :: 503 0
+
+11:06:54.412 :: MFAPP :: 504 -2
+
+11:06:54.460 :: MFAPP :: 505 0
+
+11:06:57.667 :: MFAPP :: 506 1
+
+11:07:00.723 :: MFAPP :: 507 0
+
+11:07:00.772 :: MFAPP :: 508 0
+
+11:07:03.800 :: MFAPP :: 509 4
+
+11:07:06.947 :: MFAPP :: 510 1
+
+11:07:06.995 :: MFAPP :: 511 -1
+
+11:07:10.182 :: MFAPP :: 512 1
+
+11:07:13.335 :: MFAPP :: 513 -1
+
+11:07:13.387 :: MFAPP :: 514 4
+
+11:07:16.469 :: MFAPP :: 515 1
+
+11:07:19.594 :: MFAPP :: 516 -2
+
+11:07:19.641 :: MFAPP :: 517 3
+
+11:07:22.762 :: MFAPP :: 518 -3
+
+11:07:25.791 :: MFAPP :: 519 2
+
+11:07:25.847 :: MFAPP :: 520 0
+
+11:07:28.856 :: MFAPP :: 521 1
+
+11:07:31.947 :: MFAPP :: 522 2
+
+11:07:32.001 :: MFAPP :: 523 0
+
+11:07:35.129 :: MFAPP :: 524 -1
+
+11:07:38.194 :: MFAPP :: 525 -4
+
+11:07:38.243 :: MFAPP :: 526 1
+
+11:07:41.400 :: MFAPP :: 527 -1
+
+11:07:44.611 :: MFAPP :: 528 -1
+
+11:07:44.663 :: MFAPP :: 529 1
+
+11:07:47.676 :: MFAPP :: 530 1
+
+11:07:50.764 :: MFAPP :: 531 0
+
+11:07:50.811 :: MFAPP :: 532 2
+
+11:07:53.884 :: MFAPP :: 533 -2
+
+11:07:56.967 :: MFAPP :: 534 -1
+
+11:07:57.019 :: MFAPP :: 535 1
+
+11:08:00.080 :: MFAPP :: 536 -1
+
+11:08:03.103 :: MFAPP :: 537 1
+
+11:08:03.151 :: MFAPP :: 538 0
+
+11:08:06.196 :: MFAPP :: 539 1
+
+11:08:09.366 :: MFAPP :: 540 1
+
+11:08:09.412 :: MFAPP :: 541 -4
+
+11:08:12.479 :: MFAPP :: 542 0
+
+11:08:15.504 :: MFAPP :: 543 1
+
+11:08:15.550 :: MFAPP :: 544 0
+
+11:08:18.573 :: MFAPP :: 545 -3
+
+11:08:21.623 :: MFAPP :: 546 -2
+
+11:08:21.672 :: MFAPP :: 547 0
+
+11:08:24.773 :: MFAPP :: 548 3
+
+11:08:27.836 :: MFAPP :: 549 2
+
+11:08:27.884 :: MFAPP :: 550 1
+
+11:08:30.811 :: MFAPP :: 551 2
+
+11:08:33.795 :: MFAPP :: 552 0
+
+11:08:33.844 :: MFAPP :: 553 3
+
+11:08:36.972 :: MFAPP :: 554 2
+
+11:08:40.141 :: MFAPP :: 555 0
+
+11:08:40.195 :: MFAPP :: 556 0
+
+11:08:43.249 :: MFAPP :: 557 2
+
+11:08:46.224 :: MFAPP :: 558 -2
+
+11:08:46.274 :: MFAPP :: 559 -4
+
+11:08:49.351 :: MFAPP :: 560 2
+
+11:08:52.455 :: MFAPP :: 561 0
+
+11:08:52.504 :: MFAPP :: 562 -4
+
+11:08:55.542 :: MFAPP :: 563 4
+
+11:08:58.533 :: MFAPP :: 564 -2
+
+11:08:58.583 :: MFAPP :: 565 0
+
+11:09:01.548 :: MFAPP :: 566 -2
+
+11:09:04.570 :: MFAPP :: 567 2
+
+11:09:04.615 :: MFAPP :: 568 0
+
+11:09:07.747 :: MFAPP :: 569 0
+
+11:09:10.744 :: MFAPP :: 570 0
+
+11:09:10.798 :: MFAPP :: 571 3
+
+11:09:13.814 :: MFAPP :: 572 -3
+
+11:09:16.859 :: MFAPP :: 573 0
+
+11:09:16.908 :: MFAPP :: 574 3
+
+11:09:20.047 :: MFAPP :: 575 2
+
+11:09:23.072 :: MFAPP :: 576 0
+
+11:09:23.126 :: MFAPP :: 577 2
+
+11:09:26.120 :: MFAPP :: 578 -1
+
+11:09:29.154 :: MFAPP :: 579 -2
+
+11:09:29.202 :: MFAPP :: 580 -1
+
+11:09:32.264 :: MFAPP :: 581 -2
+
+11:09:35.339 :: MFAPP :: 582 2
+
+11:09:35.385 :: MFAPP :: 583 4
+
+11:09:38.324 :: MFAPP :: 584 4
+
+11:09:41.305 :: MFAPP :: 585 4
+
+11:09:41.352 :: MFAPP :: 586 1
+
+11:09:44.376 :: MFAPP :: 587 -3
+
+11:09:47.508 :: MFAPP :: 588 -3
+
+11:09:47.562 :: MFAPP :: 589 -3
+
+11:09:50.669 :: MFAPP :: 590 -1
+
+11:09:53.669 :: MFAPP :: 591 2
+
+11:09:53.725 :: MFAPP :: 592 1
+
+11:09:56.750 :: MFAPP :: 593 1
+
+11:09:59.889 :: MFAPP :: 594 1
+
+11:09:59.936 :: MFAPP :: 595 0
+
+11:10:03.047 :: MFAPP :: 596 0
+
+11:10:06.217 :: MFAPP :: 597 0
+
+11:10:06.265 :: MFAPP :: 598 -2
+
+11:10:09.308 :: MFAPP :: 599 2
+
+11:10:12.381 :: MFAPP :: 600 0
+
+11:10:12.430 :: MFAPP :: 601 1
+
+11:10:15.451 :: MFAPP :: 602 -2
+
+11:10:18.551 :: MFAPP :: 603 -1
+
+11:10:18.600 :: MFAPP :: 604 -1
+
+11:10:21.649 :: MFAPP :: 605 0
+
+11:10:24.717 :: MFAPP :: 606 2
+
+11:10:24.766 :: MFAPP :: 607 1
+
+11:10:27.872 :: MFAPP :: 608 -3
+
+11:10:31.060 :: MFAPP :: 609 -2
+
+11:10:31.113 :: MFAPP :: 610 3
+
+11:10:34.121 :: MFAPP :: 611 -2
+
+11:10:37.143 :: MFAPP :: 612 -1
+
+11:10:37.194 :: MFAPP :: 613 0
+
+11:10:40.246 :: MFAPP :: 614 2
+
+11:10:43.258 :: MFAPP :: 615 -1
+
+11:10:43.308 :: MFAPP :: 616 0
+
+11:10:46.303 :: MFAPP :: 617 0
+
+11:10:49.279 :: MFAPP :: 618 3
+
+11:10:49.330 :: MFAPP :: 619 0
+
+11:10:52.330 :: MFAPP :: 620 0
+
+11:10:55.438 :: MFAPP :: 621 1
+
+11:10:55.489 :: MFAPP :: 622 -3
+
+11:10:58.551 :: MFAPP :: 623 0
+
+11:11:01.677 :: MFAPP :: 624 -1
+
+11:11:01.726 :: MFAPP :: 625 -1
+
+11:11:04.750 :: MFAPP :: 626 -1
+
+11:11:07.883 :: MFAPP :: 627 0
+
+11:11:07.934 :: MFAPP :: 628 4
+
+11:11:10.882 :: MFAPP :: 629 2
+
+11:11:13.933 :: MFAPP :: 630 2
+
+11:11:13.989 :: MFAPP :: 631 1
+
+11:11:17.000 :: MFAPP :: 632 6
+
+11:11:19.970 :: MFAPP :: 633 -1
+
+11:11:20.022 :: MFAPP :: 634 -4
+
+11:11:23.078 :: MFAPP :: 635 5
+
+11:11:26.175 :: MFAPP :: 636 -1
+
+11:11:26.227 :: MFAPP :: 637 -1
+
+11:11:29.137 :: MFAPP :: 638 3
+
+11:11:32.149 :: MFAPP :: 639 -3
+
+11:11:32.199 :: MFAPP :: 640 0
+
+11:11:35.280 :: MFAPP :: 641 -1
+
+11:11:38.306 :: MFAPP :: 642 1
+
+11:11:38.356 :: MFAPP :: 643 -1
+
+11:11:41.241 :: MFAPP :: 644 0
+
+11:11:44.234 :: MFAPP :: 645 -2
+
+11:11:44.294 :: MFAPP :: 646 2
+
+11:11:47.340 :: MFAPP :: 647 0
+
+11:11:50.273 :: MFAPP :: 648 1
+
+11:11:50.323 :: MFAPP :: 649 -1
+
+11:11:53.375 :: MFAPP :: 650 -1
+
+11:11:56.360 :: MFAPP :: 651 0
+
+11:11:56.410 :: MFAPP :: 652 1
+
+11:11:59.474 :: MFAPP :: 653 -2
+
+11:12:02.574 :: MFAPP :: 654 1
+
+11:12:02.630 :: MFAPP :: 655 -2
+
+11:12:05.604 :: MFAPP :: 656 0
+
+11:12:08.681 :: MFAPP :: 657 2
+
+11:12:08.732 :: MFAPP :: 658 -2
+
+11:12:11.775 :: MFAPP :: 659 -1
+
+11:12:14.858 :: MFAPP :: 660 1
+
+11:12:14.908 :: MFAPP :: 661 -3
+
+11:12:18.130 :: MFAPP :: 662 1
+
+11:12:21.084 :: MFAPP :: 663 0
+
+11:12:21.136 :: MFAPP :: 664 2
+
+11:12:24.138 :: MFAPP :: 665 1
+
+11:12:27.249 :: MFAPP :: 666 1
+
+11:12:27.299 :: MFAPP :: 667 -2
+
+11:12:30.277 :: MFAPP :: 668 -1
+
+11:12:33.271 :: MFAPP :: 669 0
+
+11:12:33.330 :: MFAPP :: 670 1
+
+11:12:36.420 :: MFAPP :: 671 0
+
+11:12:39.463 :: MFAPP :: 672 -1
+
+11:12:39.519 :: MFAPP :: 673 0
+
+11:12:42.605 :: MFAPP :: 674 2
+
+11:12:45.791 :: MFAPP :: 675 -2
+
+11:12:45.843 :: MFAPP :: 676 2
+
+11:12:48.845 :: MFAPP :: 677 4
+
+11:12:51.864 :: MFAPP :: 678 0
+
+11:12:51.911 :: MFAPP :: 679 0
+
+11:12:54.990 :: MFAPP :: 680 0
+
+11:12:57.995 :: MFAPP :: 681 2
+
+11:12:58.055 :: MFAPP :: 682 0
+
+11:13:01.134 :: MFAPP :: 683 -2
+
+11:13:04.159 :: MFAPP :: 684 -1
+
+11:13:04.210 :: MFAPP :: 685 -2
+
+11:13:07.240 :: MFAPP :: 686 2
+
+11:13:10.412 :: MFAPP :: 687 1
+
+11:13:10.461 :: MFAPP :: 688 2
+
+11:13:13.564 :: MFAPP :: 689 -1
+
+11:13:16.646 :: MFAPP :: 690 0
+
+11:13:16.698 :: MFAPP :: 691 -2
+
+11:13:19.653 :: MFAPP :: 692 -1
+
+11:13:22.656 :: MFAPP :: 693 2
+
+11:13:22.708 :: MFAPP :: 694 0
+
+11:13:25.811 :: MFAPP :: 695 -3
+
+11:13:28.935 :: MFAPP :: 696 -3
+
+11:13:28.986 :: MFAPP :: 697 1
+
+11:13:32.105 :: MFAPP :: 698 -1
+
+11:13:35.110 :: MFAPP :: 699 1
+
+11:13:35.165 :: MFAPP :: 700 -1
+
+11:13:38.163 :: MFAPP :: 701 1
+
+11:13:41.190 :: MFAPP :: 702 -1
+
+11:13:41.248 :: MFAPP :: 703 0
+
+11:13:44.350 :: MFAPP :: 704 -2
+
+11:13:47.497 :: MFAPP :: 705 1
+
+11:13:47.548 :: MFAPP :: 706 4
+
+11:13:50.665 :: MFAPP :: 707 -1
+
+11:13:53.746 :: MFAPP :: 708 -3
+
+11:13:53.805 :: MFAPP :: 709 0
+
+11:13:56.762 :: MFAPP :: 710 1
+
+11:13:59.823 :: MFAPP :: 711 1
+
+11:13:59.880 :: MFAPP :: 712 -2
+
+11:14:02.962 :: MFAPP :: 713 0
+
+11:14:05.990 :: MFAPP :: 714 2
+
+11:14:06.053 :: MFAPP :: 715 2
+
+11:14:09.035 :: MFAPP :: 716 0
+
+11:14:12.048 :: MFAPP :: 717 -1
+
+11:14:12.101 :: MFAPP :: 718 1
+
+11:14:15.188 :: MFAPP :: 719 -1
+
+11:14:18.324 :: MFAPP :: 720 2
+
+11:14:18.376 :: MFAPP :: 721 0
+
+11:14:21.405 :: MFAPP :: 722 1
+
+11:14:24.510 :: MFAPP :: 723 -4
+
+11:14:24.570 :: MFAPP :: 724 -3
+
+11:14:27.545 :: MFAPP :: 725 1
+
+11:14:30.535 :: MFAPP :: 726 1
+
+11:14:30.589 :: MFAPP :: 727 0
+
+11:14:33.680 :: MFAPP :: 728 1
+
+11:14:36.720 :: MFAPP :: 729 1
+
+11:14:36.780 :: MFAPP :: 730 2
+
+11:14:39.805 :: MFAPP :: 731 -1
+
+11:14:42.925 :: MFAPP :: 732 1
+
+11:14:42.976 :: MFAPP :: 733 1
+
+11:14:45.972 :: MFAPP :: 734 0
+
+11:14:49.129 :: MFAPP :: 735 0
+
+11:14:49.181 :: MFAPP :: 736 0
+
+11:14:52.209 :: MFAPP :: 737 1
+
+11:14:55.224 :: MFAPP :: 738 1
+
+11:14:55.278 :: MFAPP :: 739 0
+
+11:14:58.322 :: MFAPP :: 740 0
+
+11:15:01.371 :: MFAPP :: 741 1
+
+11:15:01.428 :: MFAPP :: 742 0
+
+11:15:04.462 :: MFAPP :: 743 -2
+
+11:15:07.432 :: MFAPP :: 744 0
+
+11:15:07.489 :: MFAPP :: 745 0
+
+11:15:10.520 :: MFAPP :: 746 1
+
+11:15:13.657 :: MFAPP :: 747 0
+
+11:15:13.715 :: MFAPP :: 748 3
+
+11:15:16.737 :: MFAPP :: 749 -1
+
+11:15:19.884 :: MFAPP :: 750 -3
+
+11:15:19.929 :: MFAPP :: 751 0
+
+11:15:22.930 :: MFAPP :: 752 3
+
+11:15:25.963 :: MFAPP :: 753 1
+
+11:15:26.021 :: MFAPP :: 754 -2
+
+11:15:29.106 :: MFAPP :: 755 0
+
+11:15:32.131 :: MFAPP :: 756 -1
+
+11:15:32.190 :: MFAPP :: 757 2
+
+11:15:35.305 :: MFAPP :: 758 0
+
+11:15:38.360 :: MFAPP :: 759 0
+
+11:15:38.417 :: MFAPP :: 760 -1
+
+11:15:41.431 :: MFAPP :: 761 0
+
+11:15:44.495 :: MFAPP :: 762 2
+
+11:15:44.557 :: MFAPP :: 763 0
+
+11:15:47.564 :: MFAPP :: 764 -2
+
+11:15:50.635 :: MFAPP :: 765 0
+
+11:15:50.688 :: MFAPP :: 766 0
+
+11:15:53.671 :: MFAPP :: 767 0
+
+11:15:56.789 :: MFAPP :: 768 1
+
+11:15:56.849 :: MFAPP :: 769 -1
+
+11:15:59.962 :: MFAPP :: 770 -1
+
+11:16:03.086 :: MFAPP :: 771 2
+
+11:16:03.133 :: MFAPP :: 772 -1
+
+11:16:06.136 :: MFAPP :: 773 2
+
+11:16:09.261 :: MFAPP :: 774 -4
+
+11:16:09.315 :: MFAPP :: 775 2
+
+11:16:12.326 :: MFAPP :: 776 2
+
+11:16:15.411 :: MFAPP :: 777 2
+
+11:16:15.464 :: MFAPP :: 778 -2
+
+11:16:18.597 :: MFAPP :: 779 3
+
+11:16:21.656 :: MFAPP :: 780 1
+
+11:16:21.707 :: MFAPP :: 781 -3
+
+11:16:24.736 :: MFAPP :: 782 3
+
+11:16:27.771 :: MFAPP :: 783 -2
+
+11:16:27.819 :: MFAPP :: 784 5
+
+11:16:30.829 :: MFAPP :: 785 -1
+
+11:16:34.010 :: MFAPP :: 786 0
+
+11:16:34.073 :: MFAPP :: 787 3
+
+11:16:37.008 :: MFAPP :: 788 -2
+
+11:16:40.070 :: MFAPP :: 789 -1
+
+11:16:40.123 :: MFAPP :: 790 0
+
+11:16:43.116 :: MFAPP :: 791 0
+
+11:16:46.221 :: MFAPP :: 792 -2
+
+11:16:46.274 :: MFAPP :: 793 3
+
+11:16:49.238 :: MFAPP :: 794 0
+
+11:16:52.285 :: MFAPP :: 795 -4
+
+11:16:52.349 :: MFAPP :: 796 3
+
+11:16:55.298 :: MFAPP :: 797 -1
+
+11:16:58.307 :: MFAPP :: 798 0
+
+11:16:58.364 :: MFAPP :: 799 -1
+
+11:17:01.433 :: MFAPP :: 800 -2
+
+11:17:04.479 :: MFAPP :: 801 -4
+
+11:17:04.546 :: MFAPP :: 802 1
+
+11:17:07.591 :: MFAPP :: 803 1
+
+11:17:10.646 :: MFAPP :: 804 0
+
+11:17:10.707 :: MFAPP :: 805 0
+
+11:17:13.666 :: MFAPP :: 806 2
+
+11:17:16.757 :: MFAPP :: 807 -1
+
+11:17:16.805 :: MFAPP :: 808 1
+
+11:17:19.868 :: MFAPP :: 809 -1
+
+11:17:22.868 :: MFAPP :: 810 0
+
+11:17:22.926 :: MFAPP :: 811 0
+
+11:17:25.929 :: MFAPP :: 812 0
+
+11:17:28.910 :: MFAPP :: 813 -1
+
+11:17:28.971 :: MFAPP :: 814 0
+
+11:17:31.897 :: MFAPP :: 815 0
+
+11:17:34.969 :: MFAPP :: 816 0
+
+11:17:35.032 :: MFAPP :: 817 1
+
+11:17:38.114 :: MFAPP :: 818 0
+
+11:17:41.129 :: MFAPP :: 819 0
+
+11:17:41.177 :: MFAPP :: 820 -1
+
+11:17:44.332 :: MFAPP :: 821 1
+
+11:17:47.405 :: MFAPP :: 822 -1
+
+11:17:47.469 :: MFAPP :: 823 0
+
+11:17:50.492 :: MFAPP :: 824 0
+
+11:17:53.607 :: MFAPP :: 825 0
+
+11:17:53.669 :: MFAPP :: 826 0
+
+11:17:56.751 :: MFAPP :: 827 0
+
+11:17:59.774 :: MFAPP :: 828 0
+
+11:17:59.831 :: MFAPP :: 829 0
+
+11:18:02.684 :: MFAPP :: 830 0
+
+11:18:05.813 :: MFAPP :: 831 0
+
+11:18:05.867 :: MFAPP :: 832 0
+
+11:18:08.935 :: MFAPP :: 833 0
+
+11:18:11.949 :: MFAPP :: 834 0
+
+11:18:12.007 :: MFAPP :: 835 0
+
+11:18:15.032 :: MFAPP :: 836 0
+
+11:18:18.165 :: MFAPP :: 837 0
+
+11:18:18.211 :: MFAPP :: 838 0
+
+11:18:21.191 :: MFAPP :: 839 0
+
+11:18:24.240 :: MFAPP :: 840 0
+
+11:18:24.307 :: MFAPP :: 841 0
+
+11:18:27.305 :: MFAPP :: 842 0
+
+11:18:30.358 :: MFAPP :: 843 0
+
+11:18:30.421 :: MFAPP :: 844 0
+
+11:18:33.495 :: MFAPP :: 845 0
+
+11:18:36.596 :: MFAPP :: 846 0
+
+11:18:36.662 :: MFAPP :: 847 0
+
+11:18:39.719 :: MFAPP :: 848 1
+
+11:18:42.768 :: MFAPP :: 849 -2
+
+11:18:42.838 :: MFAPP :: 850 0
+
+11:18:45.906 :: MFAPP :: 851 0
+
+11:18:48.961 :: MFAPP :: 852 1
+
+11:18:49.014 :: MFAPP :: 853 0
+
+11:18:52.061 :: MFAPP :: 854 1
+
+11:18:55.099 :: MFAPP :: 855 0
+
+11:18:55.154 :: MFAPP :: 856 0
+
+11:18:58.191 :: MFAPP :: 857 -1
+
+11:19:01.273 :: MFAPP :: 858 -2
+
+11:19:01.328 :: MFAPP :: 859 0
+
+11:19:04.499 :: MFAPP :: 860 0
+
+11:19:07.666 :: MFAPP :: 861 0
+
+11:19:07.722 :: MFAPP :: 862 0
+
+11:19:10.630 :: MFAPP :: 863 1
+
+11:19:13.739 :: MFAPP :: 864 1
+
+11:19:13.813 :: MFAPP :: 865 -1
+
+11:19:16.834 :: MFAPP :: 866 -1
+
+11:19:19.925 :: MFAPP :: 867 0
+
+11:19:19.977 :: MFAPP :: 868 0
+
+11:19:23.103 :: MFAPP :: 869 0
+
+11:19:26.099 :: MFAPP :: 870 -1
+
+11:19:26.159 :: MFAPP :: 871 1
+
+11:19:29.218 :: MFAPP :: 872 0
+
+11:19:32.246 :: MFAPP :: 873 0
+
+11:19:32.307 :: MFAPP :: 874 0
+
+11:19:35.355 :: MFAPP :: 875 0
+
+11:19:38.406 :: MFAPP :: 876 0
+
+11:19:38.465 :: MFAPP :: 877 0
+
+11:19:41.487 :: MFAPP :: 878 0
+
+11:19:44.633 :: MFAPP :: 879 1
+
+11:19:44.698 :: MFAPP :: 880 0
+
+11:19:47.737 :: MFAPP :: 881 0
+
+11:19:50.730 :: MFAPP :: 882 0
+
+11:19:50.795 :: MFAPP :: 883 0
+
+11:19:53.849 :: MFAPP :: 884 -2
+
+11:19:56.963 :: MFAPP :: 885 1
+
+11:19:57.035 :: MFAPP :: 886 0
+
+11:20:00.030 :: MFAPP :: 887 0
+
+11:20:03.197 :: MFAPP :: 888 0
+
+11:20:03.254 :: MFAPP :: 889 0
+
+11:20:06.360 :: MFAPP :: 890 0
+
+11:20:09.501 :: MFAPP :: 891 1
+
+11:20:09.553 :: MFAPP :: 892 0
+
+11:20:12.679 :: MFAPP :: 893 0
+
+11:20:15.818 :: MFAPP :: 894 0
+
+11:20:15.881 :: MFAPP :: 895 1
+
+11:20:18.898 :: MFAPP :: 896 -1
+
+11:20:21.891 :: MFAPP :: 897 0
+
+11:20:21.952 :: MFAPP :: 898 0
+
+11:20:25.005 :: MFAPP :: 899 0
+
+11:20:28.088 :: MFAPP :: 900 0
+
+11:20:28.162 :: MFAPP :: 901 0
+
+11:20:31.196 :: MFAPP :: 902 0
+
+11:20:34.301 :: MFAPP :: 903 1
+
+11:20:34.353 :: MFAPP :: 904 0
+
+11:20:37.316 :: MFAPP :: 905 -1
+
+11:20:40.337 :: MFAPP :: 906 0
+
+11:20:40.395 :: MFAPP :: 907 0
+
+11:20:43.413 :: MFAPP :: 908 0
+
+11:20:46.531 :: MFAPP :: 909 0
+
+11:20:46.584 :: MFAPP :: 910 0
+
+11:20:49.655 :: MFAPP :: 911 0
+
+11:20:52.676 :: MFAPP :: 912 -1
+
+11:20:52.733 :: MFAPP :: 913 0
+
+11:20:55.748 :: MFAPP :: 914 0
+
+11:20:58.819 :: MFAPP :: 915 0
+
+11:20:58.882 :: MFAPP :: 916 1
+
+11:21:01.920 :: MFAPP :: 917 0
+
+11:21:05.026 :: MFAPP :: 918 0
+
+11:21:05.096 :: MFAPP :: 919 0
+
+11:21:08.018 :: MFAPP :: 920 0
+
+11:21:11.102 :: MFAPP :: 921 0
+
+11:21:11.180 :: MFAPP :: 922 0
+
+11:21:14.217 :: MFAPP :: 923 0
+
+11:21:17.237 :: MFAPP :: 924 0
+
+11:21:17.296 :: MFAPP :: 925 0
+
+11:21:20.445 :: MFAPP :: 926 0
+
+11:21:23.402 :: MFAPP :: 927 0
+
+11:21:23.474 :: MFAPP :: 928 0
+
+11:21:26.519 :: MFAPP :: 929 0
+
+11:21:29.600 :: MFAPP :: 930 0
+
+11:21:29.653 :: MFAPP :: 931 0
+
+11:21:32.663 :: MFAPP :: 932 0
+
+11:21:35.750 :: MFAPP :: 933 0
+
+11:21:35.804 :: MFAPP :: 934 0
+
+11:21:38.795 :: MFAPP :: 935 0
+
+11:21:41.782 :: MFAPP :: 936 0
+
+11:21:41.845 :: MFAPP :: 937 0
+
+11:21:44.806 :: MFAPP :: 938 0
+
+11:21:47.924 :: MFAPP :: 939 0
+
+11:21:47.978 :: MFAPP :: 940 -1
+
+11:21:50.982 :: MFAPP :: 941 2
+
+11:21:54.048 :: MFAPP :: 942 0
+
+11:21:54.118 :: MFAPP :: 943 0
+
+11:21:57.143 :: MFAPP :: 944 0
+
+11:22:00.270 :: MFAPP :: 945 0
+
+11:22:00.332 :: MFAPP :: 946 0
+
+11:22:03.473 :: MFAPP :: 947 0
+
+11:22:06.570 :: MFAPP :: 948 0
+
+11:22:06.656 :: MFAPP :: 949 -1
+
+11:22:09.672 :: MFAPP :: 950 0
+
+11:22:12.706 :: MFAPP :: 951 0
+
+11:22:12.765 :: MFAPP :: 952 0
+
+11:22:15.877 :: MFAPP :: 953 0
+
+11:22:18.929 :: MFAPP :: 954 0
+
+11:22:18.983 :: MFAPP :: 955 0
+
+11:22:22.057 :: MFAPP :: 956 0
+
+11:22:25.081 :: MFAPP :: 957 0
+
+11:22:25.137 :: MFAPP :: 958 0
+
+11:22:28.146 :: MFAPP :: 959 0
+
+11:22:31.239 :: MFAPP :: 960 0
+
+11:22:31.315 :: MFAPP :: 961 0
+
+11:22:34.391 :: MFAPP :: 962 0
+
+11:22:37.505 :: MFAPP :: 963 0
+
+11:22:37.567 :: MFAPP :: 964 0
+
+11:22:40.737 :: MFAPP :: 965 0
+
+11:22:43.883 :: MFAPP :: 966 0
+
+11:22:43.943 :: MFAPP :: 967 0
+
+11:22:46.976 :: MFAPP :: 968 0
+
+11:22:50.021 :: MFAPP :: 969 0
+
+11:22:50.076 :: MFAPP :: 970 0
+
+11:22:53.113 :: MFAPP :: 971 0
+
+11:22:56.174 :: MFAPP :: 972 0
+
+11:22:56.238 :: MFAPP :: 973 0
+
+11:22:59.182 :: MFAPP :: 974 0
+
+11:23:02.148 :: MFAPP :: 975 0
+
+11:23:02.233 :: MFAPP :: 976 0
+
+11:23:05.412 :: MFAPP :: 977 0
+
+11:23:08.316 :: MFAPP :: 978 0
+
+11:23:08.397 :: MFAPP :: 979 0
+
+11:23:11.356 :: MFAPP :: 980 0
+
+11:23:14.417 :: MFAPP :: 981 0
+
+11:23:14.476 :: MFAPP :: 982 0
+
+11:23:17.548 :: MFAPP :: 983 0
+
+11:23:20.615 :: MFAPP :: 984 0
+
+11:23:20.683 :: MFAPP :: 985 0
+
+11:23:23.612 :: MFAPP :: 986 0
+
+11:23:26.647 :: MFAPP :: 987 0
+
+11:23:26.721 :: MFAPP :: 988 0
+
+11:23:29.756 :: MFAPP :: 989 0
+
+11:23:32.728 :: MFAPP :: 990 0
+
+11:23:32.789 :: MFAPP :: 991 0
+
+11:23:35.814 :: MFAPP :: 992 0
+
+11:23:38.828 :: MFAPP :: 993 0
+
+11:23:38.892 :: MFAPP :: 994 1
+
+11:23:42.026 :: MFAPP :: 995 -1
+
+11:23:45.095 :: MFAPP :: 996 0
+
+11:23:45.152 :: MFAPP :: 997 0
+
+11:23:48.081 :: MFAPP :: 998 0
+
+11:23:48.139 :: MFAPP :: 999 0
+
+11:23:51.135 :: MFAPP :: 1000 0
+
+11:23:54.127 :: MFAPP :: 1001 0
+
+11:23:54.188 :: MFAPP :: 1002 0
+
+11:23:57.104 :: MFAPP :: 1003 0
+
+11:24:00.169 :: MFAPP :: 1004 0
+
+11:24:00.235 :: MFAPP :: 1005 0
+
+11:24:03.325 :: MFAPP :: 1006 0
+
+11:24:06.327 :: MFAPP :: 1007 0
+
+11:24:06.382 :: MFAPP :: 1008 0
+
+11:24:09.506 :: MFAPP :: 1009 0
+
+11:24:12.505 :: MFAPP :: 1010 0
+
+11:24:12.562 :: MFAPP :: 1011 0
+
+11:24:15.569 :: MFAPP :: 1012 0
+
+11:24:18.644 :: MFAPP :: 1013 0
+
+11:24:18.700 :: MFAPP :: 1014 0
+
+11:24:21.801 :: MFAPP :: 1015 0
+
+11:24:24.871 :: MFAPP :: 1016 0
+
+11:24:24.928 :: MFAPP :: 1017 0
+
+11:24:28.038 :: MFAPP :: 1018 0
+
+11:24:31.103 :: MFAPP :: 1019 0
+
+11:24:31.159 :: MFAPP :: 1020 0
+
+11:24:34.158 :: MFAPP :: 1021 0
+
+11:24:37.206 :: MFAPP :: 1022 0
+
+11:24:37.269 :: MFAPP :: 1023 0
+
+11:24:40.398 :: MFAPP :: 1024 0
+
+11:24:43.512 :: MFAPP :: 1025 0
+
+11:24:43.566 :: MFAPP :: 1026 0
+
+11:24:47.382 :: MFAPP :: 1027 0
+
+11:24:50.540 :: MFAPP :: 1028 0
+
+11:24:50.593 :: MFAPP :: 1029 0
+
+11:24:53.634 :: MFAPP :: 1030 0
+
+11:24:56.618 :: MFAPP :: 1031 0
+
+11:24:56.673 :: MFAPP :: 1032 0
+
+11:24:59.763 :: MFAPP :: 1033 0
+
+11:25:02.791 :: MFAPP :: 1034 0
+
+11:25:02.855 :: MFAPP :: 1035 0
+
+11:25:05.727 :: MFAPP :: 1036 0
+
+11:25:08.752 :: MFAPP :: 1037 0
+
+11:25:08.813 :: MFAPP :: 1038 0
+
+11:25:11.942 :: MFAPP :: 1039 0
+
+11:25:14.962 :: MFAPP :: 1040 0
+
+11:25:15.013 :: MFAPP :: 1041 0
+
+11:25:18.043 :: MFAPP :: 1042 0
+
+11:25:21.130 :: MFAPP :: 1043 0
+
+11:25:21.192 :: MFAPP :: 1044 0
+
+11:25:24.122 :: MFAPP :: 1045 0
+
+11:25:27.209 :: MFAPP :: 1046 0
+
+11:25:27.265 :: MFAPP :: 1047 0
+
+11:25:30.407 :: MFAPP :: 1048 0
+
+11:25:33.395 :: MFAPP :: 1049 0
+
+11:25:33.450 :: MFAPP :: 1050 0
+
+11:25:36.564 :: MFAPP :: 1051 0
+
+11:25:39.682 :: MFAPP :: 1052 0
+
+11:25:39.736 :: MFAPP :: 1053 0
+
+11:25:42.791 :: MFAPP :: 1054 0
+
+11:25:45.801 :: MFAPP :: 1055 0
+
+11:25:45.856 :: MFAPP :: 1056 0
+
+11:25:48.950 :: MFAPP :: 1057 0
+
+11:25:52.074 :: MFAPP :: 1058 0
+
+11:25:52.130 :: MFAPP :: 1059 0
+
+11:25:55.150 :: MFAPP :: 1060 0
+
+11:25:58.144 :: MFAPP :: 1061 0
+
+11:25:58.199 :: MFAPP :: 1062 0
+
+11:26:01.212 :: MFAPP :: 1063 0
+
+11:26:04.298 :: MFAPP :: 1064 0
+
+11:26:04.359 :: MFAPP :: 1065 0
+
+11:26:07.466 :: MFAPP :: 1066 0
+
+11:26:10.474 :: MFAPP :: 1067 0
+
+11:26:10.530 :: MFAPP :: 1068 0
+
+11:26:13.560 :: MFAPP :: 1069 0
+
+11:26:16.575 :: MFAPP :: 1070 0
+
+11:26:16.638 :: MFAPP :: 1071 0
+
+11:26:19.715 :: MFAPP :: 1072 0
+
+11:26:22.686 :: MFAPP :: 1073 0
+
+11:26:22.739 :: MFAPP :: 1074 0
+
+11:26:25.799 :: MFAPP :: 1075 0
+
+11:26:28.880 :: MFAPP :: 1076 0
+
+11:26:28.938 :: MFAPP :: 1077 0
+
+11:26:31.953 :: MFAPP :: 1078 0
+
+11:26:35.515 :: MFAPP :: 1079 0
+
+11:26:35.609 :: MFAPP :: 1080 0
+
+11:26:38.411 :: MFAPP :: 1081 0
+
+11:26:41.109 :: MFAPP :: 1082 0
+
+11:26:41.174 :: MFAPP :: 1083 0
+
+11:26:44.216 :: MFAPP :: 1084 0
+
+11:26:47.286 :: MFAPP :: 1085 1
+
+11:26:47.345 :: MFAPP :: 1086 0
+
+11:26:50.463 :: MFAPP :: 1087 0
+
+11:26:53.332 :: MFAPP :: 1088 0
+
+11:26:53.386 :: MFAPP :: 1089 0
+
+11:26:56.358 :: MFAPP :: 1090 0
+
+11:26:59.359 :: MFAPP :: 1091 0
+
+11:26:59.416 :: MFAPP :: 1092 0
+
+11:27:02.334 :: MFAPP :: 1093 0
+
+11:27:05.306 :: MFAPP :: 1094 0
+
+11:27:05.368 :: MFAPP :: 1095 0
+
+11:27:08.306 :: MFAPP :: 1096 0
+
+11:27:11.333 :: MFAPP :: 1097 0
+
+11:27:11.392 :: MFAPP :: 1098 0
+
+11:27:14.394 :: MFAPP :: 1099 0
+
+11:27:17.370 :: MFAPP :: 1100 0
+
+11:27:17.443 :: MFAPP :: 1101 0
+
+11:27:20.387 :: MFAPP :: 1102 0
+
+11:27:23.465 :: MFAPP :: 1103 0
+
+11:27:23.523 :: MFAPP :: 1104 0
+
+11:27:26.637 :: MFAPP :: 1105 0
+
+11:27:29.724 :: MFAPP :: 1106 0
+
+11:27:29.793 :: MFAPP :: 1107 0
+
+11:27:32.840 :: MFAPP :: 1108 0
+
+11:27:36.712 :: MFAPP :: 1109 0
+
+11:27:36.857 :: MFAPP :: 1110 0
+
+11:27:39.647 :: MFAPP :: 1111 0
+
+11:27:43.009 :: MFAPP :: 1112 -1
+
+11:27:43.065 :: MFAPP :: 1113 0
+
+11:27:45.926 :: MFAPP :: 1114 0
+
+11:27:48.587 :: MFAPP :: 1115 0
+
+11:27:48.641 :: MFAPP :: 1116 0
+
+11:27:51.875 :: MFAPP :: 1117 0
+
+11:27:54.660 :: MFAPP :: 1118 0
+
+11:27:54.716 :: MFAPP :: 1119 0
+
+11:27:57.619 :: MFAPP :: 1120 0
+
+11:28:00.482 :: MFAPP :: 1121 0
+
+11:28:00.539 :: MFAPP :: 1122 0
+
+11:28:03.238 :: MFAPP :: 1123 0
+
+11:28:06.215 :: MFAPP :: 1124 0
+
+11:28:06.279 :: MFAPP :: 1125 0
+
+11:28:09.182 :: MFAPP :: 1126 0
+
+11:28:12.211 :: MFAPP :: 1127 0
+
+11:28:12.274 :: MFAPP :: 1128 0
+
+11:28:15.287 :: MFAPP :: 1129 0
+
+11:28:18.235 :: MFAPP :: 1130 0
+
+11:28:18.303 :: MFAPP :: 1131 0
+
+11:28:21.472 :: MFAPP :: 1132 0
+
+11:28:24.314 :: MFAPP :: 1133 0
+
+11:28:24.372 :: MFAPP :: 1134 0
+
+11:28:27.653 :: MFAPP :: 1135 0
+
+11:28:31.402 :: MFAPP :: 1136 0
+
+11:28:31.459 :: MFAPP :: 1137 0
+
+11:28:34.254 :: MFAPP :: 1138 0
+
+11:28:37.034 :: MFAPP :: 1139 0
+
+11:28:37.086 :: MFAPP :: 1140 0
+
+11:28:39.842 :: MFAPP :: 1141 0
+
+11:28:42.613 :: MFAPP :: 1142 0
+
+11:28:42.671 :: MFAPP :: 1143 0
+
+11:28:45.640 :: MFAPP :: 1144 0
+
+11:28:48.834 :: MFAPP :: 1145 0
+
+11:28:48.893 :: MFAPP :: 1146 0
+
+11:28:51.949 :: MFAPP :: 1147 0
+
+11:28:54.990 :: MFAPP :: 1148 0
+
+11:28:55.048 :: MFAPP :: 1149 0
+
+11:28:58.142 :: MFAPP :: 1150 0
+
+11:29:01.179 :: MFAPP :: 1151 0
+
+11:29:01.245 :: MFAPP :: 1152 0
+
+11:29:04.318 :: MFAPP :: 1153 0
+
+11:29:07.443 :: MFAPP :: 1154 0
+
+11:29:07.513 :: MFAPP :: 1155 0
+
+11:29:10.600 :: MFAPP :: 1156 0
+
+11:29:13.663 :: MFAPP :: 1157 0
+
+11:29:13.724 :: MFAPP :: 1158 0
+
+11:29:16.821 :: MFAPP :: 1159 0
+
+11:29:19.820 :: MFAPP :: 1160 0
+
+11:29:19.885 :: MFAPP :: 1161 0
+
+11:29:22.909 :: MFAPP :: 1162 0
+
+11:29:26.016 :: MFAPP :: 1163 0
+
+11:29:26.081 :: MFAPP :: 1164 0
+
+11:29:29.077 :: MFAPP :: 1165 0
+
+11:29:32.224 :: MFAPP :: 1166 0
+
+11:29:32.285 :: MFAPP :: 1167 0
+
+11:29:35.434 :: MFAPP :: 1168 0
+
+11:29:38.476 :: MFAPP :: 1169 0
+
+11:29:38.555 :: MFAPP :: 1170 0
+
+11:29:41.507 :: MFAPP :: 1171 0
+
+11:29:44.384 :: MFAPP :: 1172 0
+
+11:29:44.452 :: MFAPP :: 1173 0
+
+11:29:47.378 :: MFAPP :: 1174 0
+
+11:29:50.496 :: MFAPP :: 1175 0
+
+11:29:50.560 :: MFAPP :: 1176 0
+
+11:29:53.587 :: MFAPP :: 1177 0
+
+11:29:56.568 :: MFAPP :: 1178 0
+
+11:29:56.627 :: MFAPP :: 1179 0
+
+11:29:59.778 :: MFAPP :: 1180 0
+
+11:30:02.803 :: MFAPP :: 1181 0
+
+11:30:02.855 :: MFAPP :: 1182 0
+
+11:30:05.685 :: MFAPP :: 1183 0
+
+11:30:08.699 :: MFAPP :: 1184 0
+
+11:30:08.758 :: MFAPP :: 1185 0
+
+11:30:11.745 :: MFAPP :: 1186 0
+
+11:30:14.774 :: MFAPP :: 1187 0
+
+11:30:14.839 :: MFAPP :: 1188 0
+
+11:30:17.984 :: MFAPP :: 1189 0
+
+11:30:21.078 :: MFAPP :: 1190 0
+
+11:30:21.145 :: MFAPP :: 1191 0
+
+11:30:24.219 :: MFAPP :: 1192 0
+
+11:30:27.331 :: MFAPP :: 1193 0
+
+11:30:27.390 :: MFAPP :: 1194 0
+
+11:30:30.363 :: MFAPP :: 1195 0
+
+11:30:33.293 :: MFAPP :: 1196 0
+
+11:30:33.352 :: MFAPP :: 1197 0
+
+11:30:36.363 :: MFAPP :: 1198 0
+
+11:30:39.365 :: MFAPP :: 1199 0
+
+11:30:39.424 :: MFAPP :: 1200 0
+
+11:30:42.499 :: MFAPP :: 1201 0
+
+11:30:45.637 :: MFAPP :: 1202 0
+
+11:30:45.700 :: MFAPP :: 1203 0
+
+11:30:48.697 :: MFAPP :: 1204 0
+
+11:30:51.702 :: MFAPP :: 1205 0
+
+11:30:51.781 :: MFAPP :: 1206 0
+
+11:30:54.718 :: MFAPP :: 1207 0
+
+11:30:57.827 :: MFAPP :: 1208 0
+
+11:30:57.890 :: MFAPP :: 1209 0
+
+11:31:00.989 :: MFAPP :: 1210 0
+
+11:31:04.068 :: MFAPP :: 1211 0
+
+11:31:04.124 :: MFAPP :: 1212 0
+
+11:31:07.203 :: MFAPP :: 1213 0
+
+11:31:10.272 :: MFAPP :: 1214 0
+
+11:31:10.338 :: MFAPP :: 1215 0
+
+11:31:13.437 :: MFAPP :: 1216 0
+
+11:31:16.464 :: MFAPP :: 1217 0
+
+11:31:16.530 :: MFAPP :: 1218 0
+
+11:31:19.624 :: MFAPP :: 1219 0
+
+11:31:22.738 :: MFAPP :: 1220 0
+
+11:31:22.806 :: MFAPP :: 1221 0
+
+11:31:25.764 :: MFAPP :: 1222 0
+
+11:31:28.768 :: MFAPP :: 1223 0
+
+11:31:28.832 :: MFAPP :: 1224 0
+
+11:31:31.821 :: MFAPP :: 1225 0
+
+11:31:34.925 :: MFAPP :: 1226 0
+
+11:31:34.993 :: MFAPP :: 1227 0
+
+11:31:37.952 :: MFAPP :: 1228 0
+
+11:31:40.964 :: MFAPP :: 1229 0
+
+11:31:41.030 :: MFAPP :: 1230 0
+
+11:31:44.053 :: MFAPP :: 1231 0
+
+11:31:47.104 :: MFAPP :: 1232 0
+
+11:31:47.171 :: MFAPP :: 1233 0
+
+11:31:50.290 :: MFAPP :: 1234 0
+
+11:31:53.421 :: MFAPP :: 1235 0
+
+11:31:53.486 :: MFAPP :: 1236 0
+
+11:31:56.518 :: MFAPP :: 1237 0
+
+11:31:59.731 :: MFAPP :: 1238 0
+
+11:31:59.789 :: MFAPP :: 1239 0
+
+11:32:02.884 :: MFAPP :: 1240 0
+
+11:32:05.960 :: MFAPP :: 1241 0
+
+11:32:06.021 :: MFAPP :: 1242 0
+
+11:32:09.041 :: MFAPP :: 1243 0
+
+11:32:12.067 :: MFAPP :: 1244 0
+
+11:32:12.135 :: MFAPP :: 1245 0
+
+11:32:15.158 :: MFAPP :: 1246 0
+
+11:32:18.344 :: MFAPP :: 1247 0
+
+11:32:18.410 :: MFAPP :: 1248 0
+
+11:32:21.349 :: MFAPP :: 1249 0
+
+11:32:24.361 :: MFAPP :: 1250 0
+
+11:32:24.431 :: MFAPP :: 1251 0
+
+11:32:27.478 :: MFAPP :: 1252 0
+
+11:32:30.496 :: MFAPP :: 1253 0
+
+11:32:30.558 :: MFAPP :: 1254 0
+
+11:32:33.618 :: MFAPP :: 1255 0
+
+11:32:36.615 :: MFAPP :: 1256 0
+
+11:32:36.680 :: MFAPP :: 1257 0
+
+11:32:39.733 :: MFAPP :: 1258 0
+
+11:32:42.765 :: MFAPP :: 1259 0
+
+11:32:42.841 :: MFAPP :: 1260 0
+
+11:32:45.904 :: MFAPP :: 1261 0
+
+11:32:48.947 :: MFAPP :: 1262 0
+
+11:32:49.005 :: MFAPP :: 1263 0
+
+11:32:52.030 :: MFAPP :: 1264 0
+
+11:32:55.072 :: MFAPP :: 1265 0
+
+11:32:55.136 :: MFAPP :: 1266 0
+
+11:32:58.147 :: MFAPP :: 1267 0
+
+11:33:01.216 :: MFAPP :: 1268 0
+
+11:33:01.279 :: MFAPP :: 1269 0
+
+11:33:04.274 :: MFAPP :: 1270 0
+
+11:33:07.379 :: MFAPP :: 1271 0
+
+11:33:07.452 :: MFAPP :: 1272 0
+
+11:33:10.400 :: MFAPP :: 1273 0
+
+11:33:13.440 :: MFAPP :: 1274 0
+
+11:33:13.512 :: MFAPP :: 1275 0
+
+11:33:16.576 :: MFAPP :: 1276 0
+
+11:33:19.652 :: MFAPP :: 1277 0
+
+11:33:19.723 :: MFAPP :: 1278 0
+
+11:33:22.731 :: MFAPP :: 1279 0
+
+11:33:25.706 :: MFAPP :: 1280 0
+
+11:33:25.774 :: MFAPP :: 1281 0
+
+11:33:28.778 :: MFAPP :: 1282 0
+
+11:33:31.943 :: MFAPP :: 1283 0
+
+11:33:32.005 :: MFAPP :: 1284 0
+
+11:33:35.098 :: MFAPP :: 1285 0
+
+11:33:38.139 :: MFAPP :: 1286 0
+
+11:33:38.207 :: MFAPP :: 1287 0
+
+11:33:41.215 :: MFAPP :: 1288 0
+
+11:33:44.198 :: MFAPP :: 1289 0
+
+11:33:44.264 :: MFAPP :: 1290 0
+
+11:33:47.338 :: MFAPP :: 1291 0
+
+11:33:50.484 :: MFAPP :: 1292 0
+
+11:33:50.544 :: MFAPP :: 1293 0
+
+11:33:53.528 :: MFAPP :: 1294 0
+
+11:33:56.546 :: MFAPP :: 1295 0
+
+11:33:56.609 :: MFAPP :: 1296 0
+
+11:33:59.715 :: MFAPP :: 1297 0
+
+11:34:02.666 :: MFAPP :: 1298 0
+
+11:34:02.732 :: MFAPP :: 1299 0
+
+11:34:05.714 :: MFAPP :: 1300 0
+
+11:34:08.807 :: MFAPP :: 1301 0
+
+11:34:08.880 :: MFAPP :: 1302 0
+
+11:34:11.946 :: MFAPP :: 1303 0
+
+11:34:15.009 :: MFAPP :: 1304 0
+
+11:34:15.070 :: MFAPP :: 1305 0
+
+11:34:18.075 :: MFAPP :: 1306 0
+
+11:34:21.138 :: MFAPP :: 1307 0
+
+11:34:21.210 :: MFAPP :: 1308 0
+
+11:34:24.277 :: MFAPP :: 1309 0
+
+11:34:27.219 :: MFAPP :: 1310 0
+
+11:34:27.286 :: MFAPP :: 1311 0
+
+11:34:30.264 :: MFAPP :: 1312 0
+
+11:34:33.338 :: MFAPP :: 1313 0
+
+11:34:33.406 :: MFAPP :: 1314 0
+
+11:34:36.485 :: MFAPP :: 1315 0
+
+11:34:39.580 :: MFAPP :: 1316 0
+
+11:34:39.640 :: MFAPP :: 1317 0
+
+11:34:42.623 :: MFAPP :: 1318 0
+
+11:34:45.692 :: MFAPP :: 1319 0
+
+11:34:45.756 :: MFAPP :: 1320 0
+
+11:34:48.848 :: MFAPP :: 1321 0
+
+11:34:52.049 :: MFAPP :: 1322 0
+
+11:34:52.120 :: MFAPP :: 1323 0
+
+11:34:55.120 :: MFAPP :: 1324 0
+
+11:34:58.191 :: MFAPP :: 1325 0
+
+11:34:58.259 :: MFAPP :: 1326 0
+
+11:35:01.254 :: MFAPP :: 1327 0
+
+11:35:04.317 :: MFAPP :: 1328 0
+
+11:35:04.389 :: MFAPP :: 1329 0
+
+11:35:07.477 :: MFAPP :: 1330 0
+
+11:35:10.561 :: MFAPP :: 1331 0
+
+11:35:10.645 :: MFAPP :: 1332 0
+
+11:35:13.706 :: MFAPP :: 1333 0
+
+11:35:16.710 :: MFAPP :: 1334 0
+
+11:35:16.782 :: MFAPP :: 1335 0
+
+11:35:19.855 :: MFAPP :: 1336 0
+
+11:35:22.933 :: MFAPP :: 1337 0
+
+11:35:23.000 :: MFAPP :: 1338 0
+
+11:35:26.021 :: MFAPP :: 1339 0
+
+11:35:29.134 :: MFAPP :: 1340 0
+
+11:35:29.201 :: MFAPP :: 1341 0
+
+11:35:32.164 :: MFAPP :: 1342 0
+
+11:35:35.232 :: MFAPP :: 1343 0
+
+11:35:35.293 :: MFAPP :: 1344 0
+
+11:35:38.368 :: MFAPP :: 1345 0
+
+11:35:41.447 :: MFAPP :: 1346 0
+
+11:35:41.521 :: MFAPP :: 1347 0
+
+11:35:44.569 :: MFAPP :: 1348 0
+
+11:35:47.667 :: MFAPP :: 1349 0
+
+11:35:47.727 :: MFAPP :: 1350 0
+
+11:35:50.871 :: MFAPP :: 1351 0
+
+11:35:53.889 :: MFAPP :: 1352 0
+
+11:35:53.950 :: MFAPP :: 1353 0
+
+11:35:56.913 :: MFAPP :: 1354 0
+
+11:35:59.891 :: MFAPP :: 1355 0
+
+11:35:59.966 :: MFAPP :: 1356 0
+
+11:36:02.956 :: MFAPP :: 1357 0
+
+11:36:05.971 :: MFAPP :: 1358 0
+
+11:36:06.043 :: MFAPP :: 1359 0
+
+11:36:09.022 :: MFAPP :: 1360 0
+
+11:36:12.017 :: MFAPP :: 1361 0
+
+11:36:12.081 :: MFAPP :: 1362 0
+
+11:36:15.109 :: MFAPP :: 1363 0
+
+11:36:18.184 :: MFAPP :: 1364 0
+
+11:36:18.249 :: MFAPP :: 1365 0
+
+11:36:21.298 :: MFAPP :: 1366 0
+
+11:36:24.425 :: MFAPP :: 1367 0
+
+11:36:24.496 :: MFAPP :: 1368 0
+
+11:36:27.586 :: MFAPP :: 1369 0
+
+11:36:30.745 :: MFAPP :: 1370 0
+
+11:36:30.810 :: MFAPP :: 1371 0
+
+11:36:33.898 :: MFAPP :: 1372 0
+
+11:36:36.987 :: MFAPP :: 1373 0
+
+11:36:37.066 :: MFAPP :: 1374 0
+
+11:36:40.171 :: MFAPP :: 1375 0
+
+11:36:43.139 :: MFAPP :: 1376 0
+
+11:36:43.213 :: MFAPP :: 1377 0
+
+11:36:46.072 :: MFAPP :: 1378 0
+
+11:36:49.104 :: MFAPP :: 1379 0
+
+11:36:49.176 :: MFAPP :: 1380 0
+
+11:36:52.170 :: MFAPP :: 1381 0
+
+11:36:55.241 :: MFAPP :: 1382 0
+
+11:36:55.304 :: MFAPP :: 1383 0
+
+11:36:58.284 :: MFAPP :: 1384 0
+
+11:37:01.282 :: MFAPP :: 1385 0
+
+11:37:01.345 :: MFAPP :: 1386 0
+
+11:37:04.255 :: MFAPP :: 1387 0
+
+11:37:07.223 :: MFAPP :: 1388 0
+
+11:37:07.292 :: MFAPP :: 1389 0
+
+11:37:10.219 :: MFAPP :: 1390 0
+
+11:37:13.308 :: MFAPP :: 1391 0
+
+11:37:13.375 :: MFAPP :: 1392 0
+
+11:37:16.421 :: MFAPP :: 1393 0
+
+11:37:19.511 :: MFAPP :: 1394 0
+
+11:37:19.581 :: MFAPP :: 1395 0
+
+11:37:22.491 :: MFAPP :: 1396 0
+
+11:37:25.420 :: MFAPP :: 1397 0
+
+11:37:25.496 :: MFAPP :: 1398 0
+
+11:37:28.448 :: MFAPP :: 1399 0
+
+11:37:31.452 :: MFAPP :: 1400 0
+
+11:37:31.527 :: MFAPP :: 1401 0
+
+11:37:34.473 :: MFAPP :: 1402 0
+
+11:37:37.341 :: MFAPP :: 1403 0
+
+11:37:37.405 :: MFAPP :: 1404 0
+
+11:37:40.492 :: MFAPP :: 1405 0
+
+11:37:43.491 :: MFAPP :: 1406 0
+
+11:37:43.567 :: MFAPP :: 1407 0
+
+11:37:46.465 :: MFAPP :: 1408 0
+
+11:37:49.430 :: MFAPP :: 1409 0
+
+11:37:49.504 :: MFAPP :: 1410 0
+
+11:37:52.459 :: MFAPP :: 1411 0
+
+11:37:55.526 :: MFAPP :: 1412 0
+
+11:37:55.584 :: MFAPP :: 1413 0
+
+11:37:58.543 :: MFAPP :: 1414 0
+
+11:38:01.611 :: MFAPP :: 1415 0
+
+11:38:01.684 :: MFAPP :: 1416 0
+
+11:38:04.668 :: MFAPP :: 1417 0
+
+11:38:07.738 :: MFAPP :: 1418 0
+
+11:38:07.821 :: MFAPP :: 1419 0
+
+11:38:10.790 :: MFAPP :: 1420 0
+
+11:38:13.791 :: MFAPP :: 1421 0
+
+11:38:13.863 :: MFAPP :: 1422 0
+
+11:38:16.723 :: MFAPP :: 1423 0
+
+11:38:19.695 :: MFAPP :: 1424 0
+
+11:38:19.767 :: MFAPP :: 1425 0
+
+11:38:22.716 :: MFAPP :: 1426 0
+
+11:38:25.706 :: MFAPP :: 1427 0
+
+11:38:25.775 :: MFAPP :: 1428 0
+
+11:38:28.722 :: MFAPP :: 1429 0
+
+11:38:31.786 :: MFAPP :: 1430 0
+
+11:38:31.854 :: MFAPP :: 1431 0
+
+11:38:34.946 :: MFAPP :: 1432 0
+
+11:38:37.830 :: MFAPP :: 1433 0
+
+11:38:37.900 :: MFAPP :: 1434 0
+
+11:38:40.985 :: MFAPP :: 1435 0
+
+11:38:44.031 :: MFAPP :: 1436 0
+
+11:38:44.102 :: MFAPP :: 1437 0
+
+11:38:47.131 :: MFAPP :: 1438 0
+
+11:38:50.158 :: MFAPP :: 1439 0
+
+11:38:50.224 :: MFAPP :: 1440 0
+
+11:38:53.329 :: MFAPP :: 1441 0
+
+11:38:56.351 :: MFAPP :: 1442 0
+
+11:38:56.418 :: MFAPP :: 1443 0
+
+11:38:59.435 :: MFAPP :: 1444 0
+
+11:39:02.442 :: MFAPP :: 1445 0
+
+11:39:02.507 :: MFAPP :: 1446 0
+
+11:39:05.581 :: MFAPP :: 1447 0
+
+11:39:08.727 :: MFAPP :: 1448 0
+
+11:39:08.806 :: MFAPP :: 1449 0
+
+11:39:11.742 :: MFAPP :: 1450 0
+
