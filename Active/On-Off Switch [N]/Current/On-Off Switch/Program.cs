@@ -3,154 +3,166 @@
  * (c) 2013 The Samraksh Company
  * 
  * Version history
- *  1.0: initial release
- *  1.1: fix bug: on and off switch responses are reversed
- *  1.2: changed main thread sleep to Timeout.Infinite; renamed LcdExtensionMethods
+ *  1.0:	- Initial release
+ *  
+ *  1.1:	- Fix error: on and off switch responses are reversed
+ *  
+ *  1.2:	- Changed main thread sleep to Timeout.Infinite; renamed LcdExtensionMethods
+ *  
+ *  1.3:	- Updated to latest namespaces
+ *			- Removed ExtensionMethod and added EnhancedLcd
+ *			- Added VersionInfo
+ *			- Minor changes
+ *	
+ * 1.4:		*** tbd
 ---------------------------------------------------------------------*/
 
 using System;
+using System.Reflection;
+using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using System.Threading;
+using Samraksh.AppNote.Utility;
+using Samraksh.eMote.DotNow;
 
-// This makes it easy to reference the eMote hardware class
-using Samraksh.SPOT.Hardware.EmoteDotNow;
+namespace Samraksh.AppNote.DotNow.OnOffSwitch {
+	public class Program {
 
-// This includes extensions for the LCD class with a method that makes it easy to convert a char to LCD. See the file ExtensionMethods.cs
-using ExtensionMethods;
+		// Define input button instance. Initialized below.
+		static InputPort _inputSwitch;
 
-namespace Switch {
-    public class Program {
+		// Define an LCD instance.
+		static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
 
-        // Define input button instance. Initialized below.
-        static InputPort inputSwitch;
+		// Keep track of the number of button interrupts and the last time a button interrupt was called
+		static int _interruptCnt;
+		static DateTime _lastInterruptDateTime = DateTime.Now;
 
-        // Define an LCD instance.
-        static EmoteLCD lcd = new EmoteLCD();
+		public static void Main() {
+			try {
+				Debug.EnableGCMessages(false);
 
-        // Keep track of the number of button interrupts and the last time a button interrupt was called
-        static int interruptCnt = 0;
-        static DateTime lastInterruptDateTime = DateTime.Now;
+				Debug.Print("\nOn-Off Switch");
 
-        public static void Main() {
-            try {
+				// Print the version and build info
+				VersionInfo.Init(Assembly.GetExecutingAssembly());
+				Debug.Print("Version " + VersionInfo.Version + ", build " + VersionInfo.BuildDateTime);
+				Debug.Print("");
 
-                // Print the name of the app note
+				// Initialize the input button as an interrupt port. 
+				// Constructor arguments
+				//      We are going to input from the port associated with connector J12 Pin 1 on the .NOW board.
+				//      We use Port.ResistorMode.PullUp so that when the switch is off (circuit is open), the port is pulled to Vref and will read False. 
+				//          Otherwise, the port will float and the value will be undefined.
+				//          When the switch is on (circuit is closed), the port will be pulled to Gnd and will read True.
+				//      We want to trigger an interrupt on both leading and trailing edge of the signal.
+				//  Other notes
+				//      The second argument in the contructor, glitchFilter, is not currently implenmeted.
+				//      The InputPort class does not have a constructor that includes Port.InterruptMode.
+				//          However, InputPort inherits from InterruptPort, so we can use its constructor.
 
-                Debug.Print(Resources.GetString(Resources.StringResources.AppNoteDescription));
-                Debug.Print("-------------- ready -------------");
+				_inputSwitch = new InterruptPort(Pins.GPIO_J12_PIN1, false, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeBoth);
 
-                // Initialize the LCD display. Nothing will be displayed if this is not done.
+				var buttonValue = _inputSwitch.Read();
+				DisplaySwitchOnLCD(buttonValue);
 
-                lcd.Initialize();
+				// Set the callback method that is accessed when an interrupt occurs
 
-                // Initialize the input button as an interrupt port. 
-                // Constructor arguments
-                //      We are going to input from the port associated with connector J12 Pin 1 on the .NOW board.
-                //      We use Port.ResistorMode.PullDown so that when the switch is off (circuit is open), the port is pulled to ground and will read False. 
-                //          Otherwise, the port will float and the value will be undefined.
-                //          When the switch is on (circuit is closed), the port will be pulled to Vref+ and will read True.
-                //      We want to trigger an interrupt on both leading and trailing edge of the signal.
-                //  Other notes
-                //      The second argument in the contructor, glitchFilter, is not currently implenmeted.
-                //      The InputPort class does not have a constructor that includes Port.InterruptMode.
-                //          However, InputPort inherits from InterruptPort, so we can use its constructor.
+				_inputSwitch.OnInterrupt += inputSwitch_OnInterrupt;
 
-                inputSwitch = new InterruptPort(Pins.GPIO_J12_PIN1, false, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeBoth);
+				// Put this thread to sleep and don't wake up
+				//  If this isn't included, the Main program will exit now and nothing else will happen.
 
-                // Set the callback method that is accessed when an interrupt occurs
+				Thread.Sleep(Timeout.Infinite);
+			}
+			catch (Exception ex) {
+				Debug.Print("Exception thrown: " + ex);
+			}
+		}
 
-                inputSwitch.OnInterrupt += inputSwitch_OnInterrupt;
+		// Set up to disable interrupt
+		const int TimerInterval = 10;	// Timer duration in ms. Increase this if you have trouble with switch bounce.
+		static Timer _interruptTimer;	// The timer
 
-                // Put this thread to sleep and don't wake up
-                //  If this isn't included, the Main program will exit now and nothing else will happen.
+		const int True = 1;
+		const int False = 0;
+		static int _interruptDisabled = False;   // TRUE if interrupt disabled, else FALSE. Initially enabled.
 
-                Thread.Sleep(Timeout.Infinite);
-            }
-            catch (Exception ex) {
-                Debug.Print("Exception thrown: " + ex.ToString());
-            }
-        }
+		/// <summary>
+		/// Timer callback
+		/// </summary>
+		/// <remarks>Called when timer expires</remarks>
+		/// <param name="obj"></param>
+		static void TimerCallback(object obj) {
+			_interruptDisabled = False;          // Enable interrupt
+		}
 
-        // Set up to disable interrupt
-        const int TIMER_INTERVAL = 10;          // Timer duration in ms. Increase this if you have trouble with switch bounce.
-        static Timer interruptTimer;            // The timer
+		/// <summary>
+		/// Handle switch interrupt
+		/// </summary>
+		/// <param name="pin">The pin number that caused the timeout</param>
+		/// <param name="state">The state of the pin</param>
+		/// <param name="time">The (local) time of the interrupt</param>
+		static void inputSwitch_OnInterrupt(uint pin, uint state, DateTime time) {
 
-        const int TRUE = 1;
-        const int FALSE = 0;
-        static int interruptDisabled = FALSE;   // TRUE if interrupt disabled, else FALSE. Initially enabled.
-        /// <summary>
-        /// Timer callback
-        /// </summary>
-        /// <remarks>Called when timer expires</remarks>
-        /// <param name="obj"></param>
-        static void timerCallback(object obj) {
-            interruptDisabled = FALSE;          // Enable interrupt
-        }
+			// Debounce the switch
+			//  Debouncing is needed because mechanical contacts will tend to make and break momentarily when opening or closing.
+			//  After an interrupt, it is effectively disabled for a short period of time (controlled by the variable TIMER_INTERVAL).
+			//  First, decide whether to continue or not. CompareExchange is an atomic test-and-set.
+			//      If interruptDisabled is FALSE (third arg), set it to TRUE. Return original value of interruptDisabled.
+			//      Hence, if not disabled, will disable it. If disabled, will return.
+			//  Second, start the timer (see below)
 
-        /// <summary>
-        /// Handle switch interrupt
-        /// </summary>
-        /// <param name="pin">The pin number that caused the timeout</param>
-        /// <param name="state">The state of the pin</param>
-        /// <param name="time">The (local) time of the interrupt</param>
-        static void inputSwitch_OnInterrupt(uint pin, uint state, DateTime time) {
+			if (Interlocked.CompareExchange(ref _interruptDisabled, True, False) == True) {
+				return;
+			}
 
-            // Debounce the switch
-            //  Debouncing is needed because mechanical contacts will tend to make and break momentarily when opening or closing.
-            //  After an interrupt, it is effectively disabled for a short period of time (controlled by the variable TIMER_INTERVAL).
-            //  First, decide whether to continue or not. CompareExchange is an atomic test-and-set.
-            //      If interruptDisabled is FALSE (third arg), set it to TRUE. Return original value of interruptDisabled.
-            //      Hence, if not disabled, will disable it. If disabled, will return.
-            //  Second, start the timer (see below)
+			var now = DateTime.Now;
+			
+			// Calculate the time from the last interrupt. This is optional.
+			var lastInterruptSpan = now - _lastInterruptDateTime;
+			_lastInterruptDateTime = DateTime.Now;
 
-            if (Interlocked.CompareExchange(ref interruptDisabled, TRUE, FALSE) == TRUE) {
-                return;
-            }
+			// Count the interrupts. This is optional.
+			_interruptCnt++;
 
-            // Print out the parameter values. This is optional.
-            //  Note that pin is a numeric value. It corresponds to the enum associated with the defined pin.
-            //      In this case, J12/1 is number 24.
-            //  State is 0 if low, 1 if high
-            //  Time is when the interrupt happened (in local time). To show the difference, also print the time span from Now.
+			// Print out the callback argument values & other interrupt info. This is optional.
+			//  Note that pin is a numeric value. It corresponds to the enum associated with the defined pin.
+			//      In this case, J12/1 is pin 24.
+			//  Time is when the interrupt happened (in local time). To show the difference, you can also print the time span from Now.
 
-            Debug.Print("--- " + pin + " " + state + " " + time + " " + (DateTime.Now - time).ToString());
+			Debug.Print("--- Pin " + pin + ", State " + state + ", Time " + time + "; Last interrupt span: " + lastInterruptSpan.Milliseconds + ", Interrupt cnt: " + _interruptCnt);
 
-            // Calculate the time from the last interrupt. This is optional.
-            TimeSpan lastInterruptSpan = DateTime.Now - lastInterruptDateTime;
-            lastInterruptDateTime = DateTime.Now;
+			// Read the button value. True = on (high), false = off (low)
 
-            // Count the interrupts. This is optional.
-            interruptCnt++;
+			var buttonValue = _inputSwitch.Read();
 
-            // Read the button value. True = set (high), false = reset (low)
+			DisplaySwitchOnLCD(buttonValue);
 
-            bool buttonValue = inputSwitch.Read();
+			// Finish debouncing the switch
+			//  Create and start, or restart the timer, depending on whether the timer has been created or not.
+			//  Setting the period to 0 means it will run once and stop.
 
-            // Display ON or OFF to LCD, depending on switch value
+			if (_interruptTimer == null) {
+				_interruptTimer = new Timer(TimerCallback, _interruptDisabled, TimerInterval, 0);
+			}
+			else {
+				_interruptTimer.Change(TimerInterval, 0);
+			}
 
-            if (buttonValue) {
-                lcd.Write('O'.ToLCD(), 'F'.ToLCD(), 'F'.ToLCD(), ' '.ToLCD());
-                Debug.Print("Switch OFF " + interruptCnt + " " + lastInterruptSpan.Milliseconds);
-            }
-            else {
-                lcd.Write('O'.ToLCD(), 'N'.ToLCD(), ' '.ToLCD(), ' '.ToLCD());
-                Debug.Print("Switch ON  " + interruptCnt + " " + lastInterruptSpan.Milliseconds);
-            }
+		}
 
-            // Finish debouncing the switch
-            //  Create and start, or restart the timer, depending on whether the timer has been created or not.
-            //  Setting the period to 0 means it will run once and stop.
+		private static void DisplaySwitchOnLCD(bool buttonValue) {
+			// Display ON or OFF to LCD, depending on switch value
 
-            if (interruptTimer == null) {
-                interruptTimer = new Timer(new TimerCallback(timerCallback), interruptDisabled, TIMER_INTERVAL, 0);
-            }
-            else {
-                interruptTimer.Change(TIMER_INTERVAL, 0);
-            }
-
-        }
-
-
-    }
+			if (!buttonValue) {
+				Lcd.Write("ON");
+				Debug.Print("Switch ON");
+			}
+			else {
+				Lcd.Write("OFF");
+				Debug.Print("Switch OFF");
+			}
+		}
+	}
 }
