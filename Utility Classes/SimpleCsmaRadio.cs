@@ -6,6 +6,8 @@
  *  1.1 Added parameter for type of radio
  *  1.2 Revised for eMote namespace
  *  1.3 Minor changes and corrections
+ *  1.4
+ *		- Changed obselete method calls
  *********************************************************/
 
 using System;
@@ -44,18 +46,20 @@ namespace Samraksh.AppNote.Utility {
             /// <summary>Radio off</summary>
             Off
         };
-        
-        /// <summary>
-        /// CSMA radio constructor 
-        /// </summary>
-        /// <param name="radioName">Name of the radio (internal, long range)</param>
-        /// <param name="ccaSensetime">CCA sense time, in ms</param>
-        /// <param name="txPowerValue">Power level</param>
-        /// <param name="radioReceivedData">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
-        public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData) {
-            var macConfig = new MacConfiguration { NeighbourLivelinesDelay = 100, CCASenseTime = ccaSensetime };
+
+	    /// <summary>
+	    /// CSMA radio constructor 
+	    /// </summary>
+	    /// <param name="radioName">Name of the radio (internal, long range)</param>
+	    /// <param name="ccaSensetime">CCA sense time, in ms</param>
+	    /// <param name="txPowerValue">Power level</param>
+	    /// <param name="radioReceivedData">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
+	    /// <param name="channel">Channel to use</param>
+	    public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData, Channels channel = Channels.Channel_26) {
+            var macConfig = new MacConfiguration { NeighborLivenessDelay = 100, CCASenseTime = ccaSensetime };
             macConfig.radioConfig.SetTxPower(txPowerValue);
             macConfig.radioConfig.SetRadioName(radioName);
+			macConfig.radioConfig.SetChannel(channel);
             _userReceivedDataCallback = radioReceivedData;
 
             try {
@@ -63,7 +67,7 @@ namespace Samraksh.AppNote.Utility {
                     // Set up CSMA with the MAC configuration, receive callback and neighbor change callback (which does nothing)
                 if (retVal != DeviceStatus.Success) {
                     var lcd = new EnhancedEmoteLcd();
-                    lcd.Display("5555");
+                    lcd.Write("5555");
                     Thread.Sleep(Timeout.Infinite);
                 }
 
@@ -72,14 +76,14 @@ namespace Samraksh.AppNote.Utility {
             catch (MacNotConfiguredException e) {
                 Debug.Print("CSMA configuration error " + e);
                 var lcd = new EnhancedEmoteLcd();
-                lcd.Display("1111");
+                lcd.Write("1111");
                 Thread.Sleep(Timeout.Infinite);
                 throw;
             }
             catch (Exception e) {
                 Debug.Print("Unknown error " + e);
                 var lcd = new EnhancedEmoteLcd();
-                lcd.Display("2222");
+                lcd.Write("2222");
                 Thread.Sleep(Timeout.Infinite);
                 throw;
             }
