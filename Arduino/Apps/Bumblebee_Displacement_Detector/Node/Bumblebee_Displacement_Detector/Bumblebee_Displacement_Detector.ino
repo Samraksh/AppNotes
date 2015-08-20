@@ -32,9 +32,9 @@ enum serialLogging {serialNone, serialAllInputs, serialRawInputs, serialAdjusted
 //
 //const serialLogging serialLog = serialNone;		// Do not write to serial.
 //const serialLogging serialLog = serialAllInputs;	// Write all inputs to serial. Useful for validation of input interpolation and averaging. NOTE: this produces too much data for 250 Hz. Must run slower. Only useful for evaluating interpolation and averaging.
-//const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
-const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection outputs. This is the most common option
-//const serialLogging serialLog = serialDetects;	// Detection outputs only.
+const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
+//const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection & confirmation results. This is the most common option
+//const serialLogging serialLog = serialDetects;	// Detection & confirmation results only.
 
 // Uncomment exactly one of these
 //
@@ -65,14 +65,15 @@ const int loopReceivedSamplePin = 8;
 const int profileSdPin = 9;
 const int profileSerialLed = 10;
 
-// SD card GPIO output pins
+// SD card GPIO output GPIOs
 const int sdChipSelectPin = 4;		// Select SD Card
 const int defaultChipSelectPin = 10;
 
 // Send sync message input GPIO
 const int syncPin = 11; 
 
-const int debugLedOut = 13;			// GPIO pin for general debugging
+// General debugging output GPIO
+const int debugLedOut = 13;
 
 //*********************************************
 //		Global Variables
@@ -95,7 +96,7 @@ static SampleValPair prevVal;			// Previous, mean-adjusted sample value
 //	Note: out # prefixes must be unique and lower case
 //		Similarly for in * prefixes
 
-//***** In: Info type prefixes
+//***** Out: Info type prefixes
 const char outColumnNamesMsgPrefix[] = "#c";
 const char outSyncPrefix[] = "#s";
 const char outConfMsgPrefix[] = "#p";

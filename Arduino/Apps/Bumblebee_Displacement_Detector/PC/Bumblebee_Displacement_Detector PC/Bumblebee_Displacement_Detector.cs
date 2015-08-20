@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 using Samraksh.AppNote.Utility;
+using Globals;
 
 namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 
@@ -150,108 +152,52 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 			StartStop.Enabled = true;
 		}
 
+		private static readonly Queue<char[]> PendingInputStack = new Queue<char[]>();
+		private static readonly AutoResetEvent PendingInputsSemaphore = new AutoResetEvent(false);
+		private static Thread _processInputsThread;
+
 		/// <summary>
 		/// A call-back method that's called by SerialComm whenever serial data has been received from the mote
 		/// </summary>
 		/// <param name="input">The data received</param>
-		private void ProcessInput(string input) {
-			var receivedTime = DateTime.Now;
-			var isDisp = false;
-			var isConf = false;
-			MethodInvoker m;
-			foreach (var theChar in input.ToCharArray()) {
-				if (theChar == '\n') {
-					var foundString = FoundStringB.ToString().Trim('\r').Trim('\n');
-					var lineItems = foundString.Split(',');
-					var msgPrefix = lineItems[0];
+		private void ProcessInput(char[] input) {
+			if (_processInputsThread == null) {
+				_processInputsThread = new Thread(ProcessInputsMethod) { IsBackground = true };
+				_processInputsThread.Start();
+			}
+			PendingInputStack.Enqueue(input);
+			PendingInputsSemaphore.Set();
+		}
 
-					// Process the message types
-					switch (msgPrefix) {
-						case InMsg.Sync.Prefix:
-							try {
-								if (lineItems.Length == InMsg.Sync.Length) {
-									break;	// All we have to do here is log it
-								}
-								throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.Sync.Length));
-							}
-							catch (Exception ex) {
-								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
-								if (InvokeRequired) { Invoke(m); }
-								else { m(); }
-							}
-							break;
-						case InMsg.AllInputs.Prefix:
-							try {
-								if (lineItems.Length == InMsg.AllInputs.Length) {
-									//isDisp = (lineItems[lineItems.Length - 2] == "1");
-									//isConf = (lineItems[lineItems.Length - 1] == "1");
-									var sampleNo = Convert.ToInt32(lineItems[1]);
-									var sampI = Convert.ToInt32(lineItems[6]);
-									var sampQ = Convert.ToInt32(lineItems[7]);
-									CheckSampleValue(sampI, sampQ, sampleNo);
-								}
-								else {
-									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.AllInputs.Length));
-								}
-							}
-							catch (Exception ex) {
-								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
-								if (InvokeRequired) { Invoke(m); }
-								else { m(); }
-							}
-							break;
+		/// <summary>
+		/// Process pending inputs
+		/// </summary>
+		private void ProcessInputsMethod() {
+			while (true) {
+				PendingInputsSemaphore.WaitOne();
+				while (PendingInputStack.Count > 0) {
+					var input = PendingInputStack.Dequeue();
+					var isDisp = false;
+					var isConf = false;
+					foreach (var theChar in input) {
+						if (theChar == '\n') {
+							var receivedTime = DateTime.Now;
+							var foundString = FoundStringB.ToString().Trim('\r').Trim('\n');
+							var lineItems = foundString.Split(',');
+							var msgPrefix = lineItems[0];
 
-						case InMsg.AdjustedInputsAndDetection.Prefix:
-							try {
-								if (lineItems.Length == InMsg.AdjustedInputsAndDetection.Length) {
-									isDisp = (lineItems[lineItems.Length - 2] == "1");
-									isConf = (lineItems[lineItems.Length - 1] == "1");
-								}
-								else {
-									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.AdjustedInputsAndDetection.Length));
-								}
-							}
-							catch (Exception ex) {
-								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
-								if (InvokeRequired) { Invoke(m); }
-								else { m(); }
-							}
-							break;
-
-						case InMsg.RawInputs.Prefix:
-							try {
-								if (lineItems.Length != InMsg.RawInputs.Length) {
-									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.AdjustedInputsAndDetection.Length));
-								}
-							}
-							catch (Exception ex) {
-								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
-								if (InvokeRequired) { Invoke(m); }
-								else { m(); }
-							}
-							break;
-
-						case InMsg.ConfigMsg.Prefix:
-							try {
-								if (lineItems.Length == InMsg.ConfigMsg.Length) {
-									var label = lineItems[1];
-									var val = lineItems[2];
-									m = null;
-									switch (label) {
-										case MsgParamName.SampRate:
-											m = () => { SampleRate.Text = val; };
-											break;
-										case MsgParamName.MinCumCuts:
-											m = () => { MinCumCuts.Text = val; };
-											break;
-										case MsgParamName.ConfM:
-											m = () => { ConfM.Text = val; };
-											break;
-										case MsgParamName.ConfN:
-											m = () => { ConfN.Text = val; };
-											break;
+							// Process the message types
+							MethodInvoker m;
+							switch (msgPrefix) {
+								case InMsg.Sync.Prefix:
+									try {
+										if (lineItems.Length == InMsg.Sync.Length) {
+											break; // All we have to do here is log it
+										}
+										throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.Sync.Length));
 									}
-									if (m != null) {
+									catch (Exception ex) {
+										m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
 										if (InvokeRequired) {
 											Invoke(m);
 										}
@@ -259,66 +205,171 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 											m();
 										}
 									}
-								}
-								else {
-									throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length, InMsg.AllInputs.Length));
-								}
+									break;
+								case InMsg.AllInputs.Prefix:
+									try {
+										if (lineItems.Length == InMsg.AllInputs.Length) {
+											//isDisp = (lineItems[lineItems.Length - 2] == "1");
+											//isConf = (lineItems[lineItems.Length - 1] == "1");
+											var sampleNo = Convert.ToInt32(lineItems[1]);
+											var sampI = Convert.ToInt32(lineItems[6]);
+											var sampQ = Convert.ToInt32(lineItems[7]);
+											CheckSampleValue(sampI, sampQ, sampleNo);
+										}
+										else {
+											throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length,
+												InMsg.AllInputs.Length));
+										}
+									}
+									catch (Exception ex) {
+										m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+										if (InvokeRequired) {
+											Invoke(m);
+										}
+										else {
+											m();
+										}
+									}
+									break;
+
+								case InMsg.AdjustedInputsAndDetection.Prefix:
+									try {
+										if (lineItems.Length == InMsg.AdjustedInputsAndDetection.Length) {
+											isDisp = (lineItems[lineItems.Length - 2] == "1");
+											isConf = (lineItems[lineItems.Length - 1] == "1");
+										}
+										else {
+											throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length,
+												InMsg.AdjustedInputsAndDetection.Length));
+										}
+									}
+									catch (Exception ex) {
+										m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+										if (InvokeRequired) {
+											Invoke(m);
+										}
+										else {
+											m();
+										}
+									}
+									break;
+
+								case InMsg.RawInputs.Prefix:
+									try {
+										if (lineItems.Length != InMsg.RawInputs.Length) {
+											throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length,
+												InMsg.AdjustedInputsAndDetection.Length));
+										}
+									}
+									catch (Exception ex) {
+										m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+										if (InvokeRequired) {
+											Invoke(m);
+										}
+										else {
+											m();
+										}
+									}
+									break;
+
+								case InMsg.ConfigMsg.Prefix:
+									try {
+										if (lineItems.Length == InMsg.ConfigMsg.Length) {
+											var label = lineItems[1];
+											var val = lineItems[2];
+											m = null;
+											switch (label) {
+												case MsgParamName.SampRate:
+													m = () => { SampleRate.Text = val; };
+													break;
+												case MsgParamName.MinCumCuts:
+													m = () => { MinCumCuts.Text = val; };
+													break;
+												case MsgParamName.ConfM:
+													m = () => { ConfM.Text = val; };
+													break;
+												case MsgParamName.ConfN:
+													m = () => { ConfN.Text = val; };
+													break;
+											}
+											if (m != null) {
+												if (InvokeRequired) {
+													Invoke(m);
+												}
+												else {
+													m();
+												}
+											}
+										}
+										else {
+											throw new Exception(string.Format("{0} len: {1}; sb {2}", lineItems[0], lineItems.Length,
+												InMsg.AllInputs.Length));
+										}
+									}
+									catch (Exception ex) {
+										m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
+										if (InvokeRequired) {
+											Invoke(m);
+										}
+										else {
+											m();
+										}
+									}
+									break;
 							}
-							catch (Exception ex) {
-								m = () => MessagesTextBox.AppendText(string.Format("Error: {0}; {1}\n", ex.Message, foundString));
-								if (InvokeRequired) {
-									Invoke(m);
-								}
-								else {
-									m();
-								}
-							}
-							break;
+
+#if false // Disable audio alerts for now
+	// Give audio alerts
+					if (isDisp) {
+						_playDisp.Play();
 					}
+					if (isConf) {
+						_playConf.Play();
+					}
+#endif
 
-
-					// Give audio alerts
-					//if (isDisp) {
-					//	_playDisp.Play();
-					//}
-					//if (isConf) {
-					//	_playConf.Play();
-					//}
-
-					// We use a method invoker to avoid cross-thread issues
-					var disp = isDisp;
-					var conf = isConf;
-					m = () => {
-						var logString = receivedTime.ToString("HH:mm:ss.fff,") + foundString;
-						// If detail message, only put to text box for the first sample of a snippet (assume 250 samples/snippet)
-						//	This speeds things up and helps prevent data loss
-						if (lineItems[0] == InMsg.AllInputs.Prefix || lineItems[0] == InMsg.AdjustedInputsAndDetection.Prefix || lineItems[0] == InMsg.RawInputs.Prefix) {
-							try {
-								int sampNum;
-								//Int32.TryParse(lineItems[1], out sampNum);
-								if (Int32.TryParse(lineItems[1], out sampNum) && sampNum % 250 == 1) {
+							// We use a method invoker to avoid cross-thread issues
+							var disp = isDisp;
+							var conf = isConf;
+							m = () => {
+								var logString = receivedTime.ToString("HH:mm:ss.fff,") + foundString;
+								// If detail message, only put to text box for the first sample of a snippet (assume 250 samples/snippet)
+								//	This speeds things up and helps prevent data loss
+								if (lineItems[0] == InMsg.AllInputs.Prefix || lineItems[0] == InMsg.AdjustedInputsAndDetection.Prefix ||
+									lineItems[0] == InMsg.RawInputs.Prefix) {
+									try {
+										int sampNum;
+										//Int32.TryParse(lineItems[1], out sampNum);
+										if (Int32.TryParse(lineItems[1], out sampNum) && sampNum % 250 == 1) {
+											FromMoteTextBox.AppendText(logString + "\n");
+										}
+									}
+									// ReSharper disable once EmptyGeneralCatchClause
+									catch {
+									}
+								}
+								else {
 									FromMoteTextBox.AppendText(logString + "\n");
 								}
+								if ((bool)LogToFileButton.Tag) {
+									_logFile.Write(logString + "\r\n");
+								}
+								Disp.Visible = disp;
+								Conf.Visible = conf;
+								//Debug.Print("{0}, {1}", Conf.Enabled, Conf.ForeColor);
+							};
+							if (FromMoteTextBox.InvokeRequired) {
+								FromMoteTextBox.Invoke(m);
 							}
-							// ReSharper disable once EmptyGeneralCatchClause
-							catch { }
+							else {
+								m();
+							}
+							FoundStringB.Clear();
+							continue;
 						}
-						else {
-							FromMoteTextBox.AppendText(logString + "\n");
-						}
-						if ((bool)LogToFileButton.Tag) {
-							_logFile.Write(logString + "\r\n");
-						}
-						Disp.Visible = disp;
-						Conf.Visible = conf;
-						//Debug.Print("{0}, {1}", Conf.Enabled, Conf.ForeColor);
-					};
-					if (FromMoteTextBox.InvokeRequired) { FromMoteTextBox.Invoke(m); }
-					else { m(); }
-					FoundStringB.Clear();
-					return;
+						FoundStringB.Append(theChar);
+					}
 				}
-				FoundStringB.Append(theChar);
 			}
 		}
 
@@ -388,6 +439,10 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 				LogToFileButton.Tag = true;
 				LogToFileButton.Text = "Stop logging";
 			}
+		}
+
+		private void DisplacementDetection_FormClosing(object sender, FormClosingEventArgs e) {
+			GlobalVals._formIsClosing = true;
 		}
 
 		///// <summary>

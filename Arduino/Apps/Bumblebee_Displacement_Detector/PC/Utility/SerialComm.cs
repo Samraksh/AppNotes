@@ -1,7 +1,9 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
 using System.Linq.Expressions;
+using Globals;
 
 namespace Samraksh.AppNote.Utility {
 
@@ -10,8 +12,8 @@ namespace Samraksh.AppNote.Utility {
 		//Stream _serialStream;                // The serial stream
 		//readonly PortDefinition _portDef;      // Serial port definition
 		//AsyncCallback _serialCallback;       // Callback when serial data received
-		readonly byte[] _inputBytes = new byte[1];    // Buffer for input received. Set to size 1 so that each character will be delivered when it arrives.
-		public delegate void SerialCallback(string theInput);   // Signature for callback
+		readonly byte[] _inputBytes = new byte[1000];    // Buffer for input received. 
+		public delegate void SerialCallback(char[] theInput);   // Signature for callback
 		readonly SerialCallback _callBack;            // Callback so user code can process received data
 		//private string _portName;
 		//private int _bitRate;
@@ -69,9 +71,14 @@ namespace Samraksh.AppNote.Utility {
 		/// Process serial data received
 		/// </summary>
 		private void ProcessData(IAsyncResult iar) {
-			var inputString = System.Text.Encoding.UTF8.GetString(_inputBytes);   // Decode the bytes as string, using UTF8 encoding
-			_callBack(inputString);  // Call user method to process the received data
-			try {
+			if (!_serialPort.IsOpen || GlobalVals._formIsClosing) {
+				return;
+			}
+			var numBytesRead = _serialPort.BaseStream.EndRead(iar);
+			Debug.Print("Serial chars read: {0}", numBytesRead);
+			var inputChars = System.Text.Encoding.UTF8.GetChars(_inputBytes, 0, numBytesRead);   // Decode the bytes as string, using UTF8 encoding
+			_callBack(inputChars);  // Call user method to process the received data
+			try {	// Getting fatalexecutionerror
 				_serialPort.BaseStream.BeginRead(_inputBytes, 0, _inputBytes.Length, ProcessData, _count); // Begin another read
 				++_count;
 			}

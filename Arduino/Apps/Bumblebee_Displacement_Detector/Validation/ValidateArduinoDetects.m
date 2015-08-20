@@ -9,7 +9,7 @@ MofN_M = 2;
 MofN_N = 8;
 MofNBuff = zeros(1,MofN_N);
 
-[NRows, NCols] = size(ArduinoInputsDetects);
+[~, NCols] = size(ArduinoInputsDetects);
 TagCol = -1;
 for I = 1:NCols
     if strcmp(ArduinoInputsDetects(1,I),'#c')
@@ -40,6 +40,8 @@ ConfErrors = 0;
 
 CurrCutsM = 0;
 
+
+
 for Idx = 1 : NRows - 1
     NextCol1 = ArduinoInputsDetects{Idx+1,1};
     if ~strcmp(ArduinoInputsDetects(Idx, LineTypeC), '#j') || isnan(NextCol1(1))
@@ -48,15 +50,20 @@ for Idx = 1 : NRows - 1
     
     SampleNo = ArduinoInputsDetects{Idx, SampleNoC};
     if SampleNo < 2
+        CurrIA = ArduinoInputsDetects{Idx, AdjIC};
+        CurrQA = ArduinoInputsDetects{Idx, AdjQC};
         continue;
     end;
     
     InputCount = InputCount + 1;
-    
+      
+    PrevIA = CurrIA;
+    PrevQA = CurrQA;
     CurrIA = ArduinoInputsDetects{Idx, AdjIC};
     CurrQA = ArduinoInputsDetects{Idx, AdjQC};
-    PrevIA = ArduinoInputsDetects{Idx-1, AdjIC};
-    PrevQA = ArduinoInputsDetects{Idx-1, AdjQC};
+    
+    if isnan(PrevIA)
+    end;
     
     IsCutA = ArduinoInputsDetects{Idx, IsCutC};
     
@@ -69,9 +76,12 @@ for Idx = 1 : NRows - 1
         DiffAngle = 0;
     end
     % Treat angles close to pi as zero
-    if round(mod(DiffAngle,pi),5) == 0
+    if round(abs(abs(DiffAngle)-pi),5) == 0
         DiffAngle = 0;
     end
+%     if round(mod(DiffAngle,pi),5) == 0
+%         DiffAngle = 0;
+%     end
     
     % Check that the cross product (used by the mote program) matches the
     % angle difference used here for verification
@@ -80,6 +90,8 @@ for Idx = 1 : NRows - 1
     
     if sign(CrossProduct) ~= sign(DiffAngle)
         CrossAngleErrors = CrossAngleErrors + 1;
+        fprintf('Cross Product vs Angle Diff Error %i. Sample No: %i\n',CrossAngleErrors,SampleNo);
+        fprintf('\tCross: %i, Angle: %i\n', CrossProduct, DiffAngle);
     end
     
     % Validate cut
@@ -97,22 +109,21 @@ for Idx = 1 : NRows - 1
     end
     
     if IsCutM ~= IsCutA
-        fprintf('Cut Error. Sample No: %i, Arduino: %i; MatLab: %i\n', SampleNo, IsCutA, IsCutM);
         CutErrors = CutErrors + 1;
+        fprintf('Cut Error %i. Sample No: %i, Arduino: %i; MatLab: %i\n', CutErrors, SampleNo, IsCutA, IsCutM);
         
         Cross = (PrevQA * CurrIA) - (PrevIA * CurrQA);
-        fprintf('SampNo: %i\n', SampleNo);
-        fprintf('Prev (I,Q) Ard: (%i,%i)\n',PrevIA, PrevQA);
-        fprintf('Prev (I,Q): (%i,%i); Angle: %2f\n',PrevIA, PrevQA, rad2deg(PrevAngle));
-        fprintf('Curr (I,Q): (%i,%i); Angle: %2f\n',CurrIA, CurrQA, rad2deg(CurrAngle));
-        fprintf('Diff: %2f, Cross: %i\n\n', rad2deg(DiffAngle), Cross);
-        figure;
-        plot(PrevQA, PrevIA, '+', CurrQA, CurrIA, '*', 0, 0, 'o');
-        MaxX = max(abs(PrevAdjQM),abs(CurrQA)) + 1;
-        xlim([-MaxX, MaxX]);
-        MaxY = max(abs(PrevAdjIM),abs(CurrIA)) + 1;
-        ylim([-MaxY, MaxY]);
-        
+        fprintf('\tSampNo: %i\n', SampleNo);
+        %fprintf('Prev (I,Q) Ard: (%i,%i)\n',PrevIA, PrevQA);
+        fprintf('\tPrev (I,Q): (%i,%i); Angle: %2f\n',PrevIA, PrevQA, rad2deg(PrevAngle));
+        fprintf('\tCurr (I,Q): (%i,%i); Angle: %2f\n',CurrIA, CurrQA, rad2deg(CurrAngle));
+        fprintf('\tDiff: %2f, Cross: %i\n\n', rad2deg(DiffAngle), Cross);
+%         figure;
+%         plot(PrevQA, PrevIA, '+', CurrQA, CurrIA, '*', 0, 0, 'o');
+%         MaxX = max(abs(PrevAdjQM),abs(CurrQA)) + 1;
+%         xlim([-MaxX, MaxX]);
+%         MaxY = max(abs(PrevAdjIM),abs(CurrIA)) + 1;
+%         ylim([-MaxY, MaxY]);
     end
     
     CurrCutsM = CurrCutsM + IsCutA;

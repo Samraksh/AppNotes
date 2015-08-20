@@ -110,7 +110,7 @@
 			// 
 			// ClearMessages
 			// 
-			this.ClearMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.ClearMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.ClearMessages.Location = new System.Drawing.Point(753, 508);
 			this.ClearMessages.Margin = new System.Windows.Forms.Padding(4);
 			this.ClearMessages.Name = "ClearMessages";
@@ -146,6 +146,7 @@
 			// 
 			// ClearFromMote
 			// 
+			this.ClearFromMote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.ClearFromMote.Location = new System.Drawing.Point(24, 508);
 			this.ClearFromMote.Margin = new System.Windows.Forms.Padding(4);
 			this.ClearFromMote.Name = "ClearFromMote";
@@ -411,6 +412,7 @@
 			this.Controls.Add(this.Parameters);
 			this.Name = "DisplacementDetection";
 			this.Text = "Displacement Detection";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DisplacementDetection_FormClosing);
 			this.Load += new System.EventHandler(this.DisplacementDetection_Load);
 			((System.ComponentModel.ISupportInitialize)(this.RefreshSerialPortList)).EndInit();
 			this.Parameters.ResumeLayout(false);

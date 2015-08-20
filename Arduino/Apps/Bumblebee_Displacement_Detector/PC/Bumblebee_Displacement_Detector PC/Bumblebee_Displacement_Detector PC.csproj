@@ -83,6 +83,10 @@
     <None Include="Resources\RefreshButton.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Globals\Globals.csproj">
+      <Project>{b461ab57-b22a-4340-ac41-292e6fd2c275}</Project>
+      <Name>Globals</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{da2d77d1-6036-4843-a4b2-4fdc28821177}</Project>
       <Name>Utility</Name>
