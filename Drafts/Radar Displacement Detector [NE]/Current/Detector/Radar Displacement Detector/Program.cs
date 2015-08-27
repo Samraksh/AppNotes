@@ -73,7 +73,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			
 			Globals.Out.RawSample.Opt.LogRawSampleToSD = false;
 
-			Globals.Out.RawEverything.Opt.LogRawEverythingToSD = false;
+			Globals.Out.RawEverything.Opt.LogRawEverythingToSD = true;
 
 			Globals.Out.PrintAfterRawLogging = true;
 
@@ -84,12 +84,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			Globals.Out.SnippetDispAndConf.Opt.LogToDebug = false;
 			Globals.Out.SnippetDispAndConf.Opt.LogToSD = false;
 			Globals.Out.SnippetDispAndConf.Opt.Print = true;
-
-			//// Convert header char arrays to string to avoid impacting heap during runtime
-			//Globals.Out.SampleAndCut.BuffDef.Prefix.Fields = new string(Globals.Out.SampleAndCut.BuffDef.Prefix.FieldsC);
-			//Globals.Out.SampleAndCut.BuffDef.Prefix.Sample = new string(Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC);
-			//Globals.Out.SnippetDispAndConf.BuffDef.Prefix.Fields = new string(Globals.Out.SnippetDispAndConf.BuffDef.Prefix.FieldsC);
-			//Globals.Out.SnippetDispAndConf.BuffDef.Prefix.Snippet = new string(Globals.Out.SnippetDispAndConf.BuffDef.Prefix.SnippetC);
 
 			// Finish setting output options
 			Globals.Out.RawSample.Opt.Logging = Globals.Out.RawSample.Opt.LogRawSampleToSD;
@@ -139,14 +133,12 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			Debug.Print("\tCallbackIntervalMicroSec " + DetectorParameters.CallbackIntervalMicroSec);
 			Debug.Print("\tM " + DetectorParameters.M);
 			Debug.Print("\tN " + DetectorParameters.N);
-			Debug.Print("\tNoise Rejection Threshold" + DetectorParameters.NoiseRejectionThreshold);
+			Debug.Print("\tNoise Rejection Threshold " + DetectorParameters.NoiseRejectionThreshold);
 			Debug.Print("\tMinCumCuts " + DetectorParameters.MinCumCuts);
 			Debug.Print("\tCutDistanceCm " + Math.Truncate(DetectorParameters.CutDistanceCm * 100) / 100);
 			Debug.Print("");
 
-			// Set up to detect end-of-sampling
-			//if (Globals.Out.LoggingRequired)
-			//{
+			// Signal end of collect
 			Globals.GpioPorts.EndCollect.OnInterrupt += (d1, s2, t) =>
 			{
 				if (Globals.LoggingFinished)
@@ -159,7 +151,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				// Note that we're finished
 				Globals.LoggingFinished = true;
 			};
-			//}
+
+			// Signal sync button press
+			Globals.GpioPorts.Sync.OnInterrupt += Globals.Out.Sync.Sync_OnButtonPress;
 
 			if (Globals.Out.RawSample.Opt.Logging || Globals.Out.RawEverything.Opt.Logging)
 			{

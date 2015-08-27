@@ -1,35 +1,11 @@
+using Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar;
+
 namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 {
 	public static partial class AnalyzeDisplacement
 	{
 
-		/// <summary>
-		/// Hold a sample pair
-		/// </summary>
-		public class Sample
-		{
-			/// <summary>
-			/// Constructor
-			/// </summary>
-			public Sample() { }
-
-			/// <summary>
-			/// Constructor
-			/// </summary>
-			/// <param name="i"></param>
-			/// <param name="q"></param>
-			public Sample(int i, int q)
-			{
-				I = i;
-				Q = q;
-			}
-
-			/// <summary>I value</summary>
-			public int I;
-
-			/// <summary>Q value</summary>
-			public int Q;
-		}
+		
 
 		/// <summary>
 		/// Sample data
@@ -40,16 +16,16 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			public static int SampleNum;
 
 			/// <summary>Current sample, adjusted by mean for comparison</summary>
-			public static readonly Sample CompSample = new Sample();
+			public static readonly Globals.Sample CompSample = new Globals.Sample();
 
 			/// <summary>Sum of samples</summary>
-			public static readonly Sample SampleSum = new Sample();
+			public static readonly Globals.Sample SampleSum = new Globals.Sample();
 
 			/// <summary>Min mean-adjusted I and Q values</summary>
-			public static readonly Sample MinComp = new Sample(int.MaxValue, int.MaxValue);
+			public static readonly Globals.Sample MinComp = new Globals.Sample(int.MaxValue, int.MaxValue);
 
 			/// <summary>Max mean-adjusted I and Q values</summary>
-			public static readonly Sample MaxComp = new Sample(int.MinValue, int.MinValue);
+			public static readonly Globals.Sample MaxComp = new Globals.Sample(int.MinValue, int.MinValue);
 
 			/// <summary>Has displacement occurred?</summary>
 			public static bool IsDisplacement;

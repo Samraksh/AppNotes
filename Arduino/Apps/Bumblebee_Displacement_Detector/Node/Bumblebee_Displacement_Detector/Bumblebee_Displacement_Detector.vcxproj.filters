@@ -23,10 +23,10 @@
     <None Include="Utility.ino" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Visual Micro\.Bumblebee_Displacement_Detector.vsarduino.h">
+    <ClInclude Include="DataStructs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DataStructs.h">
+    <ClInclude Include="Visual Micro\.Bumblebee_Displacement_Detector.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

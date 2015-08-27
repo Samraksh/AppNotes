@@ -8,7 +8,6 @@ using Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar;
 #endif
 
 using Samraksh.AppNote.Utility;
-//using Samraksh.eMote.NonVolatileMemory;
 using Samraksh.eMote.NonVolatileMemory;
 
 namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
@@ -81,7 +80,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 		/// To further confirm displacement (reduce false positives), look for at least M displacements in N seconds.
 		/// For N of M, note that we do not care if the target alternately moves forward and backward the required distance.
 		/// </remarks>
-		public static void Analyze(Sample rawSample)
+		public static void Analyze(Globals.Sample rawSample)
 		{
 			SampleData.SampleNum++;
 
@@ -124,7 +123,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			// Log raw everything if required
 			if (Globals.Out.RawEverything.Opt.Logging)
 			{
-				LogRawEverything(rawSample, isCut);
+				Globals.Out.RawEverything.LogRawEverything(SampleData.SampleNum, rawSample, SampleData.CompSample, isCut, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			//if (SampleData.SampleNum < 100) {
@@ -136,13 +135,13 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			//}
 			//Globals.DataStoreItems.DRef.si
 		}
-
-		private static void DoSampleLogging(Sample rawSample, int isCut)
+		
+		private static void DoSampleLogging(Globals.Sample rawSample, int isCut)
 		{
 			// Log raw sample if required
 			if (Globals.Out.RawSample.Opt.Logging)
 			{
-				LogRawSample(rawSample);
+				Globals.Out.RawSample.LogRawSample(rawSample);
 			}
 
 			// Print sample and cut if required
@@ -168,7 +167,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 		/// </summary>
 		/// <param name="rawSample">Raw sample (used forlogging)</param>
 		/// <param name="isCut">Is cut? (used for logging)</param>
-		private static void CheckDisplacementAndConfirmation(Sample rawSample, int isCut)
+		private static void CheckDisplacementAndConfirmation(Globals.Sample rawSample, int isCut)
 		{
 			// We've collected cumulative cut data for a snippet. See if snippet displacement has occurred
 			//  Displacement occurs only if there are more than MinCumCuts in the snippet
@@ -201,12 +200,12 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			}
 		}
 
-		private static void DoSnippetLogging(Sample rawSample, int isCut)
+		private static void DoSnippetLogging(Globals.Sample rawSample, int isCut)
 		{
 			// Send radio update, if enabled
 			if (Globals.RadioUpdates.EnableRadioUpdates)
 			{
-				Globals.RadioUpdates.Update(SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
+				Globals.RadioUpdates.SnippetUpdate(SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			// Log snippet displacement and confirmation if required
@@ -221,108 +220,14 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 				PrintSnippetDispAndConf();
 			}
 		}
-
-		private static void LogRawSample(Sample rawSample)
-		{
-			//if (SampleData.SampleNum > 10)
-			//{
-			//	return;
-			//}
-
-			Globals.DRef = new DataReference(
-					Globals.Out.Dstore,
-					Globals.Out.RawSample.BufferDef.BuffSize,
-					ReferenceDataType.BYTE
-					);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawSample.BufferDef.Buffer,
-				Globals.Out.RawSample.BufferDef.RawI, rawSample.I);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawSample.BufferDef.Buffer,
-				Globals.Out.RawSample.BufferDef.RawQ, rawSample.Q);
-
-			WriteDataRefAndUpdateCrc(Globals.DRef, Globals.Out.RawSample.BufferDef.Buffer);
-
-			//Globals.DataStoreItems.DRef.Write(Globals.DataStoreItems.RawSample.Buffer);
-
-			//Globals.AllocationsWritten++;
-
-			////var initCrc = Globals.CrcWritten;
-
-			//Globals.CrcWritten = Microsoft.SPOT.Hardware.Utility.ComputeCRC(
-			//	Globals.DataStoreItems.RawSample.Buffer,
-			//	0,
-			//	Globals.DataStoreItems.RawSample.BuffSize,
-			//	Globals.CrcWritten);
-
-			//Debug.Print("# " + rawSample.I + "\t" + rawSample.Q);
-			//Debug.Print("CRC init: " + initCrc + ", CRC end: " + Globals.CrcWritten);
-
-			//var vals = new StringBuilder("$ ");
-			//for (var i = 0; i < Globals.DataStoreItems.RawSample.BuffSize; i++)
-			//{
-			//	vals.Append(Globals.DataStoreItems.RawSample.Buffer[i] + "\t");
-			//}
-			//Debug.Print(vals.ToString()+"\n");
-
-		}
-
-		private static void LogRawEverything(Sample rawSample, int isCut)
-		{
-			//if (SampleData.SampleNum > 10)
-			//{
-			//	return;
-			//}
-
-			Globals.DRef = new DataReference(
-					Globals.Out.Dstore,
-					Globals.Out.RawEverything.BufferDef.BuffSize,
-					ReferenceDataType.BYTE
-					);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawEverything.BufferDef.Buffer,
-				Globals.Out.RawEverything.BufferDef.SampleNum, SampleData.SampleNum);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawEverything.BufferDef.Buffer,
-				Globals.Out.RawEverything.BufferDef.RawI, (uint)rawSample.I);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawEverything.BufferDef.Buffer,
-				Globals.Out.RawEverything.BufferDef.RawQ, (uint)rawSample.Q);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawEverything.BufferDef.Buffer,
-				Globals.Out.RawEverything.BufferDef.SampleI, SampleData.CompSample.I);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawEverything.BufferDef.Buffer,
-				Globals.Out.RawEverything.BufferDef.SampleQ, SampleData.CompSample.Q);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawEverything.BufferDef.Buffer,
-				Globals.Out.RawEverything.BufferDef.IsCut, isCut);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawEverything.BufferDef.Buffer,
-				Globals.Out.RawEverything.BufferDef.IsDisplacement, SampleData.IsDisplacement);
-			BitConverter.InsertValueIntoArray(Globals.Out.RawEverything.BufferDef.Buffer,
-				Globals.Out.RawEverything.BufferDef.IsConf, MofNConfirmation.IsConfirmed);
-
-			WriteDataRefAndUpdateCrc(Globals.DRef, Globals.Out.RawEverything.BufferDef.Buffer);
-
-			//Globals.DataStoreItems.DRef.Write(Globals.DataStoreItems.RawSample.Buffer);
-
-			//Globals.AllocationsWritten++;
-
-			//Debug.Print("# " + rawSample.I + "\t" + rawSample.Q);
-			//Debug.Print("CRC init: " + initCrc + ", CRC end: " + Globals.CrcWritten);
-
-			//var vals = new StringBuilder("$ ");
-			//for (var i = 0; i < Globals.Out.RawEverything.BufferDef.BuffSize; i++)
-			//{
-			//	vals.Append(Globals.Out.RawEverything.BufferDef.Buffer[i] + "\t");
-			//}
-			//Debug.Print(vals + "\n");
-
-		}
+		
 
 		private static void LogSampleAndCut(int isCut)
 		{
-			Globals.DRef = new DataReference(
-				Globals.Out.Dstore,
-				Globals.Out.SampleAndCut.BuffDef.Buffer.Length,
-				ReferenceDataType.BYTE
-				);
 			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
-				Globals.Out.AsciiHeader.Header0, Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC[0]);
+				Globals.Out.RecordPrefix.Header0, Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC[0]);
 			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
-				Globals.Out.AsciiHeader.Header1, Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC[1]);
+				Globals.Out.RecordPrefix.Header1, Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC[1]);
 			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
 				Globals.Out.SampleAndCut.BuffDef.SampleNum, SampleData.SampleNum);
 			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
@@ -332,7 +237,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
 				Globals.Out.SampleAndCut.BuffDef.IsCut, isCut);
 
-			WriteDataRefAndUpdateCrc(Globals.DRef, Globals.Out.SampleAndCut.BuffDef.Buffer);
+			Globals.WriteDataRefAndUpdateCrc(Globals.Out.SampleAndCut.BuffDef.Buffer);
 
 			//Globals.DataStoreItems.DRef.Write(Globals.DataStoreItems.SampleAndCut.Buffer);
 
@@ -359,15 +264,10 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 
 		private static void LogSnippetDispAndConf()
 		{
-			Globals.DRef = new DataReference(
-				Globals.Out.Dstore,
-				Globals.Out.SnippetDispAndConf.BuffDef.Buffer.Length,
-				ReferenceDataType.BYTE
-				);
 			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
-				Globals.Out.AsciiHeader.Header0, Globals.Out.SnippetDispAndConf.BuffDef.Prefix.SnippetC[0]);
+				Globals.Out.RecordPrefix.Header0, Globals.Out.SnippetDispAndConf.BuffDef.Prefix.SnippetC[0]);
 			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
-				Globals.Out.AsciiHeader.Header1, Globals.Out.SnippetDispAndConf.BuffDef.Prefix.SnippetC[1]);
+				Globals.Out.RecordPrefix.Header1, Globals.Out.SnippetDispAndConf.BuffDef.Prefix.SnippetC[1]);
 			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
 				Globals.Out.SnippetDispAndConf.BuffDef.SampleNum, SampleData.SampleNum);
 
@@ -378,9 +278,8 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 				Globals.Out.SnippetDispAndConf.BuffDef.IsDisp, SampleData.IsDisplacement ? 1 : 0);
 			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
 				Globals.Out.SnippetDispAndConf.BuffDef.IsConfirmed, MofNConfirmation.IsConfirmed ? 1 : 0);
-
-
-			WriteDataRefAndUpdateCrc(Globals.DRef, Globals.Out.SnippetDispAndConf.BuffDef.Buffer);
+			
+			Globals.WriteDataRefAndUpdateCrc(Globals.Out.SnippetDispAndConf.BuffDef.Buffer);
 
 			//Globals.DataStoreItems.DRef.Write(Globals.DataStoreItems.SnippetDispAndConf.Buffer);
 
@@ -394,18 +293,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 
 		}
 
-		private static void WriteDataRefAndUpdateCrc(DataReference dRef, byte[] buffer)
-		{
-			dRef.Write(buffer);
 
-			Globals.AllocationsWritten++;
-
-			Globals.CrcWritten = Microsoft.SPOT.Hardware.Utility.ComputeCRC(
-				buffer,
-				0,
-				buffer.Length,
-				Globals.CrcWritten);
-		}
 
 		/// <summary>
 		/// Cut analysis
@@ -413,7 +301,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 		/// <remarks>One cut = 5.2 / 2 = 2.6 cm distance</remarks>
 		private static class CutAnalysis
 		{
-			private static readonly Sample PrevSample = new Sample();
+			private static readonly Globals.Sample PrevSample = new Globals.Sample();
 
 			/// <summary>Cumulative cuts</summary>
 			public static int CumCuts;
@@ -447,7 +335,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			/// Increment or decrement the cumulative cuts based on previous and current sample
 			/// </summary>
 			/// <param name="currSample"></param>
-			public static int CheckForCut(Sample currSample)
+			public static int CheckForCut(Globals.Sample currSample)
 			{
 				var isCut = 0;
 				if (SampleData.SampleNum > 1)
@@ -543,8 +431,6 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 				//				Debug.Print("MofN: curr snippet " + snippetNumber + ", curr buff val " + _mofNBuff[MofNBuffPtr] + ", disp state " + IsConfirmed);
 			}
 		}
-
-
 	}
 
 }

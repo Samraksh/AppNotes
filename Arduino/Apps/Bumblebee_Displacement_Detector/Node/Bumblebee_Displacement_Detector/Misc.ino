@@ -45,7 +45,7 @@ void initializeGpios() {
 	setLed(displaceConfLed, false);
 
 	// Initialize pin for program stop
-	pinMode(stopForSdPin, INPUT_PULLUP);
+	pinMode(stopDetectionPin, INPUT_PULLUP);
 
 	// Initialize pin for sync message
 	pinMode(syncPin, INPUT_PULLUP);

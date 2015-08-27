@@ -1,4 +1,5 @@
-﻿using Microsoft.SPOT.Hardware;
+﻿using System;
+using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
 using Samraksh.eMote.Net.Mac;
@@ -14,12 +15,66 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 	/// <summary>
 	/// Global values and parameters
 	/// </summary>
-	public class Globals
-	{
+	public class Globals {
+
+		private static readonly object WriteLock = new object();
+
+		/// <summary>
+		/// Write the data reference and update the CRC
+		/// </summary>
+		/// <param name="buffer"></param>
+		public static void WriteDataRefAndUpdateCrc(byte[] buffer)
+		{
+			// Prevent attempt to write from separate threads
+			lock (WriteLock) {
+				DataStoreReference = new DataReference(
+					Out.DataStore,
+					buffer.Length,
+					ReferenceDataType.BYTE
+					);
+				DataStoreReference.Write(buffer);
+
+				AllocationsWritten++;
+
+				CrcWritten = Microsoft.SPOT.Hardware.Utility.ComputeCRC(
+					buffer,
+					0,
+					buffer.Length,
+					CrcWritten);
+			}
+		}
+
+		/// <summary>
+		/// Hold a sample pair
+		/// </summary>
+		public class Sample
+		{
+			/// <summary>
+			/// Constructor
+			/// </summary>
+			public Sample() { }
+
+			/// <summary>
+			/// Constructor
+			/// </summary>
+			/// <param name="i"></param>
+			/// <param name="q"></param>
+			public Sample(int i, int q)
+			{
+				I = i;
+				Q = q;
+			}
+
+			/// <summary>I value</summary>
+			public int I;
+
+			/// <summary>Q value</summary>
+			public int Q;
+		}
 		/// <summary>
 		/// Data store reference for writing
 		/// </summary>
-		public static DataReference DRef;
+		public static DataReference DataStoreReference;
 
 		/// <summary>
 		/// User has signaled to stop sampling
@@ -73,7 +128,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// </summary>
 			/// <param name="isDisplacement"></param>
 			/// <param name="isConf"></param>
-			public static void Update(bool isDisplacement, bool isConf)
+			public static void SnippetUpdate(bool isDisplacement, bool isConf)
 			{
 				BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.AppIdentifier, AppIdentifierHdr);
 				BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.IsDisplacement, isDisplacement);
@@ -85,14 +140,14 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 		}
 
 		/// <summary>
-		/// Logging items
+		/// Output items
 		/// </summary>
 		public static class Out
 		{
 			/// <summary>
 			/// DataStore object
 			/// </summary>
-			public static readonly DataStore Dstore = DataStore.Instance(StorageType.NOR, true);
+			public static readonly DataStore DataStore = DataStore.Instance(StorageType.NOR, true);
 
 			/// <summary>Options true iff logging</summary>
 			public static bool LoggingRequired;
@@ -100,15 +155,51 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// <summary>Print after logging</summary>
 			public static bool PrintAfterRawLogging;
 
+
 			/// <summary>
-			/// ASCII Header
+			/// Record prefix
 			/// </summary>
-			public static class AsciiHeader
+			public static class RecordPrefix
 			{
 				/// <summary>Buffer position</summary>
 				public const int Header0 = 0;
 				/// <summary>Buffer position</summary>
 				public const int Header1 = Header0 + sizeof(char);
+			}
+
+			/// <summary>
+			/// Sync message
+			/// </summary>
+			public static class Sync
+			{
+				/// <summary>Sync prefix</summary>
+				public static char[] SyncPrefix = { '#', 's' };
+
+				/// <summary>
+				/// Buffer definition
+				/// </summary>
+				public static class BufferDef
+				{
+					/// <summary>The buffer</summary>
+					public static byte[] Buffer = new byte[BuffSize];
+
+					/// <summary>Buffer size</summary>
+					public const int BuffSize = RecordPrefix.Header1 + sizeof(char);
+				}
+
+				/// <summary>
+				/// Sync button is pressed
+				/// </summary>
+				public static void Sync_OnButtonPress(uint data1, uint data2, DateTime time)
+				{
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header0, SyncPrefix[0]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header1, SyncPrefix[1]);
+
+					WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+
+				}
 			}
 
 			//********************************************************************************************************
@@ -141,12 +232,38 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 					public static byte[] Buffer = new byte[BuffSize];
 
 					/// <summary>Raw I position</summary>
-					public const int RawI = 0;
+					public const int RawI = RecordPrefix.Header1 + sizeof(char);
 					/// <summary>Raw Q position</summary>
 					public const int RawQ = RawI + sizeof(ushort);
 
 					/// <summary>Buffer size</summary>
 					public const int BuffSize = RawQ + sizeof(ushort);
+				}
+				/// <summary>
+				/// Prefixes
+				/// </summary>
+				public static class Prefix
+				{
+					/// <summary>Sample values and cut detection (Prefix, Raw.I, Raw.Q)</summary>
+					public static char[] RawSamplePrefix = { '#', 'e' };
+				}
+
+				/// <summary>
+				/// Log raw sample
+				/// </summary>
+				/// <param name="rawSample"></param>
+				public static void LogRawSample(Sample rawSample)
+				{
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header0, Prefix.RawSamplePrefix[0]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header1, Prefix.RawSamplePrefix[1]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.RawI, rawSample.I);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.RawQ, rawSample.Q);
+
+					WriteDataRefAndUpdateCrc(BufferDef.Buffer);
 				}
 			}
 
@@ -179,7 +296,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 					public static byte[] Buffer = new byte[BuffSize];
 
 					/// <summary>Buffer position</summary>
-					public const int SampleNum = 0;
+					public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
 					/// <summary>Buffer position</summary>
 					public const int RawI = SampleNum + sizeof(int);	// Last position + size of last item
 					/// <summary>Buffer position</summary>
@@ -198,6 +315,65 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 					/// <summary>Buffer size</summary>
 					public const int BuffSize = IsConf + sizeof(bool);
 				}
+				/// <summary>
+				/// Prefixes
+				/// </summary>
+				public static class Prefix
+				{
+					/// <summary>Sample values and cut detection (Prefix, Raw.I, Raw.Q)</summary>
+					public static char[] RawEverythingPrefix = { '#', 'f' };
+				}
+
+				/// <summary>
+				/// Log Raw Everything
+				/// </summary>
+				/// <param name="sampleNum"></param>
+				/// <param name="rawSample"></param>
+				/// <param name="compSample"></param>
+				/// <param name="isCut"></param>
+				/// <param name="isDisplacement"></param>
+				/// <param name="isConfirmed"></param>
+				public static void LogRawEverything(int sampleNum, Sample rawSample, Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
+				{
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header0, Prefix.RawEverythingPrefix[0]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header1, Prefix.RawEverythingPrefix[1]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.SampleNum, sampleNum);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.RawI, (uint)rawSample.I);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.RawQ, (uint)rawSample.Q);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.SampleI, compSample.I);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.SampleQ, compSample.Q);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.IsCut, isCut);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.IsDisplacement, isDisplacement);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.IsConf, isConfirmed);
+
+					WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+
+					//Globals.DataStoreItems.DRef.Write(Globals.DataStoreItems.RawSample.Buffer);
+
+					//Globals.AllocationsWritten++;
+
+					//Debug.Print("# " + rawSample.I + "\t" + rawSample.Q);
+					//Debug.Print("CRC init: " + initCrc + ", CRC end: " + Globals.CrcWritten);
+
+					//var vals = new StringBuilder("$ ");
+					//for (var i = 0; i < Globals.Out.RawEverything.BufferDef.BuffSize; i++)
+					//{
+					//	vals.Append(Globals.Out.RawEverything.BufferDef.Buffer[i] + "\t");
+					//}
+					//Debug.Print(vals + "\n");
+
+				}
+
 			}
 
 			//********************************************************************************************************
@@ -231,7 +407,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 					/// <summary>The buffer</summary>
 					public static byte[] Buffer = new byte[BuffSize];
 					/// <summary>Buffer position</summary>
-					public const int SampleNum = AsciiHeader.Header1 + sizeof(char);
+					public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
 					/// <summary>Buffer position</summary>
 					public const int SampleI = SampleNum + sizeof(int);
 					/// <summary>Buffer position</summary>
@@ -307,7 +483,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 					}
 
 					/// <summary>Buffer position</summary>
-					public const int SampleNum = AsciiHeader.Header1 + sizeof(char);
+					public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
 
 					/// <summary>Buffer position</summary>
 					public const int CumCuts = SampleNum + sizeof(int);
@@ -359,11 +535,14 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			///<summary>(input)Signal end of collect</summary>
 			public static InterruptPort EndCollect = new InterruptPort(Pins.GPIO_J11_PIN5, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeBoth);
 
+			///<summary>(input)Signal sync event</summary>
+			public static InterruptPort Sync = new InterruptPort(Pins.GPIO_J11_PIN6, true, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeBoth);
+
 			/// <summary>Displacement detected</summary>
-			public static OutputPort DetectDisplacement = new OutputPort(Pins.GPIO_J11_PIN6, false);
+			public static OutputPort DetectDisplacement = new OutputPort(Pins.GPIO_J11_PIN7, false);
 
 			/// <summary>Confirmation detected</summary>
-			public static OutputPort DetectConf = new OutputPort(Pins.GPIO_J11_PIN7, false);
+			public static OutputPort DetectConf = new OutputPort(Pins.GPIO_J11_PIN8, false);
 #endif
 		}
 	}

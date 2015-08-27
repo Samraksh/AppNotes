@@ -27,9 +27,25 @@ int checkForCut() {
 	currVal.I = interpolatedVal.I - (sumVal.I / sampNum);
 	currVal.Q = interpolatedVal.Q - (sumVal.Q / sampNum);
 
+	MaxVals.I = max(MaxVals.I,currVal.I);
+	MaxVals.Q = max(MaxVals.Q,currVal.Q);
+	MinVals.I = min(MinVals.I,currVal.I);
+	MinVals.Q = min(MinVals.Q,currVal.Q);
+
+	MaxRaw.I = max(MaxRaw.I, interpolatedVal.I);
+	MaxRaw.Q = max(MaxRaw.Q, interpolatedVal.Q);
+	MinRaw.I = min(MinRaw.I, interpolatedVal.I);
+	MinRaw.Q = min(MinRaw.Q, interpolatedVal.Q);
+
 	// If not first time, check for cut
 	int isCut = 0;	// flag for whether a cut occurred or not
 	if (!firstTime) {
+
+		if (abs(currVal.I) < NoiseThreshold && abs(currVal.Q) < NoiseThreshold) {
+			setLed(cutPin, false);
+			return 0;
+			}
+
 		// Calculate the cross-product of the vectors.
 		//	Positive is counter-clockwise, negative is clockwise
 		long crossProduct = (prevVal.Q * currVal.I) - (prevVal.I * currVal.Q);	
@@ -52,7 +68,7 @@ int checkForCut() {
 	prevVal = currVal;
 	firstTime = false;
 
-	setLed(cutPin, isCut == 0);
+	setLed(cutPin, isCut != 0);
 
 	return isCut;
 	}

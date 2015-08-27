@@ -59,7 +59,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 				// Process each sample
 				for (var i = 0; i < DetectorParameters.BufferSize; i++) {
 
-					AnalyzeDisplacement.Analyze(new AnalyzeDisplacement.Sample(Ibuffer[i], Qbuffer[i]));
+					AnalyzeDisplacement.Analyze(new Globals.Sample(Ibuffer[i], Qbuffer[i]));
 				}
 
 				// Report on time to process buffer

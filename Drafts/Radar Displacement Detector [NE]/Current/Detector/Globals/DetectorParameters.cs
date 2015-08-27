@@ -33,9 +33,9 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 
 		/// <summary>Minimum number of cuts (phase unwraps) that must occur for a minor displacement event</summary>
 		//public const int MinCumCuts = 4;
-		public const int MinCumCuts = 10;
+		public const int MinCumCuts = 9;
 
 		/// <summary>The centimeters traversed by one cut. This is a fixed characteristic of the Bumblebee; do not change this value.</summary>
-		public const float CutDistanceCm = 5.2f / 2;
+		public const float CutDistanceCm = 2.6f;
 	}
 }

@@ -83,7 +83,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			// Read data references until we hit a null, which signifies the end
 			while (true)
 			{
-				var status = Globals.Out.Dstore.ReadAllDataReferences(dRefs, dRefsOffset++);
+				var status = Globals.Out.DataStore.ReadAllDataReferences(dRefs, dRefsOffset++);
 				if (status != DataStoreReturnStatus.Success)
 				{
 					throw new Exception("Error reading from DataStore. Return code: " + status);
@@ -101,8 +101,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				if (Globals.Out.SampleAndCut.Opt.Logging || Globals.Out.SnippetDispAndConf.Opt.LogToDebug)
 				{
 
-					var header0 = BitConverter.ToChar(buffer, Globals.Out.AsciiHeader.Header0);
-					var header1 = BitConverter.ToChar(buffer, Globals.Out.AsciiHeader.Header1);
+					var header0 = BitConverter.ToChar(buffer, Globals.Out.RecordPrefix.Header0);
+					var header1 = BitConverter.ToChar(buffer, Globals.Out.RecordPrefix.Header1);
 
 					if (header0 == Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC[0] &&
 						header1 == Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC[1])
@@ -122,17 +122,18 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					}
 				}
 
+				if (allocationsRead % DetectorParameters.SamplesPerSecond == 1)
+				{
+					var snippetNo = allocationsRead / DetectorParameters.SamplesPerSecond;
+					Debug.Print("Snippet " + snippetNo);
+					Lcd.Write("t" + snippetNo);
+				}
+
 				if (Globals.Out.RawSample.Opt.Logging)
 				{
-					Debug.Print("# 1");
-
 					// Write raw sample to SD
 					SD.Write(buffer, 0, Globals.Out.RawSample.BufferDef.BuffSize);
 
-					if (allocationsRead % DetectorParameters.SamplesPerSecond == 1)
-					{
-						Debug.Print("Snippet " + allocationsRead / DetectorParameters.SamplesPerSecond);
-					}
 
 					// Print
 					if (Globals.Out.PrintAfterRawLogging && refsRead < 10)
@@ -142,31 +143,15 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 						Debug.Print(rawI + "," + rawQ);
 					}
 
-					//var initCrc = Globals.CrcRead;
-
+					// Update CRC
 					_crcRead = CalcCrc(buffer, Globals.Out.RawSample.BufferDef.BuffSize);
 
-					//Debug.Print("CRC init: " + initCrc + ", CRC end: " + Globals.CrcRead);
-
-					//var vals = new StringBuilder("$ ");
-					//for (var i = 0; i < Globals.DataStoreItems.RawSample.BuffSize; i++)
-					//{
-					//	vals.Append(Globals.DataStoreItems.RawSample.Buffer[i] + "\t");
-					//}
-					//Debug.Print(vals.ToString() + "\n");
 				}
 
 				if (Globals.Out.RawEverything.Opt.Logging)
 				{
-					Debug.Print("# 2");
-
 					// Write everything of interest to SD
 					SD.Write(buffer, 0, Globals.Out.RawEverything.BufferDef.BuffSize);
-
-					if (allocationsRead % DetectorParameters.SamplesPerSecond == 1)
-					{
-						Debug.Print("Snippet " + allocationsRead / DetectorParameters.SamplesPerSecond);
-					}
 
 					// Print
 					if (Globals.Out.PrintAfterRawLogging && refsRead < 10)

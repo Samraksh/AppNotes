@@ -12,8 +12,9 @@ const int DefaultSampRate = 250;
 static int sampRate = DefaultSampRate;	// Samples per second
 static long sampIntUSec = 1000000 / sampRate; // sample interval in micro seconds
 
-//***** Cut Analysis *************************
+//***** Displacement Analysis ****************
 const int MinCumCuts = 6;			// Number of net cuts (positive or negative) for displacement
+const int NoiseThreshold = 0;		// Samples with I and Q values below noise threshold will be ignored for cut analysis
 const int snippetSize = sampRate;	// Number of samples in a snippet
 static int snippetCntr = 0;			// Sample counter within snippet
 static int snippetNum = 0;			// Snippet number
@@ -32,8 +33,8 @@ enum serialLogging {serialNone, serialAllInputs, serialRawInputs, serialAdjusted
 //
 //const serialLogging serialLog = serialNone;		// Do not write to serial.
 //const serialLogging serialLog = serialAllInputs;	// Write all inputs to serial. Useful for validation of input interpolation and averaging. NOTE: this produces too much data for 250 Hz. Must run slower. Only useful for evaluating interpolation and averaging.
-const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
-//const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection & confirmation results. This is the most common option
+//const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
+const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection & confirmation results. This is the most common option
 //const serialLogging serialLog = serialDetects;	// Detection & confirmation results only.
 
 // Uncomment exactly one of these
@@ -56,9 +57,8 @@ const int displaceLed = 5;		// HIGH when displacement detected
 const int displaceConfLed = 6;	// HIGH when displacement confirmed
 
 // Stop program input GPIO
-//	Only necessary if SD output is selected. 
-//	When the user pulls the pin LOW (usually with a push-button switch), the program will close the SD port and stop.
-const int stopForSdPin = 7;
+//	When the user pulls the pin LOW (usually with a push-button switch), the program will close the SD port (if open) and stop.
+const int stopDetectionPin = 7;
 
 // Logic analyzer output GPIOs 
 const int loopReceivedSamplePin = 8;
@@ -89,6 +89,10 @@ static SampleValPair interpolatedVal;	// Interpolated value
 static RunsumValPair sumVal;			// Sum of interpolated values to date
 static SampleValPair currVal;			// Current, mean-adjusted sample value
 static SampleValPair prevVal;			// Previous, mean-adjusted sample value
+static SampleValPair MinVals;
+static SampleValPair MaxVals;
+static SampleValPair MinRaw;
+static SampleValPair MaxRaw;
 
 //*********************************************
 //		Message Prefixes
@@ -100,6 +104,7 @@ static SampleValPair prevVal;			// Previous, mean-adjusted sample value
 const char outColumnNamesMsgPrefix[] = "#c";
 const char outSyncPrefix[] = "#s";
 const char outConfMsgPrefix[] = "#p";
+const char outMinMaxPrefix[] = "#x";
 
 //***** Out: Logging type prefixes
 const char outAllInputsPrefix[] = "#i,";
@@ -130,6 +135,10 @@ void setup() {
 
 	// Initialize all the GPIOs
 	initializeGpios();
+
+	// Initialize min and max vals
+	MaxVals.I = MaxVals.Q = MaxRaw.I = MaxRaw.Q = -2147483647; // Min long (32 bit)
+	MinVals.I = MinVals.I = MinRaw.I = MinRaw.Q = 2147483647;	// max long (32 bit)
 
 	// Initialize SD, if enabled
 	sdInitialize();
@@ -193,18 +202,26 @@ void setup() {
 void loop() {
 	static bool displacementDetected;
 
-	if (digitalRead(stopForSdPin) == LOW) {
+	if (digitalRead(stopDetectionPin) == LOW) {
 		Timer1.stop();
 		sdDataFile.flush();
 		sdDataFile.close();
-		Serial.println("Finished");
+
+		char logLine[150];
+		sprintf(logLine,"\nMean-adjusted vals:\tMin: %li,%li;\tMax vals: %li,%li", MinVals.I, MinVals.Q, MaxVals.I, MaxVals.Q);
+		Serial.println(logLine);
+		sprintf(logLine,"Raw interpolated vals:\tMin: %li,%li;\tMax vals: %li,%li", MinRaw.I, MinRaw.Q, MaxRaw.I, MaxRaw.Q);
+		Serial.println(logLine);
+		sprintf(logLine,"Number of samples: %li\tRaw totals: %llu,%llu\tMeans: %li,%li", sampNum, sumVal.I, sumVal.Q, (long)(sumVal.I / sampNum), (long)(sumVal.Q / sampNum) );
+		Serial.println(logLine);
+
+		Serial.println("\nFinished");
 		while(1) {}	// Stop
 		}
 
 	// We're using a simulated semaphore with a bool
 	//	It is set in the timer callback and reset here.
-	//	As contrasted with a real semaphore, this has to be set and reset in the code.
-	//	This separates the callback logic from the loop processing logic.
+	//	This separates the timer callback logic from the loop processing logic.
 
 	if (receivedSampleSemaphore) {
 
@@ -242,16 +259,9 @@ void loop() {
 	// Check for sync button press
 	static bool lastSyncPinInput = HIGH;
 	bool syncPinInput = digitalRead(syncPin);
-	if(syncPinInput == LOW && lastSyncPinInput == HIGH) {
+	if (syncPinInput == LOW && lastSyncPinInput == HIGH) {
 		Serial.println(outSyncPrefix);
 		Serial.flush();
-		//setLed(cutPin, true);
-		//setLed(displaceLed, true);
-		//setLed(displaceConfLed, true);
-		//delay(1000);
-		//setLed(cutPin, false);
-		//setLed(displaceLed, false);
-		//setLed(displaceConfLed, false);
 		}
 	lastSyncPinInput = syncPinInput;
 
