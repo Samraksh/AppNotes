@@ -74,7 +74,7 @@ namespace Receiver
 			Debug.Print("\t" + isDisplacement + "\t" + isConf);
 			Lcd.Clear();
 			Lcd.WriteN(lcdTogglePos, _toggle ? 'X'.ToLcd() : ' '.ToLcd());
-			Lcd.WriteN(lcdIsDisplacementPos, isDisplacement ? 'D'.ToLcd() : ' '.ToLcd());
+			Lcd.WriteN(lcdIsDisplacementPos, isDisplacement ? 'd'.ToLcd() : ' '.ToLcd());
 			Lcd.WriteN(lcdIsConfPos, isConf ? 'C'.ToLcd() : ' '.ToLcd());
 			_toggle = !_toggle;
 		}
