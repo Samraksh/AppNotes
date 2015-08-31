@@ -46,7 +46,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 
 			public static class RawInputs {
 				public const string Prefix = "#r";
-				public const int Length = 4;
+				public const int Length = 5;
 			}
 
 			public static class Sync {

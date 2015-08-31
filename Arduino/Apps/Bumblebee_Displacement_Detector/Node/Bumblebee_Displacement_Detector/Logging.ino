@@ -16,14 +16,14 @@ void serialDetectsLogger(bool displacementDetected){
 	setLed(profileSerialLed, false);
 	}
 
-void serialRawInputsLogger() {
+void serialRawInputsLogger(int isCut) {
 	// Log raw samples, if enabled
 	if (serialLog != serialRawInputs) {
 		return;
 		}
 
 	char logLine[100];
-	sprintf(logLine,"%s,%li,%li,%li\n",outRawInputsPrefix,sampNum,sampledVal.I,sampledVal.Q);
+	sprintf(logLine,"%s,%li,%li,%li,%i\n", outRawInputsPrefix, sampNum, sampledVal.I, sampledVal.Q, isCut);
 	Serial.print(logLine);
 	Serial.flush();
 	}
@@ -49,6 +49,8 @@ void serialAllInputsLogger(int isCut, bool displacementDetected) {
 	Serial.print(','); Serial.print(currVal.Q); 
 	Serial.print(','); Serial.print(prevVal.I); 
 	Serial.print(','); Serial.print(prevVal.Q); 
+	Serial.print(','); Serial.print(isCut); 
+	Serial.print(','); Serial.print(displacementDetected); 
 	Serial.println();
 	Serial.flush();
 	setLed(profileSerialLed, false);

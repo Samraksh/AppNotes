@@ -33,8 +33,8 @@ enum serialLogging {serialNone, serialAllInputs, serialRawInputs, serialAdjusted
 //
 //const serialLogging serialLog = serialNone;		// Do not write to serial.
 //const serialLogging serialLog = serialAllInputs;	// Write all inputs to serial. Useful for validation of input interpolation and averaging. NOTE: this produces too much data for 250 Hz. Must run slower. Only useful for evaluating interpolation and averaging.
-//const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
-const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection & confirmation results. This is the most common option
+const serialLogging serialLog = serialRawInputs;	// Raw inputs, without processing. Useful for validation of BumbleBee and ADC.
+//const serialLogging serialLog = serialAdjustedInputsAndDetections;	// Interpolated, mean-adjusted inputs and detection & confirmation results. This is the most common option
 //const serialLogging serialLog = serialDetects;	// Detection & confirmation results only.
 
 // Uncomment exactly one of these
@@ -153,10 +153,10 @@ void setup() {
 		case serialAllInputs:
 			sampRate = 100;	// force to a lower sample rate to avoid a race condition wrt serial logging
 			sampIntUSec = 1000000 / sampRate; // sample interval in micro seconds
-			sprintf(serialHeader,"Logging to serial (All Inputs, for Validation)\n%s,Sample,InterpolatedI,InterpolatedQ,SumI,SumQ,SampledI,SampledQ,CurrI,CurrQ,PrevI,PrevQ",outColumnNamesMsgPrefix);
+			sprintf(serialHeader,"Logging to serial (All Inputs, for Validation)\n%s,Sample,InterpolatedI,InterpolatedQ,SumI,SumQ,SampledI,SampledQ,CurrI,CurrQ,PrevI,PrevQ,isCut,isDisp",outColumnNamesMsgPrefix);
 			break;
 		case serialRawInputs:
-			sprintf(serialHeader,"Logging to serial (Raw Inputs)\n%s,Sample,RawI,RawQ",outColumnNamesMsgPrefix);
+			sprintf(serialHeader,"Logging to serial (Raw Inputs)\n%s,Sample,RawI,RawQ,isCut",outColumnNamesMsgPrefix);
 			break;
 		case serialAdjustedInputsAndDetections:
 			sprintf(serialHeader,"Logging to serial (Adjusted Inputs and Detections)\n%s,Sample,CurrI,CurrQ,IsCut,IsDisp,IsConf",outColumnNamesMsgPrefix);
@@ -235,7 +235,7 @@ void loop() {
 		serialAllInputsLogger(isCut, displacementDetected);
 
 		// Log raw detail to serial, if enabled
-		serialRawInputsLogger();
+		serialRawInputsLogger(isCut);
 
 		// Log short detail to serial, if enabled
 		serialAdjustedInputsAndDetectionsLogger(isCut, displacementDetected);
@@ -400,6 +400,8 @@ void sampleTimer_tick() {
 		}
 	// If we're waiting on interpolation, return
 	if (interpolatedVal.I < 0 || interpolatedVal.Q < 0) { 
+		serialRawInputsLogger(0);
+		serialAllInputsLogger(0,0);
 		return; 
 		}
 	// Indicate that the sample is ready

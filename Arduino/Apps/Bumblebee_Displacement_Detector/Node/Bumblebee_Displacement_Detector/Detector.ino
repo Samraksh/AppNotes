@@ -63,6 +63,12 @@ int checkForCut() {
 		// Sum the cuts
 		currCuts = currCuts + isCut;
 		runCuts = runCuts + isCut;
+
+		//char logLine[50];
+		//sprintf(logLine,"#q,%li,%li,%li,%li,%li,%i\n", sampNum, prevVal.I, prevVal.Q, currVal.I, currVal.Q, isCut);
+		//Serial.print(logLine);
+		//Serial.flush();
+
 		}
 
 	prevVal = currVal;
