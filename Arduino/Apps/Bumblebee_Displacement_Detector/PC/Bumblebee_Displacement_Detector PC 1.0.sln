@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bumblebee_Displacement_Detector PC", "Bumblebee_Displacement_Detector PC\Bumblebee_Displacement_Detector PC.csproj", "{8BC04427-2630-43B1-9EB1-9F9637432C94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{DA2D77D1-6036-4843-A4B2-4FDC28821177}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Globals", "Globals\Globals.csproj", "{B461AB57-B22A-4340-AC41-292E6FD2C275}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,14 +13,6 @@ Global
 		{8BC04427-2630-43B1-9EB1-9F9637432C94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BC04427-2630-43B1-9EB1-9F9637432C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BC04427-2630-43B1-9EB1-9F9637432C94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA2D77D1-6036-4843-A4B2-4FDC28821177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA2D77D1-6036-4843-A4B2-4FDC28821177}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA2D77D1-6036-4843-A4B2-4FDC28821177}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA2D77D1-6036-4843-A4B2-4FDC28821177}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B461AB57-B22A-4340-AC41-292E6FD2C275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B461AB57-B22A-4340-AC41-292E6FD2C275}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B461AB57-B22A-4340-AC41-292E6FD2C275}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B461AB57-B22A-4340-AC41-292E6FD2C275}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
