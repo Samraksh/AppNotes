@@ -1,8 +1,5 @@
-﻿using System;
-using Microsoft.SPOT;
-
-namespace Globals {
+﻿namespace Globals {
 	public static class GlobalVals {
-		public static bool _formIsClosing;
+		public static bool FormIsClosing;
 	}
 }

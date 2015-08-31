@@ -84,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Globals\Globals.csproj">
-      <Project>{b461ab57-b22a-4340-ac41-292e6fd2c275}</Project>
+      <Project>{2ce15b72-3482-4693-9e35-67c25424bdfa}</Project>
       <Name>Globals</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">

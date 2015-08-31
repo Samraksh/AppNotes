@@ -442,7 +442,7 @@ namespace Samraksh.AppNotes.Arduino.DisplacementDetection {
 		}
 
 		private void DisplacementDetection_FormClosing(object sender, FormClosingEventArgs e) {
-			GlobalVals._formIsClosing = true;
+			GlobalVals.FormIsClosing = true;
 		}
 
 		///// <summary>

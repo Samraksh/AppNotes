@@ -71,7 +71,7 @@ namespace Samraksh.AppNote.Utility {
 		/// Process serial data received
 		/// </summary>
 		private void ProcessData(IAsyncResult iar) {
-			if (!_serialPort.IsOpen || GlobalVals._formIsClosing) {
+			if (!_serialPort.IsOpen || GlobalVals.FormIsClosing) {
 				return;
 			}
 			var numBytesRead = _serialPort.BaseStream.EndRead(iar);
