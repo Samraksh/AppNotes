@@ -46,10 +46,10 @@
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow">
-      <HintPath>..\eMote\eMote .NOW Release 4.3_1.0.12\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+      <HintPath>..\eMote\eMote .NOW Release 4.3.0.13\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Kiwi">
-      <HintPath>..\eMote\eMote .NOW Release 4.3_1.0.12\Samraksh_eMote_Kiwi\Samraksh_eMote_Kiwi.dll</HintPath>
+      <HintPath>..\eMote\eMote .NOW Release 4.3.0.13\Samraksh_eMote_Kiwi\Samraksh_eMote_Kiwi.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
