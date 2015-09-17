@@ -4,6 +4,12 @@
  * 
  * Version history
  *  1.0: initial release
+ *  
+ *  1.1:
+ *  
+ *  1.2:
+ *  
+ *  1.3: Changes for release 13
 ---------------------------------------------------------------------*/
 
 using System;

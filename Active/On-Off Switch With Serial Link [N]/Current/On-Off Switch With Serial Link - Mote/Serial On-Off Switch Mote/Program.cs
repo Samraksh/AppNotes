@@ -6,6 +6,10 @@
  *  1.0:	- initial release
  *  1.1:	- Updated to eMote v. 12 namespaces
  *			- Refactor to include project Utility
+ *			
+ *  1.2:
+ *  
+ *  1.3:    - Updated for eMote v. 13
 ---------------------------------------------------------------------*/
 
 using System.Threading;
