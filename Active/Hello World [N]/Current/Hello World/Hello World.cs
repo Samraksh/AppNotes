@@ -9,6 +9,10 @@
  *      
  *      1.1:	- Added eMote folder with DLLs and TinyClr
  *				- Other minor changes
+ *				
+ *      1.2:
+ *      
+ *      1.3:    - Updated dlls from release 4.3.0.13
 ---------------------------------------------------------------------*/
 
 // Use extension methods. See the definition at the end of this file.
@@ -48,6 +52,7 @@ namespace Samraksh.AppNote.DotNow.HelloWorld {
 
             // Set up the LCD instance
             var lcd = new EmoteLCD();
+            lcd.Initialize();
             
 	        // Scroll loop
 			//	The display can hold 4 characters
