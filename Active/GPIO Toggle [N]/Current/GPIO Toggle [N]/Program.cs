@@ -10,6 +10,10 @@
  *      1.1:	Changed to use Samraksh.eMote.DotNow.Pins for pin assignment
  *				Changed namespace to conform with other app notes
  *				Added eMote folder with DLLs and TinyClr
+ *				
+ *      1.2:
+ *      
+ *      1.3:    Changes to make use of eMote release 4.3.0.13
 ---------------------------------------------------------------------*/
 
 using System.Reflection;

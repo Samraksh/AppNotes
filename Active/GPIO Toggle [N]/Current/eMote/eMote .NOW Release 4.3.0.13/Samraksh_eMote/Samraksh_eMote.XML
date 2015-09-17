@@ -4,31 +4,6 @@
         <name>Samraksh_eMote</name>
     </assembly>
     <members>
-        <member name="T:Samraksh.eMote.NonVolatileMemory.StorageType">
-            <summary>
-            Block device type
-            </summary>
-        </member>
-        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreError">
-            <summary>
-            DataStore error values 
-            </summary>
-        </member>
-        <member name="T:Samraksh.eMote.NonVolatileMemory.ReferenceDataType">
-            <summary>
-            Data types allowed in DataStore
-            </summary>
-        </member>
-        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreReturnStatus">
-            <summary>
-            DataStore return types
-            </summary>
-        </member>
-        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreInvalidArgumentException">
-            <summary>
-            Different exception classes based on return value from native methods
-            </summary>
-        </member>
         <member name="T:Samraksh.eMote.NonVolatileMemory.DataReference">
             <summary>
             A data reference is is a pointer to a record in DataStore.
@@ -40,12 +15,57 @@
             DataType of reference
             </summary>
         </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.VerifyDataReferenceParams(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="offset"></param>
+            <param name="numData"></param>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.VerifyDataReferenceParams(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numData"></param>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.VerifyDataReferenceParams(System.UInt16[],System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numData"></param>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.VerifyDataReferenceParams(System.UInt32[],System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numData"></param>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.CheckWriteStatus(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="retVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.CheckReadStatus(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="retVal"></param>
+            <returns></returns>
+        </member>
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.#ctor(Samraksh.eMote.NonVolatileMemory.DataStore,System.Int32,Samraksh.eMote.NonVolatileMemory.ReferenceDataType)">
             <summary>
             Default data class constructor. Possible to create max of 256 active data objects.
             </summary>
             <param name="dStore">DataStore object</param>
-            <param name="m_Size">Size of the data object to be stored in DataStore. 
+            <param name="refSize">Size of the data object to be stored in DataStore. 
             Max size is (2^32 - 1) if type is bytes; (2^31 - 1) if type is uint16; (2^30 - 1) if type is uint32</param>
             <param name="referenceDataType">Type of data to be stored in DataStore</param>
             <exception caption="DataStore Exception" cref="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">Method invocation has an invalid argument</exception>
@@ -55,16 +75,16 @@
             <summary>
             Returns a data object corresponding to the input parameter data ID.
             Possible to create max of 256 active data objects.
-            </summary>Rea
+            </summary>
             <param name="dStore">DataStore object</param>
-            <param name="dataId">ID of data for which the user wants a reference/handle</param>
+            <param name="dataId">ID of data for which user wants a reference/handle</param>
             <exception caption="DataStore Exception" cref="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">Method invocation has an invalid argument</exception>
             <exception caption="Argument Exception" cref="T:System.ArgumentException">Method invocation has an invalid argument</exception>
         </member>
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.Byte[],System.Int32,System.Int32)">
             <summary>Write a byte array into DataStore, specifying the amount to write and the offset from the start of the record.</summary>
             <param name="data">Array to write</param>
-            <param name="offset">Offset from start of DataStore allocationto write. Even value recommended for byte data type</param>
+            <param name="offset">Offset from start of DataStore allocation to write to, and not an offset from start of data array. Even value recommended for byte data type.</param>
             <param name="numData">Count of data to be written to DataStore</param>
             <returns>Success / failure status</returns>
             <exception caption="DataStore Exception" cref="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">Method invocation has an invalid argument</exception>
@@ -72,7 +92,7 @@
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.UInt16[],System.Int32,System.Int32)">
             <summary>Write a ushsort (UInt16) array into DataStore, specifying the amount to write and the offset from the start of the record.</summary>
             <param name="data">Array to write</param>
-            <param name="offset">Offset from start of DataStore allocationto write.</param>
+            <param name="offset">Offset from start of DataStore allocation to write to, and not an offset from start of data array.</param>
             <param name="numData">Count of data to be written to DataStore</param>
             <returns>Success / failure status</returns>
             <exception caption="DataStore Exception" cref="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">Method invocation has an invalid argument</exception>
@@ -80,7 +100,7 @@
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Write(System.UInt32[],System.Int32,System.Int32)">
             <summary>Write a uint (UInt32) array into DataStore, specifying the amount to write and the offset from the start of the record.</summary>
             <param name="data">Array to write</param>
-            <param name="offset">Offset from start of DataStore allocationto write.</param>
+            <param name="offset">Offset from start of DataStore allocation to write to, and not an offset from start of data array.</param>
             <param name="numData">Count of data to be written to DataStore</param>
             <returns>Success / failure status</returns>
             <exception caption="DataStore Exception" cref="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">Method invocation has an invalid argument</exception>
@@ -127,7 +147,7 @@
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.Byte[],System.Int32,System.Int32)">
             <summary>Read a byte array from DataStore, specifying the amount to read and the offset from start of allocation.</summary>
             <param name="data">Array to receive data read</param>
-            <param name="offset">Offset from start of DataStore allocationto read.</param>
+            <param name="offset">Offset from start of DataStore allocation to read from, and not an offset from start of data array.</param>
             <param name="numData">Count of data to be read</param>
             <returns>Success / failure status</returns>
             <exception caption="DataStore Exception" cref="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">Method invocation has an invalid argument</exception>
@@ -135,7 +155,7 @@
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.UInt16[],System.Int32,System.Int32)">
             <summary>Read a ushort (UInt16) array from DataStore, specifying the amount to read and the offset from start of allocation.</summary>
             <param name="data">Array to receive data read</param>
-            <param name="offset">Offset from start of DataStore allocationto read.</param>
+            <param name="offset">Offset from start of DataStore allocation to read from, and not an offset from start of data array.</param>
             <param name="numData">Count of data to be read</param>
             <returns>Success / failure status</returns>
             <exception caption="DataStore Exception" cref="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">Method invocation has an invalid argument</exception>
@@ -143,7 +163,7 @@
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.Read(System.UInt32[],System.Int32,System.Int32)">
             <summary>Read a uint (UInt16) array from DataStore, specifying the amount to read and the offset from start of allocation.</summary>
             <param name="data">Array to receive data read</param>
-            <param name="offset">Offset from start of DataStore allocationto read.</param>
+            <param name="offset">Offset from start of DataStore allocation to read from, and not an offset from start of data array.</param>
             <param name="numData">Count of data to be read</param>
             <returns>Success / failure status</returns>
             <exception caption="DataStore Exception" cref="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">Method invocation has an invalid argument</exception>
@@ -199,6 +219,13 @@
             </summary>
             <param name="dataId">ID of the data to be looked up</param>
             <returns>Address reference to the dataID</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.GetDataLocation(System.UInt32)">
+            <summary>
+            Get actual data location for specified data ID from DataStore
+            </summary>
+            <param name="dataId">ID of the data to be looked up</param>
+            <returns>Address of data</returns>
         </member>
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataReference.LookupDataType(System.UInt32)">
             <summary>
@@ -326,6 +353,7 @@
             Initializes DataStore with specified storage type.
             </summary>
             <param name="storageType">Storage type</param>
+            <param name="eraseDataStore">Should datastore be erased?</param>
         </member>
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.ReadAllDataReferences(Samraksh.eMote.NonVolatileMemory.DataReference[],System.Int32)">
             <summary>
@@ -372,6 +400,61 @@
             <param name="dataType">Data type to be written</param>
             <returns>True if success</returns>
         </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Write(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.UInt16)">
+            <summary>
+            
+            </summary>
+            <param name="address"></param>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numBytes"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Write(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="address"></param>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numBytes"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.WriteRaw(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte)">
+            <summary>
+            Write data array to DataStore starting from specified address
+            </summary>
+            <param name="address">Address to write to</param>
+            <param name="data">Data to be written to DataStore</param>
+            <param name="offset">Offset from start of DataStore allocationto write.</param>
+            <param name="numBytes">Count of bytes to be written</param>
+            <param name="dataType">Data type to be written</param>
+            <returns>True if success</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.WriteRaw(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.UInt16)">
+            <summary>
+            
+            </summary>
+            <param name="address"></param>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numBytes"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.WriteRaw(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="address"></param>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numBytes"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Read(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte)">
             <summary>
             Read data array from DataStore starting from specified address.
@@ -382,6 +465,61 @@
             <param name="numBytes">Number of bytes to be read</param>
             <param name="dataType">Data type of the data to be read</param>
             <returns>True if success</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Read(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.UInt16)">
+            <summary>
+            
+            </summary>
+            <param name="address"></param>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numBytes"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Read(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="address"></param>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numBytes"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.ReadRaw(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte)">
+            <summary>
+            Read data array from DataStore starting from specified address.
+            </summary>
+            <param name="address">Address to read from</param>
+            <param name="data">Byte array to be filled up with data from DataStore</param>
+            <param name="offset">Offset from start of DataStore allocationto read.</param>
+            <param name="numBytes">Number of bytes to be read</param>
+            <param name="dataType">Data type of the data to be read</param>
+            <returns>True if success</returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.ReadRaw(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.UInt16)">
+            <summary>
+            
+            </summary>
+            <param name="address"></param>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numBytes"></param>
+            <param name="dataType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.ReadRaw(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="address"></param>
+            <param name="data"></param>
+            <param name="offset"></param>
+            <param name="numBytes"></param>
+            <param name="dataType"></param>
+            <returns></returns>
         </member>
         <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Finalize">
             <summary>
@@ -463,7 +601,7 @@
             </summary>
             <returns>DataStore error status</returns>
         </member>
-        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Write(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte,System.Int32)">
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.WriteRaw(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte,System.Int32)">
             <summary>
             Write data present in buffer starting from address and amount equal to numBytes. 
             </summary>
@@ -475,7 +613,7 @@
             <param name="storageType">Block storage type</param>
             <returns>True if success</returns>
         </member>
-        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.Read(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte,System.Int32)">
+        <member name="M:Samraksh.eMote.NonVolatileMemory.DataStore.ReadRaw(System.UInt32,System.Byte[],System.UInt32,System.UInt32,System.Byte,System.Int32)">
             <summary>
             Read from data into the buffer starting from address.
             </summary>
@@ -505,6 +643,51 @@
         <member name="P:Samraksh.eMote.NonVolatileMemory.DataStore.FreeBytes">
             <summary>
             Number of bytes of space available to store data
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.StorageType">
+            <summary>
+            Block device type
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreError">
+            <summary>
+            DataStore error values 
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.ReferenceDataType">
+            <summary>
+            Data types allowed in DataStore
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreReturnStatus">
+            <summary>
+            DataStore return types
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreInvalidArgumentException">
+            <summary>
+            Different exception classes based on return value from native methods
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreInvalidReferenceException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreNotInitializedException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreOutOfMemoryException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.NonVolatileMemory.DataStoreException">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:Samraksh.eMote.GC">
