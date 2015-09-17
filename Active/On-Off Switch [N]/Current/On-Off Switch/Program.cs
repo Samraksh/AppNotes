@@ -15,6 +15,8 @@
  *			- Minor changes
  *	
  * 1.4:		*** tbd
+ * 
+ * 1.5:     - Updated to include binaries from eMote release 4.3.0.13
 ---------------------------------------------------------------------*/
 
 using System;
@@ -57,7 +59,7 @@ namespace Samraksh.AppNote.DotNow.OnOffSwitch {
 				//          When the switch is on (circuit is closed), the port will be pulled to Gnd and will read True.
 				//      We want to trigger an interrupt on both leading and trailing edge of the signal.
 				//  Other notes
-				//      The second argument in the contructor, glitchFilter, is not currently implenmeted.
+				//      The second argument in the contructor, glitchFilter, is not currently implemented.
 				//      The InputPort class does not have a constructor that includes Port.InterruptMode.
 				//          However, InputPort inherits from InterruptPort, so we can use its constructor.
 
