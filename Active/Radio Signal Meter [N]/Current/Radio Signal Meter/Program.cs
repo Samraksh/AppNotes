@@ -8,6 +8,7 @@
  *      1.2:	- Added build profiles for on-board and long-range radios
  *      1.3:	- Added option to choose the radio channel
  *				- Upgraded to latest eMote namespace
+ *      1.4:    - Updated for eMote release 13 (Sep 17, 2015)
  *      
  *  Remarks
  *      Choose "Long Range" or "On Board" solution configuration depending on which radio you're using.

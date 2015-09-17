@@ -55,7 +55,7 @@ namespace Samraksh.AppNote.Utility {
         /// <param name="radioReceivedData">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
         /// <param name="channel">The channel to use</param>
         public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData, Channels channel = Channels.Channel_26) {
-            var macConfig = new MacConfiguration { NeighbourLivelinesDelay = 100, CCASenseTime = ccaSensetime };
+            var macConfig = new MacConfiguration { NeighborLivenessDelay = 100, CCASenseTime = ccaSensetime };
             macConfig.radioConfig.SetTxPower(txPowerValue);
             macConfig.radioConfig.SetRadioName(radioName);
             macConfig.radioConfig.SetChannel(channel);
@@ -66,7 +66,7 @@ namespace Samraksh.AppNote.Utility {
                 // Set up CSMA with the MAC configuration, receive callback and neighbor change callback (which does nothing)
                 if (retVal != DeviceStatus.Success) {
                     var lcd = new EnhancedEmoteLcd();
-                    lcd.Display("5555");
+                    lcd.Write("5555");
                     Thread.Sleep(Timeout.Infinite);
                 }
 
@@ -75,14 +75,14 @@ namespace Samraksh.AppNote.Utility {
             catch (MacNotConfiguredException e) {
                 Debug.Print("CSMA configuration error " + e);
                 var lcd = new EnhancedEmoteLcd();
-                lcd.Display("1111");
+                lcd.Write("1111");
                 Thread.Sleep(Timeout.Infinite);
                 throw;
             }
             catch (Exception e) {
                 Debug.Print("Unknown error " + e);
                 var lcd = new EnhancedEmoteLcd();
-                lcd.Display("2222");
+                lcd.Write("2222");
                 Thread.Sleep(Timeout.Infinite);
                 throw;
             }
