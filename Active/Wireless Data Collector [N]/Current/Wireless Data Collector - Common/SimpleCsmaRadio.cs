@@ -1,8 +1,8 @@
 using System;
 using Microsoft.SPOT;
-using Samraksh.SPOT.Net;
-using Samraksh.SPOT.Net.Mac;
-using Samraksh.SPOT.Net.Radio;
+using Samraksh.eMote.Net;
+using Samraksh.eMote.Net.Mac;
+using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh {
     namespace AppNote {
@@ -45,7 +45,7 @@ namespace Samraksh {
                 public SimpleCsmaRadio(byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData) {
                     var macConfig = new MacConfiguration();
 
-                    macConfig.NeighbourLivelinesDelay = 100;
+                    macConfig.NeighborLivenessDelay = 100;
                     // Neighbor timeout. Neighbor changes are ignored but we still have to specify a value
                     macConfig.CCASenseTime = ccaSensetime;
                     macConfig.radioConfig.SetTxPower(txPowerValue);

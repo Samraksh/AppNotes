@@ -5,6 +5,7 @@
  * Version history
  *  1.0: initial release
  *  1.1: added member doc, revised namespace structure
+ *  1.2: Updated dlls based on eMote ver. 4.3.0.13 (Sep 18, 2015)
 ---------------------------------------------------------------------*/
 
 #define Show_Reply_Time
@@ -16,9 +17,9 @@ using Microsoft.SPOT;
 
 using Samraksh.AppNote.Utility;
 
-using Samraksh.SPOT.Net;
-using Samraksh.SPOT.Net.Mac;
-using Samraksh.SPOT.Net.Radio;
+using Samraksh.eMote.Net;
+using Samraksh.eMote.Net.Mac;
+using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh {
     namespace AppNote {

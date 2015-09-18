@@ -60,11 +60,11 @@
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_SPOT_Hardware">
-      <HintPath>Samraksh DLLs\Hardware\Samraksh_SPOT_Hardware.dll</HintPath>
+    <Reference Include="Samraksh_eMote_DotNow">
+      <HintPath>..\..\Wireless Data Collector - Common\eMote .NOW Release 4.3.0.13\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_SPOT_Net">
-      <HintPath>Samraksh DLLs\Net\Samraksh_SPOT_Net.dll</HintPath>
+    <Reference Include="Samraksh_eMote_Net">
+      <HintPath>..\..\Wireless Data Collector - Common\eMote .NOW Release 4.3.0.13\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

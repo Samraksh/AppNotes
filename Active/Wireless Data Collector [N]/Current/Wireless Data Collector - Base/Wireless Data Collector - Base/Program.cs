@@ -5,6 +5,8 @@
  * 
  * Version history
  *  1.0: initial release
+ *  1.1:
+ *  1.2: Updated for eMote ver. 4.3.0.13 (Sep 18, 2015)
 ---------------------------------------------------------------------*/
 
 using System;
@@ -12,9 +14,10 @@ using System.Collections;
 using System.Threading;
 
 using Microsoft.SPOT;
+using System.Text;
 using Samraksh.AppNote.WirelessDataCollector;
-using Samraksh.SPOT.Net.Radio;
-using Samraksh.SPOT.Net.Mac;
+using Samraksh.eMote.Net.Radio;
+using Samraksh.eMote.Net.Mac;
 
 using Samraksh.AppNote.Utility;
 
@@ -86,15 +89,15 @@ namespace Samraksh.AppNote {
                             rcvMsg.Src + ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " +
                             rcvMsg.LQI + "; packet #: " + packetNum + " of " + numPackets);
 
-                // Convert the payload data, if it doesn't throw an exception
+                //Print payload 
                 //  This is optional
-                try {
-                    var rcvPayloadChar = System.Text.Encoding.UTF8.GetChars(msgBytes);
-                    Debug.Print("   Payload [" + new string(rcvPayloadChar) + "]");
+                var msgBytesStr = new StringBuilder("\nPayload\t");
+                foreach (var theByte in msgBytes)
+                {
+                    msgBytesStr.Append(theByte.ToString());
+                    msgBytesStr.Append(" ");
                 }
-                catch {
-                    Debug.Print("   Payload: can't translate to chars");
-                }
+                Debug.Print(msgBytesStr.ToString());
 
                 // Process the message
                 try {
@@ -110,7 +113,7 @@ namespace Samraksh.AppNote {
                     var msgSentTime = BitConverter.ToInt64(msgBytes, Common.MessageTimePos);
 
                     // Check which kind of message it is
-                    switch (msgBytes[Common.PayloadTypeSize]) {
+                    switch (msgBytes[Common.PayloadTypePos]) {
                         // Hello message: send response & create or update the initial time pair
                         case (byte)Common.PayloadTypes.Hello: {
                                 Debug.Print("\nReceived Hello, time " + msgSentTime.ToString() + ", seq " + BitConverter.ToInt32(msgBytes, Common.MessageSequencePos).ToString());
@@ -168,6 +171,7 @@ namespace Samraksh.AppNote {
                                 break;
                             }
                         default: {
+                            Debug.Print("Default: Unknown payload type " + msgBytes[Common.PayloadTypePos].ToString());
                                 return;
                             }
                     }
