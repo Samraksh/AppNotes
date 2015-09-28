@@ -57,7 +57,7 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="OutputLoggedData.cs" />
+    <Compile Include="CopyLoggedDataToSdAndPrint.cs" />
     <Compile Include="Process Sample Buffer.cs" />
     <Compile Include="Support Classes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

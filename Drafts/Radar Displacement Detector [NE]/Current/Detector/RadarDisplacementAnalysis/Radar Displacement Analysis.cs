@@ -25,34 +25,12 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 
 		private static class ClassParameters
 		{
-			//	/// <summary>Number of milliseconds between samples</summary>
-			//	public static int SamplingIntervalMicroSec;    // Larger values => fewer samples/sec
-
-			//	/// <summary>Number of samples per second</summary>
-			//	public static int SamplesPerSecond;
-
-			//	/// <summary>Number of minor displacement events that must occur for displacement detection</summary>
-			//	public static int M;
-
-			//	/// <summary>Number of seconds for which a displacement detection can last</summary>
-			//	public static int N;
-
-			//	/// <summary>Noise rejection trhreshold</summary>
-			//	public static int NoiseRejectionThreshold;
-
-			//	/// <summary>Minimum number of cuts (phase unwraps) that must occur for a minor displacement event</summary>
-			//	public static int MinCumCuts;
-
-			//	/// <summary>The centimeters traversed by one cut. This is a fixed characteristic of the Bumblebee; do not change this value.</summary>
-			//	public const float CutDistanceCm = 5.2f / 2;
-
 			/// <summary>Method to call when M of N confirms displacement</summary>
 			public static EventCallback MofNConfirmationCallback;
 
 			/// <summary>Method to call when M of N confirms displacement</summary>
 			public static EventCallback DisplacementCallback;
 		}
-
 
 		/// <summary>
 		/// Initialize displacement analysis
@@ -75,10 +53,11 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 		/// </summary>
 		/// <remarks>
 		/// Samples are partitioned into snippets; currently 1 second.
-		/// Displacement occurs if the abs(sum of cuts) in a snippet exceeds a maximum such as 6. 
-		///     The assumption is that a fixed object such as a tree will not exhibit this much net displacement.
+		/// For a sample to be considered for displacement, the absolute values of the I and Q must be at least a specified NoiseRejectionThreshold.
+		/// Displacement occurs if the abs(sum of cuts) in a snippet exceeds the value of MinCumCuts. 
+		///     The assumption is that a fixed object such as a tree will not exhibit this much net displacement in one snippet.
 		/// To further confirm displacement (reduce false positives), look for at least M displacements in N seconds.
-		/// For N of M, note that we do not care if the target alternately moves forward and backward the required distance.
+		/// For N of M, note that we do not care if the target alternately displaces forward and backward.
 		/// </remarks>
 		public static void Analyze(Globals.Sample rawSample)
 		{
@@ -101,11 +80,11 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			}
 
 			// Record mins and maxes
-			SampleData.MinComp.I = System.Math.Min(SampleData.MinComp.I, SampleData.CompSample.I);
-			SampleData.MinComp.Q = System.Math.Min(SampleData.MinComp.Q, SampleData.CompSample.Q);
+			SampleData.MinComp.I = Globals.LongMin(SampleData.MinComp.I, SampleData.CompSample.I);
+			SampleData.MinComp.Q = Globals.LongMin(SampleData.MinComp.Q, SampleData.CompSample.Q);
 
-			SampleData.MaxComp.I = System.Math.Max(SampleData.MaxComp.I, SampleData.CompSample.I);
-			SampleData.MaxComp.Q = System.Math.Max(SampleData.MaxComp.Q, SampleData.CompSample.Q);
+			SampleData.MaxComp.I = Globals.LongMax(SampleData.MaxComp.I, SampleData.CompSample.I);
+			SampleData.MaxComp.Q = Globals.LongMax(SampleData.MaxComp.Q, SampleData.CompSample.Q);
 
 			// Update snippet counter and see if we've reached a snippet boundary (one second)
 			CutAnalysis.SnippetCntr++;
@@ -121,9 +100,9 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 
 
 			// Log raw everything if required
-			if (Globals.Out.RawEverything.Opt.Logging)
+			if (OutputItems.RawEverything.Opt.Logging)
 			{
-				Globals.Out.RawEverything.LogRawEverything(SampleData.SampleNum, rawSample, SampleData.CompSample, isCut, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
+				OutputItems.RawEverything.Log(SampleData.SampleNum, SampleData.SampleSum, rawSample, SampleData.CompSample, isCut, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			//if (SampleData.SampleNum < 100) {
@@ -135,32 +114,28 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			//}
 			//Globals.DataStoreItems.DRef.si
 		}
-		
+
 		private static void DoSampleLogging(Globals.Sample rawSample, int isCut)
 		{
 			// Log raw sample if required
-			if (Globals.Out.RawSample.Opt.Logging)
+			if (OutputItems.RawSample.Opt.Logging)
 			{
-				Globals.Out.RawSample.LogRawSample(rawSample);
+				OutputItems.RawSample.Log(rawSample);
 			}
 
 			// Print sample and cut if required
-			if (Globals.Out.SampleAndCut.Opt.Print)
+			if (OutputItems.SampleAndCut.Opt.Print)
 			{
-				var statusStr = new String(Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC) +
-					"\t" + SampleData.CompSample.I +
-					"\t" + SampleData.CompSample.Q +
-					"\t" + isCut;
-				Debug.Print(statusStr);
+				OutputItems.SampleAndCut.PrintVals(SampleData.CompSample, isCut);
 			}
 
 			// Log sample and cut if required
-			if (Globals.Out.SampleAndCut.Opt.LogToDebug || Globals.Out.SampleAndCut.Opt.LogToSD)
+			if (OutputItems.SampleAndCut.Opt.LogToDebug || OutputItems.SampleAndCut.Opt.LogToSD)
 			{
-				LogSampleAndCut(isCut);
+				OutputItems.SampleAndCut.Log(SampleData.SampleNum, SampleData.CompSample, isCut);
 			}
-
 		}
+
 
 		/// <summary>
 		/// Check whether displacement and/or confirmation (MofN) has occurred
@@ -209,89 +184,20 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			}
 
 			// Log snippet displacement and confirmation if required
-			if (Globals.Out.SnippetDispAndConf.Opt.LogToDebug || Globals.Out.SnippetDispAndConf.Opt.LogToSD)
+			if (OutputItems.SnippetDispAndConf.Opt.LogToDebug || OutputItems.SnippetDispAndConf.Opt.LogToSD)
 			{
-				LogSnippetDispAndConf();
+				OutputItems.SnippetDispAndConf.Log(SampleData.SampleNum, CutAnalysis.CumCuts, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			// Print snippet displacement & confirmation if required
-			if (Globals.Out.SnippetDispAndConf.Opt.Print)
+			if (OutputItems.SnippetDispAndConf.Opt.Print)
 			{
-				PrintSnippetDispAndConf();
+				OutputItems.SnippetDispAndConf.PrintVals(CutAnalysis.SnippetNum, CutAnalysis.CumCuts, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 		}
-		
 
-		private static void LogSampleAndCut(int isCut)
-		{
-			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
-				Globals.Out.RecordPrefix.Header0, Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC[0]);
-			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
-				Globals.Out.RecordPrefix.Header1, Globals.Out.SampleAndCut.BuffDef.Prefix.SampleC[1]);
-			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
-				Globals.Out.SampleAndCut.BuffDef.SampleNum, SampleData.SampleNum);
-			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
-				Globals.Out.SampleAndCut.BuffDef.SampleI, SampleData.CompSample.I);
-			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
-				Globals.Out.SampleAndCut.BuffDef.SampleQ, SampleData.CompSample.Q);
-			BitConverter.InsertValueIntoArray(Globals.Out.SampleAndCut.BuffDef.Buffer,
-				Globals.Out.SampleAndCut.BuffDef.IsCut, isCut);
 
-			Globals.WriteDataRefAndUpdateCrc(Globals.Out.SampleAndCut.BuffDef.Buffer);
 
-			//Globals.DataStoreItems.DRef.Write(Globals.DataStoreItems.SampleAndCut.Buffer);
-
-			//Globals.AllocationsWritten++;
-
-			//Globals.CrcWritten = Microsoft.SPOT.Hardware.Utility.ComputeCRC(
-			//	Globals.DataStoreItems.SampleAndCut.Buffer,
-			//	0,
-			//	Globals.DataStoreItems.SampleAndCut.BuffSize,
-			//	Globals.CrcWritten);
-		}
-
-		private static void PrintSnippetDispAndConf()
-		{
-			var statusStr =
-				new string(Globals.Out.SnippetDispAndConf.BuffDef.Prefix.SnippetC)
-				+ "\t" + CutAnalysis.SnippetNum
-				+ "\t" + CutAnalysis.CumCuts
-				+ "\t" + (SampleData.IsDisplacement ? "1" : "0")
-				+ "\t" + (MofNConfirmation.IsConfirmed ? "1" : "0")
-				;
-			Debug.Print(statusStr);
-		}
-
-		private static void LogSnippetDispAndConf()
-		{
-			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
-				Globals.Out.RecordPrefix.Header0, Globals.Out.SnippetDispAndConf.BuffDef.Prefix.SnippetC[0]);
-			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
-				Globals.Out.RecordPrefix.Header1, Globals.Out.SnippetDispAndConf.BuffDef.Prefix.SnippetC[1]);
-			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
-				Globals.Out.SnippetDispAndConf.BuffDef.SampleNum, SampleData.SampleNum);
-
-			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
-				Globals.Out.SnippetDispAndConf.BuffDef.CumCuts, CutAnalysis.CumCuts);
-
-			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
-				Globals.Out.SnippetDispAndConf.BuffDef.IsDisp, SampleData.IsDisplacement ? 1 : 0);
-			BitConverter.InsertValueIntoArray(Globals.Out.SnippetDispAndConf.BuffDef.Buffer,
-				Globals.Out.SnippetDispAndConf.BuffDef.IsConfirmed, MofNConfirmation.IsConfirmed ? 1 : 0);
-			
-			Globals.WriteDataRefAndUpdateCrc(Globals.Out.SnippetDispAndConf.BuffDef.Buffer);
-
-			//Globals.DataStoreItems.DRef.Write(Globals.DataStoreItems.SnippetDispAndConf.Buffer);
-
-			//Globals.AllocationsWritten++;
-
-			//Globals.CrcWritten = Microsoft.SPOT.Hardware.Utility.ComputeCRC(
-			//	Globals.DataStoreItems.SampleAndCut.Buffer,
-			//	0,
-			//	Globals.DataStoreItems.SampleAndCut.BuffSize,
-			//	Globals.CrcWritten);
-
-		}
 
 
 

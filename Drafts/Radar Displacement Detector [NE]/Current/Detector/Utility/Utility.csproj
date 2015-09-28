@@ -60,6 +60,7 @@
     <Compile Include="BitConverter.cs" />
     <Compile Include="EnhancedLcd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SdBufferedWrite.cs" />
     <Compile Include="SimpleCsmaRadio.cs" />
     <Compile Include="VersionInfo.cs" />
   </ItemGroup>

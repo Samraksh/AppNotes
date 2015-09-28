@@ -80,21 +80,6 @@ namespace Receiver
 		}
 		private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
 		private static bool _toggle = true;
-
-		///// <summary>
-		///// Send update message
-		///// </summary>
-		///// <param name="isDisplacement"></param>
-		///// <param name="isConf"></param>
-		//public static void Update(bool isDisplacement, bool isConf)
-		//{
-		//	BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.AppIdentifier, AppIdentifierHdr);
-		//	BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.IsDisplacement, isDisplacement);
-		//	BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.IsConf, isConf);
-		//	Radio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
-		//	Radio.Send(Addresses.BROADCAST, BufferDef.Buffer);
-		//	Radio.SetRadioState(SimpleCsmaRadio.RadioStates.Off);
-		//}
 	}
 
 }

@@ -5,7 +5,6 @@
  * Version history
  *  1.0:	- initial release
  *  1.1:	- Update to eMote v. 12 namespaces
- *  1.2:    - Update to eMote v. 4.3.0.13 release (Sep 17, 2015)
  ---------------------------------------------------------------------*/
 
 using System;
@@ -44,7 +43,7 @@ namespace Samraksh {
 				private static readonly OutputPort AccelerometerPower = new OutputPort(Pins.GPIO_J11_PIN3, true);   // Enable power to the accelerometer
 
 				//private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();  // Define the LCD
-                private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
+				private static readonly EmoteLCD Lcd = new EmoteLCD();
 
 				/// <summary>
 				/// Main thread: set things up and then go to sleep.
@@ -52,8 +51,8 @@ namespace Samraksh {
 				/// </summary>
 				public static void Main() {
 
-					//Lcd.Initialize();
-					//Lcd.Clear();
+					Lcd.Initialize();
+					Lcd.Clear();
 
 					Debug.EnableGCMessages(false);  // We don't want to see garbage collector messages in the Output window
 
@@ -81,14 +80,13 @@ namespace Samraksh {
 					if (typeOfEvent != SB.Accelerometer.EventType.DataUpdate) return;
 					// Get the current accelerometer data
 					var currentData = _axl.CurrentData;
-                    Debug.Print("currentData " + currentData);
 					// Get the axis values and convert to micro-g
 					var x = currentData.X * 1000F;
 					var y = currentData.Y * 1000F;
 					var z = currentData.Z * 1000F;
 					// Calculate the total acceleration. At rest, this will be about 1g
 					var s = Math.Sqrt(x * x + y * y + z * z);   // We're using a fast sqrt calculation
-                    // If the total acceleration is less than the threshold factor then we detect freefall.
+					// If the total acceleration is less than the threshold factor then we detect freefall.
 					var isfFalling = (s < FreefallThresholdFactor * 1000) ? " x" : "  ";
 
 					var isFalling4 = (isfFalling + "    ").ToCharArray();
@@ -100,13 +98,11 @@ namespace Samraksh {
 					Debug.Print("<" + new string(isFalling4) + ">");
 					Debug.Print(isF0 + " " + isf1 + " " + isf2 + " " + isf3);
 
-                    //Lcd and accelerometer share drivers and writing to LCD crashes the app
-					//Lcd.Write(isF0, isf1, isf2, isf3);
+					Lcd.Write(isF0, isf1, isf2, isf3);
 
 					//Lcd.Write(isfFalling);
-                    
+					return;
 					Debug.Print("\n" + _seq++ + isfFalling + " x=" + x + ", y=" + y + ", z=" + z + ", S=" + s);
-                    return;
 				}
 				private static int _seq;
 			}
