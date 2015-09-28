@@ -1,13 +1,4 @@
-﻿/*--------------------------------------------------------------------
- * Timer Jitter: app note for the eMote .NOW
- * (c) 2013-2015 The Samraksh Company
- * 
- * Version history
- *      1.0:	- Initial release
- *		1.1:    - Changes to include eMote v.13 changes (Sep 21, 2015)
----------------------------------------------------------------------*/
-
-#define xLoopTrace
+﻿#define xLoopTrace
 #define PrintIntervals
 
 using System;
@@ -140,7 +131,7 @@ namespace Samraksh.AppNote.TimerJitter {
 			}
 
 			// We're done
-            Globals.Globals.Lcd.Display("done");
+			Globals.Globals.Lcd.Display("done");
 		}
 
 		/// <summary>

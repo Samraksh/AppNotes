@@ -45,9 +45,8 @@
     <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_eMote_DotNow, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\eMote\eMote .NOW Release 1.0.11\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+    <Reference Include="Samraksh_eMote_DotNow">
+      <HintPath>..\eMote\eMote .NOW Release 4.3_1.0.12\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

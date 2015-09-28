@@ -28,7 +28,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			// Prevent attempt to write from separate threads
 			lock (WriteLock) {
 				DataStoreReference = new DataReference(
-					Out.DataStore,
+					OutputItems.DataStore,
 					buffer.Length,
 					ReferenceDataType.BYTE
 					);
@@ -42,6 +42,28 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 					buffer.Length,
 					CrcWritten);
 			}
+		}
+
+		/// <summary>
+		/// Min for type long
+		/// </summary>
+		/// <param name="arg1"></param>
+		/// <param name="arg2"></param>
+		/// <returns></returns>
+		public static long LongMin(long arg1, long arg2)
+		{
+			return arg1 < arg2 ? arg1 : arg2;
+		}
+
+		/// <summary>
+		/// Maxfor type long
+		/// </summary>
+		/// <param name="arg1"></param>
+		/// <param name="arg2"></param>
+		/// <returns></returns>
+		public static long LongMax(long arg1, long arg2)
+		{
+			return arg1 > arg2 ? arg1 : arg2;
 		}
 
 		/// <summary>
@@ -59,18 +81,19 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// </summary>
 			/// <param name="i"></param>
 			/// <param name="q"></param>
-			public Sample(int i, int q)
+			public Sample(long i, long q)
 			{
 				I = i;
 				Q = q;
 			}
 
 			/// <summary>I value</summary>
-			public int I;
+			public long I;
 
 			/// <summary>Q value</summary>
-			public int Q;
+			public long Q;
 		}
+
 		/// <summary>
 		/// Data store reference for writing
 		/// </summary>
@@ -84,6 +107,9 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 		/// <summary>Crc for writing</summary>
 		public static uint CrcWritten = 0;
 
+		/// <summary>Crc for reading</summary>
+		public static uint CrcRead;
+		
 		/// <summary>Allocations written</summary>
 		public static int AllocationsWritten = 0;
 
@@ -103,7 +129,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			public static bool EnableRadioUpdates = false;
 
 			/// <summary>Prepended to each packet to identify the app</summary>
-			public static char AppIdentifierHdr = 'D';
+			private const char AppIdentifierHdr = 'D';
 
 			/// <summary>
 			/// Radio buffer definition
@@ -139,368 +165,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			}
 		}
 
-		/// <summary>
-		/// Output items
-		/// </summary>
-		public static class Out
-		{
-			/// <summary>
-			/// DataStore object
-			/// </summary>
-			public static readonly DataStore DataStore = DataStore.Instance(StorageType.NOR, true);
-
-			/// <summary>Options true iff logging</summary>
-			public static bool LoggingRequired;
-
-			/// <summary>Print after logging</summary>
-			public static bool PrintAfterRawLogging;
-
-
-			/// <summary>
-			/// Record prefix
-			/// </summary>
-			public static class RecordPrefix
-			{
-				/// <summary>Buffer position</summary>
-				public const int Header0 = 0;
-				/// <summary>Buffer position</summary>
-				public const int Header1 = Header0 + sizeof(char);
-			}
-
-			/// <summary>
-			/// Sync message
-			/// </summary>
-			public static class Sync
-			{
-				/// <summary>Sync prefix</summary>
-				public static char[] SyncPrefix = { '#', 's' };
-
-				/// <summary>
-				/// Buffer definition
-				/// </summary>
-				public static class BufferDef
-				{
-					/// <summary>The buffer</summary>
-					public static byte[] Buffer = new byte[BuffSize];
-
-					/// <summary>Buffer size</summary>
-					public const int BuffSize = RecordPrefix.Header1 + sizeof(char);
-				}
-
-				/// <summary>
-				/// Sync button is pressed
-				/// </summary>
-				public static void Sync_OnButtonPress(uint data1, uint data2, DateTime time)
-				{
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header0, SyncPrefix[0]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header1, SyncPrefix[1]);
-
-					WriteDataRefAndUpdateCrc(BufferDef.Buffer);
-
-				}
-			}
-
-			//********************************************************************************************************
-			//		Raw sample
-			//********************************************************************************************************
-
-			/// <summary>
-			/// Raw sample
-			/// </summary>
-			public static class RawSample
-			{
-				/// <summary>Output options for raw sample</summary>
-				public static class Opt
-				{
-					/// <summary>Log to DataStore and output later to SD</summary>
-					public static bool LogRawSampleToSD;
-					///// <summary>Log to DataStore and output later to SD and print</summary>
-					//public static bool LogRawSampleToSDAndPrint;
-					/// <summary>Logging is required</summary>
-					public static bool Logging;
-				}
-
-				/// <summary>
-				/// Raw sample buffer
-				/// </summary>
-				/// <remarks>Items stored: raw I value, raw Q value</remarks>
-				public class BufferDef
-				{
-					/// <summary>The buffer</summary>
-					public static byte[] Buffer = new byte[BuffSize];
-
-					/// <summary>Raw I position</summary>
-					public const int RawI = RecordPrefix.Header1 + sizeof(char);
-					/// <summary>Raw Q position</summary>
-					public const int RawQ = RawI + sizeof(ushort);
-
-					/// <summary>Buffer size</summary>
-					public const int BuffSize = RawQ + sizeof(ushort);
-				}
-				/// <summary>
-				/// Prefixes
-				/// </summary>
-				public static class Prefix
-				{
-					/// <summary>Sample values and cut detection (Prefix, Raw.I, Raw.Q)</summary>
-					public static char[] RawSamplePrefix = { '#', 'e' };
-				}
-
-				/// <summary>
-				/// Log raw sample
-				/// </summary>
-				/// <param name="rawSample"></param>
-				public static void LogRawSample(Sample rawSample)
-				{
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header0, Prefix.RawSamplePrefix[0]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header1, Prefix.RawSamplePrefix[1]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.RawI, rawSample.I);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.RawQ, rawSample.Q);
-
-					WriteDataRefAndUpdateCrc(BufferDef.Buffer);
-				}
-			}
-
-			//********************************************************************************************************
-			//		Raw everything
-			//********************************************************************************************************
-
-			/// <summary>
-			/// Raw everything buffer
-			/// </summary>
-			/// <remarks>Items stored: SampleNum (int), RawI, RawQ (both short), SampleI, SampleQ (both int), IsCut, IsDisplacement, IsConf (all bool)</remarks>
-			public static class RawEverything
-			{
-				/// <summary>Output options for raw everything</summary>
-				public static class Opt
-				{
-					/// <summary>Log to DataStore and output later to SD</summary>
-					public static bool LogRawEverythingToSD;
-					///// <summary>Log to DataStore and output later to SD and print</summary>
-					//public static bool LogRawEverythingToSDAndPrint;
-					/// <summary>Logging is required</summary>
-					public static bool Logging;
-				}
-				/// <summary>
-				/// Raw everything buffer
-				/// </summary>
-				public static class BufferDef
-				{
-					/// <summary>The buffer</summary>
-					public static byte[] Buffer = new byte[BuffSize];
-
-					/// <summary>Buffer position</summary>
-					public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
-					/// <summary>Buffer position</summary>
-					public const int RawI = SampleNum + sizeof(int);	// Last position + size of last item
-					/// <summary>Buffer position</summary>
-					public const int RawQ = RawI + sizeof(short);
-					/// <summary>Buffer position</summary>
-					public const int SampleI = RawQ + sizeof(short);
-					/// <summary>Buffer position</summary>
-					public const int SampleQ = SampleI + sizeof(int);
-					/// <summary>Buffer position</summary>
-					public const int IsCut = SampleQ + sizeof(int);
-					/// <summary>Buffer position</summary>
-					public const int IsDisplacement = IsCut + sizeof(int);
-					/// <summary>Buffer position</summary>
-					public const int IsConf = IsDisplacement + sizeof(bool);
-
-					/// <summary>Buffer size</summary>
-					public const int BuffSize = IsConf + sizeof(bool);
-				}
-				/// <summary>
-				/// Prefixes
-				/// </summary>
-				public static class Prefix
-				{
-					/// <summary>Sample values and cut detection (Prefix, Raw.I, Raw.Q)</summary>
-					public static char[] RawEverythingPrefix = { '#', 'f' };
-				}
-
-				/// <summary>
-				/// Log Raw Everything
-				/// </summary>
-				/// <param name="sampleNum"></param>
-				/// <param name="rawSample"></param>
-				/// <param name="compSample"></param>
-				/// <param name="isCut"></param>
-				/// <param name="isDisplacement"></param>
-				/// <param name="isConfirmed"></param>
-				public static void LogRawEverything(int sampleNum, Sample rawSample, Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
-				{
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header0, Prefix.RawEverythingPrefix[0]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header1, Prefix.RawEverythingPrefix[1]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.SampleNum, sampleNum);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.RawI, (uint)rawSample.I);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.RawQ, (uint)rawSample.Q);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.SampleI, compSample.I);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.SampleQ, compSample.Q);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.IsCut, isCut);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.IsDisplacement, isDisplacement);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.IsConf, isConfirmed);
-
-					WriteDataRefAndUpdateCrc(BufferDef.Buffer);
-
-					//Globals.DataStoreItems.DRef.Write(Globals.DataStoreItems.RawSample.Buffer);
-
-					//Globals.AllocationsWritten++;
-
-					//Debug.Print("# " + rawSample.I + "\t" + rawSample.Q);
-					//Debug.Print("CRC init: " + initCrc + ", CRC end: " + Globals.CrcWritten);
-
-					//var vals = new StringBuilder("$ ");
-					//for (var i = 0; i < Globals.Out.RawEverything.BufferDef.BuffSize; i++)
-					//{
-					//	vals.Append(Globals.Out.RawEverything.BufferDef.Buffer[i] + "\t");
-					//}
-					//Debug.Print(vals + "\n");
-
-				}
-
-			}
-
-			//********************************************************************************************************
-			//		SampleAndCut
-			//********************************************************************************************************
-
-			/// <summary>
-			/// ASCII Sample and cut
-			/// </summary>
-			public static class SampleAndCut
-			{
-				/// <summary>Options for sample-level</summary>
-				public static class Opt
-				{
-					/// <summary>Print immediately to Debug</summary>
-					public static bool Print;
-					/// <summary>Log to DataStore and output later to Debug</summary>
-					public static bool LogToDebug;
-					/// <summary>Log to DataStore and output later to SD</summary>
-					public static bool LogToSD;
-					/// <summary>Logging is required</summary>
-					public static bool Logging;
-				}
-
-				/// <summary>
-				/// Byte array for ASCII samples and cuts
-				/// </summary>
-				/// <remarks>Items stored: Header (2 char), Sample Number, I value, Q value (all int), IsCut (bool)</remarks>
-				public static class BuffDef
-				{
-					/// <summary>The buffer</summary>
-					public static byte[] Buffer = new byte[BuffSize];
-					/// <summary>Buffer position</summary>
-					public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
-					/// <summary>Buffer position</summary>
-					public const int SampleI = SampleNum + sizeof(int);
-					/// <summary>Buffer position</summary>
-					public const int SampleQ = SampleI + sizeof(int);
-					/// <summary>Buffer position</summary>
-					public const int IsCut = SampleQ + sizeof(int);
-
-					/// <summary>Buffer size</summary>
-					public const int BuffSize = IsCut + sizeof(int);
-
-					/// <summary>
-					/// Prefixes
-					/// </summary>
-					public static class Prefix
-					{
-						/// <summary>Sample and cut detection header as chars</summary>
-						public static char[] FieldsC = { '#', 'a' };
-						///// <summary>Sample and cut detection header as string</summary>
-						//public static string Fields = string.Empty;
-						/// <summary>Sample values and cut detection (SampleNum, Sample.I, Sample.Q, IsCut) as chars</summary>
-						public static char[] SampleC = { '#', 'b' };
-						///// <summary>Sample values and cut detection as string</summary>
-						//public static string Sample = string.Empty;
-					}
-				}
-
-			}
-
-			//********************************************************************************************************
-			//		ASCII snippet displacement and confirmation
-			//********************************************************************************************************
-
-			/// <summary>
-			/// ASCII snippet displacement and confirmation
-			/// </summary>
-			public static class SnippetDispAndConf
-			{
-				/// <summary>Options for snippet-level</summary>
-				public static class Opt
-				{
-					/// <summary>Print immediately to Debug</summary>
-					public static bool Print;
-					/// <summary>Log to DataStore and output later to Debug</summary>
-					public static bool LogToDebug;
-					/// <summary>Log to DataStore and output later to SD</summary>
-					public static bool LogToSD;
-					/// <summary>Logging is required</summary>
-					public static bool Logging;
-				}
-
-				/// <summary>
-				/// Byte array for ASCII snippet
-				/// </summary>
-				/// <remarks>
-				/// Items stored: Header (2 char), Sample Number, CumCuts (both int), IsDisp, IsConfirmed (both bool)
-				/// </remarks>
-				public static class BuffDef
-				{
-					/// <summary>The Buffer</summary>
-					public static byte[] Buffer = new byte[BuffSize];
-
-					/// <summary>Prefixes</summary>
-					public static class Prefix
-					{
-						/// <summary>Snippet log header chars</summary>
-						public static char[] FieldsC = { '#', 'c' };
-						///// <summary>Snippet log header string</summary>
-						//public static string Fields = string.Empty;
-						/// <summary>Snippet detections (sample num, IsDisplacement, IsConf) chars</summary>
-						public static char[] SnippetC = { '#', 'd' };
-						///// <summary>Snippet detections string</summary>
-						//public static string Snippet = string.Empty;
-					}
-
-					/// <summary>Buffer position</summary>
-					public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
-
-					/// <summary>Buffer position</summary>
-					public const int CumCuts = SampleNum + sizeof(int);
-
-					/// <summary>Buffer position</summary>
-					public const int IsDisp = CumCuts + sizeof(int);
-
-					/// <summary>Buffer position</summary>
-					public const int IsConfirmed = IsDisp + sizeof(bool);
-
-					/// <summary>Buffer size</summary>
-					public const int BuffSize = IsConfirmed + sizeof(bool);
-				}
-			}
-
-		}
-
+	
 		/// <summary>
 		/// Define GPIO ports
 		/// </summary>

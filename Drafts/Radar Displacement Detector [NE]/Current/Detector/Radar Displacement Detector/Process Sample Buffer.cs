@@ -52,7 +52,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 				//var started = DateTime.Now;
 				//Debug.Print("Started  " + started.Minute + ":" + started.Second + "." + started.Millisecond);
 
-				if (!Globals.Out.SnippetDispAndConf.Opt.Print) {
+				if (!OutputItems.SnippetDispAndConf.Opt.Print) {
 					Debug.Print("# " + (AnalyzeDisplacement.SampleData.SampleNum + 1));
 				}
 

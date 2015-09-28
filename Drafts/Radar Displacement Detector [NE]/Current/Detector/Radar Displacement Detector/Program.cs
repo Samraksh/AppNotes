@@ -20,6 +20,7 @@ using Samraksh.AppNote.Utility;
 #if !(DotNow || Sam_Emulator)
 #error Conditional build symbol missing
 #endif
+using Samraksh.Appnote.Utility;
 using Samraksh.eMote.DotNow;
 using Samraksh.eMote.Net.Radio;
 using Math = System.Math;
@@ -44,6 +45,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 
 		private static readonly ushort[] Ibuffer = new ushort[DetectorParameters.BufferSize];
 		private static readonly ushort[] Qbuffer = new ushort[DetectorParameters.BufferSize];
+
+		private const ushort SdBufferSize = 512/2;	// Same as Exfiltrator buffer size
+		private const byte Eof = 0xF0;	// Same as Exfiltrator EOF
 
 #if DotNow
 		private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
@@ -70,56 +74,70 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					Globals.RadioUpdates.Channel);
 			}
 	
-			
-			Globals.Out.RawSample.Opt.LogRawSampleToSD = false;
+			// Define output options
+			//OutputItems.RawSample.Opt.LogRawSampleToSD = false;
 
-			Globals.Out.RawEverything.Opt.LogRawEverythingToSD = true;
+			//OutputItems.RawEverything.Opt.LogRawEverythingToSD = true;
 
-			Globals.Out.PrintAfterRawLogging = true;
+			//OutputItems.PrintAfterRawLogging = true;
 
-			Globals.Out.SampleAndCut.Opt.LogToDebug = false;
-			Globals.Out.SampleAndCut.Opt.LogToSD = false;
-			Globals.Out.SampleAndCut.Opt.Print = false;
+			//OutputItems.SampleAndCut.Opt.LogToDebug = false;
+			//OutputItems.SampleAndCut.Opt.LogToSD = false;
+			//OutputItems.SampleAndCut.Opt.Print = false;
 
-			Globals.Out.SnippetDispAndConf.Opt.LogToDebug = false;
-			Globals.Out.SnippetDispAndConf.Opt.LogToSD = false;
-			Globals.Out.SnippetDispAndConf.Opt.Print = true;
+			//OutputItems.SnippetDispAndConf.Opt.LogToDebug = false;
+			//OutputItems.SnippetDispAndConf.Opt.LogToSD = false;
+			//OutputItems.SnippetDispAndConf.Opt.Print = true;
+
+			OutputItems.RawSample.Opt.LogRawSampleToSD = false;
+
+			OutputItems.RawEverything.Opt.LogRawEverythingToSD = true;
+
+			OutputItems.PrintAfterRawLogging = true;
+
+			OutputItems.SampleAndCut.Opt.LogToDebug = false;
+			OutputItems.SampleAndCut.Opt.LogToSD = false;
+			OutputItems.SampleAndCut.Opt.Print = false;
+
+			OutputItems.SnippetDispAndConf.Opt.LogToDebug = false;
+			OutputItems.SnippetDispAndConf.Opt.LogToSD = false;
+			OutputItems.SnippetDispAndConf.Opt.Print = true;
 
 			// Finish setting output options
-			Globals.Out.RawSample.Opt.Logging = Globals.Out.RawSample.Opt.LogRawSampleToSD;
-			Globals.Out.RawEverything.Opt.Logging = Globals.Out.RawEverything.Opt.LogRawEverythingToSD;
-			Globals.Out.SampleAndCut.Opt.Logging = Globals.Out.SampleAndCut.Opt.LogToDebug || Globals.Out.SampleAndCut.Opt.LogToDebug;
-			Globals.Out.SnippetDispAndConf.Opt.Logging = Globals.Out.SnippetDispAndConf.Opt.LogToDebug || Globals.Out.SnippetDispAndConf.Opt.LogToDebug;
-			Globals.Out.LoggingRequired =
-				Globals.Out.RawSample.Opt.Logging ||
-				Globals.Out.RawEverything.Opt.Logging ||
-				Globals.Out.SampleAndCut.Opt.Logging ||
-				Globals.Out.SnippetDispAndConf.Opt.Logging;
+			OutputItems.RawSample.Opt.Logging = OutputItems.RawSample.Opt.LogRawSampleToSD;
+			OutputItems.RawEverything.Opt.Logging = OutputItems.RawEverything.Opt.LogRawEverythingToSD;
+			OutputItems.SampleAndCut.Opt.Logging = OutputItems.SampleAndCut.Opt.LogToDebug || OutputItems.SampleAndCut.Opt.LogToSD;
+			OutputItems.SnippetDispAndConf.Opt.Logging = OutputItems.SnippetDispAndConf.Opt.LogToDebug || OutputItems.SnippetDispAndConf.Opt.LogToSD;
+			OutputItems.LoggingRequired =
+				OutputItems.RawSample.Opt.Logging ||
+				OutputItems.RawEverything.Opt.Logging ||
+				OutputItems.SampleAndCut.Opt.Logging ||
+				OutputItems.SnippetDispAndConf.Opt.Logging;
 
-			// Check logging output consistency
-			//	CAN mix logging and print since print is immediate and not logged
-			//	CAN do multiple kinds of ASCII logging at the same time because each record has a unique prefix
-			//	CAN'T do multiple kinds of raw logging at the same time because there is no prefix
-			//	CAN'T do ASCII and raw logging at the same time because raw has no prefix
-			var badConfig = false;
-			// Can't do 2 raw logging
-			badConfig |=
-				(Globals.Out.RawEverything.Opt.Logging &&
-				Globals.Out.RawSample.Opt.Logging);
-			// Can't do any raw logging along with ASCII logging
-			badConfig |=
-					(Globals.Out.RawEverything.Opt.Logging ||
-					Globals.Out.RawSample.Opt.Logging)
-				&&
-					(Globals.Out.SampleAndCut.Opt.Logging ||
-					Globals.Out.SnippetDispAndConf.Opt.Logging);
-			if (badConfig)
-			{
-#if DotNow
-				Lcd.Write("Xcfg");
-#endif
-				throw new ApplicationException("*** Error: cannot log raw sample simultaneously with other logging ***");
-			}
+//			// Check logging output consistency
+//			//	CAN mix logging and print since print is immediate and not logged
+//			//	CAN do multiple kinds of ASCII logging at the same time because each record has a unique prefix
+//			//	CAN'T do multiple kinds of raw logging at the same time because there is no prefix
+//			//	CAN'T do ASCII and raw logging at the same time because raw has no prefix
+//			var badConfig = false;
+//			// Can't do 2 raw logging
+//			badConfig |=
+//				(OutputItems.RawEverything.Opt.Logging &&
+//				OutputItems.RawSample.Opt.Logging);
+//			// Can't do any raw logging along with ASCII logging
+//			badConfig |=
+//					(OutputItems.RawEverything.Opt.Logging ||
+//					OutputItems.RawSample.Opt.Logging)
+//				&&
+//					(OutputItems.SampleAndCut.Opt.Logging ||
+//					OutputItems.SnippetDispAndConf.Opt.Logging);
+//			if (badConfig)
+//			{
+//#if DotNow
+//				Lcd.Write("Xcfg");
+//#endif
+//				throw new ApplicationException("*** Error: cannot log raw sample simultaneously with other logging ***");
+//			}
 
 			PowerState.ChangePowerLevel(PowerLevel.High);
 			Debug.Print("Power Level: " + PowerState.CurrentPowerLevel + " (16=High, 32=Med, 48=Low");
@@ -153,9 +171,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			};
 
 			// Signal sync button press
-			Globals.GpioPorts.Sync.OnInterrupt += Globals.Out.Sync.Sync_OnButtonPress;
+			Globals.GpioPorts.Sync.OnInterrupt += OutputItems.Sync.Sync_OnButtonPress;
 
-			if (Globals.Out.RawSample.Opt.Logging || Globals.Out.RawEverything.Opt.Logging)
+			if (OutputItems.RawSample.Opt.Logging || OutputItems.RawEverything.Opt.Logging)
 			{
 				Debug.Print("* Log raw samples to SD");
 #if DotNow
@@ -170,7 +188,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 #endif
 					throw new ApplicationException("*** Error: Cannot initialize microSD");
 				}
-				if (Globals.Out.PrintAfterRawLogging)
+				if (OutputItems.PrintAfterRawLogging)
 				{
 					Debug.Print("\tand print");
 				}
@@ -179,25 +197,25 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			Lcd.Write("IIII");
 #endif
 
-			if (Globals.Out.SampleAndCut.Opt.LogToDebug)
+			if (OutputItems.SampleAndCut.Opt.LogToDebug)
 			{
 				Debug.Print("* Log samples and detects to Debug");
 			}
 
-			if (Globals.Out.SampleAndCut.Opt.Print)
+			if (OutputItems.SampleAndCut.Opt.Print)
 			{
 				Debug.Print("* Immediate output samples and detects to Debug not supported");
 			}
 
-			if (Globals.Out.SnippetDispAndConf.Opt.LogToDebug)
+			if (OutputItems.SnippetDispAndConf.Opt.LogToDebug)
 			{
 				Debug.Print("* Log snippet displacements and confirmations to Debug");
 			}
 
-			if (Globals.Out.SnippetDispAndConf.Opt.Print)
+			if (OutputItems.SnippetDispAndConf.Opt.Print)
 			{
 				Debug.Print("* Immediate output snippet displacements and confirmations to Debug");
-				Debug.Print(new string(Globals.Out.SnippetDispAndConf.BuffDef.Prefix.FieldsC) + "\tSnippet\tCumCuts\tDisp\tMofN");
+				Debug.Print(new string(OutputItems.FieldNamesHeader) + "\tSnippet\tCumCuts\tDisp\tMofN");
 			}
 
 			Thread.Sleep(4000); // Wait a bit before launch
@@ -208,8 +226,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			processSampleBufferThread.Start();
 
 			// Initialize displacement analysis
-
 			AnalyzeDisplacement.Initialize(DisplacementCallback, MofNConfirmationCallback);
+
+			// Initialize SD buffering
+			SdBufferedWrite.Init(SdBufferSize, Eof);
 
 			// Start ADC sampling
 			AnalogInput.InitializeADC();
@@ -226,7 +246,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			Debug.Print("* Min mean-adjusted I and Q values: " + AnalyzeDisplacement.SampleData.MinComp.I + "," + AnalyzeDisplacement.SampleData.MinComp.Q);
 			Debug.Print("* Max mean-adjusted I and Q values: " + AnalyzeDisplacement.SampleData.MaxComp.I + "," + AnalyzeDisplacement.SampleData.MaxComp.Q);
 
-			OutputLoggedData();
+			CopyLoggedDataToSdAndPrint();
 
 			Debug.Print("*******\nFinished Output\n*****");
 
