@@ -1,0 +1,20 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Samraksh eMote .NOW</title>
+  </head>
+  <body class="vendor-book">
+    <div class="details">
+      <span class="vendor">Samraksh</span>
+      <span class="locale">en-US</span>
+      <span class="product">eMote</span>
+      <span class="name">.NOW</span>
+    </div>
+    <div class="package-list">
+      <div class="package">
+        <span class="name">eMote _NOW Help Viewer</span>      
+        <span class="package-etag"></span>
+        <a class="current-link" href="eMote _NOW Help Viewer.mshc">eMote _NOW Help Viewer.mshc</a>
+      </div>
+    </div>
+  </body>
+</html>
