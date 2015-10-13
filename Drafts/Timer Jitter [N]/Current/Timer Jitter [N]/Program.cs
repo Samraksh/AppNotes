@@ -198,6 +198,7 @@ namespace Samraksh.AppNote.TimerJitter {
 				if (_timerTicksPtr >= _timerTicks.Length) {
 					if (timer is eMote.RealTime.Timer) {
 						((NativeEventDispatcher)_realTimeTimer).Dispose(); // destroy the timer
+						_realTimeTimer.Dispose();
 					}
 					else if (timer is Timer) {
 						_dotNetTimer.Dispose(); // destroy the timer
