@@ -39,7 +39,7 @@
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow">
-      <HintPath>..\eMote\eMote 4.3_1.0.11.2\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+      <HintPath>..\eMote .NOW Release 4.3.0.13\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

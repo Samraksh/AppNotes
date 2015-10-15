@@ -1,5 +1,13 @@
-﻿#define xLoopTrace
-#define PrintIntervals
+﻿/*--------------------------------------------------------------------
+ * Timer Jitter [N] app note for eMote .NOW 1.0
+ * (c) 2015 The Samraksh Company
+ * 
+ * Version history
+ *  1.0: initial release
+---------------------------------------------------------------------*/
+
+#define xLoopTrace
+#define xPrintIntervals
 
 using System;
 using System.Diagnostics;
@@ -9,8 +17,10 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.Utility;
 
-namespace Samraksh.AppNote.TimerJitter {
-	internal class Program {
+namespace Samraksh.AppNote.TimerJitter
+{
+	internal class Program
+	{
 
 		// Interval for .NET timer
 		private const int TimerIntervalMilliSec = 100;
@@ -41,7 +51,8 @@ namespace Samraksh.AppNote.TimerJitter {
 		private static readonly Results[] RealTimeResults = new Results[MaxNumMakeWorkThreads];
 		private static readonly Results[] DotNetResults = new Results[MaxNumMakeWorkThreads];
 
-		private static void Main() {
+		private static void Main()
+		{
 			Globals.Globals.Lcd.Display("strt");
 			Debug.Print("\nTimer Jitter, " + VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 
@@ -62,22 +73,27 @@ namespace Samraksh.AppNote.TimerJitter {
 
 			Debug.Print("Number of samples: " + NumSamples);
 			Debug.Print("Timer Interval: " + TimerIntervalMilliSec + " (millisec);" + TimerIntervalMicroSec + " (microsec)");
+			Debug.Print("Max number of threads: " + MaxNumMakeWorkThreads);
 
 			// Run the profiling with make-work threads running. 
-			for (var numThreads = 0; numThreads < MaxNumMakeWorkThreads; numThreads++) {
+			for (var numThreads = 0; numThreads < MaxNumMakeWorkThreads; numThreads++)
+			{
 				// Reset the thread-stop flag
 				_makeWorkThreadStop = false;
 
 				Debug.Print("\n--------------- Number of MakeWork threads: " + numThreads);
 
 				// Create and start the threads
-				for (var i = 0; i < numThreads; i++) {
+				for (var i = 0; i < numThreads; i++)
+				{
 					var i1 = i; // Need to use local copy so lambda expression below will use the right value
-					makeWorkThreads[i] = new Thread(() => {
+					makeWorkThreads[i] = new Thread(() =>
+					{
 						Debug.Print("  Starting Makework thread " + i1);
 						// ReSharper disable once NotAccessedVariable
 						var cntr = 0;
-						while (true) {
+						while (true)
+						{
 							if (_makeWorkThreadStop) { return; }    // If time to stop, return
 							cntr++;
 						}
@@ -93,7 +109,8 @@ namespace Samraksh.AppNote.TimerJitter {
 
 				// Stop the threads and wait till stopped
 				_makeWorkThreadStop = true;
-				for (var i = 0; i < numThreads; i++) {
+				for (var i = 0; i < numThreads; i++)
+				{
 					makeWorkThreads[i].Join();
 					Debug.Print("  Joined MakeWork thread " + i);
 				}
@@ -110,21 +127,26 @@ namespace Samraksh.AppNote.TimerJitter {
 			Debug.Print("Timer interval:," + TimerIntervalMilliSec + ",millisec");
 			Debug.Print("Samples:," + NumSamples);
 			Debug.Print(header);
-			for (var i = 0; i < MaxNumMakeWorkThreads; i++) {
+			for (var i = 0; i < MaxNumMakeWorkThreads; i++)
+			{
 				var realtimeResults = RealTimeResults[i];
 				var dotnetResults = DotNetResults[i];
 				var resultsPrint = i + ",,";
-				if (realtimeResults != null) {
+				if (realtimeResults != null)
+				{
 					resultsPrint += realtimeResults.MeanError + "," + realtimeResults.Min + "," + realtimeResults.Max + "," + realtimeResults.Range + "," + realtimeResults.Mean + "," + realtimeResults.Std + ",";
 				}
-				else {
+				else
+				{
 					resultsPrint += ",,,,,,";
 				}
 				resultsPrint += ",";
-				if (dotnetResults != null) {
+				if (dotnetResults != null)
+				{
 					resultsPrint += dotnetResults.MeanError + "," + dotnetResults.Min + "," + dotnetResults.Max + "," + dotnetResults.Range + "," + dotnetResults.Mean + "," + dotnetResults.Std + ",";
 				}
-				else {
+				else
+				{
 					resultsPrint += ",,,,,,";
 				}
 				Debug.Print(resultsPrint);
@@ -139,10 +161,12 @@ namespace Samraksh.AppNote.TimerJitter {
 		/// </summary>
 		/// <param name="numThreads">Number of make-work threads</param>
 		/// <returns></returns>
-		private static bool ProfileRealTimeTimer(int numThreads) {
+		private static bool ProfileRealTimeTimer(int numThreads)
+		{
 			Globals.Globals.Lcd.Display("RT 0");
 			// Check if debuggeer is attached. If so, abort
-			if (Debugger.IsAttached) {
+			if (Debugger.IsAttached)
+			{
 				Debug.Print("\n*** Debugger is incompatible with RealTime timer. Exiting.\n");
 				return false;
 			}
@@ -151,7 +175,7 @@ namespace Samraksh.AppNote.TimerJitter {
 			_realTimeTimer = new eMote.RealTime.Timer(TimerIntervalMicroSec, 0);
 			_realTimeTimer.OnInterrupt += (data1, data2, time) => TimerCommon.OnTick(time, _realTimeTimer);
 
-			Thread.Sleep(250*1000);
+			Thread.Sleep(250 * 1000);
 
 			// Wait until threads are done
 			NextStep.WaitOne();
@@ -166,7 +190,8 @@ namespace Samraksh.AppNote.TimerJitter {
 			return true;
 		}
 
-		private static void ProfileDotNetTimer(int numThreads) {
+		private static void ProfileDotNetTimer(int numThreads)
+		{
 			Globals.Globals.Lcd.Display("Dn 0");
 			_dotNetTimer = new Timer(_ => TimerCommon.OnTick(DateTime.Now, _dotNetTimer), null, 0, TimerIntervalMilliSec);
 			NextStep.WaitOne();
@@ -176,7 +201,8 @@ namespace Samraksh.AppNote.TimerJitter {
 			PrintIntervals();
 		}
 
-		private static void PrintIntervals() {
+		private static void PrintIntervals()
+		{
 #if PrintIntervals
 			Debug.Print("===============================");
 			for (var i = 0; i < _timerTicks.Length; i++) {
@@ -186,24 +212,30 @@ namespace Samraksh.AppNote.TimerJitter {
 #endif
 		}
 
-		private static class TimerCommon {
+		private static class TimerCommon
+		{
 			private static bool _firstTick = true;
 			private static long _lastTick;
 
-			public static void OnTick(DateTime time, object timer) {
+			public static void OnTick(DateTime time, object timer)
+			{
 				Globals.Globals.GpioJ12P1.Write(true);
 				Globals.Globals.GpioJ12P1.Write(false);
 
 				// If we're done, reset things, raise the semaphore, and return
-				if (_timerTicksPtr >= _timerTicks.Length) {
-					if (timer is eMote.RealTime.Timer) {
+				if (_timerTicksPtr >= _timerTicks.Length)
+				{
+					if (timer is eMote.RealTime.Timer)
+					{
 						((NativeEventDispatcher)_realTimeTimer).Dispose(); // destroy the timer
-						_realTimeTimer.Dispose();
+						//_realTimeTimer.Dispose();
 					}
-					else if (timer is Timer) {
+					else if (timer is Timer)
+					{
 						_dotNetTimer.Dispose(); // destroy the timer
 					}
-					else {
+					else
+					{
 						Globals.Globals.Lcd.Display("Excp");
 						throw new Exception("Unknown timer type");
 					}
@@ -217,7 +249,8 @@ namespace Samraksh.AppNote.TimerJitter {
 				var thisTick = time.Ticks;
 
 				// Prime the pump
-				if (_firstTick) {
+				if (_firstTick)
+				{
 					_lastTick = thisTick;
 					_firstTick = false;
 					return;
@@ -237,7 +270,8 @@ namespace Samraksh.AppNote.TimerJitter {
 			}
 		}
 
-		private static Results CalculateStats(string timerType) {
+		private static Results CalculateStats(string timerType)
+		{
 			const long scalingFactor = TimeSpan.TicksPerMillisecond;
 			const string scalingFactorLabel = "Millisecond";
 			Debug.Print("");
@@ -245,7 +279,8 @@ namespace Samraksh.AppNote.TimerJitter {
 			Debug.Print("Units: " + scalingFactorLabel);
 
 			double sumError = 0;
-			foreach (var timerTick in _timerTicks) {
+			foreach (var timerTick in _timerTicks)
+			{
 				var error = System.Math.Abs((timerTick / scalingFactor) - TimerIntervalMilliSec);
 				sumError += error;
 			}
@@ -271,7 +306,8 @@ namespace Samraksh.AppNote.TimerJitter {
 			return results;
 		}
 
-		private class Results {
+		private class Results
+		{
 			public readonly double Mean;
 			public readonly double Min;
 			public readonly double Range;
@@ -279,7 +315,8 @@ namespace Samraksh.AppNote.TimerJitter {
 			public readonly double Std;
 			public readonly double MeanError;
 
-			public Results(double meanError, double mean, double min, double max, double range, double std) {
+			public Results(double meanError, double mean, double min, double max, double range, double std)
+			{
 				MeanError = meanError;
 				Mean = mean;
 				Min = min;
