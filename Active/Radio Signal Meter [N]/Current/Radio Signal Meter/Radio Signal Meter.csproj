@@ -82,10 +82,10 @@
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow">
-      <HintPath>..\eMote\eMote .NOW Release 4.3.0.13\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+      <HintPath>..\eMote\eMote .NOW Release 4.3.2.0\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net">
-      <HintPath>..\eMote\eMote .NOW Release 4.3.0.13\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>..\eMote\eMote .NOW Release 4.3.2.0\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
