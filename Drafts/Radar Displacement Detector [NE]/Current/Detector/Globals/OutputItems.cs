@@ -75,10 +75,12 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// </summary>
 			public static void Sync_OnButtonPress(uint data1, uint data2, DateTime time)
 			{
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
+
+				
 
 				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
 
@@ -157,13 +159,13 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// <param name="rawSample"></param>
 			public static void Log(Globals.Sample rawSample)
 			{
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.RawI, (ushort)rawSample.I);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.RawQ, (ushort)rawSample.Q);
 
 				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
@@ -299,29 +301,29 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// <param name="isConfirmed"></param>
 			public static void Log(int sampleNum, Globals.Sample sumVals, Globals.Sample rawSample, Globals.Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
 			{
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.SampleNum, sampleNum);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.SumI, sumVals.I);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.SumQ, sumVals.Q);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.RawI, (ushort)rawSample.I);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.RawQ, (ushort)rawSample.Q);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.SampleI, (short)compSample.I);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.SampleQ, (short)compSample.Q);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.IsCut, (short)isCut);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.IsDisplacement, isDisplacement);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					BufferDef.IsConf, isConfirmed);
 
 				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
@@ -455,17 +457,17 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// <param name="isCut"></param>
 			public static void Log(int sampleNum, Globals.Sample sample, int isCut)
 			{
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					(int)BuffDef.SampleNum, sampleNum);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					(int)BuffDef.SampleI, (short)sample.I);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					(int)BuffDef.SampleQ, (short)sample.Q);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					BuffDef.IsCut, (short)isCut);
 
 				Globals.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
@@ -584,19 +586,19 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// </summary>
 			public static void Log(int sampleNum, int cumCuts, bool isDisplacement, bool isConfirmed)
 			{
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					BuffDef.SampleNum, sampleNum);
 
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					BuffDef.CumCuts, cumCuts);
 
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					BuffDef.IsDisp, isDisplacement);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				InsertValueIntoArray.Insert(BuffDef.Buffer,
 					BuffDef.IsConfirmed, isConfirmed);
 
 				Globals.WriteDataRefAndUpdateCrc(BuffDef.Buffer);

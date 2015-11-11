@@ -13,10 +13,8 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
-#if UseRadio
 using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
-#endif
 
 namespace Samraksh.AppNote.PowerMeasurement
 {
@@ -41,16 +39,31 @@ namespace Samraksh.AppNote.PowerMeasurement
 		{
 			public static readonly ManualResetEvent CpuBoundEnable = new ManualResetEvent(false);
 			public static readonly ManualResetEvent RadioTxEnable = new ManualResetEvent(false);
-#if UseRadio
-			public static readonly SimpleCsmaRadio CsmaRadio = new SimpleCsmaRadio(RadioName.RF231RADIO, 100, TxPowerValue.Power_0Point0dBm, null);
-#endif
+			public static SimpleCsmaRadio CsmaRadio;
+
 			public static void DisableAll()
 			{
+				Debug.Print("Disable all");
+			
+				// Set power level to low
+				Debug.Print("\tChange power level");
+				PowerState.ChangePowerLevel(PowerLevel.Low);
+				// Block CpuBound thread
+				Debug.Print("\tCpuBoundEnable.Reset");
 				CpuBoundEnable.Reset();
+				// Block RadioTx thread
+				Debug.Print("\tRadioTxEnable.Reset");
 				RadioTxEnable.Reset();
-#if UseRadio
-				CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.Off);
-#endif
+				// Discard old radio object and create new. Ensures that it is turned off.
+				Debug.Print("\tCall Define Radio");
+				DefineRadio(TxPowerValue.Power_Minus17dBm);
+			}
+
+			public static void DefineRadio(TxPowerValue txPowerValue)
+			{
+				Debug.Print("DefineRadio");
+				CsmaRadio = new SimpleCsmaRadio(RadioName.RF231RADIO, 100, txPowerValue, null);
+				//CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.Off);
 			}
 		}
 
@@ -85,9 +98,7 @@ namespace Samraksh.AppNote.PowerMeasurement
 				while (true)
 				{
 					ModeFields.RadioTxEnable.WaitOne();
-#if UseRadio
 					ModeFields.CsmaRadio.Send(Addresses.BROADCAST, msg);
-#endif
 				}
 				// ReSharper disable once FunctionNeverReturns
 			});
@@ -97,9 +108,10 @@ namespace Samraksh.AppNote.PowerMeasurement
 		/// <summary>
 		/// Program entry point
 		/// </summary>
-		public static void Main()
-		{
-			Debug.Print("\nData Collector Radar");
+		public static void Main() {
+			Lcd.Write("4321");
+			Thread.Sleep(2000);
+			Debug.Print("\nPower Measurement");
 
 			// Print the version and build info
 			Debug.Print(VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
@@ -108,9 +120,13 @@ namespace Samraksh.AppNote.PowerMeasurement
 			ToggleMode.OnInterrupt += ChangeMode.CallBack;
 
 			ModeFields.DisableAll();
+
+			Debug.Print("ActivityThreads.StartAll");
 			ActivityThreads.StartAll();
-			
-			SetSleepMode();
+
+			SetModes.SetSleepMode();
+
+			Debug.Print("Waiting for GPIO");
 
 			Thread.Sleep(Timeout.Infinite);
 
@@ -121,7 +137,8 @@ namespace Samraksh.AppNote.PowerMeasurement
 			private static DateTime _lastEventTime = DateTime.MinValue;
 			private static readonly TimeSpan BounceTime = new TimeSpan(0, 0, 0, 0, 300);
 
-			public static void CallBack(uint port, uint state, DateTime currEventTime) {
+			public static void CallBack(uint port, uint state, DateTime currEventTime)
+			{
 				var isBbounceInterval = currEventTime - _lastEventTime < BounceTime;
 				// Debounce the switch
 				if (isBbounceInterval)
@@ -137,25 +154,25 @@ namespace Samraksh.AppNote.PowerMeasurement
 				switch (_currMode)
 				{
 					case ModeStates.Sleep:
-						SetPowerLowMode();
+						SetModes.SetPowerLowMode();
 						break;
 					case ModeStates.PowerLow:
-						SetPowerMediumMode();
+						SetModes.SetPowerMediumMode();
 						break;
 					case ModeStates.PowerMedium:
-						SetPowerHighMode();
+						SetModes.SetPowerHighMode();
 						break;
 					case ModeStates.PowerHigh:
-						SetRadioOnMode();
+						SetModes.SetRadioOnMode();
 						break;
 					case ModeStates.RadioRx:
-						SetRadioTxLo();
+						SetModes.SetRadioTxLo();
 						break;
 					case ModeStates.RadioTxLo:
-						SetRadioTxHi();
+						SetModes.SetRadioTxHi();
 						break;
 					case ModeStates.RadioTxHi:
-						SetSleepMode();
+						SetModes.SetSleepMode();
 						break;
 					default:
 						Lcd.Write("err");
@@ -164,70 +181,78 @@ namespace Samraksh.AppNote.PowerMeasurement
 			}
 		}
 
-		private static void SetSleepMode()
+		private static class SetModes
 		{
-			ModeFields.DisableAll();
-			_currMode = ModeStates.Sleep;
-			Lcd.Write("P 0");
-		}
+			public static void SetSleepMode()
+			{
+				Debug.Print("Set sleep mode");
+				ModeFields.DisableAll();
 
-		private static void SetPowerLowMode()
-		{
-			ModeFields.DisableAll();
-			PowerState.ChangePowerLevel(PowerLevel.Low);
-			_currMode = ModeStates.PowerLow;
-			ModeFields.CpuBoundEnable.Set();
-		}
+				_currMode = ModeStates.Sleep;
+				Lcd.Write("P 0");
+			}
 
-		private static void SetPowerMediumMode()
-		{
-			ModeFields.DisableAll();
-			PowerState.ChangePowerLevel(PowerLevel.Medium);
-			_currMode = ModeStates.PowerMedium;
-			ModeFields.CpuBoundEnable.Set();
-		}
+			public static void SetPowerLowMode()
+			{
+				Debug.Print("Setting CPU power mode low");
 
-		private static void SetPowerHighMode()
-		{
-			ModeFields.DisableAll();
-			PowerState.ChangePowerLevel(PowerLevel.High);
-			ModeFields.CpuBoundEnable.Set();
-			_currMode = ModeStates.PowerHigh;
-		}
+				ModeFields.DisableAll();
+				PowerState.ChangePowerLevel(PowerLevel.Low);
+				_currMode = ModeStates.PowerLow;
+				ModeFields.CpuBoundEnable.Set();
+			}
 
-		private static void SetRadioOnMode()
-		{
-			ModeFields.DisableAll();
-#if UseRadio
-			ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
-#endif
-			_currMode = ModeStates.RadioRx;
-			Lcd.Write("Rdo");
-		}
+			public static void SetPowerMediumMode()
+			{
+				Debug.Print("Setting CPU power mode medium");
+				ModeFields.DisableAll();
 
-		private static void SetRadioTxLo()
-		{
-			ModeFields.DisableAll();
-#if UseRadio
-			ModeFields.CsmaRadio.MacConfig.radioConfig.SetTxPower(TxPowerValue.Power_Minus17dBm);
-			ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
-#endif
-			ModeFields.RadioTxEnable.Set();
-			_currMode = ModeStates.RadioTxLo;
-			Lcd.Write("Tx 0");
-		}
+				PowerState.ChangePowerLevel(PowerLevel.Medium);
+				_currMode = ModeStates.PowerMedium;
+				ModeFields.CpuBoundEnable.Set();
+			}
 
-		private static void SetRadioTxHi()
-		{
-			ModeFields.DisableAll();
-#if UseRadio
-			ModeFields.CsmaRadio.MacConfig.radioConfig.SetTxPower(TxPowerValue.Power_3dBm);
-			ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
-#endif
-			ModeFields.RadioTxEnable.Set();
-			_currMode = ModeStates.RadioTxHi;
-			Lcd.Write("Tx 1");
-		}
+			public static void SetPowerHighMode()
+			{
+				Debug.Print("Setting CPU power mode high");
+				ModeFields.DisableAll();
 
+				PowerState.ChangePowerLevel(PowerLevel.High);
+				_currMode = ModeStates.PowerHigh;
+				ModeFields.CpuBoundEnable.Set();
+			}
+
+			public static void SetRadioOnMode()
+			{
+				Debug.Print("Turning radio on");
+				ModeFields.DisableAll();
+
+				ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+				_currMode = ModeStates.RadioRx;
+				Lcd.Write("Rdo");
+			}
+
+			public static void SetRadioTxLo()
+			{
+				ModeFields.DisableAll();
+
+				ModeFields.DefineRadio(TxPowerValue.Power_Minus17dBm);
+				ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+				ModeFields.RadioTxEnable.Set();
+				_currMode = ModeStates.RadioTxLo;
+				Lcd.Write("Tx 0");
+			}
+
+			public static void SetRadioTxHi()
+			{
+				ModeFields.DisableAll();
+
+				ModeFields.DefineRadio(TxPowerValue.Power_3dBm);
+				ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+				ModeFields.RadioTxEnable.Set();
+				_currMode = ModeStates.RadioTxHi;
+				Lcd.Write("Tx 1");
+			}
+		}
 	}
 }

@@ -13,7 +13,9 @@
  *				
  *      1.2:
  *      
- *      1.3:    Changes to make use of eMote release 4.3.0.13
+ *      1.3:    Changed to make use of eMote release 4.3.0.13
+ *      
+ *		1.4:	Changed to make use of eMote release 4.3.0.14
 ---------------------------------------------------------------------*/
 
 using System.Reflection;

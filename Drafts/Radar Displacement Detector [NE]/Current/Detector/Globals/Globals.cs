@@ -156,9 +156,9 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 			/// <param name="isConf"></param>
 			public static void SnippetUpdate(bool isDisplacement, bool isConf)
 			{
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.AppIdentifier, AppIdentifierHdr);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.IsDisplacement, isDisplacement);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.IsConf, isConf);
+				InsertValueIntoArray.Insert(BufferDef.Buffer, BufferDef.AppIdentifier, AppIdentifierHdr);
+				InsertValueIntoArray.Insert(BufferDef.Buffer, BufferDef.IsDisplacement, isDisplacement);
+				InsertValueIntoArray.Insert(BufferDef.Buffer, BufferDef.IsConf, isConf);
 				Radio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
 				Radio.Send(Addresses.BROADCAST, BufferDef.Buffer);
 				Radio.SetRadioState(SimpleCsmaRadio.RadioStates.Off);

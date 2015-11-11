@@ -1,4 +1,4 @@
-#if UseRadio
+
 /********************************************************
  * Simple CSMA Radio class
  *  Simplify the definition of a CSMA radio
@@ -15,10 +15,11 @@
 using System;
 using System.Threading;
 using Microsoft.SPOT;
-
+using Samraksh.eMote.DotNow;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
+using DeviceStatus = Samraksh.eMote.Net.DeviceStatus;
 
 namespace Samraksh.AppNote.Utility {
     /// <summary>
@@ -162,4 +163,3 @@ namespace Samraksh.AppNote.Utility {
         }
     }
 }
-#endif

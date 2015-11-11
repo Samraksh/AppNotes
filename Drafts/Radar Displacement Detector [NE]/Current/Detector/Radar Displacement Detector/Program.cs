@@ -75,20 +75,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			}
 	
 			// Define output options
-			//OutputItems.RawSample.Opt.LogRawSampleToSD = false;
-
-			//OutputItems.RawEverything.Opt.LogRawEverythingToSD = true;
-
-			//OutputItems.PrintAfterRawLogging = true;
-
-			//OutputItems.SampleAndCut.Opt.LogToDebug = false;
-			//OutputItems.SampleAndCut.Opt.LogToSD = false;
-			//OutputItems.SampleAndCut.Opt.Print = false;
-
-			//OutputItems.SnippetDispAndConf.Opt.LogToDebug = false;
-			//OutputItems.SnippetDispAndConf.Opt.LogToSD = false;
-			//OutputItems.SnippetDispAndConf.Opt.Print = true;
-
 			OutputItems.RawSample.Opt.LogRawSampleToSD = false;
 
 			OutputItems.RawEverything.Opt.LogRawEverythingToSD = true;
@@ -104,6 +90,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			OutputItems.SnippetDispAndConf.Opt.Print = true;
 
 			// Finish setting output options
+
 			OutputItems.RawSample.Opt.Logging = OutputItems.RawSample.Opt.LogRawSampleToSD;
 			OutputItems.RawEverything.Opt.Logging = OutputItems.RawEverything.Opt.LogRawEverythingToSD;
 			OutputItems.SampleAndCut.Opt.Logging = OutputItems.SampleAndCut.Opt.LogToDebug || OutputItems.SampleAndCut.Opt.LogToSD;
