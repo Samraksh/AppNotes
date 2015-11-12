@@ -1,6 +1,6 @@
 using Microsoft.SPOT;
+using Samraksh.AppNote.DotNow.Radar;
 using Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis;
-using Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 

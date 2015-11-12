@@ -1,11 +1,10 @@
 using System;
-using System.Text;
 using Microsoft.SPOT;
-using Samraksh.AppNote.Utility;
 using Samraksh.Appnote.Utility;
+using Samraksh.AppNote.Utility;
 using Samraksh.eMote.NonVolatileMemory;
 
-namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
+namespace Samraksh.AppNote.DotNow.Radar
 {
 	/// <summary>
 	/// Output items
@@ -15,7 +14,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 		/// <summary>
 		/// DataStore object
 		/// </summary>
-		public static readonly DataStore DataStore = DataStore.Instance(StorageType.NOR, true);
+		public static readonly DataStore DStore = DataStore.Instance(StorageType.NOR, true);
 
 		/// <summary>Options true iff logging</summary>
 		public static bool LoggingRequired;
@@ -80,10 +79,7 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 				InsertValueIntoArray.Insert(BufferDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
 
-				
-
 				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
-
 			}
 		}
 

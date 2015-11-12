@@ -1,8 +1,6 @@
 using System;
 using System.Text;
 using Microsoft.SPOT;
-using Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar;
-
 #if !(DotNow || Sam_Emulator)
 #error Conditional build symbol missing
 #endif

@@ -1,7 +1,4 @@
-using System;
-using Microsoft.SPOT;
-
-namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
+namespace Samraksh.AppNote.DotNow.Radar
 {
 	/// <summary>
 	/// Displacement detection parameters

@@ -3,9 +3,13 @@
  * (c) 2013 The Samraksh Company
  * 
  * Version history
- *  1.0: initial release
+ *  1.0: 
+ *		-	initial release
  *  1.1:
- *  1.2: Changes to include eMote ver. 4.3.0.13 (Sep 17, 2015)
+ *  1.2: 
+ *		-	Changes to include eMote ver. 4.3.0.13 (Sep 17, 2015)
+ *	1.3:
+ *		-	Change to use eMote ver 4.3.0.14
  ---------------------------------------------------------------------*/
 
 using System;
@@ -49,7 +53,7 @@ namespace Samraksh.AppNote.DotNOW.PersistentObjectStorage {
         //  0: Sensor ID
         //  1: Sum of sensed values
         //  2: Number of times sensed
-        private static readonly UInt32[] SensorValues = new UInt32[3];
+        private static readonly uint[] SensorValues = new uint[3];
 
         private static Hashtable _sensorDataReferences = new Hashtable();      // Indexed table of data references, used for sensing
         private static readonly Hashtable ComparisonTable = new Hashtable();    // Indexed table of sensor values

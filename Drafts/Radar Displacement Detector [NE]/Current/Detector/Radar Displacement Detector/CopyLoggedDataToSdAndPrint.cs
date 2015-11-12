@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
-using Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar;
 using Samraksh.Appnote.Utility;
+using Samraksh.AppNote.DotNow.Radar;
 using Samraksh.eMote.DotNow;
 using Samraksh.eMote.NonVolatileMemory;
 using Math = System.Math;
@@ -53,7 +53,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 
 			// Read all data references
 #if DotNow
-			Lcd.Write("tttt");
+			Globals.Lcd.Write("tttt");
 #endif
 			var dRefsOffset = 0;
 			var dRefs = new DataReference[1];
@@ -79,7 +79,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			// Read data references until we hit a null, which signifies the end
 			while (true)
 			{
-				var status = OutputItems.DataStore.ReadAllDataReferences(dRefs, dRefsOffset++);
+				var status = OutputItems.DStore.ReadAllDataReferences(dRefs, dRefsOffset++);
 				if (status != DataStoreReturnStatus.Success)
 				{
 					throw new Exception("Error reading from DataStore. Return code: " + status);
@@ -112,7 +112,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					var snippetNo = allocationsRead / DetectorParameters.SamplesPerSecond;
 					Debug.Print("Snippet " + snippetNo);
 #if DotNow
-					Lcd.Write("t" + (snippetNo % 1000));
+					Globals.Lcd.Write("t" + (snippetNo % 1000));
 #endif
 				}
 

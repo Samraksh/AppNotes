@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
@@ -10,13 +11,17 @@ using Samraksh.eMote.NonVolatileMemory;
 #error Conditional build symbol missing
 #endif
 
-namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
+namespace Samraksh.AppNote.DotNow.Radar
 {
 	/// <summary>
 	/// Global values and parameters
 	/// </summary>
 	public class Globals {
 
+#if DotNow
+		/// <summary>Lcd</summary>
+		public static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
+#endif
 		private static readonly object WriteLock = new object();
 
 		/// <summary>
@@ -25,22 +30,28 @@ namespace Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar
 		/// <param name="buffer"></param>
 		public static void WriteDataRefAndUpdateCrc(byte[] buffer)
 		{
-			// Prevent attempt to write from separate threads
-			lock (WriteLock) {
-				DataStoreReference = new DataReference(
-					OutputItems.DataStore,
-					buffer.Length,
-					ReferenceDataType.BYTE
-					);
-				DataStoreReference.Write(buffer);
+			try {
+				// Prevent attempt to write from separate threads
+				lock (WriteLock) {
+					DataStoreReference = new DataReference(
+						OutputItems.DStore,
+						buffer.Length,
+						ReferenceDataType.BYTE
+						);
+					DataStoreReference.Write(buffer);
 
-				AllocationsWritten++;
+					AllocationsWritten++;
 
-				CrcWritten = Microsoft.SPOT.Hardware.Utility.ComputeCRC(
-					buffer,
-					0,
-					buffer.Length,
-					CrcWritten);
+					CrcWritten = Microsoft.SPOT.Hardware.Utility.ComputeCRC(
+						buffer,
+						0,
+						buffer.Length,
+						CrcWritten);
+				}
+			}
+			catch (Exception ex) {
+				Debug.Print("Error "+ ex);
+				Lcd.Write("Err");
 			}
 		}
 

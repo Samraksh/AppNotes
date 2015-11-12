@@ -10,6 +10,8 @@
  *      1.3
  *			-	Upgraded to eMote v. 1.0.12
  *			-	Minor cleanup
+ *		1.4
+ *			-	Upgraded to eMote v. 1.0.14
  **************************************************/
 
 //#define Testing   // Enable this flag to provide testing output rather than raw data to the serial port
