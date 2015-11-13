@@ -3,9 +3,13 @@
  * (c) 2013 The Samraksh Company
  * 
  * Version history
- *  1.0:	- initial release
- *  1.1:	- Updated to eMote v. 12 namespaces
- *			- Refactor to include project Utility
+ *  1.0:
+ *		- initial release
+ *  1.1:
+ *		- Updated to eMote v. 12 namespaces
+ *		- Refactor to include project Utility
+ *	1.2:
+ *		- Update to eMote v. 14
 ---------------------------------------------------------------------*/
 
 using System.Threading;
@@ -25,10 +29,9 @@ namespace Samraksh.Appnote.DotNow.OnOffSwitchSerialLink {
 	/// To keep the main program simple, classes have been included to abstract switch handling and serial communication
 	/// </summary>
 	public class Program {
-
-		static SerialComm _serialComm;		// Define serial comm
-		static bool _sendSwitchVal = true;	// True iff switch data should be sent to PC client
-		const string CommPort = "COM1";		// The comm port to use. Due to limitations in drivers, must be COM1, COM2 or COM3.
+		private static SerialComm _serialComm;		// Define serial comm
+		private static bool _sendSwitchVal = true;	// True iff switch data should be sent to PC client
+		private const string CommPort = "COM1";		// The comm port to use. Due to limitations in drivers, must be COM1, COM2 or COM3.
 		static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
 
 		/// <summary>

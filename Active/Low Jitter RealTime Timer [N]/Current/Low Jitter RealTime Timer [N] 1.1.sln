@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Low Jitter RealTime Timer [N]", "Low Jitter RealTime Timer [N]\Low Jitter RealTime Timer [N].csproj", "{A81C591F-1296-4847-940C-8AB6405272BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{3A705DE9-1802-4D9E-A606-D23CC21D74E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Globals", "Globals\Globals.csproj", "{A6279487-1C35-4274-8B2C-A85AE06C755A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A81C591F-1296-4847-940C-8AB6405272BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A81C591F-1296-4847-940C-8AB6405272BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A81C591F-1296-4847-940C-8AB6405272BD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A81C591F-1296-4847-940C-8AB6405272BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A81C591F-1296-4847-940C-8AB6405272BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A81C591F-1296-4847-940C-8AB6405272BD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3A705DE9-1802-4D9E-A606-D23CC21D74E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A705DE9-1802-4D9E-A606-D23CC21D74E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A705DE9-1802-4D9E-A606-D23CC21D74E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A705DE9-1802-4D9E-A606-D23CC21D74E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6279487-1C35-4274-8B2C-A85AE06C755A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6279487-1C35-4274-8B2C-A85AE06C755A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6279487-1C35-4274-8B2C-A85AE06C755A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6279487-1C35-4274-8B2C-A85AE06C755A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

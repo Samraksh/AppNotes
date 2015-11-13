@@ -3,20 +3,22 @@
  * (c) 2013 The Samraksh Company
  * 
  * Version history
- *  1.0:	- Initial release
- *  
- *  1.1:	- Fix error: on and off switch responses are reversed
- *  
- *  1.2:	- Changed main thread sleep to Timeout.Infinite; renamed LcdExtensionMethods
- *  
- *  1.3:	- Updated to latest namespaces
- *			- Removed ExtensionMethod and added EnhancedLcd
- *			- Added VersionInfo
- *			- Minor changes
- *	
- * 1.4:		*** tbd
- * 
- * 1.5:     - Updated to include binaries from eMote release 4.3.0.13
+ *  1.0:	
+ *		- Initial release
+ *	1.1:
+ *		- Fix error: on and off switch responses are reversed
+ *	1.2:
+ *		- Changed main thread sleep to Timeout.Infinite; renamed LcdExtensionMethods
+ *	1.3:
+ *		- Updated to latest namespaces
+ *		- Removed ExtensionMethod and added EnhancedLcd
+ *		- Added VersionInfo
+ *		- Minor changes
+ *	1.4:	
+ *	1.5:
+ *		- Updated to include binaries from eMote release 4.3.0.13
+ *	1.5
+ *		- Updated to eMote 4.3.0.14
 ---------------------------------------------------------------------*/
 
 using System;

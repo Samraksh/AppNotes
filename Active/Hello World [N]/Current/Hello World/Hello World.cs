@@ -5,14 +5,16 @@
  * Hello World: Scroll across LCD display
  * 
  * Version history
- *      1.0:	- Initial release
- *      
- *      1.1:	- Added eMote folder with DLLs and TinyClr
- *				- Other minor changes
- *				
+ *      1.0:	
+ *			- Initial release
+ *      1.1:	
+ *			- Added eMote folder with DLLs and TinyClr
+ *			- Other minor changes
  *      1.2:
- *      
- *      1.3:    - Updated dlls from release 4.3.0.13
+ *      1.3:
+ *			- Updated dlls from release 4.3.0.13
+ *		1.4: 
+ *			- Updated for eMote 4.3.0.14
 ---------------------------------------------------------------------*/
 
 // Use extension methods. See the definition at the end of this file.
