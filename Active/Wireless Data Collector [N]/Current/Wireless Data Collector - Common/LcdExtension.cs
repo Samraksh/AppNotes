@@ -1,3 +1,4 @@
+using System;
 using Samraksh.eMote.DotNow;
 
 namespace Samraksh {
@@ -13,21 +14,21 @@ namespace Samraksh {
                 /// Initialize the LCD
                 /// </summary>
                 public EmoteLcdUtil() {
-                    this.Initialize();
+                    Initialize();
                 }
             }
 
             /// <summary>
             /// Extend EmoteLCD with Display methods for integer and string
             /// </summary>
-            public partial class EmoteLcdUtil : EmoteLCD {
+            public partial class EmoteLcdUtil {
                 /// <summary>
                 /// Display an integer. If more than 4 decimal digits, display first 4 only
                 /// </summary>
                 /// <param name="num">The number to be displayed</param>
                 public void Display(int num) {
                     var str = num.ToString();
-                    str = "0000".Substring(0, System.Math.Max(0, 4 - str.Length)) + str;
+                    str = "0000".Substring(0, Math.Max(0, 4 - str.Length)) + str;
                     Display(str);
                 }
 
@@ -37,7 +38,7 @@ namespace Samraksh {
                 /// <param name="str">The string to be displayed</param>
                 public void Display(string str) {
                     var msgChar = (str + "    ").Substring(0, 4).ToCharArray();
-                    this.Write(msgChar[0].ToLcd(), msgChar[1].ToLcd(), msgChar[2].ToLcd(), msgChar[3].ToLcd());
+                    Write(msgChar[0].ToLcd(), msgChar[1].ToLcd(), msgChar[2].ToLcd(), msgChar[3].ToLcd());
                 }
 
             }
