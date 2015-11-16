@@ -3,10 +3,15 @@
  * (c) 2013-2015 The Samraksh Company
  * 
  * Version history
- *      1.0:	- Initial release
- *      1.1:	- Upgraded to v. 12 namespaces
- *				- Various cleanup and refactoring
- *		1.2:    - Changes to include eMote v.13 changes (Sep 17, 2015)
+ *	1.0:
+ *		- Initial release
+ *  1.1:
+ *		- Upgraded to v. 12 namespaces
+ *		- Various cleanup and refactoring
+ *	1.2:
+ *		- Changes to include eMote v.13 changes (Sep 17, 2015)
+ *	1.3:
+ *		- Updated to eMote v. 14
 ---------------------------------------------------------------------*/
 
 using System;
