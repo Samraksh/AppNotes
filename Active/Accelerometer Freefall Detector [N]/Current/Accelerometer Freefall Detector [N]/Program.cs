@@ -42,8 +42,8 @@ namespace Samraksh {
 				// ReSharper disable once UnusedMember.Local
 				private static readonly OutputPort AccelerometerPower = new OutputPort(Pins.GPIO_J11_PIN3, true);   // Enable power to the accelerometer
 
-				//private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();  // Define the LCD
-				private static readonly EmoteLCD Lcd = new EmoteLCD();
+				private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();  // Define the LCD
+				//private static readonly EmoteLCD Lcd = new EmoteLCD();
 
 				/// <summary>
 				/// Main thread: set things up and then go to sleep.
@@ -51,14 +51,16 @@ namespace Samraksh {
 				/// </summary>
 				public static void Main() {
 
-					Lcd.Initialize();
-					Lcd.Clear();
+					//Lcd.Initialize();
 
 					Debug.EnableGCMessages(false);  // We don't want to see garbage collector messages in the Output window
 
 					Debug.Print(VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 					//    Lcd.Write("Accl");
+					Lcd.Write("Accl");
 					Thread.Sleep(4000);
+					Lcd.Clear();
+					
 
 					_axl = new SB.Accelerometer(RefreshRate, SensorEventCallback);  // Set up the accelerometer
 

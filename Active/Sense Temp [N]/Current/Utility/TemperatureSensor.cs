@@ -9,13 +9,10 @@
 #define TestingX    // Set to Testing to enable diagnostic prints
 
 using System;
-using Microsoft.SPOT;
-using Microsoft.SPOT.Hardware;
 using System.Threading;
+using Microsoft.SPOT.Hardware;
 
-
-
-namespace Samraksh.SPOT.AppNote.Utility {
+namespace Samraksh.AppNote.Utility {
 
     /// <summary>
     /// Read the temperature sensor with OneWire protocol via user-specified GPIO pin
@@ -54,7 +51,7 @@ namespace Samraksh.SPOT.AppNote.Utility {
                      Microsoft.SPOT.Hardware.Utility.ExtractValueFromArray(new byte[] { 0xaa, 0xbb }, 0, 2) == 0xbbaa;
 
         // The device family code returned by the sensor
-        private byte DS18x20DeviceFamilyCode;
+        private byte _ds18X20DeviceFamilyCode;
 
         // Delay betwen OneWire commands
         private const int sensorDelay = 750;
@@ -120,8 +117,8 @@ namespace Samraksh.SPOT.AppNote.Utility {
 
             // We know that there is exactly one device on the OneWire bus. Make sure it's the right one.
             var device = (devices[0] as byte[]);
-            DS18x20DeviceFamilyCode = device[0];
-            if (DS18x20DeviceFamilyCode != Ds18S20DeviceFamilyCode && DS18x20DeviceFamilyCode != Ds18B20DeviceFamilyCode) {
+            _ds18X20DeviceFamilyCode = device[0];
+            if (_ds18X20DeviceFamilyCode != Ds18S20DeviceFamilyCode && _ds18X20DeviceFamilyCode != Ds18B20DeviceFamilyCode) {
                 throw new TemperatureSensorException("Device family code is " + device[0] + "; s/b " + Ds18S20DeviceFamilyCode + " or " + Ds18B20DeviceFamilyCode);
             }
         }
@@ -198,7 +195,7 @@ namespace Samraksh.SPOT.AppNote.Utility {
 
                 // Adjust for precision, depending on which kind of sensor we have
                 //  Note that for the Ds18S20, additional precision is available. This might be addressed in a future version
-                switch (DS18x20DeviceFamilyCode) {
+                switch (_ds18X20DeviceFamilyCode) {
                     case Ds18B20DeviceFamilyCode:
                         // Measurement is in 1/16 degrees C
                         sensedTemperature /= 16;
@@ -210,7 +207,7 @@ namespace Samraksh.SPOT.AppNote.Utility {
                     default:
                         // This should never happen since we've already checked
                         throw new TemperatureSensorException("Invalid Temperature Sensor Device Family Code: " +
-                                                             DS18x20DeviceFamilyCode);
+                                                             _ds18X20DeviceFamilyCode);
                 }
                 // Set the temperature property
                 lock (_temperatureLock) {
