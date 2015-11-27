@@ -12,6 +12,9 @@
  *		- Updated dlls based on eMote ver. 4.3.0.13 (Sep 18, 2015)
  *	1.3:
  *		- Updated to eMove v. 14.
+ *		- Using System.BitConverter. Note bug for ToInt64: http://www.thomasvjames.com/2015/02/netmf-bitconverter/
+ *	1.4
+ *		-
 ---------------------------------------------------------------------*/
 
 using System;
@@ -20,7 +23,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.SPOT;
 
-using Samraksh.AppNote.Utility;
+using Util = Samraksh.AppNote.Utility;
 using Samraksh.AppNote.WirelessDataCollector;
 using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
@@ -37,8 +40,8 @@ namespace Samraksh.AppNotes.WirelessDataCollector.Base
 	{
 
 		// Define radio and LCD
-		static SimpleCsmaRadio _csmaRadio;
-		static readonly EmoteLcdUtil Lcd = new EmoteLcdUtil();
+		static Util.SimpleCsmaRadio _csmaRadio;
+		static readonly Util.EmoteLcdUtil Lcd = new Util.EmoteLcdUtil();
 
 		// Define a hashtable that is used to store sensing node info for initial time
 		static readonly Hashtable SensingNodes = new Hashtable();
@@ -63,7 +66,7 @@ namespace Samraksh.AppNotes.WirelessDataCollector.Base
 			// Set up the radio for CSMA interaction
 			//  The first two arguments are fairly standard but you're free to try changing them
 			//  The last argument is the method to call when a message is received
-			_csmaRadio = new SimpleCsmaRadio(140, TxPowerValue.Power_0Point7dBm, RadioReceive);
+			_csmaRadio = new Util.SimpleCsmaRadio(140, TxPowerValue.Power_0Point7dBm, RadioReceive);
 
 			// As base station node, just listen for incoming messages & respond
 			Thread.Sleep(Timeout.Infinite);
@@ -138,7 +141,7 @@ namespace Samraksh.AppNotes.WirelessDataCollector.Base
 					Debug.Print((dbgcnt++).ToString());
 
 					// Get the time the message was sent (sensing node time scale)
-					var msgSentTime = BitConverter.ToInt64(msgBytes, Common.MessageTimePos);
+					var msgSentTime = Util.BitConverter.ToInt64(msgBytes, Common.MessageTimePos);
 
 					Debug.Print((dbgcnt++).ToString());
 
@@ -190,7 +193,7 @@ namespace Samraksh.AppNotes.WirelessDataCollector.Base
 								var currPos = Common.PayloadHeaderSize;    // Initialize the current position
 								while (currPos + Common.SampleTimeDataLen <= rcvMsg.Size)
 								{
-									var sensorSampleTime = BitConverter.ToInt64(msgBytes, currPos);
+									var sensorSampleTime = Util.BitConverter.ToInt64(msgBytes, currPos);
 									currPos += Common.MessageTimeSize;
 									var sensorSampleValue = BitConverter.ToInt32(msgBytes, currPos);
 									currPos += Common.SampleDataSize;

@@ -11,6 +11,9 @@
  *		- Updated dlls based on eMote ver. 4.3.0.13 (Sep 18, 2015)
  *	1.3:
  *		- Updated to eMove v. 14.
+ *		- Using System.BitConverter rather than custom C# class.
+ *	1.4:
+ *		-
 ---------------------------------------------------------------------*/
 
 #define Show_Reply_Time
