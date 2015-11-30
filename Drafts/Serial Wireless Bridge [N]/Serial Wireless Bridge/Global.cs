@@ -1,9 +1,8 @@
-using System.Text;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
 
 namespace Samraksh.AppNote.SerialWirelessBridge {
-    static class Global {
+	internal static class Global {
         /// <summary>Size of serial circular buffer</summary>
         internal const int SerialCircBuffSize = 512;
 

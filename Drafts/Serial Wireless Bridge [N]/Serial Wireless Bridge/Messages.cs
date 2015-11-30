@@ -51,8 +51,8 @@ namespace Samraksh.AppNote.SerialWirelessBridge {
 
             internal static class OutGoing {
                 public const int Type = 0; // byte
-                public const int Value = Type + 1; // byte[4]
-                public const int MsgLen = Value + 1; // Length of message
+                public const int Value = Type + 1; // int
+                public const int MsgLen = Value + sizeof(int); // Length of message
             }
 
         }

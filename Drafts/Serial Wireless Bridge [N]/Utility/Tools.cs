@@ -249,7 +249,7 @@ namespace Samraksh.AppNote.Utility {
         public static string Dec2Hex(int Input, int MinLength = 0) {
 #if MF_FRAMEWORK_VERSION_V4_2 || MF_FRAMEWORK_VERSION_V4_3
             // Since NETMF 4.2 int.toString() exists, so we can do this:
-            return Input.ToString("x" + MinLength.ToString());
+            return Input.ToString("X" + MinLength.ToString());
 #else
                 // Contains all Hex posibilities
                 string ConversionTable = "0123456789ABCDEF";
