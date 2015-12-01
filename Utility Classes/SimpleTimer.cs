@@ -16,7 +16,7 @@ using System.Threading;
 
 namespace Samraksh.AppNote.Utility
 {
-	public class SimpleTimerBase
+	public abstract class SimpleTimerBase
 	{
 		private Timer _theTimer; // Can't inherit since the timer class is sealed
 

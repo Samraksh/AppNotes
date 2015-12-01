@@ -10,18 +10,6 @@ namespace Samraksh.AppNotes.SimpleTimerTest
 		private static double _baseTime;
 		public static void Main()
 		{
-			// Test one-shot timer
-			const int dueTimex = 4 * 1000;
-			var timer1 = new Timer(TimerTick,null,dueTimex,-1);
-			_baseTime = TimeNow();
-			Debug.Print("Timer 1 (one shot). Time = " + _baseTime);
-			Thread.Sleep((int)(1.1 * dueTimex));
-
-			var timer2 = new Timer(TimerTick, null, dueTimex, -1);
-			_baseTime = TimeNow();
-			Debug.Print("Timer 2 (one shot). Time = " + _baseTime);
-			Thread.Sleep((int)(1.1 * dueTimex));
-			
 			// Test SimpleOneshotTimer
 			const int dueTime = 4 * 1000;
 			var oneshot = new SimpleOneshotTimer(TimerTick, null, dueTime);
@@ -36,8 +24,10 @@ namespace Samraksh.AppNotes.SimpleTimerTest
 			_baseTime = TimeNow();
 			Debug.Print("SimplePeriodicTimer. Time = " + _baseTime);
 			periodic.Start();
-			Thread.Sleep((int)4.5 * periodTime);
+			Thread.Sleep((int)5.5 * periodTime);
 			periodic.Stop();
+			// Sleep a bit before stopping. Otherwise this main thread will terminate while the timer is still active and the last tick will be late.
+			Thread.Sleep(1000);
 		}
 
 		private static void TimerTick(object obj)

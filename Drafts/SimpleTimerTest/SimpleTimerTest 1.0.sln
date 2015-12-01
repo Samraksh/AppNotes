@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTimerTest", "SimpleTimerTest\SimpleTimerTest.csproj", "{59B463FF-7C77-4C4C-9C4A-D6F6B9225F1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{AF9F80A9-6630-40E7-B4F8-47FE3848288F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{59B463FF-7C77-4C4C-9C4A-D6F6B9225F1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59B463FF-7C77-4C4C-9C4A-D6F6B9225F1C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{59B463FF-7C77-4C4C-9C4A-D6F6B9225F1C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AF9F80A9-6630-40E7-B4F8-47FE3848288F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9F80A9-6630-40E7-B4F8-47FE3848288F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9F80A9-6630-40E7-B4F8-47FE3848288F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9F80A9-6630-40E7-B4F8-47FE3848288F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
