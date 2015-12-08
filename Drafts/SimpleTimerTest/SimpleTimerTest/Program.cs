@@ -10,6 +10,14 @@ namespace Samraksh.AppNotes.SimpleTimerTest
 		private static double _baseTime;
 		public static void Main()
 		{
+			Debug.Print("\n*** first run\n");
+			TestTimers();
+			Debug.Print("\n*** second run\n");
+			TestTimers();
+		}
+
+		private static void TestTimers()
+		{
 			// Test SimpleOneshotTimer
 			const int dueTime = 4 * 1000;
 			var oneshot = new SimpleOneshotTimer(TimerTick, null, dueTime);
@@ -28,6 +36,7 @@ namespace Samraksh.AppNotes.SimpleTimerTest
 			periodic.Stop();
 			// Sleep a bit before stopping. Otherwise this main thread will terminate while the timer is still active and the last tick will be late.
 			Thread.Sleep(1000);
+			
 		}
 
 		private static void TimerTick(object obj)

@@ -34,7 +34,6 @@ namespace Samraksh.AppNote.PowerMeasurement
 		private enum ModeStates { Sleep, PowerLow, PowerMedium, PowerHigh, RadioRx, RadioTxLo, RadioTxHi, };
 		private static ModeStates _currMode;
 
-
 		private static class ModeFields
 		{
 			public static readonly ManualResetEvent CpuBoundEnable = new ManualResetEvent(false);
@@ -44,7 +43,7 @@ namespace Samraksh.AppNote.PowerMeasurement
 			public static void DisableAll()
 			{
 				Debug.Print("Disable all");
-			
+
 				// Set power level to low
 				Debug.Print("\tChange power level");
 				PowerState.ChangePowerLevel(PowerLevel.Low);
@@ -55,8 +54,9 @@ namespace Samraksh.AppNote.PowerMeasurement
 				Debug.Print("\tRadioTxEnable.Reset");
 				RadioTxEnable.Reset();
 				// Discard old radio object and create new. Ensures that it is turned off.
-				Debug.Print("\tCall Define Radio");
-				DefineRadio(TxPowerValue.Power_Minus17dBm);
+				Debug.Print("\tDiscard Radio");
+				CsmaRadio = null;
+				Debug.GC(true);
 			}
 
 			public static void DefineRadio(TxPowerValue txPowerValue)
@@ -108,8 +108,9 @@ namespace Samraksh.AppNote.PowerMeasurement
 		/// <summary>
 		/// Program entry point
 		/// </summary>
-		public static void Main() {
-			Lcd.Write("4321");
+		public static void Main()
+		{
+			Lcd.Write("Hola");
 			Thread.Sleep(2000);
 			Debug.Print("\nPower Measurement");
 
@@ -117,6 +118,10 @@ namespace Samraksh.AppNote.PowerMeasurement
 			Debug.Print(VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 			Debug.Print("");
 
+			//// Set power level to low
+			//Debug.Print("\tChange power level to Low: " + PowerLevel.Low);
+			//PowerState.ChangePowerLevel(PowerLevel.Low);
+			
 			ToggleMode.OnInterrupt += ChangeMode.CallBack;
 
 			ModeFields.DisableAll();
@@ -139,16 +144,13 @@ namespace Samraksh.AppNote.PowerMeasurement
 
 			public static void CallBack(uint port, uint state, DateTime currEventTime)
 			{
-				var isBbounceInterval = currEventTime - _lastEventTime < BounceTime;
+				var isBounceInterval = currEventTime - _lastEventTime < BounceTime;
 				// Debounce the switch
-				if (isBbounceInterval)
+				if (isBounceInterval)
 				{
 					return;
 				}
 				_lastEventTime = currEventTime;
-
-				//Lcd.Write(ToggleMode.Read() ? 1 : 0);
-				//Thread.Sleep(500);
 
 				//	Toggle the mode
 				switch (_currMode)
@@ -172,7 +174,9 @@ namespace Samraksh.AppNote.PowerMeasurement
 						SetModes.SetRadioTxHi();
 						break;
 					case ModeStates.RadioTxHi:
-						SetModes.SetSleepMode();
+						ModeFields.DisableAll();
+						Lcd.Write("Done");
+						//SetModes.SetSleepMode();
 						break;
 					default:
 						Lcd.Write("err");
@@ -227,7 +231,8 @@ namespace Samraksh.AppNote.PowerMeasurement
 				Debug.Print("Turning radio on");
 				ModeFields.DisableAll();
 
-				ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+				ModeFields.DefineRadio(TxPowerValue.Power_Minus17dBm);
+				//ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
 				_currMode = ModeStates.RadioRx;
 				Lcd.Write("Rdo");
 			}
@@ -237,7 +242,7 @@ namespace Samraksh.AppNote.PowerMeasurement
 				ModeFields.DisableAll();
 
 				ModeFields.DefineRadio(TxPowerValue.Power_Minus17dBm);
-				ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+				//ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
 				ModeFields.RadioTxEnable.Set();
 				_currMode = ModeStates.RadioTxLo;
 				Lcd.Write("Tx 0");
@@ -248,7 +253,7 @@ namespace Samraksh.AppNote.PowerMeasurement
 				ModeFields.DisableAll();
 
 				ModeFields.DefineRadio(TxPowerValue.Power_3dBm);
-				ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+				//ModeFields.CsmaRadio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
 				ModeFields.RadioTxEnable.Set();
 				_currMode = ModeStates.RadioTxHi;
 				Lcd.Write("Tx 1");
