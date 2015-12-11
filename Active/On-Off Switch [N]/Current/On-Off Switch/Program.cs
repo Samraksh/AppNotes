@@ -85,7 +85,7 @@ namespace Samraksh.AppNote.DotNow.OnOffSwitch {
 		}
 
 		// Set up to disable interrupt
-		const int TimerInterval = 10;	// Timer duration in ms. Increase this if you have trouble with switch bounce.
+		const int TimerInterval = 100;	// Timer duration in ms. Increase this if you have trouble with switch bounce.
 		static Timer _interruptTimer;	// The timer
 
 		const int True = 1;

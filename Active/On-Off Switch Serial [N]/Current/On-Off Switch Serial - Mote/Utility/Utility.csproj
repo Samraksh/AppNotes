@@ -19,6 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Samraksh.AppNote.Utility.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,9 +31,8 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="DebounceTimer.cs" />
     <Compile Include="EnhancedLcd.cs" />
-    <Compile Include="InputSwitch.cs" />
+    <Compile Include="DebouncedSwitch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerialComm.cs" />
     <Compile Include="VersionInfo.cs" />
