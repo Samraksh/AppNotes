@@ -7,6 +7,7 @@
 ---------------------------------------------------------------------*/
 
 using System;
+using System.Reflection;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
@@ -51,7 +52,7 @@ namespace Samraksh.AppNote.SenseTemperature
 			try
 			{
 				Debug.EnableGCMessages(false);
-				Debug.Print("\nSense Temperature " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
+				Debug.Print("\nSense Temperature " + VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 				Lcd.Write("temp");
 
 				// Turn Kiwi temp sensor on

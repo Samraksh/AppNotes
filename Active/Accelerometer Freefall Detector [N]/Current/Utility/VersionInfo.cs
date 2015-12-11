@@ -58,7 +58,6 @@ namespace Samraksh.AppNote.Utility {
             get { return _theVersion.Major + "." + _theVersion.Minor; }
         }
 
-
         /// <summary>
         /// Current build DateTime
         /// </summary>
@@ -69,7 +68,5 @@ namespace Samraksh.AppNote.Utility {
                        TimeSpan.TicksPerSecond * 2 * _theVersion.Revision));    // Seconds since midnight
             }
         }
-
     }
-
 }

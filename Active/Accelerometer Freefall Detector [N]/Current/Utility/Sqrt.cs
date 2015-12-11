@@ -36,6 +36,7 @@ namespace Samraksh.AppNote.Utility {
 				// Decade (10..100)
 				prev = 5.51f;
 			}
+			// ReSharper disable once CompareOfFloatsByEqualityOperator
 			else if (x == 1.0f) {
 				// Avoid useless iterations
 				return x * exp;
