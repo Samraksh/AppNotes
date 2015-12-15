@@ -51,13 +51,12 @@ namespace Samraksh.AppNote.Utility
         /// Constructor
         /// </summary>
         /// <param name="portId">GPIO input to use</param>
-        /// <param name="resistorMode">Pull up or pull down or neither</param>
         /// <param name="userCallBack">User callback for input changes</param>
         /// <param name="debounceInterval">(optional) Debounce interval. Default is 50 ms</param>
-        public DebouncedSwitch(Cpu.Pin portId, Port.ResistorMode resistorMode, DebouncedSwitchCallback userCallBack, int debounceInterval = 50)
+        public DebouncedSwitch(Cpu.Pin portId, DebouncedSwitchCallback userCallBack, int debounceInterval = 50)
         {
             _userCallBack = userCallBack;
-            InputPort switchPort = new InterruptPort(portId, false, resistorMode, Port.InterruptMode.InterruptEdgeBoth);
+            InputPort switchPort = new InterruptPort(portId, false, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeBoth);
             switchPort.OnInterrupt += InputSwitch_OnInterrupt;
             _debounceInterval = debounceInterval;
         }
@@ -69,12 +68,12 @@ namespace Samraksh.AppNote.Utility
         /// Set or reset the debounce timer if there's a change in input
         /// </remarks>
         /// <param name="pin">The GPIO pin</param>
-        /// <param name="gpioState">0 if low, 1 if high</param>
+        /// <param name="gpioState">0 if low (switch ON), 1 if high (swutch OFF)</param>
         /// <param name="time">When the interrupt occurred</param>
         private void InputSwitch_OnInterrupt(uint pin, uint gpioState, DateTime time)
         {
             // If the gpioState is unchanged, all is good so far. Just return.
-            if (gpioState == _stableVal) { return; }
+            if (gpioState == _stableVal ) { return; }
             // Otherwise start (or restart) the debounce timer.
             _stableVal = gpioState;
             if (_debounceTimer == null)
@@ -83,7 +82,7 @@ namespace Samraksh.AppNote.Utility
             }
             else
             {
-                _debounceTimer.Change(_debounceInterval, 0);
+                _debounceTimer.Change(_debounceInterval, -1);
             }
         }
 

@@ -12,6 +12,7 @@
  *		- Update to eMote v. 14
 ---------------------------------------------------------------------*/
 
+using System.Reflection;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
@@ -42,7 +43,7 @@ namespace Samraksh.Appnote.DotNow.OnOffSwitchSerialLink
         public static void Main()
         {
 
-            Debug.Print(VersionInfo.VersionBuild());
+            Debug.Print(VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 
             // Flash a hello message for a second, to  let us know the program is starting
             Lcd.Write("Hola");
