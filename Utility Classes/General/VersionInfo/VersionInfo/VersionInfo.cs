@@ -15,7 +15,7 @@ namespace Samraksh.AppNote.Utility {
     /// <summary>
     /// Get version info
     /// </summary>
-    /// <remarks>?
+    /// <remarks>
     /// See http://stackoverflow.com/a/1601079/468523
     /// </remarks>
     public static class VersionInfo {

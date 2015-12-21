@@ -1,10 +1,10 @@
 /*=========================
  * Simple Timer Class
- *  Define a simple one-shot or recorring timer
+ *  Define a simple one-shot or recurring timer
  * Versions
  *  1.0 Initial Version
  *  1.1 Fixed bugs 
- *      - Rcurrent timer
+ *      - Recurring timer
  *      - Thread-safe callback (use CallBack method with lock)
  *  1.2:
  *		- Refactored into SimpleOneshotTimer and SimplePeriodicTimer
@@ -16,18 +16,28 @@ using System.Threading;
 
 namespace Samraksh.AppNote.Utility
 {
+	/// <summary>
+	/// Simplified timer. Makes it easier to manage one-shot and periodic timers
+	/// </summary>
 	public abstract class SimpleTimerBase
 	{
 		private Timer _theTimer; // Can't inherit since the timer class is sealed
 
-		public TimerCallback TimerCallback { private get; set; }
+		/// <summary>User callback</summary>
+		public TimerCallback UserCallback { private get; set; }
+		/// <summary>Call back value</summary>
 		public object CallBackValue { private get; set; }
-		public int InitialDueTime { private get; set; }
-		public int InitialPeriod { private get; set; }
+
+		/// <summary>Initially-specified due time</summary>
+		protected int InitialDueTime;
+		/// <summary>Initially-specified period</summary>
+		protected int InitialPeriod;
 		// Need current values in order to tell if timer is running or not
 		//  Cannot reflect on timer to determine its status
-		public int CurrDueTime { private get; set; }
-		public int CurrPeriod { private get; set; }
+		/// <summary>Current due time</summary>
+		protected int CurrDueTime;
+		/// <summary>Current period</summary>
+		protected int CurrPeriod;
 
 		/// <summary>
 		/// Timer start time
@@ -90,7 +100,7 @@ namespace Samraksh.AppNote.Utility
 			lock (this)
 			{
 				// Prevent disposal while in callback method
-				TimerCallback(obj);
+				UserCallback(obj);
 			}
 		}
 	}
@@ -104,12 +114,12 @@ namespace Samraksh.AppNote.Utility
 		/// <summary>
 		/// This creates a one-shot timer since the period is 0
 		/// </summary>
-		/// <param name="timerCallback"></param>
+		/// <param name="userCallback"></param>
 		/// <param name="callBackValue"></param>
 		/// <param name="dueTime"></param>
-		public SimpleTimer(TimerCallback timerCallback, object callBackValue, int dueTime)
+		public SimpleTimer(TimerCallback userCallback, object callBackValue, int dueTime)
 		{
-			TimerCallback = timerCallback;
+			UserCallback = userCallback;
 			CallBackValue = callBackValue;
 			InitialDueTime = CurrDueTime = dueTime;
 			InitialPeriod = CurrPeriod = 0;
@@ -118,13 +128,13 @@ namespace Samraksh.AppNote.Utility
 		/// <summary>
 		/// This creates a periodic timer
 		/// </summary>
-		/// <param name="timerCallback"></param>
+		/// <param name="userCallback"></param>
 		/// <param name="callBackValue"></param>
 		/// <param name="dueTime"></param>
 		/// <param name="period"></param>
-		public SimpleTimer(TimerCallback timerCallback, object callBackValue, int dueTime, int period)
+		public SimpleTimer(TimerCallback userCallback, object callBackValue, int dueTime, int period)
 		{
-			TimerCallback = timerCallback;
+			UserCallback = userCallback;
 			CallBackValue = callBackValue;
 			InitialDueTime = CurrDueTime = dueTime;
 			InitialPeriod = CurrPeriod = period;
@@ -136,10 +146,15 @@ namespace Samraksh.AppNote.Utility
 	/// </summary>
 	public class SimpleOneshotTimer : SimpleTimerBase
 	{
-		//public SimpleOneshotTimer(TimerCallback timerCallback, object callBackValue, int dueTime) : base(timerCallback, callBackValue, dueTime) { }
-		public SimpleOneshotTimer(TimerCallback timerCallback, object callBackValue, int dueTime)
+		/// <summary>
+		/// One-Shot Timer
+		/// </summary>
+		/// <param name="userCallback"></param>
+		/// <param name="callBackValue"></param>
+		/// <param name="dueTime"></param>
+		public SimpleOneshotTimer(TimerCallback userCallback, object callBackValue, int dueTime)
 		{
-			TimerCallback = timerCallback;
+			UserCallback = userCallback;
 			CallBackValue = callBackValue;
 			InitialDueTime = CurrDueTime = dueTime;
 			InitialPeriod = CurrPeriod = 0;
@@ -151,10 +166,16 @@ namespace Samraksh.AppNote.Utility
 	/// </summary>
 	public class SimplePeriodicTimer : SimpleTimerBase
 	{
-		//public SimplePeriodicTimer(TimerCallback timerCallback, object callBackValue, int dueTime, int period): base(timerCallback, callBackValue, dueTime, period)
-		public SimplePeriodicTimer(TimerCallback timerCallback, object callBackValue, int dueTime, int period)
+		/// <summary>
+		/// Periodic Timer
+		/// </summary>
+		/// <param name="userCallback"></param>
+		/// <param name="callBackValue"></param>
+		/// <param name="dueTime"></param>
+		/// <param name="period"></param>
+		public SimplePeriodicTimer(TimerCallback userCallback, object callBackValue, int dueTime, int period)
 		{
-			TimerCallback = timerCallback;
+			UserCallback = userCallback;
 			CallBackValue = callBackValue;
 			InitialDueTime = CurrDueTime = dueTime;
 			InitialPeriod = CurrPeriod = period;
