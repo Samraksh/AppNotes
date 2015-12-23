@@ -10,6 +10,8 @@
  *		- Changed obsolete method calls
  *	1.5
  *		- Updated to eMote v. 14
+ *	1.6
+ *		- Callback via subscription to OnReceive
  *********************************************************/
 
 using System;
@@ -21,7 +23,6 @@ using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh.AppNote.Utility
 {
-	// ReSharper disable once InconsistentNaming
 	/// <summary>
 	/// CSMA exception
 	/// </summary>
@@ -40,7 +41,7 @@ namespace Samraksh.AppNote.Utility
 		/// <param name="innerException">Inner exception</param>
 		public CSMAException(string descrip, Exception innerException) : base(descrip, innerException) { }
 	}
-	
+
 	/// <summary>
 	/// Handle CSMA radio communication
 	/// To keep it simple, we ignore neighborhood changes
@@ -51,12 +52,15 @@ namespace Samraksh.AppNote.Utility
 		/// Callback delegate for user method to handle incoming packets
 		/// </summary>
 		/// <param name="csma"></param>
-		public delegate void RadioReceivedData(CSMA csma);
+		public delegate void ReceivePacket(CSMA csma);
 
-		readonly RadioReceivedData _userReceivedDataCallback;
+		/// <summary>
+		/// Receive event
+		/// </summary>
+		public event ReceivePacket OnReceive;
 
 		// CSMA object that's created & passed back to the user.
-		readonly CSMA _csma;
+		private readonly CSMA _csma;
 
 		/// <summary>
 		/// Radio states
@@ -65,7 +69,6 @@ namespace Samraksh.AppNote.Utility
 		{
 			/// <summary>Radio on</summary>
 			On,
-
 			/// <summary>Radio off</summary>
 			Off
 		};
@@ -76,15 +79,17 @@ namespace Samraksh.AppNote.Utility
 		/// <param name="radioName">Name of the radio (internal, long range)</param>
 		/// <param name="ccaSensetime">CCA sense time, in ms</param>
 		/// <param name="txPowerValue">Power level</param>
-		/// <param name="radioReceivedData">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
 		/// <param name="channel">Channel to use</param>
-		public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData, Channels channel = Channels.Channel_26)
+		public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, Channels channel = Channels.Channel_26)
 		{
-			var macConfig = new MacConfiguration { NeighborLivenessDelay = 100, CCASenseTime = ccaSensetime };
+			var macConfig = new MacConfiguration
+			{
+				NeighborLivenessDelay = 100,
+				CCASenseTime = ccaSensetime
+			};
 			macConfig.radioConfig.SetTxPower(txPowerValue);
 			macConfig.radioConfig.SetRadioName(radioName);
 			macConfig.radioConfig.SetChannel(channel);
-			_userReceivedDataCallback = radioReceivedData;
 
 			try
 			{
@@ -99,13 +104,31 @@ namespace Samraksh.AppNote.Utility
 			}
 			catch (MacNotConfiguredException e)
 			{
-				throw new CSMAException("MAC configuration exception",e);
+				throw new CSMAException("MAC configuration exception", e);
 			}
 			catch (Exception e)
 			{
-				throw new CSMAException("Exception",e);
+				throw new CSMAException("Exception", e);
 			}
 			Debug.Print("CSMA address is :  " + _csma.GetAddress());
+		}
+
+		/// <summary>
+		/// CSMA radio constructor 
+		/// </summary>
+		/// <param name="radioName">Name of the radio (internal, long range)</param>
+		/// <param name="ccaSensetime">CCA sense time, in ms</param>
+		/// <param name="txPowerValue">Power level</param>
+		/// <param name="receivePacket">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
+		/// <param name="channel">Channel to use</param>
+		[Obsolete("Use constructor without ReceivePacket argument with OnReceive += to subscribe")]
+		public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, ReceivePacket receivePacket, Channels channel = Channels.Channel_26) :
+			this(radioName, ccaSensetime, txPowerValue, channel)
+		{
+			if (receivePacket != null)
+			{
+				OnReceive += receivePacket;
+			}
 		}
 
 		/// <summary>
@@ -115,11 +138,7 @@ namespace Samraksh.AppNote.Utility
 		/// <param name="message">Message to be sent, as a byte array</param>
 		public void Send(Addresses msgType, byte[] message)
 		{
-			//var lcd = new EnhancedEmoteLcd();
-			//lcd.Display("3333");
 			_csma.Send((ushort)msgType, message, 0, (ushort)message.Length);
-			//Thread.Sleep(100);
-			//lcd.Display("4444");
 		}
 
 		/// <summary>
@@ -150,8 +169,6 @@ namespace Samraksh.AppNote.Utility
 			return resultStatus;
 		}
 
-
-
 		/// <summary>
 		/// Callback when neighborhood changes
 		/// </summary>
@@ -170,14 +187,12 @@ namespace Samraksh.AppNote.Utility
 		/// <param name="numberOfPackets"></param>
 		private void Receive(UInt16 numberOfPackets)
 		{
-			// If the user doesn't want to be notified of received messages, return
-			if (_userReceivedDataCallback == null)
-			{
-				return;
-			}
 			// Send the CSMA object to the user.
 			// No need to send numberOfPackets; that's available as CSMA.GetPendingPacketCount
-			_userReceivedDataCallback(_csma);
+			if (OnReceive != null)
+			{
+				OnReceive(_csma);
+			}
 		}
 	}
 }
