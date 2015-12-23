@@ -1,11 +1,13 @@
 using System;
 using Microsoft.SPOT;
+using Samraksh.AppNote.Utility;
 
 namespace TestEnhancedeMoteLCD
 {
     public class Program
     {
         private const string OtherAssemblyName = "Samraksh.AppNote.Utility.EnhancedeMoteLcd";
+		private static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
 
         public static void Main()
         {
