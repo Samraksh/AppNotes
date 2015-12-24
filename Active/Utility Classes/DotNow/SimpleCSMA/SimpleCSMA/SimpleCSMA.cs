@@ -12,6 +12,7 @@
  *		- Updated to eMote v. 14
  *	1.6
  *		- Callback via subscription to OnReceive
+ *		- Obseleted constructor, using properties instead
  *********************************************************/
 
 using System;
