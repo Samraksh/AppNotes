@@ -17,8 +17,6 @@
  *********************************************************/
 
 using System;
-using Microsoft.SPOT;
-
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
@@ -103,6 +101,7 @@ namespace Samraksh.AppNote.Utility
 			try
 			{
 				_macConfig = new MacConfiguration();
+
 				_neighborLivenessDelay = Default.NeighborLivenessDelay;
 				_ccaSenseTime = Default.CCASenseTime;
 				_txPowerValue = Default.TxPowerValue;
@@ -119,7 +118,37 @@ namespace Samraksh.AppNote.Utility
 			{
 				throw new CSMAException("Exception", e);
 			}
-			Debug.Print("CSMA address is :  " + _csma.GetAddress());
+		}
+
+		/// <summary>
+		/// CSMA constructor 
+		/// </summary>
+		/// <param name="radioName">Name of the radio (internal, long range)</param>
+		/// <param name="ccaSensetime">CCA sense time, in ms</param>
+		/// <param name="txPowerValue">Power level</param>
+		/// <param name="channel">Channel to use</param>
+		public SimpleCSMA(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, Channels channel = Channels.Channel_26)
+		{
+			try
+			{
+				_macConfig = new MacConfiguration();
+
+				_neighborLivenessDelay = Default.NeighborLivenessDelay;
+				_ccaSenseTime = ccaSensetime;
+				_txPowerValue = txPowerValue;
+				_channel = channel;
+				_radioName = radioName;
+
+				EnactMACConfig();
+			}
+			catch (MacNotConfiguredException e)
+			{
+				throw new CSMAException("MAC configuration exception", e);
+			}
+			catch (Exception e)
+			{
+				throw new CSMAException("Exception", e);
+			}
 		}
 
 		/// <summary>
@@ -130,21 +159,14 @@ namespace Samraksh.AppNote.Utility
 		/// <param name="txPowerValue">Power level</param>
 		/// <param name="receivePacket">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
 		/// <param name="channel">Channel to use</param>
+		[Obsolete("Deprecated. Use SimpleCSMA(RadioName, byte, TxPowerValue, Channels) instead")]
 		public SimpleCSMA(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, ReceivePacket receivePacket, Channels channel = Channels.Channel_26)
+			: this(radioName, ccaSensetime, txPowerValue, channel)
 		{
 			if (receivePacket != null)
 			{
 				OnReceive += receivePacket;
 			}
-
-			_macConfig.CCASenseTime = _ccaSenseTime = ccaSensetime;
-			_macConfig.NeighborLivenessDelay = _neighborLivenessDelay = Default.NeighborLivenessDelay;
-			_txPowerValue = txPowerValue;
-			_macConfig.radioConfig.SetTxPower(txPowerValue);
-			_channel = channel;
-			_macConfig.radioConfig.SetChannel(channel);
-
-			EnactMACConfig();
 		}
 
 		private void EnactMACConfig()

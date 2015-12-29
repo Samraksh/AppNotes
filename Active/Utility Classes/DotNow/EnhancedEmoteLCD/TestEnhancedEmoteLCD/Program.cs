@@ -27,43 +27,44 @@ namespace TestEnhancedeMoteLCD
 			Lcd.Write(1234);
 			LCD[] charsNumber = { LCD.CHAR_1, LCD.CHAR_2, LCD.CHAR_3, LCD.CHAR_4, };
 			allPassed &= PrintCurrentChars(charsNumber);
-			Thread.Sleep(3000);
+			//Thread.Sleep(3000);
 
 			PrintTestName("Write string");
 			Lcd.Write("ABCD");
 			LCD[] charsStr = { LCD.CHAR_A, LCD.CHAR_B, LCD.CHAR_C, LCD.CHAR_D, };
 			allPassed &= PrintCurrentChars(charsStr);
-			Thread.Sleep(3000);
+			//Thread.Sleep(3000);
 
 			PrintTestName("Clear");
 			Lcd.Clear();
 			LCD[] charsClear = { LCD.CHAR_NULL, LCD.CHAR_NULL, LCD.CHAR_NULL, LCD.CHAR_NULL, };
 			allPassed &= PrintCurrentChars(charsClear);
-			Thread.Sleep(3000);
+			//Thread.Sleep(3000);
 
 			PrintTestName("Decimal Points");
+			Lcd.Write("6789");
 			var dP = new bool[4];
 			for (var i = 0; i <= dP.Length; i++)
 			{
-				dP[dP.Length - i - 1] = true;
+				dP[i] = true;
 				Lcd.SetDP(dP[3], dP[2], dP[1], dP[0]);
 				Thread.Sleep(1000);
 				allPassed &= PrintCurrentDps(dP);
 			}
 			for (var i = 0; i <= dP.Length; i++)
 			{
-				dP[4 - i] = false;
+				dP[i] = false;
 				Lcd.SetDP(dP[3], dP[2], dP[1], dP[0]);
 				Thread.Sleep(1000);
 				allPassed &= PrintCurrentDps(dP);
 			}
-			Thread.Sleep(2000);
+			//Thread.Sleep(2000);
 
 			PrintTestName("Write LCD chars");
 			Lcd.Write(LCD.CHAR_9, LCD.CHAR_8, LCD.CHAR_7, LCD.CHAR_6);
 			LCD[] charsWrite = { LCD.CHAR_9, LCD.CHAR_8, LCD.CHAR_7, LCD.CHAR_6 };
 			allPassed &= PrintCurrentChars(charsWrite);
-			Thread.Sleep(3000);
+			//Thread.Sleep(3000);
 
 			PrintTestName("Write N");
 			Lcd.Write("xxxx");
@@ -73,7 +74,7 @@ namespace TestEnhancedeMoteLCD
 			}
 			LCD[] charsN = { LCD.CHAR_0, LCD.CHAR_1, LCD.CHAR_2, LCD.CHAR_3, };
 			allPassed &= PrintCurrentChars(charsN);
-			Thread.Sleep(3000);
+			//Thread.Sleep(3000);
 
 			PrintTestName("Write Raw");
 			Lcd.WriteRawBytes((int)LCD.CHAR_5, (int)LCD.CHAR_4, (int)LCD.CHAR_3, (int)LCD.CHAR_2);
@@ -82,6 +83,8 @@ namespace TestEnhancedeMoteLCD
 			Thread.Sleep(3000);
 
 			Debug.Print("\n==== All passed: " + (allPassed ? "Yes" : "No"));
+
+			Thread.Sleep(Timeout.Infinite);
 		}
 
 		private static void PrintTestName(string testName)
@@ -109,18 +112,19 @@ namespace TestEnhancedeMoteLCD
 
 		private static bool PrintCurrentDps(bool[] reqDps)
 		{
-			var lcdDps = Lcd.CurrentDps;
+			var lcdDps = Lcd.CurrentDPs;
 			var dpsStr = new StringBuilder();
 			var matches = true;
-			for (var i = lcdDps.Length - 1; i > -1; i--)
+			for (var i = 0; i < lcdDps.Length; i++)
 			{
-				if (reqDps[lcdDps.Length - 1 - i] != lcdDps[i])
+				if (reqDps[i] != lcdDps[i])
 				{
 					matches = false;
 				}
 				dpsStr.Append(lcdDps[i] ? 'x' : ' ');
+				dpsStr.Append(' ');
 			}
-			Debug.Print("\t  4 3 2 1\n\t<<" + dpsStr + ">> Matches: " + (matches ? "Yes" : "No"));
+			Debug.Print("\t  4 3 2 1 \n\t<<" + dpsStr + ">> Matches: " + (matches ? "Yes" : "No"));
 			return matches;
 		}
 

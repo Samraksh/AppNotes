@@ -9,7 +9,7 @@
  *  1.2 
  *      - Migrated to new eMote namespace and changed Display to Write and obseleted Display
  *  1.3
- *      - Migrated to eMote v. 14, added CurrentChars and CurrentDps and extended base methods that modified display
+ *      - Migrated to eMote v. 14, added CurrentChars and CurrentDPs and extended base methods that modified display
 =========================*/
 
 using System;
@@ -31,7 +31,7 @@ namespace Samraksh.AppNote.Utility
 		/// <summary>
 		/// Current decimal points displayed
 		/// </summary>
-		public bool[] CurrentDps { get; private set; }
+		public bool[] CurrentDPs { get; private set; }
 
 		/// <summary>
 		/// Initialize the LCD
@@ -48,8 +48,8 @@ namespace Samraksh.AppNote.Utility
 				CurrentChars[i] = LCD.CHAR_NULL;
 			}
 
-			// Initialize CurrentDps
-			CurrentDps = new bool[4];
+			// Initialize CurrentDPs
+			CurrentDPs = new bool[4];
 		}
 
 		/// <summary>
@@ -95,7 +95,7 @@ namespace Samraksh.AppNote.Utility
 		#region Overrides //############################################################
 
 		/// <summary>
-		/// Clear the display, set CurrentChars to blank and CurrentDps to false (not present)
+		/// Clear the display, set CurrentChars to blank and CurrentDPs to false (not present)
 		/// </summary>
 		/// <returns></returns>
 		public new bool Clear()
@@ -103,7 +103,7 @@ namespace Samraksh.AppNote.Utility
 			for (var i = 0; i < CurrentChars.Length; i++)
 			{
 				CurrentChars[i] = LCD.CHAR_NULL;
-				CurrentDps[i] = false;
+				CurrentDPs[i] = false;
 			}
 			return base.Clear();
 		}
@@ -119,10 +119,10 @@ namespace Samraksh.AppNote.Utility
 		// ReSharper disable once InconsistentNaming
 		public new bool SetDP(bool dp4, bool dp3, bool dp2, bool dp1)
 		{
-			CurrentDps[0] = dp1;
-			CurrentDps[1] = dp2;
-			CurrentDps[2] = dp3;
-			CurrentDps[3] = dp4;
+			CurrentDPs[0] = dp1;
+			CurrentDPs[1] = dp2;
+			CurrentDPs[2] = dp3;
+			CurrentDPs[3] = dp4;
 			return base.SetDP(dp4, dp3, dp2, dp1);
 		}
 

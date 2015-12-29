@@ -1,5 +1,3 @@
-using System;
-using Microsoft.SPOT;
 using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh.AppNote.Utility
