@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samraksh.AppNote.Utility.EnhancedEmoteLCD</name>
+    </assembly>
+    <members>
+        <member name="T:Samraksh.AppNote.Utility.EnhancedEmoteLCD">
+            <summary>
+            EmoteLCD with initialization and extended methods
+            </summary>
+            <remarks>Includes LCD initialization as part of constructor</remarks>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.#ctor">
+            <summary>
+            Initialize the LCD
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.Display(System.Int32)">
+            <summary>
+            Display an integer. If more than 4 decimal digits, display first 4 only
+            </summary>
+            <param name="num">The number to be displayed</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.Write(System.Int32)">
+            <summary>
+            Write an integer. If more than 4 decimal digits, display first 4 only
+            </summary>
+            <param name="num">The number to be displayed</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.Display(System.String)">
+            <summary>
+            Display a string. If more than 4 characters, display first 4 only
+            </summary>
+            <param name="str">The string to be displayed</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.Write(System.String)">
+            <summary>
+            Write a string. If more than 4 characters, write first 4 only
+            </summary>
+            <param name="str">The string to be displayed</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.Clear">
+            <summary>
+            Clear the display, set CurrentChars to blank and CurrentDPs to false (not present)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.SetDP(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Set decimal point
+            </summary>
+            <param name="dp1"></param>
+            <param name="dp2"></param>
+            <param name="dp3"></param>
+            <param name="dp4"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.Write(Samraksh.eMote.DotNow.LCD,Samraksh.eMote.DotNow.LCD,Samraksh.eMote.DotNow.LCD,Samraksh.eMote.DotNow.LCD)">
+            <summary>
+            Write the LCD characters to the display and record in CurrentChars
+            </summary>
+            <param name="data4"></param>
+            <param name="data3"></param>
+            <param name="data2"></param>
+            <param name="data1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.WriteN(System.Int32,Samraksh.eMote.DotNow.LCD)">
+            <summary>
+            Write the LCD character in the designated column and record in CurrentChars
+            </summary>
+            <param name="column"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.EnhancedEmoteLCD.WriteRawBytes(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Write raw bytes to the display and record in CurrentChars
+            </summary>
+            <param name="data4"></param>
+            <param name="data3"></param>
+            <param name="data2"></param>
+            <param name="data1"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Samraksh.AppNote.Utility.EnhancedEmoteLCD.CurrentChars">
+            <summary>
+            Current values displayed
+            </summary>
+        </member>
+        <member name="P:Samraksh.AppNote.Utility.EnhancedEmoteLCD.CurrentDPs">
+            <summary>
+            Current decimal points displayed
+            </summary>
+        </member>
+        <member name="T:Samraksh.AppNote.Utility.LcdExtensions">
+            <summary>
+            Extend the char class with a method that converts to LCD
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.LcdExtensions.ToChar(Samraksh.eMote.DotNow.LCD)">
+            <summary>
+            
+            </summary>
+            <param name="lcdArg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.LcdExtensions.ToLcd(System.Char)">
+            <summary>
+            Converts a char to LCD
+            </summary>
+            <remarks>
+            Example: 'a'.ToLCD()
+            </remarks>
+            <param name="charArg">The input as a char</param>
+            <returns>The corresponding LCD value</returns>
+        </member>
+    </members>
+</doc>

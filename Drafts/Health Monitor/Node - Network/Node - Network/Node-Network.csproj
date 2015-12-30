@@ -41,18 +41,25 @@
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="Samraksh.AppNote.Utility.BitConverter">
-      <HintPath>..\Utility Version 4.3.0.14\BitConverter\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
+    <Reference Include="Samraksh.AppNote.Utility.BitConverter, Version=1.1.5842.19912, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\eMote .NOW Utilities Version 4.3.0.14\BitConverter\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.EnhancedEmoteLCD, Version=1.2.5842.24051, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\eMote .NOW Utilities Version 4.3.0.14\EnhancedEmoteLCD\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.VersionInfo, Version=1.2.5827.28325, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Utility Version 4.3.0.14\VersionInfo\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+      <HintPath>..\..\eMote .NOW Utilities Version 4.3.0.14\VersionInfo\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_eMote_DotNow">
-      <HintPath>..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+    <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_eMote_Net">
-      <HintPath>..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -63,15 +70,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Users\William\Dropbox %28Samraksh%29\Samraksh Share\Development\GitHub Clones\AppNotes\Active\Utility Classes\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\Utility.EnhancedEmoteLCD.csproj">
-      <Project>{30B5CE2D-328A-4324-AA69-532DBD498A89}</Project>
-      <Name>Utility.EnhancedEmoteLCD</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Users\William\Dropbox %28Samraksh%29\Samraksh Share\Development\GitHub Clones\AppNotes\Active\Utility Classes\DotNow\SimpleCSMA\SimpleCSMA\Utility.SimpleCSMA.csproj">
+    <ProjectReference Include="..\..\..\..\Active\Utility Classes\DotNow\SimpleCSMA\SimpleCSMA\Utility.SimpleCSMA.csproj">
       <Project>{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}</Project>
       <Name>Utility.SimpleCSMA</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Utility\Utility.csproj">
+    <ProjectReference Include="..\..\Utility\Utility.csproj">
       <Project>{B467457F-66F9-4B61-9BF2-990AF8220161}</Project>
       <Name>Utility</Name>
     </ProjectReference>
