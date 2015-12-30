@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnhancedEmoteLCD", "EnhancedeMoteLCD\EnhancedEmoteLCD.csproj", "{30B5CE2D-328A-4324-AA69-532DBD498A89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility.EnhancedEmoteLCD", "EnhancedeMoteLCD\Utility.EnhancedEmoteLCD.csproj", "{30B5CE2D-328A-4324-AA69-532DBD498A89}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEnhancedEmoteLCD", "TestEnhancedEmoteLCD\TestEnhancedEmoteLCD.csproj", "{2DC2A92A-DCC8-4618-AAF1-EDD6800D1244}"
 EndProject

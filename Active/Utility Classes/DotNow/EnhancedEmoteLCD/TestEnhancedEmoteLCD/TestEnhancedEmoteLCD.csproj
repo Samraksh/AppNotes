@@ -15,7 +15,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,7 +40,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
-      <HintPath>..\EnhancedeMoteLCD\Utility Classes\VersionInfo\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+      <HintPath>..\Utility Classes\VersionInfo\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -55,9 +55,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EnhancedeMoteLCD\EnhancedEmoteLCD.csproj">
+    <ProjectReference Include="..\EnhancedeMoteLCD\Utility.EnhancedEmoteLCD.csproj">
       <Project>{30B5CE2D-328A-4324-AA69-532DBD498A89}</Project>
-      <Name>EnhancedEmoteLCD</Name>
+      <Name>Utility.EnhancedEmoteLCD</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />

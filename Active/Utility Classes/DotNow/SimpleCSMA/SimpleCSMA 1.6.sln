@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCSMA", "SimpleCSMA\SimpleCSMA.csproj", "{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility.SimpleCSMA", "SimpleCSMA\Utility.SimpleCSMA.csproj", "{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

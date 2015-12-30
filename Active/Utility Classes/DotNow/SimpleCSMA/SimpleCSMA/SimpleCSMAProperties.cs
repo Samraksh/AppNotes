@@ -7,11 +7,15 @@ namespace Samraksh.AppNote.Utility
 		/// <summary>
 		/// Default values
 		/// </summary>
-		private static class Default
+		public static class Default
 		{
+			/// <summary>Default sense time</summary>
 			public const byte CCASenseTime = 100;
+			/// <summary>Default power value</summary>
 			public const TxPowerValue TxPowerValue = eMote.Net.Radio.TxPowerValue.Power_3dBm;
+			/// <summary>Default channel</summary>
 			public const Channels Channel = Channels.Channel_26;
+			/// <summary>Default neighbor liveness delay</summary>
 			public const uint NeighborLivenessDelay = 100;
 		}
 
