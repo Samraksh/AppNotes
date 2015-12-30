@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.SPOT;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;

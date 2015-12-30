@@ -9,11 +9,14 @@ using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh.AppNote.HealthMonitor
 {
+
 	/// <summary>
 	/// ###
 	/// </summary>
-	public class Program
+	public static class Program
 	{
+		private static SimpleCSMAStream _simpleCSMAStream;
+
 		/// <summary>
 		/// ###
 		/// </summary>
@@ -26,28 +29,26 @@ namespace Samraksh.AppNote.HealthMonitor
 
 			var msgBytes = new byte[sizeof(bool) + sizeof(int)];
 
-			const byte networkStreamId = 1;
-			const byte monitorStreamId = 2;
-
 			var simpleCSMA = new SimpleCSMA(RadioName.RF231RADIO, SimpleCSMA.Default.CCASenseTime, SimpleCSMA.Default.TxPowerValue, Channels.Channel_11);
-			
-			var simpleCSMAStream = new SimpleCSMAStream(simpleCSMA);
-			
-			var networkStreamCallback = new StreamCallback(networkStreamId, NetworkCallback);
-			simpleCSMAStream.AddStreamCallback(networkStreamCallback);
+			_simpleCSMAStream = new SimpleCSMAStream(simpleCSMA);
 
-			var monitorStreamCallback = new StreamCallback(monitorStreamId, MonitorCallback);
-			simpleCSMAStream.AddStreamCallback(monitorStreamCallback);
+			var networkStreamCallback = new StreamCallback(Common.NetworkStreamId, NetworkCallback);
+			_simpleCSMAStream.AddStreamCallback(networkStreamCallback);
+
+			var monitorStreamCallback = new StreamCallback(Common.MonitorStreamId, MonitorCallback);
+			_simpleCSMAStream.AddStreamCallback(monitorStreamCallback);
+
+			// Network nodes merely display & exchange incrementing values
 
 			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
-			if (networkStreamId != StreamCallback.AllStreams)
+			if (Common.NetworkStreamId != StreamCallback.AllStreams)
 			{
 				var cntr = 0;
 				while (cntr++ < int.MaxValue)
 				{
 					lcd.Write(cntr);
 					BitConverter.InsertValueIntoArray(msgBytes, 1, cntr);
-					simpleCSMAStream.Send(Addresses.BROADCAST, networkStreamId, msgBytes);
+					_simpleCSMAStream.Send(Addresses.BROADCAST, Common.NetworkStreamId, msgBytes);
 					Thread.Sleep(2000);
 				}
 			}
@@ -85,10 +86,20 @@ namespace Samraksh.AppNote.HealthMonitor
 			var rcvPayloadBytes = rcvMsg.GetMessage();
 			if (rcvPayloadBytes.Length <= 1)
 			{
-				Debug.Print("*** Monitor: message of length "+rcvPayloadBytes.Length +" received");
+				Debug.Print("*** Monitor: message of length " + rcvPayloadBytes.Length + " received");
 				return;
 			}
-						
+			var controllerMessage = rcvPayloadBytes[1];
+			switch (controllerMessage)
+			{
+				case (byte)Common.ControllerMessage.Ping:
+					Debug.Print("Received " + Common.ControllerMessage.Ping);
+					_simpleCSMAStream.Send((Addresses)rcvMsg.Src, Common.MonitorStreamId, new byte[0]);
+					break;
+				default:
+					Debug.Print("Unknown message received from controller: " + controllerMessage);
+					break;
+			}
 		}
 	}
 }
