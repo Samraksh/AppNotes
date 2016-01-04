@@ -1,3 +1,5 @@
+using Samraksh.eMote.Net.Radio;
+
 namespace Samraksh.AppNote.HealthMonitor
 {
 	public static class Common
@@ -18,6 +20,8 @@ namespace Samraksh.AppNote.HealthMonitor
 
 		public const byte NetworkStreamId = 1;
 		public const byte MonitorStreamId = 2;
+
+		public const Channels Channel = Channels.Channel_11;
 		
 
 	}

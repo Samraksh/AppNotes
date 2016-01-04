@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Microsoft.SPOT;
 using Samraksh.eMote.Net.Mac;
 
 
@@ -26,6 +27,7 @@ namespace Samraksh.AppNote.Utility
 			if (rcvMsg == null) { return; }
 			var rcvPayloadBytes = rcvMsg.GetMessage();
 			if (rcvPayloadBytes.Length == 0) { return; }
+			Debug.Print("R: " + rcvPayloadBytes[0] + "," + rcvPayloadBytes[1]);
 			var rcvStreamId = rcvPayloadBytes[0];
 			foreach (var theStreamCallbackObj in _streamCallbacks)
 			{

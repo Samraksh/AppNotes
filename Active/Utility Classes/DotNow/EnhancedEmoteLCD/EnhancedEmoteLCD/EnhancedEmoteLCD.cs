@@ -23,6 +23,9 @@ namespace Samraksh.AppNote.Utility
 	/// <remarks>Includes LCD initialization as part of constructor</remarks>
 	public class EnhancedEmoteLCD : EmoteLCD
 	{
+		// Critical section lock
+		private object _criticalSectionLock = new object();
+
 		/// <summary>
 		/// Current values displayed
 		/// </summary>
@@ -100,12 +103,15 @@ namespace Samraksh.AppNote.Utility
 		/// <returns></returns>
 		public new bool Clear()
 		{
-			for (var i = 0; i < CurrentChars.Length; i++)
+			lock (_criticalSectionLock)
 			{
-				CurrentChars[i] = LCD.CHAR_NULL;
-				CurrentDPs[i] = false;
+				for (var i = 0; i < CurrentChars.Length; i++)
+				{
+					CurrentChars[i] = LCD.CHAR_NULL;
+					CurrentDPs[i] = false;
+				}
+				return base.Clear();
 			}
-			return base.Clear();
 		}
 
 		/// <summary>
@@ -119,11 +125,14 @@ namespace Samraksh.AppNote.Utility
 		// ReSharper disable once InconsistentNaming
 		public new bool SetDP(bool dp4, bool dp3, bool dp2, bool dp1)
 		{
-			CurrentDPs[0] = dp1;
-			CurrentDPs[1] = dp2;
-			CurrentDPs[2] = dp3;
-			CurrentDPs[3] = dp4;
-			return base.SetDP(dp4, dp3, dp2, dp1);
+			lock (_criticalSectionLock)
+			{
+				CurrentDPs[0] = dp1;
+				CurrentDPs[1] = dp2;
+				CurrentDPs[2] = dp3;
+				CurrentDPs[3] = dp4;
+				return base.SetDP(dp4, dp3, dp2, dp1);
+			}
 		}
 
 		/// <summary>
@@ -136,11 +145,14 @@ namespace Samraksh.AppNote.Utility
 		/// <returns></returns>
 		public new bool Write(LCD data4, LCD data3, LCD data2, LCD data1)
 		{
-			CurrentChars[4 - 1] = data4;
-			CurrentChars[3 - 1] = data3;
-			CurrentChars[2 - 1] = data2;
-			CurrentChars[1 - 1] = data1;
-			return base.Write(data4, data3, data2, data1);
+			lock (_criticalSectionLock)
+			{
+				CurrentChars[4 - 1] = data4;
+				CurrentChars[3 - 1] = data3;
+				CurrentChars[2 - 1] = data2;
+				CurrentChars[1 - 1] = data1;
+				return base.Write(data4, data3, data2, data1);
+			}
 		}
 
 		/// <summary>
@@ -151,8 +163,11 @@ namespace Samraksh.AppNote.Utility
 		/// <returns></returns>
 		public new bool WriteN(int column, LCD data)
 		{
-			CurrentChars[column - 1] = data;
-			return base.WriteN(column, data);
+			lock (_criticalSectionLock)
+			{
+				CurrentChars[column - 1] = data;
+				return base.WriteN(column, data);
+			}
 		}
 
 		/// <summary>
@@ -165,11 +180,14 @@ namespace Samraksh.AppNote.Utility
 		/// <returns></returns>
 		public new bool WriteRawBytes(int data4, int data3, int data2, int data1)
 		{
-			CurrentChars[4 - 1] = (LCD)data4;
-			CurrentChars[3 - 1] = (LCD)data3;
-			CurrentChars[2 - 1] = (LCD)data2;
-			CurrentChars[1 - 1] = (LCD)data1;
-			return base.WriteRawBytes(data4, data3, data2, data1);
+			lock (_criticalSectionLock)
+			{
+				CurrentChars[4 - 1] = (LCD) data4;
+				CurrentChars[3 - 1] = (LCD) data3;
+				CurrentChars[2 - 1] = (LCD) data2;
+				CurrentChars[1 - 1] = (LCD) data1;
+				return base.WriteRawBytes(data4, data3, data2, data1);
+			}
 		}
 
 		#endregion
