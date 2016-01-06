@@ -21,8 +21,7 @@ namespace Samraksh.AppNote.HealthMonitor
 	{
 		private static SimpleCSMAStream _simpleCSMAStream;
 		private static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
-
-		private static readonly OutputPort ResetEnable = new OutputPort(Pins.GPIO_J12_PIN1, true);
+		private static readonly OutputPort ResetPort = new OutputPort(Pins.GPIO_J12_PIN1, true);
 
 		/// <summary>
 		/// ###
@@ -32,39 +31,43 @@ namespace Samraksh.AppNote.HealthMonitor
 			Debug.Print("\nHealth Monitor " + VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 			Thread.Sleep(4000);
 
+			var msgBytes = new byte[sizeof(byte) + sizeof(int)];
 
-			var msgBytes = new byte[sizeof(bool) + sizeof(int)];
-
+			// Set up CSMA and CSMA Stream
 			var simpleCSMA = new SimpleCSMA(RadioName.RF231RADIO, SimpleCSMA.Default.CCASenseTime, SimpleCSMA.Default.TxPowerValue, Common.Channel);
 			_simpleCSMAStream = new SimpleCSMAStream(simpleCSMA);
 
-			var networkStreamCallback = new StreamCallback(Common.NetworkStreamId, NetworkCallback);
-			_simpleCSMAStream.AddStreamCallback(networkStreamCallback);
+			// Set up health monitor
+			HealthMonitor.Initialize(_simpleCSMAStream, Lcd, ResetPort);
 
-			var monitorStreamCallback = new StreamCallback(Common.MonitorStreamId, MonitorCallback);
-			_simpleCSMAStream.AddStreamCallback(monitorStreamCallback);
+			// Set up app stream
+			var appStreamCallback = new StreamCallback(Common.AppStreamId, AppCallback);
+			_simpleCSMAStream.AddStreamCallback(appStreamCallback);
 
 			// Network nodes merely display & exchange incrementing values
 
 			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
-			if (Common.NetworkStreamId != StreamCallback.AllStreams)
+			if (Common.AppStreamId != StreamCallback.AllStreams)
 			{
 				var cntr = 0;
-				while (cntr++ < int.MaxValue)
+				while (cntr++ < Int32.MaxValue)
 				{
 					Lcd.Write(cntr);
 					BitConverter.InsertValueIntoArray(msgBytes, 1, cntr);
-					_simpleCSMAStream.Send(Addresses.BROADCAST, Common.NetworkStreamId, msgBytes);
+					_simpleCSMAStream.Send(Addresses.BROADCAST, Common.AppStreamId, msgBytes);
 					Thread.Sleep(2000);
 				}
 			}
 
 			Debug.Print("Finished sending");
 			Thread.Sleep(Timeout.Infinite);
-
 		}
 
-		private static void NetworkCallback(Message rcvMsg)
+		/// <summary>
+		/// App callback
+		/// </summary>
+		/// <param name="rcvMsg"></param>
+		public static void AppCallback(Message rcvMsg)
 		{
 			var rcvPayloadBytes = rcvMsg.GetMessage();
 			if (rcvPayloadBytes.Length == 0)
@@ -73,11 +76,11 @@ namespace Samraksh.AppNote.HealthMonitor
 				return;
 			}
 			Debug.Print("\nReceived " + (rcvMsg.Unicast ? "Unicast" : "Broadcast")
-				+ ", message from src: " + rcvMsg.Src
-				+ ", stream number: " + rcvPayloadBytes[0]
-				+ ", size: " + rcvMsg.Size
-				+ ", rssi: " + rcvMsg.RSSI
-				+ ", lqi: " + rcvMsg.LQI);
+						+ ", message from src: " + rcvMsg.Src
+						+ ", stream number: " + rcvPayloadBytes[0]
+						+ ", size: " + rcvMsg.Size
+						+ ", rssi: " + rcvMsg.RSSI
+						+ ", lqi: " + rcvMsg.LQI);
 			var rcvPayloadStrBldr = new StringBuilder();
 			for (var i = 1; i < rcvPayloadBytes.Length; i++)
 			{
@@ -87,6 +90,6 @@ namespace Samraksh.AppNote.HealthMonitor
 			Debug.Print("\t" + rcvPayloadStrBldr);
 		}
 
-		
+
 	}
 }

@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HealthMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -74,6 +75,10 @@
     <ProjectReference Include="..\..\..\..\Active\Utility Classes\DotNow\SimpleCSMA\SimpleCSMA\Utility.SimpleCSMA.csproj">
       <Project>{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}</Project>
       <Name>Utility.SimpleCSMA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Node-Common\Node-Common\Node-Common.csproj">
+      <Project>{BCB6C168-CB4C-4A66-9ED0-ADE99A572758}</Project>
+      <Name>Node-Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Utility\Utility.csproj">
       <Project>{B467457F-66F9-4B61-9BF2-990AF8220161}</Project>

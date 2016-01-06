@@ -18,7 +18,7 @@ namespace Samraksh.AppNote.HealthMonitor
 			NowResetting = 2,
 		}
 
-		public const byte NetworkStreamId = 1;
+		public const byte AppStreamId = 1;
 		public const byte MonitorStreamId = 2;
 
 		public const Channels Channel = Channels.Channel_11;

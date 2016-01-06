@@ -72,6 +72,7 @@ namespace Samraksh.AppNote.HealthMonitor
 						_simpleCSMAStream.Send(Addresses.BROADCAST, Common.MonitorStreamId, MonitorSendBytes);
 						break;
 					case ConsoleCommands.Reset:
+						SerialWriteCrLf("<< Send Reset");
 						MonitorSendBytes[1] = (byte)Common.ControllerMessage.Reset;
 						_simpleCSMAStream.Send(Addresses.BROADCAST, Common.MonitorStreamId, MonitorSendBytes);
 						break;

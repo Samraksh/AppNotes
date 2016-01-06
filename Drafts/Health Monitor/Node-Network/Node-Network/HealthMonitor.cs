@@ -1,36 +1,53 @@
+using System;
 using System.Text;
 using Microsoft.SPOT;
-using Samraksh.AppNote.HealthMonitor;
+using Microsoft.SPOT.Hardware;
+using Samraksh.AppNote.Utility;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 
-namespace Samraksh.AppNote.Utility
+namespace Samraksh.AppNote.HealthMonitor
 {
 	/// <summary>
 	/// ###
 	/// </summary>
-	public class HealthMonitor
+	public static class HealthMonitor
 	{
-		private  byte[] _nodeMonitorSendBytes = new byte[100];
-		private readonly EnhancedEmoteLCD _lcd;
-		private readonly SimpleCSMAStream _simpleCSMAStream;
+		private static byte[] _nodeMonitorSendBytes = new byte[100];
+		private static EnhancedEmoteLCD _lcd;
+		private static SimpleCSMAStream _simpleCSMAStream;
+		private static OutputPort _resetPort;
 
-		public HealthMonitor(SimpleCSMAStream simpleCSMAStream, EnhancedEmoteLCD lcd, out )
+		/// <summary>
+		/// Health Monitor constructor
+		/// </summary>
+		/// <param name="simpleCSMAStream"></param>
+		/// <param name="lcd"></param>
+		/// <param name="resetPort"></param>
+		public static void Initialize(SimpleCSMAStream simpleCSMAStream, EnhancedEmoteLCD lcd, OutputPort resetPort)
 		{
 			_simpleCSMAStream = simpleCSMAStream;
 			_lcd = lcd;
+			_resetPort = resetPort;
+
+			var monitorStreamCallback = new StreamCallback(Common.MonitorStreamId, MonitorCallback);
+			_simpleCSMAStream.AddStreamCallback(monitorStreamCallback);
 		}
 
-		public void MonitorCallback(Message rcvMsg)
+		/// <summary>
+		/// Health Monitor callback
+		/// </summary>
+		/// <param name="rcvMsg"></param>
+		public static void MonitorCallback(Message rcvMsg)
 		{
 			var rcvPayloadBytes = rcvMsg.GetMessage();
 
 			Debug.Print("\nMonitor received " + (rcvMsg.Unicast ? "Unicast" : "Broadcast")
-				+ ", message from src: " + rcvMsg.Src
-				+ ", stream number: " + rcvPayloadBytes[0]
-				+ ", size: " + rcvMsg.Size
-				+ ", rssi: " + rcvMsg.RSSI
-				+ ", lqi: " + rcvMsg.LQI);
+						+ ", message from src: " + rcvMsg.Src
+						+ ", stream number: " + rcvPayloadBytes[0]
+						+ ", size: " + rcvMsg.Size
+						+ ", rssi: " + rcvMsg.RSSI
+						+ ", lqi: " + rcvMsg.LQI);
 
 
 			if (rcvPayloadBytes.Length <= 1)
@@ -64,7 +81,7 @@ namespace Samraksh.AppNote.Utility
 					_nodeMonitorSendBytes = Encoding.UTF8.GetBytes("**Now Resetting");
 					_nodeMonitorSendBytes[1] = (byte)Common.NodeMessage.NowResetting;
 					_simpleCSMAStream.Send((Addresses)rcvMsg.Src, Common.MonitorStreamId, _nodeMonitorSendBytes);
-					ResetEnable.Write(false);
+					_resetPort.Write(false);
 					break;
 				default:
 					Debug.Print("Unknown message received from controller: " + controllerMessage);
