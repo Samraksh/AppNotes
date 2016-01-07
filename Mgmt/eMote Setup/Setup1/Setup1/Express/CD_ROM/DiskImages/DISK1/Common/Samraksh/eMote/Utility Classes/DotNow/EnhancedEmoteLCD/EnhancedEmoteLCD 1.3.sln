@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility.EnhancedEmoteLCD", "EnhancedeMoteLCD\Utility.EnhancedEmoteLCD.csproj", "{30B5CE2D-328A-4324-AA69-532DBD498A89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEnhancedEmoteLCD", "TestEnhancedEmoteLCD\TestEnhancedEmoteLCD.csproj", "{2DC2A92A-DCC8-4618-AAF1-EDD6800D1244}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30B5CE2D-328A-4324-AA69-532DBD498A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30B5CE2D-328A-4324-AA69-532DBD498A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30B5CE2D-328A-4324-AA69-532DBD498A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30B5CE2D-328A-4324-AA69-532DBD498A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC2A92A-DCC8-4618-AAF1-EDD6800D1244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC2A92A-DCC8-4618-AAF1-EDD6800D1244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC2A92A-DCC8-4618-AAF1-EDD6800D1244}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2DC2A92A-DCC8-4618-AAF1-EDD6800D1244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC2A92A-DCC8-4618-AAF1-EDD6800D1244}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DC2A92A-DCC8-4618-AAF1-EDD6800D1244}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
