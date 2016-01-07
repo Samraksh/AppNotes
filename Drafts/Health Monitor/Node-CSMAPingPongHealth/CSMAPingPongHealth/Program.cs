@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -11,6 +12,12 @@ using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
 using BitConverter = Samraksh.AppNote.Utility.BitConverter;
 
+
+/*=====================================================
+ * Configuration
+ * Jumper .NOW J12/1 (GPIO output) to J12/6 (reset)
+ ====================================================*/
+
 namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 {
 	/// <summary>
@@ -20,10 +27,35 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 	{
 		private static SimpleCSMAStream _simpleCSMAStream;
 		private static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
-		private static readonly OutputPort ResetPort = new OutputPort(Pins.GPIO_J12_PIN1, true);
 
 		/// <summary>
-		/// ###
+		/// This port is used to reset the node. 
+		/// Under command of the health monitor controller, the port is pulled low.
+		/// Since it is jumpered to J12/6 (reset), this brings J12/6 low and resets the mote.
+		/// </summary>
+		private static readonly OutputPort ResetPort = new OutputPort(Pins.GPIO_J12_PIN1, true);
+
+
+		// This is used as a header for the packet payload to identify the app
+		private const string Header = "PingPong";
+
+		// The current value
+		static int _currVal;
+
+		// Reply timer. Slows down interaction by not sending reply messages until the timer expires
+		private const int SendInterval = 4000; // Time to wait before sending reply
+		static Timer _replyTimer;
+		static readonly TimerCallback ReplyTimerCallback = reply_Timeout;
+
+		// No response timer. If no message received, send current value again
+		//  Timer is reset whenever a message is received
+		private const int NoResponseInterval = SendInterval * 4; // Time to wait before re-sending; must be larger than send interval
+		private static Timer _noResponseDelayTimer;
+		private static readonly TimerCallback NoResponseDelayTimerCallback = noResponseDelay_Timeout;
+
+
+		/// <summary>
+		/// Main program
 		/// </summary>
 		public static void Main()
 		{
@@ -41,25 +73,28 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 
 			// Set up app stream
 			var appStreamCallback = new StreamCallback(Common.AppStreamId, AppCallback);
-			_simpleCSMAStream.AddStreamCallback(appStreamCallback);
+			_simpleCSMAStream.Subscribe(appStreamCallback);
 
-			// Network nodes merely display & exchange incrementing values
 
-			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
-			if (Common.AppStreamId != StreamCallback.AllStreams)
-			{
-				var cntr = 0;
-				while (cntr++ < int.MaxValue)
-				{
-					Lcd.Write(cntr);
-					BitConverter.InsertValueIntoArray(msgBytes, 0, cntr);
-					_simpleCSMAStream.Send(Addresses.BROADCAST, Common.AppStreamId, msgBytes);
-					Thread.Sleep(2000);
-				}
-			}
 
-			Debug.Print("Finished sending");
+			// Display a welcome message
+			Lcd.Write("Hola");
+			Thread.Sleep(4000);
+
+			// Pick a value randomly
+			_currVal = (new Random()).Next(99);  // We're choosing a fairly small value to avoid runover on the LCD display (since it only has 4 positions)
+			Lcd.Write(_currVal);
+
+			// Send the current value now
+			_simpleCSMAStream.Send(Addresses.BROADCAST, Common.AppStreamId, Encoding.UTF8.GetBytes(_currVal.ToString().Trim()));
+
+			// Start a one-shot timer that resets itself whenever it expires
+			StartOneshotTimer(ref _noResponseDelayTimer, NoResponseDelayTimerCallback, NoResponseInterval);
+
+			// Everything is set up. Go to sleep forever, pending events
 			Thread.Sleep(Timeout.Infinite);
+
+
 		}
 
 		/// <summary>

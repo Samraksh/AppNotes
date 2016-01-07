@@ -2,27 +2,37 @@ using System;
 using System.Collections;
 using System.Text;
 using Microsoft.SPOT;
-using Samraksh.eMote.Net;
+using Samraksh.AppNote.HealthMonitor;
 using Samraksh.eMote.Net.Mac;
-
 
 namespace Samraksh.AppNote.Utility
 {
 
-	/// <summary>###</summary>
+	///<summary>
+	/// SimpleCSMA Network Stream
+	///</summary>
 	public class SimpleCSMAStream : INetStream
 	{
 		private readonly ArrayList _streamCallbacks = new ArrayList();
 
 		private readonly SimpleCSMA _simpleCSMA;
 
-		/// <summary>###</summary>
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <remarks>
+		/// Save the SimpleCSMA object and subscribe to it.
+		/// </remarks>
 		public SimpleCSMAStream(SimpleCSMA simpleCSMA)
 		{
 			_simpleCSMA = simpleCSMA;
 			_simpleCSMA.OnReceive += ReceivePacketHandler;
 		}
 
+		/// <summary>
+		/// Look at the message contents and decides who should get it.
+		/// </summary>
+		/// <param name="csma"></param>
 		private void ReceivePacketHandler(CSMA csma)
 		{
 			var rcvMsg = csma.GetNextPacket();
@@ -42,28 +52,21 @@ namespace Samraksh.AppNote.Utility
 				if (theStreamCallback.StreamId == rcvStreamId || theStreamCallback.StreamId == StreamCallback.AllStreams)
 				{
 
-					//var msgBldr = new StringBuilder("H rcv ");
-					//for (var i = 0; i < rcvPayload.Length; i++)
-					//{
-					//	msgBldr.Append(rcvPayload[i] + " ");
-					//}
-					//Debug.Print(msgBldr.ToString());
-					//Debug.Print("");
+					//Common.PrintByteVals("H rcv ",rcvPayload);
 
-
-					theStreamCallback.CallbackHandlerStreamMessage(rcvMsg, rcvPayload);
+					theStreamCallback.MessageReceivedHandler(rcvMsg, rcvPayload);
 				}
 			}
 		}
 
-		/// <summary>###</summary>
-		public void AddStreamCallback(StreamCallback streamCallback)
+		/// <summary>Subscribe to a stream</summary>
+		public void Subscribe(StreamCallback streamCallback)
 		{
 			foreach (var theStreamCallbackObj in _streamCallbacks)
 			{
 				var theStreamCallback = (StreamCallback)theStreamCallbackObj;
 				if (theStreamCallback.StreamId == streamCallback.StreamId
-					&& theStreamCallback.CallbackHandlerStreamMessage == streamCallback.CallbackHandlerStreamMessage)
+					&& theStreamCallback.MessageReceivedHandler == streamCallback.MessageReceivedHandler)
 				{
 					return;
 				}
@@ -72,15 +75,15 @@ namespace Samraksh.AppNote.Utility
 		}
 
 		/// <summary>
-		/// Remove stream callback
+		/// Unsubscribe from a scream
 		/// </summary>
-		public void RemoveStreamCallback(StreamCallback streamCallback)
+		public void Unsubscribe(StreamCallback streamCallback)
 		{
 			for (var i = 0; i < _streamCallbacks.Count; i++)
 			{
 				var theStreamCallback = (StreamCallback)_streamCallbacks[i];
 				if (theStreamCallback.StreamId == streamCallback.StreamId
-					&& theStreamCallback.CallbackHandlerStreamMessage == streamCallback.CallbackHandlerStreamMessage)
+					&& theStreamCallback.MessageReceivedHandler == streamCallback.MessageReceivedHandler)
 				{
 					_streamCallbacks.RemoveAt(i);
 				}
@@ -105,22 +108,15 @@ namespace Samraksh.AppNote.Utility
 				return;
 			}
 
-			var messageEx = new byte[message.Length + 1];
 			// Shift the message right and insert stream ID
+			var messageEx = new byte[message.Length + 1];
 			for (var i = 0; i < message.Length; i++)
 			{
 				messageEx[i + 1] = message[i];
 			}
-
 			messageEx[0] = streamId;
 
-			//var msgBldr = new StringBuilder("H snd ");
-			//for (var i = 0; i < messageEx.Length; i++)
-			//{
-			//	msgBldr.Append(messageEx[i] + " ");
-			//}
-			//Debug.Print(msgBldr.ToString());
-			//Debug.Print("");
+			//Common.PrintByteVals("H snd ",messageEx);
 
 			_simpleCSMA.Send(dest, messageEx);
 		}

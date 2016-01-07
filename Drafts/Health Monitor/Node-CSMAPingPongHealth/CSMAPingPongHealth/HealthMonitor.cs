@@ -31,7 +31,7 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 			_resetPort = resetPort;
 
 			var monitorStreamCallback = new StreamCallback(Common.MonitorStreamId, MonitorCallback);
-			_simpleCSMAStream.AddStreamCallback(monitorStreamCallback);
+			_simpleCSMAStream.Subscribe(monitorStreamCallback);
 			Send(Addresses.BROADCAST, Common.MonitorStreamId, (byte)Common.NodeMessage.Starting, Encoding.UTF8.GetBytes("Now Starting"));
 		}
 
@@ -86,29 +86,18 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 
 		private static void Send(Addresses address, byte streamId, byte messageName, byte[] message)
 		{
-			var messageEx = new byte[message.Length + 1];
-			var msgBldr = new StringBuilder("1 ");
-			for (var i = 0; i < message.Length; i++)
-			{
-				msgBldr.Append(message[i] + " ");
-			}
-			Debug.Print(msgBldr.ToString());
+			Common.PrintByteVals("1 ",message);
 
 			// Shift the message right and insert message name
-			for (var i = 0; i <message.Length; i++)
+			var messageEx = new byte[message.Length + 1];
+			for (var i = 0; i < message.Length; i++)
 			{
 				messageEx[i + 1] = message[i];
 			}
 			messageEx[0] = messageName;
 
-			msgBldr = new StringBuilder("2 ");
-			for (var i = 0; i < messageEx.Length; i++)
-			{
-				msgBldr.Append(messageEx[i] + " ");
-			}
-			Debug.Print(msgBldr.ToString());
-			Debug.Print("");
-			
+			Common.PrintByteVals("2 ", message);
+
 			_simpleCSMAStream.Send(address, streamId, messageEx);
 		}
 	}

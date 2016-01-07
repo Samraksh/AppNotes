@@ -1,49 +1,61 @@
-using System;
-using System.Collections;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.SPOT;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 
 namespace Samraksh.AppNote.Utility
 {
 	/// <summary>
-	/// 
+	/// Interface for network streams
 	/// </summary>
 	public interface INetStream
 	{
-		/// <summary>###</summary>
-		void AddStreamCallback(StreamCallback streamCallback);
-		/// <summary>###</summary>
-		void RemoveStreamCallback(StreamCallback streamCallback);
-		/// <summary>###</summary>
+		/// <summary>Add a callback to a stream</summary>
+		void Subscribe(StreamCallback streamCallback);
+
+		/// <summary>Remove a callback from a stream</summary>
+		void Unsubscribe(StreamCallback streamCallback);
+
+		/// <summary>Send a message</summary>
 		void Send(Addresses dest, byte streamId, byte[] message);
 	}
 
 	/// <summary>
-	/// ###
+	/// Callback for network streams
 	/// </summary>
+	/// <remarks>
+	/// 
+	/// </remarks>
 	public class StreamCallback
 	{
-		/// <summary>###</summary>
+		/// <summary>Special stream ID for all streams</summary>
 		public const byte AllStreams = byte.MaxValue;
 
-		/// <summary>###</summary>
+		/// <summary>Get the stream ID</summary>
 		public byte StreamId { get; private set; }
 
-		/// <summary>###</summary>
-		public ReceiveDelegateStreamMessage CallbackHandlerStreamMessage { get; private set; }
-
-		/// <summary>###</summary>
-		public delegate void ReceiveDelegateStreamMessage(Message message, byte[] messageBytes);
-
-
-		/// <summary>###</summary>
-		public StreamCallback(byte streamId, ReceiveDelegateStreamMessage callbackHandlerStreamMessage)
+		/// <summary>
+		/// A StreamCallback instance consists of a stream ID and a callback method
+		/// </summary>
+		public StreamCallback(byte streamId, MessageReceived messageReceivedHandler)
 		{
 			StreamId = streamId;
-			CallbackHandlerStreamMessage = callbackHandlerStreamMessage;
+			MessageReceivedHandler = messageReceivedHandler;
 		}
+		/// <summary>Get the callback method</summary>
+		public MessageReceived MessageReceivedHandler { get; private set; }
+
+		/// <summary>
+		/// A stream callback gets a Message and a byte array containing the message contents
+		/// </summary>
+		/// <param name="message">The message received</param>
+		/// <param name="messageBytes">The message contents</param>
+		/// <remarks>
+		/// The message contents are included separately for 2 reasons:
+		/// - It excludes the stream ID.
+		/// - Checking for stream ID requires getting the received message contents. This can only be done once.
+		/// </remarks>
+		public delegate void MessageReceived(Message message, byte[] messageBytes);
+
+
 	}
 
 }

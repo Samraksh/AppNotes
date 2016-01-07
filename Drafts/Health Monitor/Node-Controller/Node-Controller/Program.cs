@@ -28,16 +28,7 @@ namespace Samraksh.AppNote.HealthMonitor
 			_simpleCSMAStream = new SimpleCSMAStream(simpleCSMA);
 
 			var monitorStreamCallback = new StreamCallback(Common.MonitorStreamId, MonitorCallback);
-			_simpleCSMAStream.AddStreamCallback(monitorStreamCallback);
-
-			//var cntr = 0;
-			//while (cntr++ < int.MaxValue)
-			//{
-			//	var cntrStr = cntr + "\r"+"\n";
-			//	//var utf16Bytes = Encoding.UTF8.GetBytes(cntrStr);
-			//	_serialComm.Write(cntrStr);
-			//	Thread.Sleep(5000);
-			//}
+			_simpleCSMAStream.Subscribe(monitorStreamCallback);
 
 			Thread.Sleep(Timeout.Infinite);
 		}
@@ -83,28 +74,14 @@ namespace Samraksh.AppNote.HealthMonitor
 				}
 			}
 
-			//var bytestr = new StringBuilder();
-			//foreach (var theByte in readBytes)
-			//{
-			//	bytestr.Append(theByte);
-			//	bytestr.Append(' ');
-			//}
-			//Debug.Print(bytestr.ToString());
-			//_serialComm.Write(bytestr + "\r" + "\n");
+			//Common.PrintByteVals("",readBytes);
+
 		}
 
 		private static void MonitorCallback(Message rcvMsg, byte[] rcvMsgBytes)
 		{
-			//var rcvPayloadBytes = rcvMsg.GetMessage();
 
-			//var msgBldr = new StringBuilder("M rcv ");
-			//for (var i = 0; i < rcvMsgBytes.Length; i++)
-			//{
-			//	msgBldr.Append(rcvMsgBytes[i] + " ");
-			//}
-			//SerialWriteCrLf(msgBldr.ToString());
-			//SerialWriteCrLf("");
-
+			//Common.PrintByteVals("M rcv ",rcvMsgBytes);
 
 			switch (rcvMsgBytes[0])
 			{
@@ -121,23 +98,7 @@ namespace Samraksh.AppNote.HealthMonitor
 			}
 			SerialWriteCrLf();
 
-			//SerialWriteCrLf("\nReceived " + (rcvMsg.Unicast ? "Unicast" : "Broadcast")
-			//	+ ", message from src: " + rcvMsg.Src
-			//	+ ", stream number: " + rcvPayloadBytes[0]
-			//	+ ", size: " + rcvMsg.Size
-			//	+ ", rssi: " + rcvMsg.RSSI
-			//	+ ", lqi: " + rcvMsg.LQI);
-			//var rcvPayloadStrBldr = new StringBuilder();
-			//for (var i = 1; i < rcvPayloadBytes.Length; i++)
-			//{
-			//	if (rcvPayloadBytes[i] > 0)
-			//	{
-			//		rcvPayloadStrBldr.Append(Encoding.UTF8.GetChars(rcvPayloadBytes, i, 1));
-			//	}
-			//rcvPayloadStrBldr.Append(rcvPayloadBytes[i].ToString());
-			//rcvPayloadStrBldr.Append(" ");
-			//}
-			//SerialWriteCrLf("\t" + rcvPayloadStrBldr);
+			//Common.PrintByteVals("", rcvMsgBytes);
 		}
 
 		private static string SourceRssi(Message rcvMsg)

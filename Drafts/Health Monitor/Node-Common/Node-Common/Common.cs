@@ -1,3 +1,5 @@
+using System.Text;
+using Microsoft.SPOT;
 using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh.AppNote.HealthMonitor
@@ -63,7 +65,23 @@ namespace Samraksh.AppNote.HealthMonitor
 		/// Radio channel for app and health monitor
 		/// </summary>
 		public const Channels Channel = Channels.Channel_11;
-		
+
+
+		/// <summary>
+		/// Print byte values
+		/// </summary>
+		/// <param name="prefix"></param>
+		/// <param name="messageEx"></param>
+		public static void PrintByteVals(string prefix, byte[] messageEx)
+		{
+			var msgBldr = new StringBuilder(prefix);
+			for (var i = 0; i < messageEx.Length; i++)
+			{
+				msgBldr.Append(messageEx[i] + " ");
+			}
+			Debug.Print(msgBldr.ToString());
+			Debug.Print("");
+		}
 
 	}
 
