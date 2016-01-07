@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Samraksh.AppNote.HealthMonitor
+namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 {
     
     internal partial class Resources
@@ -20,7 +20,7 @@ namespace Samraksh.AppNote.HealthMonitor
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("Samraksh.AppNote.HealthMonitor.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("Samraksh.AppNote.CSMAPingPongWithHealthMonitor.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }

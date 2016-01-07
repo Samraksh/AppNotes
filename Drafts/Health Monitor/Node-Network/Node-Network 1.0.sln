@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node-Network", "Node-Network\Node-Network.csproj", "{27EAC285-F091-4BBA-8B90-5B4E768E87D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSMAPingPongWithHealthMonitor", "Node-Network\CSMAPingPongWithHealthMonitor.csproj", "{27EAC285-F091-4BBA-8B90-5B4E768E87D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node-Common", "..\Node-Common\Node-Common\Node-Common.csproj", "{BCB6C168-CB4C-4A66-9ED0-ADE99A572758}"
 EndProject

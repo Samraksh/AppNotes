@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Text;
 using Microsoft.SPOT;
+using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 
 
@@ -25,16 +27,31 @@ namespace Samraksh.AppNote.Utility
 		{
 			var rcvMsg = csma.GetNextPacket();
 			if (rcvMsg == null) { return; }
-			var rcvPayloadBytes = rcvMsg.GetMessage();
-			if (rcvPayloadBytes.Length == 0) { return; }
-			Debug.Print("R: " + rcvPayloadBytes[0] + "," + rcvPayloadBytes[1]);
-			var rcvStreamId = rcvPayloadBytes[0];
+			var rcvPayloadAll = rcvMsg.GetMessage();
+			if (rcvPayloadAll.Length == 0) { return; }
+			Debug.Print("R: " + rcvPayloadAll[0] + "," + rcvPayloadAll[1]);
+			var rcvStreamId = rcvPayloadAll[0];
+			var rcvPayload = new byte[rcvPayloadAll.Length - 1];
+			for (var i = 1; i < rcvPayloadAll.Length; i++)
+			{
+				rcvPayload[i - 1] = rcvPayloadAll[i];
+			}
 			foreach (var theStreamCallbackObj in _streamCallbacks)
 			{
 				var theStreamCallback = (StreamCallback)theStreamCallbackObj;
 				if (theStreamCallback.StreamId == rcvStreamId || theStreamCallback.StreamId == StreamCallback.AllStreams)
 				{
-					theStreamCallback.CallbackHandlerStreamMessage(rcvMsg);
+
+					//var msgBldr = new StringBuilder("H rcv ");
+					//for (var i = 0; i < rcvPayload.Length; i++)
+					//{
+					//	msgBldr.Append(rcvPayload[i] + " ");
+					//}
+					//Debug.Print(msgBldr.ToString());
+					//Debug.Print("");
+
+
+					theStreamCallback.CallbackHandlerStreamMessage(rcvMsg, rcvPayload);
 				}
 			}
 		}
@@ -54,7 +71,9 @@ namespace Samraksh.AppNote.Utility
 			_streamCallbacks.Add(streamCallback);
 		}
 
-		/// <summary>###</summary>
+		/// <summary>
+		/// Remove stream callback
+		/// </summary>
 		public void RemoveStreamCallback(StreamCallback streamCallback)
 		{
 			for (var i = 0; i < _streamCallbacks.Count; i++)
@@ -68,16 +87,42 @@ namespace Samraksh.AppNote.Utility
 			}
 		}
 
-		/// <summary>###</summary>
+		/// <summary>
+		/// Send stream message
+		/// </summary>
+		/// <remarks>
+		/// Inserts stream id as first byte
+		/// </remarks>
 		public void Send(Addresses dest, byte streamId, byte[] message)
 		{
 			if (streamId == StreamCallback.AllStreams)
 			{
-				throw new ArgumentOutOfRangeException("streamId must be less than " + StreamCallback.AllStreams);
+				throw new ArgumentOutOfRangeException("streamId cannot be AllStreams (" + StreamCallback.AllStreams + ")");
 			}
-			if (message.Length == 0) { return; }
-			message[0] = streamId;
-			_simpleCSMA.Send(dest,message);
+
+			if (message.Length == 0)
+			{
+				return;
+			}
+
+			var messageEx = new byte[message.Length + 1];
+			// Shift the message right and insert stream ID
+			for (var i = 0; i < message.Length; i++)
+			{
+				messageEx[i + 1] = message[i];
+			}
+
+			messageEx[0] = streamId;
+
+			//var msgBldr = new StringBuilder("H snd ");
+			//for (var i = 0; i < messageEx.Length; i++)
+			//{
+			//	msgBldr.Append(messageEx[i] + " ");
+			//}
+			//Debug.Print(msgBldr.ToString());
+			//Debug.Print("");
+
+			_simpleCSMA.Send(dest, messageEx);
 		}
 
 	}

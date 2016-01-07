@@ -20,7 +20,6 @@ using System.Threading;
 using Microsoft.SPOT;
 
 using Samraksh.AppNote.Utility;
-using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
 
@@ -39,7 +38,7 @@ namespace Samraksh.AppNote.DotNow.PingPong {
     public class Program {
 
 		// This is used as a header for the packet payload to identify the app
-        const string Header = "PingPong";
+	    private const string Header = "PingPong";
 
         // The current value
         static int _currVal;
@@ -49,15 +48,15 @@ namespace Samraksh.AppNote.DotNow.PingPong {
         static SimpleCsmaRadio _csmaRadio;
 
         // Reply timer. Slows down interaction by not sending reply messages until the timer expires
-        const int SendInterval = 4000; // Time to wait before sending reply
+	    private const int SendInterval = 4000; // Time to wait before sending reply
         static Timer _replyTimer;
         static readonly TimerCallback ReplyTimerCallback = reply_Timeout;
 
         // No response timer. If no message received, send current value again
         //  Timer is reset whenever a message is received
-        const int NoResponseInterval = SendInterval * 4; // Time to wait before re-sending; must be larger than send interval
-        static Timer _noResponseDelayTimer;
-        static readonly TimerCallback NoResponseDelayTimerCallback = noResponseDelay_Timeout;
+	    private const int NoResponseInterval = SendInterval * 4; // Time to wait before re-sending; must be larger than send interval
+        private static Timer _noResponseDelayTimer;
+	    private static readonly TimerCallback NoResponseDelayTimerCallback = noResponseDelay_Timeout;
 
         /// <summary>
         /// Main program. Set things up and then go to sleep forever.
@@ -95,7 +94,7 @@ namespace Samraksh.AppNote.DotNow.PingPong {
         /// Handle a received message
         /// </summary>
         /// <param name="csma">A CSMA object that has the message info</param>
-        static void RadioReceive(CSMA csma) {
+        private static void RadioReceive(CSMA csma) {
             //
             // Check to be sure it's a message we're interested in
             //
@@ -105,7 +104,7 @@ namespace Samraksh.AppNote.DotNow.PingPong {
                 return;
             }
             // Check to be sure there's something in the packet
-            Message packet = csma.GetNextPacket();
+            var packet = csma.GetNextPacket();
             if (packet == null) {
                 return;
             }
@@ -120,7 +119,7 @@ namespace Samraksh.AppNote.DotNow.PingPong {
             string payload = msgStr.Substring(Header.Length);
             int recVal;
             try {
-                recVal = Int32.Parse(payload);
+                recVal = int.Parse(payload);
             }
             catch {
                 return;
@@ -150,7 +149,7 @@ namespace Samraksh.AppNote.DotNow.PingPong {
         /// <remarks>It will be preceded by the HEADER</remarks>
         /// <param name="toSend">String to be sent</param>
         static void RadioSend(string toSend) {
-            byte[] toSendByte = System.Text.Encoding.UTF8.GetBytes(Header + toSend);
+            var toSendByte = System.Text.Encoding.UTF8.GetBytes(Header + toSend);
             _csmaRadio.Send(Addresses.BROADCAST, toSendByte);
         }
 

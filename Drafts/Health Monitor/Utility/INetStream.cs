@@ -35,7 +35,7 @@ namespace Samraksh.AppNote.Utility
 		public ReceiveDelegateStreamMessage CallbackHandlerStreamMessage { get; private set; }
 
 		/// <summary>###</summary>
-		public delegate void ReceiveDelegateStreamMessage(Message message);
+		public delegate void ReceiveDelegateStreamMessage(Message message, byte[] messageBytes);
 
 
 		/// <summary>###</summary>

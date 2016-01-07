@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text;
 using System.Threading;
+using Microsoft.SPOT;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
@@ -63,18 +64,15 @@ namespace Samraksh.AppNote.HealthMonitor
 				{
 					case ConsoleCommands.Ping:
 						SerialWriteCrLf("<< Ping");
-						MonitorSendBytes[1] = (byte)Common.ControllerMessage.Ping;
-						_simpleCSMAStream.Send(Addresses.BROADCAST, Common.MonitorStreamId, MonitorSendBytes);
+						Send(Addresses.BROADCAST, Common.MonitorStreamId, (byte)Common.ControllerMessage.Ping, MonitorSendBytes);
 						break;
 					case ConsoleCommands.SendLCD:
 						SerialWriteCrLf("<< Send LCD");
-						MonitorSendBytes[1] = (byte)Common.ControllerMessage.SendLCD;
-						_simpleCSMAStream.Send(Addresses.BROADCAST, Common.MonitorStreamId, MonitorSendBytes);
+						Send(Addresses.BROADCAST, Common.MonitorStreamId, (byte)Common.ControllerMessage.SendLCD, MonitorSendBytes);
 						break;
 					case ConsoleCommands.Reset:
 						SerialWriteCrLf("<< Send Reset");
-						MonitorSendBytes[1] = (byte)Common.ControllerMessage.Reset;
-						_simpleCSMAStream.Send(Addresses.BROADCAST, Common.MonitorStreamId, MonitorSendBytes);
+						Send(Addresses.BROADCAST, Common.MonitorStreamId, (byte)Common.ControllerMessage.Reset, MonitorSendBytes);
 						break;
 					case ConsoleCommands.Help:
 						ShowHelp();
@@ -95,19 +93,30 @@ namespace Samraksh.AppNote.HealthMonitor
 			//_serialComm.Write(bytestr + "\r" + "\n");
 		}
 
-		private static void MonitorCallback(Message rcvMsg)
+		private static void MonitorCallback(Message rcvMsg, byte[] rcvMsgBytes)
 		{
-			var rcvPayloadBytes = rcvMsg.GetMessage();
-			switch (rcvPayloadBytes[1])
+			//var rcvPayloadBytes = rcvMsg.GetMessage();
+
+			//var msgBldr = new StringBuilder("M rcv ");
+			//for (var i = 0; i < rcvMsgBytes.Length; i++)
+			//{
+			//	msgBldr.Append(rcvMsgBytes[i] + " ");
+			//}
+			//SerialWriteCrLf(msgBldr.ToString());
+			//SerialWriteCrLf("");
+
+
+			switch (rcvMsgBytes[0])
 			{
 				case (byte)Common.NodeMessage.Pong:
 				case (byte)Common.NodeMessage.CurrLCD:
 				case (byte)Common.NodeMessage.NowResetting:
-					var response = Packet2String(rcvPayloadBytes, 2, rcvPayloadBytes.Length - 2);
+				case (byte)Common.NodeMessage.Starting:
+					var response = Bytes2String(rcvMsgBytes, 1, rcvMsgBytes.Length - 1);
 					SerialWriteCrLf(">>" + response + SourceRssi(rcvMsg));
 					break;
 				default:
-					SerialWriteCrLf(">>Unrecognized node response " + rcvPayloadBytes[1]);
+					SerialWriteCrLf(">>Unrecognized node response " + rcvMsgBytes[0]);
 					break;
 			}
 			SerialWriteCrLf();
@@ -136,7 +145,7 @@ namespace Samraksh.AppNote.HealthMonitor
 			return " from " + rcvMsg.Src + ", rssi " + rcvMsg.RSSI;
 		}
 
-		private static string Packet2String(byte[] packet, int start, int length)
+		private static string Bytes2String(byte[] packet, int start, int length)
 		{
 			var packetString = new StringBuilder();
 			for (var i = start; i < start + length; i++)
@@ -168,6 +177,18 @@ namespace Samraksh.AppNote.HealthMonitor
 			_serialComm.Write("\r \n");
 
 		}
+
+		private static void Send(Addresses address, byte streamId, byte messageName, byte[] message)
+		{
+			// Shift the message right and insert message name
+			for (var i = 0; i < message.Length - 1; i++)
+			{
+				message[i + 1] = message[i];
+			}
+			message[0] = messageName;
+			_simpleCSMAStream.Send(address, streamId, message);
+		}
+
 
 
 	}

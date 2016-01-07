@@ -1,9 +1,9 @@
-using System;
 using System.Reflection;
 using System.Text;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+using Samraksh.AppNote.HealthMonitor;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
 using Samraksh.eMote.Net;
@@ -11,9 +11,8 @@ using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
 using BitConverter = Samraksh.AppNote.Utility.BitConverter;
 
-namespace Samraksh.AppNote.HealthMonitor
+namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 {
-
 	/// <summary>
 	/// ###
 	/// </summary>
@@ -50,10 +49,10 @@ namespace Samraksh.AppNote.HealthMonitor
 			if (Common.AppStreamId != StreamCallback.AllStreams)
 			{
 				var cntr = 0;
-				while (cntr++ < Int32.MaxValue)
+				while (cntr++ < int.MaxValue)
 				{
 					Lcd.Write(cntr);
-					BitConverter.InsertValueIntoArray(msgBytes, 1, cntr);
+					BitConverter.InsertValueIntoArray(msgBytes, 0, cntr);
 					_simpleCSMAStream.Send(Addresses.BROADCAST, Common.AppStreamId, msgBytes);
 					Thread.Sleep(2000);
 				}
@@ -67,29 +66,27 @@ namespace Samraksh.AppNote.HealthMonitor
 		/// App callback
 		/// </summary>
 		/// <param name="rcvMsg"></param>
-		public static void AppCallback(Message rcvMsg)
+		/// <param name="rcvMsgBytes"></param>
+		public static void AppCallback(Message rcvMsg, byte[] rcvMsgBytes)
 		{
-			var rcvPayloadBytes = rcvMsg.GetMessage();
-			if (rcvPayloadBytes.Length == 0)
+			if (rcvMsgBytes.Length == 0)
 			{
 				Debug.Print("*** Network: zero length message received");
 				return;
 			}
-			Debug.Print("\nReceived " + (rcvMsg.Unicast ? "Unicast" : "Broadcast")
+			Debug.Print("\nApp Received " + (rcvMsg.Unicast ? "Unicast" : "Broadcast")
 						+ ", message from src: " + rcvMsg.Src
-						+ ", stream number: " + rcvPayloadBytes[0]
+						+ ", stream number: " + rcvMsgBytes[0]
 						+ ", size: " + rcvMsg.Size
 						+ ", rssi: " + rcvMsg.RSSI
 						+ ", lqi: " + rcvMsg.LQI);
 			var rcvPayloadStrBldr = new StringBuilder();
-			for (var i = 1; i < rcvPayloadBytes.Length; i++)
+			for (var i = 1; i < rcvMsgBytes.Length; i++)
 			{
-				rcvPayloadStrBldr.Append(rcvPayloadBytes[i].ToString());
+				rcvPayloadStrBldr.Append(rcvMsgBytes[i].ToString());
 				rcvPayloadStrBldr.Append(" ");
 			}
 			Debug.Print("\t" + rcvPayloadStrBldr);
 		}
-
-
 	}
 }

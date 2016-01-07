@@ -1,25 +1,25 @@
-using System;
 using System.Text;
+using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+using Samraksh.AppNote.HealthMonitor;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 
-namespace Samraksh.AppNote.HealthMonitor
+namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 {
 	/// <summary>
 	/// ###
 	/// </summary>
 	public static class HealthMonitor
 	{
-		private static byte[] _nodeMonitorSendBytes = new byte[100];
 		private static EnhancedEmoteLCD _lcd;
 		private static SimpleCSMAStream _simpleCSMAStream;
 		private static OutputPort _resetPort;
 
 		/// <summary>
-		/// Health Monitor constructor
+		/// Health Monitor initialization
 		/// </summary>
 		/// <param name="simpleCSMAStream"></param>
 		/// <param name="lcd"></param>
@@ -32,37 +32,35 @@ namespace Samraksh.AppNote.HealthMonitor
 
 			var monitorStreamCallback = new StreamCallback(Common.MonitorStreamId, MonitorCallback);
 			_simpleCSMAStream.AddStreamCallback(monitorStreamCallback);
+			Send(Addresses.BROADCAST, Common.MonitorStreamId, (byte)Common.NodeMessage.Starting, Encoding.UTF8.GetBytes("Now Starting"));
 		}
 
 		/// <summary>
 		/// Health Monitor callback
 		/// </summary>
 		/// <param name="rcvMsg"></param>
-		public static void MonitorCallback(Message rcvMsg)
+		/// <param name="rcvMsgBytes"></param>
+		public static void MonitorCallback(Message rcvMsg, byte[] rcvMsgBytes)
 		{
-			var rcvPayloadBytes = rcvMsg.GetMessage();
 
 			Debug.Print("\nMonitor received " + (rcvMsg.Unicast ? "Unicast" : "Broadcast")
 						+ ", message from src: " + rcvMsg.Src
-						+ ", stream number: " + rcvPayloadBytes[0]
+						+ ", stream number: " + rcvMsgBytes[0]
 						+ ", size: " + rcvMsg.Size
 						+ ", rssi: " + rcvMsg.RSSI
 						+ ", lqi: " + rcvMsg.LQI);
 
-
-			if (rcvPayloadBytes.Length <= 1)
+			if (rcvMsgBytes.Length == 0)
 			{
-				Debug.Print("*** Monitor: message of length " + rcvPayloadBytes.Length + " received");
+				Debug.Print("*** Monitor: message of length " + rcvMsgBytes.Length + " received");
 				return;
 			}
-			var controllerMessage = rcvPayloadBytes[1];
+			var controllerMessage = rcvMsgBytes[0];
 			switch (controllerMessage)
 			{
 				case (byte)Common.ControllerMessage.Ping:
 					Debug.Print("Received " + Common.ControllerMessage.Ping);
-					_nodeMonitorSendBytes = Encoding.UTF8.GetBytes("**Pong        ");
-					_nodeMonitorSendBytes[1] = (byte)Common.NodeMessage.Pong;
-					_simpleCSMAStream.Send((Addresses)rcvMsg.Src, Common.MonitorStreamId, _nodeMonitorSendBytes);
+					Send((Addresses)rcvMsg.Src, Common.MonitorStreamId, (byte)Common.NodeMessage.Pong, Encoding.UTF8.GetBytes("Pong"));
 					break;
 				case (byte)Common.ControllerMessage.SendLCD:
 					Debug.Print("Received " + Common.ControllerMessage.SendLCD);
@@ -73,20 +71,45 @@ namespace Samraksh.AppNote.HealthMonitor
 						currLcdChar[currLcd.Length - i - 1] = currLcd[i].ToChar();
 					}
 					//var currLcdString = Encoding.UTF8.GetBytes(new string(currLcdChar));
-					_nodeMonitorSendBytes = Encoding.UTF8.GetBytes("**CurrLCD <" + new string(currLcdChar) + ">");
-					_nodeMonitorSendBytes[1] = (byte)Common.NodeMessage.CurrLCD;
-					_simpleCSMAStream.Send((Addresses)rcvMsg.Src, Common.MonitorStreamId, _nodeMonitorSendBytes);
+					Send((Addresses)rcvMsg.Src, Common.MonitorStreamId, (byte)Common.NodeMessage.CurrLCD, Encoding.UTF8.GetBytes("CurrLCD <" + new string(currLcdChar) + ">"));
 					break;
 				case (byte)Common.ControllerMessage.Reset:
-					_nodeMonitorSendBytes = Encoding.UTF8.GetBytes("**Now Resetting");
-					_nodeMonitorSendBytes[1] = (byte)Common.NodeMessage.NowResetting;
-					_simpleCSMAStream.Send((Addresses)rcvMsg.Src, Common.MonitorStreamId, _nodeMonitorSendBytes);
+					Send((Addresses)rcvMsg.Src, Common.MonitorStreamId, (byte)Common.NodeMessage.NowResetting, Encoding.UTF8.GetBytes("Now Resetting"));
+					Thread.Sleep(1000);
 					_resetPort.Write(false);
 					break;
 				default:
 					Debug.Print("Unknown message received from controller: " + controllerMessage);
 					break;
 			}
+		}
+
+		private static void Send(Addresses address, byte streamId, byte messageName, byte[] message)
+		{
+			var messageEx = new byte[message.Length + 1];
+			var msgBldr = new StringBuilder("1 ");
+			for (var i = 0; i < message.Length; i++)
+			{
+				msgBldr.Append(message[i] + " ");
+			}
+			Debug.Print(msgBldr.ToString());
+
+			// Shift the message right and insert message name
+			for (var i = 0; i <message.Length; i++)
+			{
+				messageEx[i + 1] = message[i];
+			}
+			messageEx[0] = messageName;
+
+			msgBldr = new StringBuilder("2 ");
+			for (var i = 0; i < messageEx.Length; i++)
+			{
+				msgBldr.Append(messageEx[i] + " ");
+			}
+			Debug.Print(msgBldr.ToString());
+			Debug.Print("");
+			
+			_simpleCSMAStream.Send(address, streamId, messageEx);
 		}
 	}
 }
