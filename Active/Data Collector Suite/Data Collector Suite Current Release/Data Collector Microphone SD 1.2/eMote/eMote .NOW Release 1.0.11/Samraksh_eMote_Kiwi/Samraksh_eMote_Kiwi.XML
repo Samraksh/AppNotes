@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samraksh_eMote_Kiwi</name>
+    </assembly>
+    <members>
+        <member name="M:Samraksh.eMote.SensorBoard.Accelerometer.#ctor(System.Int32,Samraksh.eMote.SensorBoard.Accelerometer.AxlCallbackType)">
+            <summary>
+            Initializes the i2c and the accelerometer sensor
+            </summary>
+            <param name="RefreshRate">controls the rate at which the driver samples the accelerometer</param>
+            <param name="callbackfunction">user callback function, if null the user is not intimated of changes in sensor values and should use polling</param>
+        </member>
+        <member name="P:Samraksh.eMote.SensorBoard.Accelerometer.RefreshRate">
+            <summary>
+            Set the value of refresh rate 
+            </summary>
+        </member>
+        <member name="P:Samraksh.eMote.SensorBoard.Accelerometer.CurrentData">
+            <summary>
+            Get the current sampling value of the accelerometer
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.SensorBoard.Accelerometer.Data.RawX">
+            <summary>
+            The raw x axis acceleration data 
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.SensorBoard.Accelerometer.Data.RawY">
+            <summary>
+            The raw y axis acceleration data 
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.SensorBoard.Accelerometer.Data.RawZ">
+            <summary>
+            The raw z axis acceleration data 
+            </summary>
+        </member>
+        <member name="P:Samraksh.eMote.SensorBoard.TemperatureSensor.Temperature">
+            <summary>
+            Read the temperature
+            </summary>
+        </member>
+    </members>
+</doc>

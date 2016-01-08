@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data Collector Host", "Data Collector Host\Data Collector Host.csproj", "{FD501799-F8F7-42F4-BDD9-B8CCBE5CA6E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{02AC9AC0-6A55-4659-818B-14D73CD18C8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD501799-F8F7-42F4-BDD9-B8CCBE5CA6E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD501799-F8F7-42F4-BDD9-B8CCBE5CA6E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD501799-F8F7-42F4-BDD9-B8CCBE5CA6E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD501799-F8F7-42F4-BDD9-B8CCBE5CA6E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02AC9AC0-6A55-4659-818B-14D73CD18C8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02AC9AC0-6A55-4659-818B-14D73CD18C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02AC9AC0-6A55-4659-818B-14D73CD18C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02AC9AC0-6A55-4659-818B-14D73CD18C8E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
