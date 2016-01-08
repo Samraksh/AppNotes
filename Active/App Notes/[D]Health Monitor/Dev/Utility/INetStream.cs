@@ -53,8 +53,5 @@ namespace Samraksh.AppNote.Utility
 		/// - Checking for stream ID requires getting the received message contents. This can only be done once.
 		/// </remarks>
 		public delegate void MessageReceived(eMote.Net.Message message, byte[] messageBytes);
-
-
 	}
-
 }
