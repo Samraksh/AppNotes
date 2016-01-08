@@ -1,0 +1,292 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samraksh_eMote_DotNow</name>
+    </assembly>
+    <members>
+        <member name="T:Samraksh.eMote.DotNow.AdcCallBack">
+            <summary>
+            Defines a delegate for the continuous mode of the callback function
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="T:Samraksh.eMote.DotNow.AnalogInput">
+            <summary>
+            AnalogInput class similar to Microsoft AnalogInput but with additional features
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.DotNow.AnalogInput.AdcInternal">
+            <summary>
+            Represents the adc internal class 
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.DotNow.AnalogInput.MyCallback">
+            <summary>
+            Represents the callback function
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.InitializeADC">
+            <summary>
+            Initializes the adc dll 
+            </summary>
+            
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.InitChannel(Microsoft.SPOT.Hardware.Cpu.AnalogChannel)">
+            <summary>
+            Initializes the adc hardware based on channel passed
+            </summary>
+            <param name="channel">channel 1 or 2</param>
+            <returns>Returns the result of the initialization operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.DualChannelRead(System.UInt16[])">
+            <summary>
+            Read both channel synchrnously
+            </summary>
+            <param name="data">array of size 2 bytes passed to the adc driver to be filled</param>
+            <returns>Returns the result of this operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.Read(Microsoft.SPOT.Hardware.Cpu.AnalogChannel)">
+            <summary>
+            Read a single channel
+            </summary>
+            <param name="channel">Channel to be read</param>
+            <returns>Returns the result of the read operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.ConfigureBatchModeDualChannel(System.UInt16[],System.UInt16[],System.UInt32,System.UInt32,Samraksh.eMote.DotNow.AdcCallBack)">
+            <summary>
+            Read the adc channels 1 and 2 in batch mode
+            </summary>
+            <param name="sampleBuff">Sample buffer to be filled</param>
+            <param name="NumSamples">Number of samples before callback</param>
+            <param name="SamplingTime">Sampling frequency</param>
+            <param name="Callback">Callback funtion to be called</param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.ConfigureBatchMode(System.UInt16[],Microsoft.SPOT.Hardware.Cpu.AnalogChannel,System.UInt32,System.UInt32,Samraksh.eMote.DotNow.AdcCallBack)">
+            <summary>
+            Read the ADC in batch mode and collect the specified number of samples before stopping
+            </summary>
+            <param name="sampleBuff">Buffer passed to the driver to be filled</param>
+            <param name="channel">Defne the channel to be read in batch mode</param>
+            <param name="NumSamples">Defines the number of samples to be read</param>
+            <param name="SamplingTime">Defines the sample time</param>
+            <param name="Callback">Defines the callback to be called when the samples are ready</param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.ConfigureContinuousMode(System.UInt16[],Microsoft.SPOT.Hardware.Cpu.AnalogChannel,System.UInt32,System.UInt32,Samraksh.eMote.DotNow.AdcCallBack)">
+            <summary>
+            Read the adc in continous mode and keep generating samples of adc forever
+            </summary>
+            <param name="SampleBuff">Buffer passed to the driver</param>
+            <param name="channel">Specify the channel to be scanned</param>
+            <param name="NumSamples">Specify the number of samples to be read before callback</param>
+            <param name="SamplingTime">Specifies the sampling time</param>
+            <param name="Callback">Specify the callback function</param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.StopSampling">
+            <summary>
+            Used to stop sampling in either continuous or batch mode 
+            </summary>
+            <returns>Returns the result of this operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.InternalCallback(System.UInt32,System.UInt32,System.DateTime)">
+            <summary>
+            Internal Callback called by the adc driver from native
+            </summary>
+            <param name="data1">Parameter passed from native</param>
+            <param name="data2"></param>
+            <param name="time"></param>
+        </member>
+        <member name="T:Samraksh.eMote.DotNow.AdcSampleTime">
+            <summary>
+            Time taken to sample in the adc driver
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.DotNow.ADCInternal">
+            <summary>
+            ADCInternal interface to the native driver
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.ADCInternal.#ctor(System.String,System.UInt64,System.Int32)">
+            <summary>
+            Specifies the driver name for matching with the native eventdispatcher
+            </summary>
+            <param name="strDrvName"></param>
+            <param name="drvData"></param>
+            <param name="callbackCount"></param>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.ADCInternal.Init(System.Int32)">
+            <summary>
+            Initializes the adc native driver
+            </summary>
+            <param name="channel">Specify the channel to be sampled</param>
+            <returns>Returns the result of the init function</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.ADCInternal.Read(System.Int32)">
+            <summary>
+            Read the channel
+            </summary>
+            <param name="channel">Specify the channel to be read</param>
+            <returns>Return the read value</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.ADCInternal.ConfigureBatchMode(System.UInt16[],System.Int32,System.UInt32,System.UInt32)">
+            <summary>
+            Configure the batch mode
+            </summary>
+            <param name="sampleBuff">Pass the buffer to be filled</param>
+            <param name="channel">Define the channel to be read</param>
+            <param name="NumSamples">Defines the number of samples to be read before callback</param>
+            <param name="SamplingTime">Defines the rate at which the adc should read channels</param>
+            <returns>Return the result of the operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.ADCInternal.ConfigureContinuousMode(System.UInt16[],System.Int32,System.UInt32,System.UInt32)">
+            <summary>
+            Configure the adc in continuous mode 
+            </summary>
+            <param name="SampleBuff">pass the buffer to be filled</param>
+            <param name="channel">pass the channel to be sampled</param>
+            <param name="NumSamples">specify the number of samples to be collected before callback</param>
+            <param name="SamplingTime">specify the rate of sampling</param>
+            <returns>Returns the result of this operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.ADCInternal.ConfigureContinuousModeWithThresholding(System.UInt16[],System.Int32,System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            Configure continuous mode adc sampling with a threshold timestamp 
+            </summary>
+            <param name="SampleBuff"></param>
+            <param name="channel"></param>
+            <param name="NumSamples"></param>
+            <param name="SamplingTime"></param>
+            <param name="threshold"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.ADCInternal.DualChannelRead(System.UInt16[])">
+            <summary>
+            Read both the channel simulateously Channel 1 followed by Channel 2
+            </summary>
+            <param name="sample">specify the buffer to be filled</param>
+            <returns>Return the result of this operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.ADCInternal.StopSampling">
+            <summary>
+            Stop batch mode and continous mode sampling of the adc 
+            </summary>
+            <returns>Returns the result of this operation</returns>
+        </member>
+        <member name="F:Samraksh.eMote.DotNow.DeviceStatus.Success">
+            <summary>
+            Success
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.DotNow.DeviceStatus.Fail">
+            <summary>
+            Fail
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.DotNow.DeviceStatus.Ready">
+            <summary>
+            Ready
+            </summary>
+        </member>
+        <member name="F:Samraksh.eMote.DotNow.DeviceStatus.Busy">
+            <summary>
+            Busy 
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.DotNow.Blink">
+            <summary>
+            LCD blink rate
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.DotNow.LCD">
+            <summary>
+            LCD char enum
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.DotNow.EmoteLCD">
+            <summary>
+            Emote LCD Interface class
+            </summary>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.EmoteLCD.Initialize">
+            <summary>
+            Initializes the lcd hardware
+            </summary>
+            <returns>The result of lcd initialization: Success, Fail</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.EmoteLCD.Uninitialize">
+            <summary>
+            Uninitializes the lcd hardware
+            </summary>
+            <returns>The result of lcd uninitialize: Success, Fail</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.EmoteLCD.Write(Samraksh.eMote.DotNow.LCD,Samraksh.eMote.DotNow.LCD,Samraksh.eMote.DotNow.LCD,Samraksh.eMote.DotNow.LCD)">
+            <summary>
+            Write to all columns of the lcd interface 
+            </summary>
+            <param name="data4">Columns 4</param>
+            <param name="data3">Columns 3</param>
+            <param name="data2">Columns 2</param>
+            <param name="data1">Columns 1</param>
+            <returns>The result of the write operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.EmoteLCD.SetDP(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Set the decimal point
+            </summary>
+            <param name="dp1">Columns 1</param>
+            <param name="dp2">Columns 2</param>
+            <param name="dp3">Columns 3</param>
+            <param name="dp4">Columns 4</param>
+            <returns>The result ofthe write operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.EmoteLCD.WriteN(System.Int32,Samraksh.eMote.DotNow.LCD)">
+            <summary>
+            Writes to the specified column on the lcd 
+            </summary>
+            <param name="column">Specifies the column on the lcd hardware</param>
+            <param name="data">Sepcifies the characted to be printed</param>
+            <returns>The result of the write operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.EmoteLCD.WriteRawBytes(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Write raw data to the lcd instead of characters
+            </summary>
+            <param name="data4">Column 4</param>
+            <param name="data3">Column 3</param>
+            <param name="data2">Column 2</param>
+            <param name="data1">Column 1</param>
+            <returns>Return the result of the write operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.EmoteLCD.Blink(Samraksh.eMote.DotNow.Blink)">
+            <summary>
+            Set the lcd to blink
+            </summary>
+            <param name="blinkType">Defines the rate of the blink</param>
+            <returns>Returns the result of the blink operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.EmoteLCD.Clear">
+            <summary>
+            Clear the lcd 
+            </summary>
+            <returns>Returns the result of the clear operation</returns>
+        </member>
+        <member name="M:Samraksh.eMote.DotNow.NOR.Initialize">
+            <summary>
+            Initialize the nor flash
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Samraksh.eMote.DotNow.Pins">
+            <summary>
+            Screw termial pin mapping
+            </summary>
+        </member>
+        <member name="T:Samraksh.eMote.DotNow.ADCChannel">
+            <summary>
+            Emote ADC channel mapping
+            </summary>
+        </member>
+    </members>
+</doc>
