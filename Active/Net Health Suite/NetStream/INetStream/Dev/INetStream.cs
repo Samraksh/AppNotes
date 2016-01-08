@@ -1,3 +1,4 @@
+using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 
 namespace Samraksh.AppNote.Utility
@@ -52,6 +53,6 @@ namespace Samraksh.AppNote.Utility
 		/// - It excludes the stream ID.
 		/// - Checking for stream ID requires getting the received message contents. This can only be done once.
 		/// </remarks>
-		public delegate void MessageReceived(eMote.Net.Message message, byte[] messageBytes);
+		public delegate void MessageReceived(Message message, byte[] messageBytes);
 	}
 }

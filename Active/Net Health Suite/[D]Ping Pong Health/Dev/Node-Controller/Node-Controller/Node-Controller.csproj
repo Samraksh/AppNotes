@@ -40,20 +40,17 @@
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="Samraksh.AppNote.Utility.BitConverter">
-      <HintPath>..\..\..\..\Utility Classes\General\BitConverter\bin\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
-    </Reference>
     <Reference Include="Samraksh.AppNote.Utility.SerialComm">
-      <HintPath>..\..\..\..\Utility Classes\General\SerialComm\bin\Samraksh.AppNote.Utility.SerialComm.dll</HintPath>
+      <HintPath>..\..\..\..\..\Utilities\General\SerialComm\bin\Samraksh.AppNote.Utility.SerialComm.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA">
-      <HintPath>..\..\..\..\Utility Classes\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
+      <HintPath>..\..\..\..\..\Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
-      <HintPath>..\..\..\..\Utility Classes\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+      <HintPath>..\..\..\..\..\Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net">
-      <HintPath>..\..\..\..\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>..\..\..\..\..\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -64,13 +61,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\NetStream\CSMANetStream\Dev\SimpleCSMAStream.csproj">
+      <Project>{50BDE36D-9F51-4AF5-922F-A046C9467217}</Project>
+      <Name>SimpleCSMAStream</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\NetStream\INetStream\Dev\INetStream.csproj">
+      <Project>{C8041059-E012-4169-8624-B429AA72E6FD}</Project>
+      <Name>INetStream</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Node-Common\Node-Common\Node-Common.csproj">
       <Project>{BCB6C168-CB4C-4A66-9ED0-ADE99A572758}</Project>
       <Name>Node-Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Utility\Utility.csproj">
-      <Project>{B467457F-66F9-4B61-9BF2-990AF8220161}</Project>
-      <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />

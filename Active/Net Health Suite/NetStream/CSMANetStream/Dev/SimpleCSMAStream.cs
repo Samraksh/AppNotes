@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
-using System.Text;
 using Microsoft.SPOT;
-//using Samraksh.AppNote.HealthMonitor;
+using Samraksh.AppNote.Utility;
 using Samraksh.eMote.Net.Mac;
 
-namespace Samraksh.AppNote.Utility
+
+namespace Samraksh.AppNote.Health
 {
 
 	///<summary>
