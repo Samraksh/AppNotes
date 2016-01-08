@@ -1,0 +1,350 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samraksh.AppNote.Utility.BitConverter</name>
+    </assembly>
+    <members>
+        <member name="T:Samraksh.AppNote.Utility.BitConverter">
+            <summary>
+            Converts base data types to an array of bytes, and an array of bytes to base data types.
+            </summary>
+        </member>
+        <member name="F:Samraksh.AppNote.Utility.BitConverter.IsLittleEndian">
+            <summary>
+            Indicates the byte order ("endianness") in which data is stored in this computer architecture.
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Boolean)">
+            <summary>
+            Returns the specified Boolean value as an array of bytes.
+            </summary>
+            <param name="value">A Boolean value. </param>
+            <returns>An array of bytes with length 1.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.Boolean)">
+            <summary>
+            Returns the specified Boolean value as an array of bytes
+            </summary>
+            <param name="array">The return array: bytes[1]</param>
+            <param name="value">A Boolean value</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToBoolean(System.Byte[],System.Int32)">
+            <summary>
+            Returns a Boolean value converted from one byte at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes. </param>
+            <param name="startIndex">The starting position within value. </param>
+            <returns>true if the byte at startIndex in value is nonzero; otherwise, false.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.Char)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Char)">
+            <summary>
+            Returns the specified Unicode character value as an array of bytes.
+            </summary>
+            <param name="value">A character to convert.</param>
+            <returns>An array of bytes with length 2.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.Char)">
+            <summary>
+            Returns the specified Unicode character value as an array of bytes.
+            </summary>
+            <param name="array">The return array: bytes[2]</param>
+            <param name="value">A character to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToChar(System.Byte[],System.Int32)">
+            <summary>
+            Returns a Unicode character converted from two bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A character formed by two bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.Int16)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Int16)">
+            <summary>
+            Returns the specified 16-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 2.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.Int16)">
+            <summary>
+            Returns the specified 16-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="array">The return array: bytes[2]</param>
+            <param name="value">The number to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToInt16(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 16-bit signed integer converted from two bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 16-bit signed integer formed by two bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.UInt16)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.UInt16)">
+            <summary>
+            Returns the specified 16-bit unsigned integer value as an array of bytes.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 2.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.UInt16)">
+            <summary>
+            Returns the specified 16-bit unsigned integer value as an array of bytes.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="array">The return array: byte[]</param>
+            <param name="value">The number to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.Int32,System.UInt16)">
+            <summary>
+            Returns the specified 16-bit unsigned integer value as an array of bytes.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="array">The return array: byte[]</param>
+            <param name="offset">Offset into the array</param>
+            <param name="value">The number to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToUInt16(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 16-bit unsigned integer converted from two bytes at a specified position in a byte array.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 16-bit unsigned integer formed by two bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Int32)">
+            <summary>
+            Returns the specified 32-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 4.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.Int32)">
+            <summary>
+            Returns the specified 32-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="array">The return array: byte[]</param>
+            <param name="value">The number to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToInt32(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 32-bit signed integer converted from four bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 32-bit signed integer formed by four bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.UInt32)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.UInt32)">
+            <summary>
+            Returns the specified 32-bit unsigned integer value as an array of bytes.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 4.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.UInt32)">
+            <summary>
+            Returns the specified 32-bit unsigned integer value as an array of bytes.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="array">The return array: byte[4]</param>
+            <param name="value">The number to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToUInt32(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 32-bit unsigned integer converted from four bytes at a specified position in a byte array.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 32-bit unsigned integer formed by four bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.Int64)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Int64)">
+            <summary>
+            Returns the specified 64-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert. </param>
+            <returns>An array of bytes with length 8.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.Int64)">
+            <summary>
+            Returns the specified 64-bit signed integer value as an array of bytes.
+            </summary>
+            <param name="array">The return array: byte[8]</param>
+            <param name="value">The number to convert. </param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToInt64(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 64-bit signed integer converted from eight bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 64-bit signed integer formed by eight bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.UInt64)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.UInt64)">
+            <summary>
+            Returns the specified 64-bit unsigned integer value as an array of bytes.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 8.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.UInt64)">
+            <summary>
+            Returns the specified 64-bit unsigned integer value as an array of bytes.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="array">The return array: byte[8]</param>
+            <param name="value">The number to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToUInt64(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 64-bit unsigned integer converted from eight bytes at a specified position in a byte array.
+            This API is not CLS-compliant. 
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 64-bit unsigned integer formed by the eight bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.Single)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Single)">
+            <summary>
+            Returns the specified single-precision floating point value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 4.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.Single)">
+             <summary>
+             Returns the specified single-precision floating point value as an array of bytes.
+             </summary>
+            <param name="array">The return array: byte[4]</param>
+             <param name="value">The number to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToSingle(System.Byte[],System.Int32)">
+            <summary>
+            Returns a single-precision floating point number converted from four bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A single-precision floating point number formed by four bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.InsertValueIntoArray(System.Byte[],System.Int32,System.Double)">
+            <summary>
+            Inserts a value at a specified position in a byte array.
+            </summary>
+            <param name="data">The array into which you want to insert the specified value.</param>
+            <param name="startIndex">The position in the array where you want to insert the specified value.</param>
+            <param name="value">The value you want to insert into the array.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Double)">
+            <summary>
+            Returns the specified double-precision floating point value as an array of bytes.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>An array of bytes with length 8.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.GetBytes(System.Byte[],System.Double)">
+            <summary>
+            Returns the specified double-precision floating point value as an array of bytes.
+            </summary>
+            <param name="array">The return array: byte[8]</param>
+            <param name="value">The number to convert.</param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.ToDouble(System.Byte[],System.Int32)">
+            <summary>
+            Returns a double-precision floating point number converted from eight bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A double precision floating point number formed by eight bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.DoubleToInt64Bits(System.Double)">
+            <summary>
+            Converts the specified double-precision floating point number to a 64-bit signed integer.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>A 64-bit signed integer whose value is equivalent to value.</returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.BitConverter.Int64BitsToDouble(System.Int64)">
+            <summary>
+            Converts the specified 64-bit signed integer to a double-precision floating point number.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <returns>A double-precision floating point number whose value is equivalent to value.</returns>
+        </member>
+    </members>
+</doc>

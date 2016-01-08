@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samraksh.AppNote.Utility.VersionInfo</name>
+    </assembly>
+    <members>
+        <member name="T:Samraksh.AppNote.Utility.VersionInfo">
+            <summary>
+            Get version info
+            </summary>
+            <remarks>
+            See http://stackoverflow.com/a/1601079/468523
+            </remarks>
+        </member>
+        <member name="F:Samraksh.AppNote.Utility.VersionInfo._theVersion">
+            <summary>
+            The version for which info is required
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.VersionInfo.Init(System.Reflection.Assembly)">
+            <summary>
+            Initialize the version
+            </summary>
+            <remarks>Skip this if you want version info from the assembly in which this class resides</remarks>
+            <param name="theAssembly"></param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.VersionInfo.VersionBuild(System.Reflection.Assembly)">
+            <summary>
+            Initialize assembly value and return a text string with version and build info
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.VersionInfo.VersionBuild">
+            <summary>
+            Return a text string with version and build info
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Samraksh.AppNote.Utility.VersionInfo.Version">
+            <summary>
+            Current build Major.Minor version info
+            </summary>
+        </member>
+        <member name="P:Samraksh.AppNote.Utility.VersionInfo.BuildDateTime">
+            <summary>
+            Current build DateTime
+            </summary>
+        </member>
+    </members>
+</doc>

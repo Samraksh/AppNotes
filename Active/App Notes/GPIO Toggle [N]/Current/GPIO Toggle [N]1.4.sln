@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPIO Toggle [N]", "GPIO Toggle [N]\GPIO Toggle [N].csproj", "{F49B16AA-2AB7-4B81-8A41-46A95384465D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{3E7DD605-4B0E-45EE-8EFB-B3DDEFEAF32F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F49B16AA-2AB7-4B81-8A41-46A95384465D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F49B16AA-2AB7-4B81-8A41-46A95384465D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F49B16AA-2AB7-4B81-8A41-46A95384465D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F49B16AA-2AB7-4B81-8A41-46A95384465D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F49B16AA-2AB7-4B81-8A41-46A95384465D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F49B16AA-2AB7-4B81-8A41-46A95384465D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3E7DD605-4B0E-45EE-8EFB-B3DDEFEAF32F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E7DD605-4B0E-45EE-8EFB-B3DDEFEAF32F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E7DD605-4B0E-45EE-8EFB-B3DDEFEAF32F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E7DD605-4B0E-45EE-8EFB-B3DDEFEAF32F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
