@@ -1,7 +1,6 @@
 using System.Reflection;
 using System.Text;
 using System.Threading;
-using Microsoft.SPOT;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;

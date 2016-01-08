@@ -41,13 +41,19 @@
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Samraksh.AppNote.Utility.BitConverter">
-      <HintPath>..\..\eMote .NOW Utilities Version 4.3.0.14\BitConverter\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
+      <HintPath>..\..\..\..\Utility Classes\General\BitConverter\bin\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.SerialComm">
+      <HintPath>..\..\..\..\Utility Classes\General\SerialComm\bin\Samraksh.AppNote.Utility.SerialComm.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA">
+      <HintPath>..\..\..\..\Utility Classes\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
-      <HintPath>..\..\eMote .NOW Utilities Version 4.3.0.14\VersionInfo\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+      <HintPath>..\..\..\..\Utility Classes\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net">
-      <HintPath>..\..\..\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>..\..\..\..\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -58,10 +64,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Active\Utility Classes\DotNow\SimpleCSMA\SimpleCSMA\Utility.SimpleCSMA.csproj">
-      <Project>{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}</Project>
-      <Name>Utility.SimpleCSMA</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Node-Common\Node-Common\Node-Common.csproj">
       <Project>{BCB6C168-CB4C-4A66-9ED0-ADE99A572758}</Project>
       <Name>Node-Common</Name>
