@@ -4,13 +4,7 @@
  * Versions
  *  1.0 
  *      - Initial Version
- *  1.1 
- *      - Made Display more efficient
- *  1.2 
- *      - Migrated to new eMote namespace and changed Display to Write and obseleted Display
- *  1.3
- *      - Migrated to eMote v. 14, added CurrentChars and CurrentDPs and extended base methods that modified display
-=========================*/
+ ========================*/
 
 using System;
 using Samraksh.eMote.DotNow;

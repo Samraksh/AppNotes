@@ -36,7 +36,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Samraksh_eMote_DotNow">
-      <HintPath>..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />

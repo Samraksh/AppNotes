@@ -15,7 +15,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -39,12 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
-      <HintPath>..\Utility Classes\VersionInfo\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
-    </Reference>
     <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
