@@ -3,9 +3,6 @@
  *  Generate version number and build date/time
  * Versions
  *  1.0 Initial Version
- *  1.1 Added VersionDateTime property
- *  1.2 Added VersionBuild method (and overload)
- *  
  ========================*/
 
 using System;
