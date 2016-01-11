@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samraksh.AppNote.Utility.SimpleTimer</name>
+    </assembly>
+    <members>
+        <member name="T:Samraksh.AppNote.Utility.SimpleTimerBase">
+            <summary>
+            Simplified timer. Makes it easier to manage one-shot and periodic timers
+            </summary>
+        </member>
+        <member name="F:Samraksh.AppNote.Utility.SimpleTimerBase.InitialDueTime">
+            <summary>Initially-specified due time</summary>
+        </member>
+        <member name="F:Samraksh.AppNote.Utility.SimpleTimerBase.InitialPeriod">
+            <summary>Initially-specified period</summary>
+        </member>
+        <member name="F:Samraksh.AppNote.Utility.SimpleTimerBase.CurrDueTime">
+            <summary>Current due time</summary>
+        </member>
+        <member name="F:Samraksh.AppNote.Utility.SimpleTimerBase.CurrPeriod">
+            <summary>Current period</summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.SimpleTimerBase.Start">
+            <summary>
+            Start (or restart) the timer
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.SimpleTimerBase.Stop">
+            <summary>
+            Stop the timer
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.SimpleTimerBase.CallBack(System.Object)">
+            <summary>
+            Prevent disposal during callback
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="P:Samraksh.AppNote.Utility.SimpleTimerBase.UserCallback">
+            <summary>User callback</summary>
+        </member>
+        <member name="P:Samraksh.AppNote.Utility.SimpleTimerBase.CallBackValue">
+            <summary>Call back value</summary>
+        </member>
+        <member name="P:Samraksh.AppNote.Utility.SimpleTimerBase.StartTime">
+            <summary>
+            Timer start time
+            </summary>
+        </member>
+        <member name="P:Samraksh.AppNote.Utility.SimpleTimerBase.IsStopped">
+            <summary>
+            Check if the timer is stopped
+            </summary>
+        </member>
+        <member name="T:Samraksh.AppNote.Utility.SimpleTimer">
+            <summary>
+            Timer with a simplified interface
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.SimpleTimer.#ctor(System.Threading.TimerCallback,System.Object,System.Int32)">
+            <summary>
+            This creates a one-shot timer since the period is 0
+            </summary>
+            <param name="userCallback"></param>
+            <param name="callBackValue"></param>
+            <param name="dueTime"></param>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.SimpleTimer.#ctor(System.Threading.TimerCallback,System.Object,System.Int32,System.Int32)">
+            <summary>
+            This creates a periodic timer
+            </summary>
+            <param name="userCallback"></param>
+            <param name="callBackValue"></param>
+            <param name="dueTime"></param>
+            <param name="period"></param>
+        </member>
+        <member name="T:Samraksh.AppNote.Utility.SimpleOneshotTimer">
+            <summary>
+            Simple one-shot timer
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.SimpleOneshotTimer.#ctor(System.Threading.TimerCallback,System.Object,System.Int32)">
+            <summary>
+            One-Shot Timer
+            </summary>
+            <param name="userCallback"></param>
+            <param name="callBackValue"></param>
+            <param name="dueTime"></param>
+        </member>
+        <member name="T:Samraksh.AppNote.Utility.SimplePeriodicTimer">
+            <summary>
+            Simple periodic timer
+            </summary>
+        </member>
+        <member name="M:Samraksh.AppNote.Utility.SimplePeriodicTimer.#ctor(System.Threading.TimerCallback,System.Object,System.Int32,System.Int32)">
+            <summary>
+            Periodic Timer
+            </summary>
+            <param name="userCallback"></param>
+            <param name="callBackValue"></param>
+            <param name="dueTime"></param>
+            <param name="period"></param>
+        </member>
+    </members>
+</doc>
