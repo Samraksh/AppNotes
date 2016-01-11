@@ -43,8 +43,26 @@
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="Samraksh.AppNote.Utility.BitConverter">
+      <HintPath>..\..\..\..\..\Utilities\General\BitConverter\bin\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.EnhancedEmoteLCD">
+      <HintPath>..\..\..\..\..\Utilities\DotNow\EnhancedEmoteLCD\bin\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
+    </Reference>
     <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA">
       <HintPath>..\..\..\..\..\Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.SimpleTimer">
+      <HintPath>..\..\..\..\..\Utilities\General\SimpleTimer\bin\Samraksh.AppNote.Utility.SimpleTimer.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
+      <HintPath>..\..\..\..\..\Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh_eMote_DotNow">
+      <HintPath>..\..\..\..\..\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh_eMote_Net">
+      <HintPath>..\..\..\..\..\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +73,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\NetStream\CSMANetStream\Dev\SimpleCSMAStream.csproj">
+      <Project>{50BDE36D-9F51-4AF5-922F-A046C9467217}</Project>
+      <Name>SimpleCSMAStream</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\NetStream\INetStream\Dev\INetStream.csproj">
+      <Project>{C8041059-E012-4169-8624-B429AA72E6FD}</Project>
+      <Name>INetStream</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Node-Common\Node-Common\Node-Common.csproj">
       <Project>{BCB6C168-CB4C-4A66-9ED0-ADE99A572758}</Project>
       <Name>Node-Common</Name>

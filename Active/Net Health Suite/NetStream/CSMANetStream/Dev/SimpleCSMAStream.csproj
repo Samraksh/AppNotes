@@ -34,7 +34,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA">
+    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA, Version=1.6.5850.29060, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net">

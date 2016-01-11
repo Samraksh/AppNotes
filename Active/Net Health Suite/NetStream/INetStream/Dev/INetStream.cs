@@ -1,7 +1,7 @@
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 
-namespace Samraksh.AppNote.Utility
+namespace Samraksh.AppNote.Health
 {
 	/// <summary>
 	/// Interface for network streams

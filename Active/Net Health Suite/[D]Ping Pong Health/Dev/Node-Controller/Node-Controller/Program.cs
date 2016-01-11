@@ -9,26 +9,31 @@ using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh.AppNote.HealthMonitor
 {
+	/// <summary>
+	/// Main program
+	/// </summary>
 	public static class Program
 	{
 		private static SerialComm _serialComm;
 		private static SimpleCSMAStream _simpleCSMAStream;
 
+		/// <summary>
+		/// Main program
+		/// </summary>
 		public static void Main()
 		{
-
 			_serialComm = new SerialComm("COM2", SerialCallback);
 			_serialComm.Open();
 
 			SerialWriteCrLf("\r \nNode-Controller " + VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
-
-			ShowHelp();
 
 			var simpleCSMA = new SimpleCSMA(RadioName.RF231RADIO, SimpleCSMA.Default.CCASenseTime, SimpleCSMA.Default.TxPowerValue, Common.Channel);
 			_simpleCSMAStream = new SimpleCSMAStream(simpleCSMA);
 
 			var monitorStreamCallback = new StreamCallback(Common.MonitorStreamId, MonitorCallback);
 			_simpleCSMAStream.Subscribe(monitorStreamCallback);
+
+			ShowHelp();
 
 			Thread.Sleep(Timeout.Infinite);
 		}
@@ -103,7 +108,7 @@ namespace Samraksh.AppNote.HealthMonitor
 
 		private static string SourceRssi(Message rcvMsg)
 		{
-			return " from " + rcvMsg.Src + ", rssi " + rcvMsg.RSSI;
+			return "\r \n\tfrom " + rcvMsg.Src + ", rssi " + rcvMsg.RSSI;
 		}
 
 		private static string Bytes2String(byte[] packet, int start, int length)

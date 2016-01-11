@@ -15,7 +15,8 @@ namespace Samraksh.AppNote.Health
 	{
 		private readonly ArrayList _streamCallbacks = new ArrayList();
 
-		private readonly SimpleCSMA _simpleCSMA;
+		/// <summary>SimpleCSMA instance</summary>
+		public SimpleCSMA SimpleCSMAInstance { get; private set; }
 
 		/// <summary>
 		/// Constructor
@@ -23,10 +24,10 @@ namespace Samraksh.AppNote.Health
 		/// <remarks>
 		/// Save the SimpleCSMA object and subscribe to it.
 		/// </remarks>
-		public SimpleCSMAStream(SimpleCSMA simpleCSMA)
+		public SimpleCSMAStream(SimpleCSMA simpleCSMAInstance)
 		{
-			_simpleCSMA = simpleCSMA;
-			_simpleCSMA.OnReceive += ReceivePacketHandler;
+			SimpleCSMAInstance = simpleCSMAInstance;
+			SimpleCSMAInstance.OnReceive += ReceivePacketHandler;
 		}
 
 		/// <summary>
@@ -118,7 +119,7 @@ namespace Samraksh.AppNote.Health
 
 			//Common.PrintByteVals("H snd ",messageEx);
 
-			_simpleCSMA.Send(dest, messageEx);
+			SimpleCSMAInstance.Send(dest, messageEx);
 		}
 
 	}
