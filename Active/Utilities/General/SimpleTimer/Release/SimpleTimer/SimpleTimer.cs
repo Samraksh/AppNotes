@@ -3,12 +3,6 @@
  *  Define a simple one-shot or recurring timer
  * Versions
  *  1.0 Initial Version
- *  1.1 Fixed bugs 
- *      - Recurring timer
- *      - Thread-safe callback (use CallBack method with lock)
- *  1.2:
- *		- Refactored into SimpleOneshotTimer and SimplePeriodicTimer
- *		- Obsoleted SimpleTimer
 =========================*/
 
 using System;
