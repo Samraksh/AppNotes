@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="..\Dlls\Samraksh_SPOT\Samraksh_SPOT.dll" DocType="DX.NET" IsLocalizationDisabled="false">
+  <RelatedProject>eMote .NOW.dxp</RelatedProject>
+  <State>
+    <Attributes />
+  </State>
+  <LastSelectedItem>Samraksh_SPOT~Samraksh.SPOT.NonVolatileMemory.DataAllocation</LastSelectedItem>
+  <item qn="Samraksh_SPOT~Samraksh.SPOT.NonVolatileMemory.DataAllocation">
+    <requirements ChangeDateTime="2014-01-24T18:33:29.066351Z">&lt;br&gt;</requirements>
+    <exampleintro ChangeDateTime="2014-01-24T19:43:33.8248494Z">&lt;p&gt;&lt;font color="green" face="Consolas" size="2"&gt;&lt;font color="green" face="Consolas" size="2"&gt;&lt;font color="green" face="Consolas" size="2"&gt;// Get an instance of the DataStore and initialize it for the onboard (NOR) flash&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;var&lt;/font&gt;&lt;/font&gt;&lt;/font&gt; &lt;font face="Consolas" size="2"&gt;&lt;font face="Consolas" size="2"&gt;dStore =&lt;/font&gt;&lt;/font&gt; &lt;font color="#2b91af" face="Consolas" size="2"&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;DataStore&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;font face="Consolas" size="2"&gt;&lt;font face="Consolas" size="2"&gt;.Instance;&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font face="Consolas" size="2"&gt;&lt;font face="Consolas" size="2"&gt;dStore.InitDataStore((&lt;/font&gt;&lt;/font&gt;&lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;int&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;font face="Consolas" size="2"&gt;&lt;font face="Consolas" size="2"&gt;)&lt;/font&gt;&lt;/font&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;StorageType&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;font face="Consolas" size="2"&gt;&lt;font face="Consolas" size="2"&gt;.NOR);&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font color="green" face="Consolas" size="2"&gt;&lt;font color="green" face="Consolas" size="2"&gt;&lt;font color="green" face="Consolas" size="2"&gt;// Allocate space from the DataStore&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font color="green" face="Consolas" size="2"&gt;&lt;font color="green" face="Consolas" size="2"&gt;&lt;font color="green" face="Consolas" size="2"&gt;// This allocation allocates 512 Uint16's&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;var&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&amp;nbsp;&lt;font face="Consolas"&gt;alloc &lt;/font&gt;= &lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;new&lt;/font&gt;&lt;/font&gt;&lt;/font&gt; &lt;font color="#2b91af" face="Consolas" size="2"&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;DataAllocation&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;font face="Consolas" size="2"&gt;&lt;font face="Consolas" size="2"&gt;(dStore, 512,&lt;/font&gt;&lt;/font&gt; &lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;&lt;font color="blue" face="Consolas" size="2"&gt;typeof&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;font face="Consolas" size="2"&gt;&lt;font face="Consolas" size="2"&gt;(&lt;/font&gt;&lt;/font&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;&lt;font color="#2b91af" face="Consolas" size="2"&gt;UInt16&lt;/font&gt;&lt;/font&gt;&lt;/font&gt;&lt;font face="Consolas" size="2"&gt;&lt;font face="Consolas" size="2"&gt;));&lt;/font&gt;&lt;/font&gt;&lt;/p&gt;</exampleintro>
+  </item>
+  <item qn="Samraksh_SPOT~Samraksh.SPOT.NonVolatileMemory.DataAllocation~Write">
+    <summary ChangeDateTime="2014-01-24T18:34:37.7022768Z">&lt;br&gt;</summary>
+  </item>
+  <item qn="Samraksh_SPOT~Samraksh.SPOT.NonVolatileMemory.DataStore">
+    <requirements ChangeDateTime="2014-01-24T19:18:00.9031713Z">&lt;br&gt;</requirements>
+  </item>
+  <item qn="Samraksh_SPOT~Samraksh.SPOT.NonVolatileMemory.DataStore~Finalize">
+    <summary ChangeDateTime="2014-01-24T19:18:48.8689148Z">&lt;br&gt;</summary>
+  </item>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+    <DX.NETCONTENTSTOREFILTER>
+      <ShowProtectedMembers>true</ShowProtectedMembers>
+      <ShowProtectedFriendMembers>true</ShowProtectedFriendMembers>
+      <ShowFriendMembers>false</ShowFriendMembers>
+      <ShowPrivateMembers>false</ShowPrivateMembers>
+      <ShowInheritedMembers>false</ShowInheritedMembers>
+      <IsSourceCodeContentVisible>true</IsSourceCodeContentVisible>
+    </DX.NETCONTENTSTOREFILTER>
+  </Filters>
+</ContentFile>

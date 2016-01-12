@@ -57,7 +57,7 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 			Debug.Print("\nHealth Monitor " + VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 			Thread.Sleep(4000);
 
-			// Set up CSMA and CSMA Stream
+			// Set up SimpleCSMA and SimpleCSMAStream
 			var simpleCSMA = new SimpleCSMA(RadioName.RF231RADIO, SimpleCSMA.Default.CCASenseTime, SimpleCSMA.Default.TxPowerValue, Common.Channel);
 			_simpleCSMAStream = new SimpleCSMAStream(simpleCSMA);
 

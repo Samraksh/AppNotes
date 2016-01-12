@@ -34,16 +34,17 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA, Version=1.6.5850.29060, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA, Version=1.6.5854.26780, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\SimpleCSMA\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_eMote_Net">
-      <HintPath>..\..\..\..\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\INetStream\Dev\INetStream.csproj">
+    <ProjectReference Include="..\INetStream\INetStream.csproj">
       <Project>{C8041059-E012-4169-8624-B429AA72E6FD}</Project>
       <Name>INetStream</Name>
     </ProjectReference>

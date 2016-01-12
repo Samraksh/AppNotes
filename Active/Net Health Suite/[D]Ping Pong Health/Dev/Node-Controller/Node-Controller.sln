@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node-Controller", "Node-Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node-Common", "..\Node-Common\Node-Common\Node-Common.csproj", "{BCB6C168-CB4C-4A66-9ED0-ADE99A572758}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCSMAStream", "..\..\..\NetStream\CSMANetStream\Dev\SimpleCSMAStream.csproj", "{50BDE36D-9F51-4AF5-922F-A046C9467217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCSMAStream", "..\NetStream\CSMANetStream\SimpleCSMAStream.csproj", "{50BDE36D-9F51-4AF5-922F-A046C9467217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INetStream", "..\..\..\NetStream\INetStream\Dev\INetStream.csproj", "{C8041059-E012-4169-8624-B429AA72E6FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INetStream", "..\NetStream\INetStream\INetStream.csproj", "{C8041059-E012-4169-8624-B429AA72E6FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
