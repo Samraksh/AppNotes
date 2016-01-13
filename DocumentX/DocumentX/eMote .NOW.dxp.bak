@@ -42,7 +42,7 @@
   <JavaProjectPlugin />
   <DotNetAssemblies>
     <ReferencePaths>
-      <ReferencePath Id="4c457ec3-5f62-440f-962b-b316c6d80f1e" Name="Microsoft.SPOT.Hardware" Directory="..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Assemblies\be" />
+      <ReferencePath Id="4c457ec3-5f62-440f-962b-b316c6d80f1e" Name="Microsoft.SPOT.Hardware" Directory="..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Assemblies\be" />
     </ReferencePaths>
     <Assembly FileName="..\Samraksh_eMote\Samraksh_eMote.dll" RootTypeName="" />
     <Assembly FileName="..\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll" RootTypeName="" />
@@ -1393,7 +1393,7 @@
         </CustomHtmlHelpWindowSettings>
         <IsWebOutputRootPageLinkEnabled>false</IsWebOutputRootPageLinkEnabled>
         <Help3RedirectRelativePath>../</Help3RedirectRelativePath>
-        <HelpFileName>eMote .NOW Help Viewer.chm</HelpFileName>
+        <HelpFileName>build\eMote .NOW Help Viewer CHM\eMote .NOW Help Viewer.chm</HelpFileName>
       </HelpCompiler>
       <RuleEngine>
         <Rules Caption="" IsReadOnly="false" MatchType="All" Id="root">
@@ -1496,6 +1496,24 @@
           <ProjectLocale CultureId="-" />
         </BuildConfigurationItem>
         <BuildConfigurationItem ProjectProfileId="d5fab87f-3ca9-47f5-9e86-74acfd6c5483" IsIncluded="false">
+          <ProjectLocale CultureId="-" />
+        </BuildConfigurationItem>
+      </BuildConfigurationItems>
+    </BuildConfiguration>
+    <BuildConfiguration Id="532ec0fb-4b89-4e28-acbc-4ddef46ce520" Name="Build Help Only">
+      <Events>
+        <EventGroup Id="d66cd273-11c1-429c-80b3-2a2ac03a51b4">
+          <Events />
+        </EventGroup>
+      </Events>
+      <BuildConfigurationItems>
+        <BuildConfigurationItem ProjectProfileId="6b2cfb6d-7340-49af-9cfb-d31ec7a4a0d5" IsIncluded="true">
+          <ProjectLocale CultureId="-" />
+        </BuildConfigurationItem>
+        <BuildConfigurationItem ProjectProfileId="a5fc17b2-b2a3-4035-ae2f-9f731eb113a8" IsIncluded="false">
+          <ProjectLocale CultureId="-" />
+        </BuildConfigurationItem>
+        <BuildConfigurationItem ProjectProfileId="d5fab87f-3ca9-47f5-9e86-74acfd6c5483" IsIncluded="true">
           <ProjectLocale CultureId="-" />
         </BuildConfigurationItem>
       </BuildConfigurationItems>

@@ -42,7 +42,7 @@
   <JavaProjectPlugin />
   <DotNetAssemblies>
     <ReferencePaths>
-      <ReferencePath Id="4c457ec3-5f62-440f-962b-b316c6d80f1e" Name="Microsoft.SPOT.Hardware" Directory="..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Assemblies\be" />
+      <ReferencePath Id="4c457ec3-5f62-440f-962b-b316c6d80f1e" Name="Microsoft.SPOT.Hardware" Directory="..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Assemblies\be" />
     </ReferencePaths>
     <Assembly FileName="..\Samraksh_eMote\Samraksh_eMote.dll" RootTypeName="" />
     <Assembly FileName="..\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll" RootTypeName="" />
@@ -512,7 +512,7 @@
         </CustomHtmlHelpWindowSettings>
         <IsWebOutputRootPageLinkEnabled>false</IsWebOutputRootPageLinkEnabled>
         <Help3RedirectRelativePath>../</Help3RedirectRelativePath>
-        <HelpFileName></HelpFileName>
+        <HelpFileName>build\eMote .NOW Help Viewer\eMote _NOW Help Viewer.mshc</HelpFileName>
       </HelpCompiler>
       <RuleEngine>
         <Rules Caption="" IsReadOnly="false" MatchType="All" Id="root">
@@ -1393,7 +1393,7 @@
         </CustomHtmlHelpWindowSettings>
         <IsWebOutputRootPageLinkEnabled>false</IsWebOutputRootPageLinkEnabled>
         <Help3RedirectRelativePath>../</Help3RedirectRelativePath>
-        <HelpFileName>eMote .NOW Help Viewer.chm</HelpFileName>
+        <HelpFileName>build\eMote .NOW Help Viewer CHM\eMote .NOW Help Viewer.chm</HelpFileName>
       </HelpCompiler>
       <RuleEngine>
         <Rules Caption="" IsReadOnly="false" MatchType="All" Id="root">

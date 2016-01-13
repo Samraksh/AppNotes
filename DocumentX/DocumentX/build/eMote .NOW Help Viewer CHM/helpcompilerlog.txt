@@ -1,7 +1,7 @@
-﻿-- Compile started at Tuesday, 12 January 2016 07:35:53
+﻿-- Compile started at Tuesday, 12 January 2016 12:35:30
 Microsoft HTML Help Compiler 4.74.8702
 
-Compiling c:\Users\William\Dropbox (Samraksh)\Samraksh Share\Admin\Samraksh Website\eMote .NOW Release\eMote .NOW Release Current\DocumentX\eMote .NOW Help Viewer.chm
+Compiling c:\SamGit\AppNotes\DocumentX\DocumentX\eMote .NOW Help Viewer.chm
 
 script\jquery-1.7.2.min.js
 script\slimbox2.js
@@ -727,14 +727,14 @@ topic690.html
 eMote .NOW Help Viewer.hhc
 eMote .NOW Help Viewer.hhk
 
-Compile time: 0 minutes, 6 seconds
+Compile time: 0 minutes, 10 seconds
 611	Topics
 6,403	Local links
 0	Internet links
 0	Graphics
 
 
-Created c:\Users\William\Dropbox (Samraksh)\Samraksh Share\Admin\Samraksh Website\eMote .NOW Release\eMote .NOW Release Current\DocumentX\eMote .NOW Help Viewer.chm, 817,356 bytes
-Compression decreased file by 6,716,094 bytes.
+Created c:\SamGit\AppNotes\DocumentX\DocumentX\eMote .NOW Help Viewer.chm, 817,364 bytes
+Compression decreased file by 6,716,086 bytes.
 
--- Compile completed on 01/12/2016 07:35:59
+-- Compile completed on 01/12/2016 12:35:41

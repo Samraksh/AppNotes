@@ -43,15 +43,15 @@
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Samraksh.AppNote.Utility.SerialComm, Version=1.2.5854.25666, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\SerialComm\Samraksh.AppNote.Utility.SerialComm.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\SerialComm\bin\Samraksh.AppNote.Utility.SerialComm.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA, Version=1.6.5854.26780, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\SimpleCSMA\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.VersionInfo, Version=1.0.5854.24977, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\VersionInfo\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
