@@ -43,25 +43,20 @@
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="Samraksh.AppNote.Utility.BitConverter, Version=1.0.5854.25801, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\BitConverter\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
+    <Reference Include="Samraksh.AppNote.Utility.BitConverter">
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\BitConverter\bin\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh.AppNote.Utility.EnhancedEmoteLCD, Version=1.0.5854.26571, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\EnhancedEmoteLCD\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
+    <Reference Include="Samraksh.AppNote.Utility.EnhancedEmoteLCD">
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\EnhancedEmoteLCD\bin\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA, Version=1.6.5854.26780, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\SimpleCSMA\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
+    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA">
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh.AppNote.Utility.SimpleTimer, Version=1.0.5854.25551, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\SimpleTimer\Samraksh.AppNote.Utility.SimpleTimer.dll</HintPath>
+    <Reference Include="Samraksh.AppNote.Utility.SimpleTimer">
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\SimpleTimer\bin\Samraksh.AppNote.Utility.SimpleTimer.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh.AppNote.Utility.VersionInfo, Version=1.0.5854.24977, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\VersionInfo\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+    <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
+      <HintPath>..\..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
