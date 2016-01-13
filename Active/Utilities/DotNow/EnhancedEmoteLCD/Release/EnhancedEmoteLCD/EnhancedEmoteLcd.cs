@@ -14,11 +14,16 @@ namespace Samraksh.AppNote.Utility
 	/// <summary>
 	/// EmoteLCD with initialization and extended methods
 	/// </summary>
-	/// <remarks>Includes LCD initialization as part of constructor</remarks>
+	/// <remarks>
+	/// Features: 
+	///		Can query what's being displayed via CurrentChars and CurrentDPs
+	///		Write overloads for arguments of int and string
+	///		Extension methods: char.ToLCD and LCD.ToChar
+	/// </remarks>
 	public class EnhancedEmoteLCD : EmoteLCD
 	{
 		// Critical section lock
-		private object _criticalSectionLock = new object();
+		private readonly object _criticalSectionLock = new object();
 
 		/// <summary>
 		/// Current values displayed
@@ -48,6 +53,8 @@ namespace Samraksh.AppNote.Utility
 			// Initialize CurrentDPs
 			CurrentDPs = new bool[4];
 		}
+
+		#region New methods ############################################################
 
 		/// <summary>
 		/// Display an integer. If more than 4 decimal digits, display first 4 only
@@ -88,8 +95,9 @@ namespace Samraksh.AppNote.Utility
 			var msgChar = (str + "    ").ToCharArray();
 			Write(msgChar[0].ToLcd(), msgChar[1].ToLcd(), msgChar[2].ToLcd(), msgChar[3].ToLcd());
 		}
+		#endregion New methods
 
-		#region Overrides //############################################################
+		#region Override methods ############################################################
 
 		/// <summary>
 		/// Clear the display, set CurrentChars to blank and CurrentDPs to false (not present)
@@ -121,10 +129,11 @@ namespace Samraksh.AppNote.Utility
 		{
 			lock (_criticalSectionLock)
 			{
-				CurrentDPs[0] = dp1;
-				CurrentDPs[1] = dp2;
-				CurrentDPs[2] = dp3;
-				CurrentDPs[3] = dp4;
+				CurrentDPs[4 - 1] = dp4;
+				CurrentDPs[3 - 1] = dp3;
+				CurrentDPs[2 - 1] = dp2;
+				CurrentDPs[1 - 1] = dp1;
+
 				return base.SetDP(dp4, dp3, dp2, dp1);
 			}
 		}
@@ -176,17 +185,19 @@ namespace Samraksh.AppNote.Utility
 		{
 			lock (_criticalSectionLock)
 			{
-				CurrentChars[4 - 1] = (LCD) data4;
-				CurrentChars[3 - 1] = (LCD) data3;
-				CurrentChars[2 - 1] = (LCD) data2;
-				CurrentChars[1 - 1] = (LCD) data1;
+				CurrentChars[4 - 1] = (LCD)data4;
+				CurrentChars[3 - 1] = (LCD)data3;
+				CurrentChars[2 - 1] = (LCD)data2;
+				CurrentChars[1 - 1] = (LCD)data1;
 				return base.WriteRawBytes(data4, data3, data2, data1);
 			}
 		}
 
-		#endregion
+		#endregion Override methods
 
 	}
+
+	#region Extension methods ############################################################
 
 	/// <summary>
 	/// Extend the char class with a method that converts to LCD
@@ -194,10 +205,13 @@ namespace Samraksh.AppNote.Utility
 	public static class LcdExtensions
 	{
 		/// <summary>
-		/// 
+		/// Converts an LCD to char 
 		/// </summary>
-		/// <param name="lcdArg"></param>
-		/// <returns></returns>
+		/// <remarks>
+		/// Example: LCD.CHAR_A.ToChar()
+		/// </remarks>>
+		/// <param name="lcdArg">The input as an LCD</param>
+		/// <returns>The corresponding char value</returns>
 		public static char ToChar(this LCD lcdArg)
 		{
 			switch (lcdArg)
@@ -331,6 +345,11 @@ namespace Samraksh.AppNote.Utility
 					return '8';
 				case LCD.CHAR_9:
 					return '9';
+
+				case LCD.CHAR_UNDERSCORE:
+					return '_';
+				case LCD.CHAR_HYPEN:
+					return '-';
 
 				default:
 					return '*';
@@ -479,9 +498,15 @@ namespace Samraksh.AppNote.Utility
 				case '9':
 					return LCD.CHAR_9;
 
+				case '_':
+					return LCD.CHAR_UNDERSCORE;
+				case '-':
+					return LCD.CHAR_HYPEN;
+
 				default:
 					return LCD.CHAR_NULL;
 			}
 		}
 	}
+	#endregion Extension methods
 }

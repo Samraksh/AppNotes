@@ -44,14 +44,14 @@ namespace TestEnhancedeMoteLCD
 			PrintTestName("Decimal Points");
 			Lcd.Write("6789");
 			var dP = new bool[4];
-			for (var i = 0; i <= dP.Length; i++)
+			for (var i = 0; i < dP.Length; i++)
 			{
 				dP[i] = true;
 				Lcd.SetDP(dP[3], dP[2], dP[1], dP[0]);
 				Thread.Sleep(1000);
 				allPassed &= PrintCurrentDps(dP);
 			}
-			for (var i = 0; i <= dP.Length; i++)
+			for (var i = 0; i < dP.Length; i++)
 			{
 				dP[i] = false;
 				Lcd.SetDP(dP[3], dP[2], dP[1], dP[0]);

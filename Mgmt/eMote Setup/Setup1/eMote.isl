@@ -407,11 +407,6 @@
 		<row><td>ISX_DEFAULTCOMPONENT29</td><td>{50C77D80-AC34-404C-9682-37D8B2631FE0}</td><td>LE7</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td>{258BB15A-D30A-4A14-9EDE-E246D39CFE04}</td><td>SAMRAKSH_EMOTE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT30</td><td>{F3D29B92-A196-4B81-AC60-BA98C53E6470}</td><td>ENHANCEDEMOTELCD1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT31</td><td>{2D007D8E-12DD-47DF-B39F-29FC369ABA20}</td><td>OBJ</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT32</td><td>{8B29A063-EE78-45AF-BD02-994BE611832C}</td><td>DEBUG</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT33</td><td>{070B2CEA-2042-4DDF-909F-6102F86986B4}</td><td>BE8</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT34</td><td>{633DDA8E-B3C6-4B43-A341-5C1A7E5DF4C8}</td><td>LE8</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>ISX_DEFAULTCOMPONENT35</td><td>{89EBA980-8302-49E6-9121-D7BD5B602763}</td><td>TEMPPE</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT36</td><td>{1EB41976-CAF5-4AE3-A6AC-E9C65BC68A79}</td><td>PROPERTIES</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT37</td><td>{B406DA70-8112-45B6-9FA9-B2CD572D9E24}</td><td>TESTENHANCEDEMOTELCD</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>ISX_DEFAULTCOMPONENT38</td><td>{8B5FD761-85BC-4C21-8845-0946C517C69F}</td><td>BIN1</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -489,7 +484,6 @@
 		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td><td>{0EE4EB37-9B7B-4243-9E06-BC7934201464}</td><td>BE7</td><td>2</td><td/><td>samraksh.appnote.utility.enh</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll1</td><td>{F334CF27-62D2-435C-B907-7DB8B67C97CA}</td><td>LE7</td><td>2</td><td/><td>samraksh.appnote.utility.enh4</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll2</td><td>{6B2AAABE-323A-4FFC-B10F-A6C83F9509BC}</td><td>BIN</td><td>2</td><td/><td>samraksh.appnote.utility.enh8</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll3</td><td>{FF997243-E0E2-4A8B-9E1B-9E136E0EF14E}</td><td>DEBUG</td><td>2</td><td/><td>samraksh.appnote.utility.enh15</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll4</td><td>{B62241AC-3A35-44B8-BD9A-192A96A5933A}</td><td>DEBUG1</td><td>2</td><td/><td>samraksh.appnote.utility.enh21</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Samraksh.AppNote.Utility.SerialComm.dll</td><td>{1940CEDD-937C-4258-B2C0-C5F32959F209}</td><td>BE16</td><td>2</td><td/><td>samraksh.appnote.utility.ser</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Samraksh.AppNote.Utility.SerialComm.dll1</td><td>{6D28BD6C-FDF7-4E53-9CF4-CB3CB5B6C015}</td><td>LE16</td><td>2</td><td/><td>samraksh.appnote.utility.ser4</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1294,7 +1288,6 @@
 		<row><td>BE6</td><td>Samraksh_eMote_RealTime.dll</td></row>
 		<row><td>BE7</td><td>ISX_DEFAULTCOMPONENT28</td></row>
 		<row><td>BE7</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td></row>
-		<row><td>BE8</td><td>ISX_DEFAULTCOMPONENT33</td></row>
 		<row><td>BE9</td><td>ISX_DEFAULTCOMPONENT40</td></row>
 		<row><td>BE9</td><td>TestEnhancedeMoteLCD.exe</td></row>
 		<row><td>BIN</td><td>ISX_DEFAULTCOMPONENT27</td></row>
@@ -1318,8 +1311,6 @@
 		<row><td>BITCONVERTER</td><td>ISX_DEFAULTCOMPONENT87</td></row>
 		<row><td>BITCONVERTER1</td><td>ISX_DEFAULTCOMPONENT91</td></row>
 		<row><td>CLRANDBOOTER</td><td>ISX_DEFAULTCOMPONENT1</td></row>
-		<row><td>DEBUG</td><td>ISX_DEFAULTCOMPONENT32</td></row>
-		<row><td>DEBUG</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll3</td></row>
 		<row><td>DEBUG1</td><td>ISX_DEFAULTCOMPONENT39</td></row>
 		<row><td>DEBUG1</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll4</td></row>
 		<row><td>DEBUG1</td><td>Samraksh_eMote_DotNow.dll4</td></row>
@@ -1431,11 +1422,6 @@
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT29</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT30</td></row>
-		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT31</td></row>
-		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT32</td></row>
-		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT33</td></row>
-		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT34</td></row>
-		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT35</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT36</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT37</td></row>
 		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT38</td></row>
@@ -1513,7 +1499,6 @@
 		<row><td>INSTALLDIR</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td></row>
 		<row><td>INSTALLDIR</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll1</td></row>
 		<row><td>INSTALLDIR</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll2</td></row>
-		<row><td>INSTALLDIR</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll3</td></row>
 		<row><td>INSTALLDIR</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll4</td></row>
 		<row><td>INSTALLDIR</td><td>Samraksh.AppNote.Utility.SerialComm.dll</td></row>
 		<row><td>INSTALLDIR</td><td>Samraksh.AppNote.Utility.SerialComm.dll1</td></row>
@@ -1610,10 +1595,8 @@
 		<row><td>LE6</td><td>Samraksh_eMote_RealTime.dll1</td></row>
 		<row><td>LE7</td><td>ISX_DEFAULTCOMPONENT29</td></row>
 		<row><td>LE7</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll1</td></row>
-		<row><td>LE8</td><td>ISX_DEFAULTCOMPONENT34</td></row>
 		<row><td>LE9</td><td>ISX_DEFAULTCOMPONENT41</td></row>
 		<row><td>LE9</td><td>TestEnhancedeMoteLCD.exe1</td></row>
-		<row><td>OBJ</td><td>ISX_DEFAULTCOMPONENT31</td></row>
 		<row><td>OBJ1</td><td>ISX_DEFAULTCOMPONENT44</td></row>
 		<row><td>OBJ2</td><td>ISX_DEFAULTCOMPONENT80</td></row>
 		<row><td>OBJ3</td><td>ISX_DEFAULTCOMPONENT92</td></row>
@@ -1658,7 +1641,6 @@
 		<row><td>SQRT1</td><td>ISX_DEFAULTCOMPONENT124</td></row>
 		<row><td>STYLESHEETS</td><td>ISX_DEFAULTCOMPONENT56</td></row>
 		<row><td>STYLESHEETS1</td><td>ISX_DEFAULTCOMPONENT66</td></row>
-		<row><td>TEMPPE</td><td>ISX_DEFAULTCOMPONENT35</td></row>
 		<row><td>TEMPPE1</td><td>ISX_DEFAULTCOMPONENT68</td></row>
 		<row><td>TEMPPE2</td><td>ISX_DEFAULTCOMPONENT84</td></row>
 		<row><td>TEMPPE3</td><td>ISX_DEFAULTCOMPONENT96</td></row>
@@ -1777,7 +1759,6 @@
 		<row><td>BE5</td><td>SAMRAKSH_EMOTE_NET</td><td>be</td><td/><td>0</td><td/></row>
 		<row><td>BE6</td><td>SAMRAKSH_EMOTE_REALTIME</td><td>be</td><td/><td>0</td><td/></row>
 		<row><td>BE7</td><td>BIN</td><td>be</td><td/><td>0</td><td/></row>
-		<row><td>BE8</td><td>DEBUG</td><td>be</td><td/><td>0</td><td/></row>
 		<row><td>BE9</td><td>DEBUG1</td><td>be</td><td/><td>0</td><td/></row>
 		<row><td>BIN</td><td>ENHANCEDEMOTELCD</td><td>bin</td><td/><td>0</td><td/></row>
 		<row><td>BIN1</td><td>TESTENHANCEDEMOTELCD</td><td>bin</td><td/><td>0</td><td/></row>
@@ -1795,7 +1776,6 @@
 		<row><td>CommonFiles64Folder</td><td>TARGETDIR</td><td>.:Common64</td><td/><td>0</td><td/></row>
 		<row><td>CommonFilesFolder</td><td>TARGETDIR</td><td>.:Common</td><td/><td>0</td><td/></row>
 		<row><td>DATABASEDIR</td><td>ISYourDataBaseDir</td><td>.</td><td/><td>0</td><td/></row>
-		<row><td>DEBUG</td><td>OBJ</td><td>Debug</td><td/><td>0</td><td/></row>
 		<row><td>DEBUG1</td><td>BIN1</td><td>Debug</td><td/><td>0</td><td/></row>
 		<row><td>DEBUG2</td><td>OBJ1</td><td>Debug</td><td/><td>0</td><td/></row>
 		<row><td>DEBUG3</td><td>BIN3</td><td>Debug</td><td/><td>0</td><td/></row>
@@ -1856,13 +1836,11 @@
 		<row><td>LE5</td><td>SAMRAKSH_EMOTE_NET</td><td>le</td><td/><td>0</td><td/></row>
 		<row><td>LE6</td><td>SAMRAKSH_EMOTE_REALTIME</td><td>le</td><td/><td>0</td><td/></row>
 		<row><td>LE7</td><td>BIN</td><td>le</td><td/><td>0</td><td/></row>
-		<row><td>LE8</td><td>DEBUG</td><td>le</td><td/><td>0</td><td/></row>
 		<row><td>LE9</td><td>DEBUG1</td><td>le</td><td/><td>0</td><td/></row>
 		<row><td>LocalAppDataFolder</td><td>TARGETDIR</td><td>.:LocalA~1|LocalAppData</td><td/><td>0</td><td/></row>
 		<row><td>MY_PRODUCT_NAME</td><td>SAMRAKSH</td><td>MYPROD~1|My Product Name</td><td/><td>0</td><td/></row>
 		<row><td>MyPicturesFolder</td><td>TARGETDIR</td><td>.:MyPict~1|MyPictures</td><td/><td>0</td><td/></row>
 		<row><td>NetHoodFolder</td><td>TARGETDIR</td><td>.:NetHood</td><td/><td>0</td><td/></row>
-		<row><td>OBJ</td><td>ENHANCEDEMOTELCD1</td><td>obj</td><td/><td>0</td><td/></row>
 		<row><td>OBJ1</td><td>TESTENHANCEDEMOTELCD</td><td>obj</td><td/><td>0</td><td/></row>
 		<row><td>OBJ2</td><td>SIMPLECSMA1</td><td>obj</td><td/><td>0</td><td/></row>
 		<row><td>OBJ3</td><td>BITCONVERTER1</td><td>obj</td><td/><td>0</td><td/></row>
@@ -1914,7 +1892,6 @@
 		<row><td>System64Folder</td><td>TARGETDIR</td><td>.:System64</td><td/><td>0</td><td/></row>
 		<row><td>SystemFolder</td><td>TARGETDIR</td><td>.:System32</td><td/><td>0</td><td/></row>
 		<row><td>TARGETDIR</td><td/><td>SourceDir</td><td/><td>0</td><td/></row>
-		<row><td>TEMPPE</td><td>DEBUG</td><td>TempPE</td><td/><td>0</td><td/></row>
 		<row><td>TEMPPE1</td><td>DEBUG2</td><td>TempPE</td><td/><td>0</td><td/></row>
 		<row><td>TEMPPE2</td><td>DEBUG4</td><td>TempPE</td><td/><td>0</td><td/></row>
 		<row><td>TEMPPE3</td><td>DEBUG5</td><td>TempPE</td><td/><td>0</td><td/></row>
@@ -2698,11 +2675,6 @@
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT29</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT3</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT30</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT31</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT32</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT33</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT34</td></row>
-		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT35</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT36</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT37</td></row>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT38</td></row>
@@ -2780,7 +2752,6 @@
 		<row><td>AlwaysInstall</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll1</td></row>
 		<row><td>AlwaysInstall</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll2</td></row>
-		<row><td>AlwaysInstall</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll3</td></row>
 		<row><td>AlwaysInstall</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll4</td></row>
 		<row><td>AlwaysInstall</td><td>Samraksh.AppNote.Utility.SerialComm.dll</td></row>
 		<row><td>AlwaysInstall</td><td>Samraksh.AppNote.Utility.SerialComm.dll1</td></row>
@@ -2934,7 +2905,6 @@
 		<row><td>d.png</td><td>ISX_DEFAULTCOMPONENT65</td><td>d.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW HTML\script\themes\default\d.png</td><td>1</td><td/></row>
 		<row><td>delegate.png</td><td>ISX_DEFAULTCOMPONENT51</td><td>Delegate.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW Help Viewer\dotnetimages\Delegate.png</td><td>1</td><td/></row>
 		<row><td>delegate.png1</td><td>ISX_DEFAULTCOMPONENT59</td><td>Delegate.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW HTML\dotnetimages\Delegate.png</td><td>1</td><td/></row>
-		<row><td>designtimeresolveassemblyref</td><td>ISX_DEFAULTCOMPONENT32</td><td>DESIGN~1.CAC|DesignTimeResolveAssemblyReferencesInput.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache</td><td>1</td><td/></row>
 		<row><td>designtimeresolveassemblyref1</td><td>ISX_DEFAULTCOMPONENT45</td><td>DESIGN~1.CAC|DesignTimeResolveAssemblyReferences.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\DesignTimeResolveAssemblyReferences.cache</td><td>1</td><td/></row>
 		<row><td>designtimeresolveassemblyref2</td><td>ISX_DEFAULTCOMPONENT45</td><td>DESIGN~1.CAC|DesignTimeResolveAssemblyReferencesInput.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache</td><td>1</td><td/></row>
 		<row><td>designtimeresolveassemblyref3</td><td>ISX_DEFAULTCOMPONENT81</td><td>DESIGN~1.CAC|DesignTimeResolveAssemblyReferencesInput.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\SimpleCSMA\SimpleCSMA\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache</td><td>1</td><td/></row>
@@ -2963,12 +2933,8 @@
 		<row><td>emote_release_14_notes.rtf</td><td>ISX_DEFAULTCOMPONENT</td><td>EMOTE_~1.RTF|eMote_Release_14_Notes.rtf</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Active\eMote .NOW\eMote_Release_14_Notes.rtf</td><td>1</td><td/></row>
 		<row><td>emote_tinybooter_v1.1.axf</td><td>ISX_DEFAULTCOMPONENT1</td><td>EMOTE_~1.AXF|Emote_TinyBooter_v1.1.axf</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Active\eMote .NOW\CLRandBooter\Emote_TinyBooter_v1.1.axf</td><td>1</td><td/></row>
 		<row><td>enhancedemotelcd.cs</td><td>ISX_DEFAULTCOMPONENT30</td><td>ENHANC~1.CS|EnhancedEmoteLcd.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\EnhancedEmoteLcd.cs</td><td>1</td><td/></row>
-		<row><td>enhancedemotelcd.csproj.file</td><td>ISX_DEFAULTCOMPONENT32</td><td>ENHANC~1.TXT|EnhancedeMoteLCD.csproj.FileListAbsolute.txt</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\EnhancedeMoteLCD.csproj.FileListAbsolute.txt</td><td>1</td><td/></row>
-		<row><td>enhancedemotelcd.csprojresol</td><td>ISX_DEFAULTCOMPONENT32</td><td>ENHANC~1.CAC|EnhancedEmoteLCD.csprojResolveAssemblyReference.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\EnhancedEmoteLCD.csprojResolveAssemblyReference.cache</td><td>1</td><td/></row>
 		<row><td>enhancedemotelcd_1.0.sln</td><td>ISX_DEFAULTCOMPONENT26</td><td>ENHANC~1.SLN|EnhancedEmoteLCD 1.0.sln</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD 1.0.sln</td><td>1</td><td/></row>
 		<row><td>enhancedemotelcd_1.0.v12.suo</td><td>ISX_DEFAULTCOMPONENT26</td><td>ENHANC~1.SUO|EnhancedeMoteLCD 1.0.v12.suo</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedeMoteLCD 1.0.v12.suo</td><td>1</td><td/></row>
-		<row><td>enhancedlcd.csproj.filelista</td><td>ISX_DEFAULTCOMPONENT32</td><td>ENHANC~1.TXT|EnhancedLCD.csproj.FileListAbsolute.txt</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\EnhancedLCD.csproj.FileListAbsolute.txt</td><td>1</td><td/></row>
-		<row><td>enhancedlcd.csprojresolveass</td><td>ISX_DEFAULTCOMPONENT32</td><td>ENHANC~1.CAC|EnhancedLCD.csprojResolveAssemblyReference.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\EnhancedLCD.csprojResolveAssemblyReference.cache</td><td>1</td><td/></row>
 		<row><td>enumeration.png</td><td>ISX_DEFAULTCOMPONENT51</td><td>ENUMER~1.PNG|Enumeration.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW Help Viewer\dotnetimages\Enumeration.png</td><td>1</td><td/></row>
 		<row><td>enumeration.png1</td><td>ISX_DEFAULTCOMPONENT59</td><td>ENUMER~1.PNG|Enumeration.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW HTML\dotnetimages\Enumeration.png</td><td>1</td><td/></row>
 		<row><td>er_config</td><td>ISX_DEFAULTCOMPONENT2</td><td>ER_CON~1|ER_CONFIG</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Active\eMote .NOW\CLRandBooter\Emote_TinyCLR_v14.hex\ER_CONFIG</td><td>1</td><td/></row>
@@ -3204,12 +3170,6 @@
 		<row><td>samraksh.appnote.utility.enh</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td><td>SAMRAK~1.DLL|Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\bin\be\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td><td>1</td><td/></row>
 		<row><td>samraksh.appnote.utility.enh1</td><td>ISX_DEFAULTCOMPONENT28</td><td>SAMRAK~1.PDB|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\bin\be\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdb</td><td>1</td><td/></row>
 		<row><td>samraksh.appnote.utility.enh10</td><td>ISX_DEFAULTCOMPONENT27</td><td>SAMRAK~1.XML|Samraksh.AppNote.Utility.EnhancedEmoteLCD.xml</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\bin\Samraksh.AppNote.Utility.EnhancedEmoteLCD.xml</td><td>1</td><td/></row>
-		<row><td>samraksh.appnote.utility.enh11</td><td>ISX_DEFAULTCOMPONENT33</td><td>SAMRAK~1.PDB|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdbx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\be\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdbx</td><td>1</td><td/></row>
-		<row><td>samraksh.appnote.utility.enh12</td><td>ISX_DEFAULTCOMPONENT33</td><td>SAMRAK~1.PE|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\be\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pe</td><td>1</td><td/></row>
-		<row><td>samraksh.appnote.utility.enh13</td><td>ISX_DEFAULTCOMPONENT34</td><td>SAMRAK~1.PDB|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdbx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\le\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdbx</td><td>1</td><td/></row>
-		<row><td>samraksh.appnote.utility.enh14</td><td>ISX_DEFAULTCOMPONENT34</td><td>SAMRAK~1.PE|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\le\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pe</td><td>1</td><td/></row>
-		<row><td>samraksh.appnote.utility.enh15</td><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll3</td><td>SAMRAK~1.DLL|Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td><td>1</td><td/></row>
-		<row><td>samraksh.appnote.utility.enh16</td><td>ISX_DEFAULTCOMPONENT32</td><td>SAMRAK~1.PDB|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdb</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdb</td><td>1</td><td/></row>
 		<row><td>samraksh.appnote.utility.enh17</td><td>ISX_DEFAULTCOMPONENT40</td><td>SAMRAK~1.PDB|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdbx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\bin\Debug\be\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdbx</td><td>1</td><td/></row>
 		<row><td>samraksh.appnote.utility.enh18</td><td>ISX_DEFAULTCOMPONENT40</td><td>SAMRAK~1.PE|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\bin\Debug\be\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pe</td><td>1</td><td/></row>
 		<row><td>samraksh.appnote.utility.enh19</td><td>ISX_DEFAULTCOMPONENT41</td><td>SAMRAK~1.PDB|Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdbx</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\bin\Debug\le\Samraksh.AppNote.Utility.EnhancedEmoteLCD.pdbx</td><td>1</td><td/></row>
@@ -3492,7 +3452,6 @@
 		<row><td>tabindex.png</td><td>ISX_DEFAULTCOMPONENT62</td><td>tabindex.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW HTML\images\webnav\tabindex.png</td><td>1</td><td/></row>
 		<row><td>tabsearch.png</td><td>ISX_DEFAULTCOMPONENT62</td><td>TABSEA~1.PNG|tabsearch.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW HTML\images\webnav\tabsearch.png</td><td>1</td><td/></row>
 		<row><td>tabtoc.png</td><td>ISX_DEFAULTCOMPONENT62</td><td>tabtoc.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW HTML\images\webnav\tabtoc.png</td><td>1</td><td/></row>
-		<row><td>temporarygeneratedfile_036c0</td><td>ISX_DEFAULTCOMPONENT32</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_036c01</td><td>ISX_DEFAULTCOMPONENT45</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_036c02</td><td>ISX_DEFAULTCOMPONENT81</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\SimpleCSMA\SimpleCSMA\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_036c03</td><td>ISX_DEFAULTCOMPONENT93</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\BitConverter\BitConverter\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>1</td><td/></row>
@@ -3500,7 +3459,6 @@
 		<row><td>temporarygeneratedfile_036c05</td><td>ISX_DEFAULTCOMPONENT115</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\SimpleTimer\SimpleTimer\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_036c06</td><td>ISX_DEFAULTCOMPONENT126</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\Sqrt\Sqrt\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_036c07</td><td>ISX_DEFAULTCOMPONENT137</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\VersionInfo\VersionInfo\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs</td><td>1</td><td/></row>
-		<row><td>temporarygeneratedfile_5937a</td><td>ISX_DEFAULTCOMPONENT32</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_5937a1</td><td>ISX_DEFAULTCOMPONENT45</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_5937a2</td><td>ISX_DEFAULTCOMPONENT81</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\SimpleCSMA\SimpleCSMA\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_5937a3</td><td>ISX_DEFAULTCOMPONENT93</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\BitConverter\BitConverter\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>1</td><td/></row>
@@ -3508,7 +3466,6 @@
 		<row><td>temporarygeneratedfile_5937a5</td><td>ISX_DEFAULTCOMPONENT115</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\SimpleTimer\SimpleTimer\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_5937a6</td><td>ISX_DEFAULTCOMPONENT126</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\Sqrt\Sqrt\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_5937a7</td><td>ISX_DEFAULTCOMPONENT137</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\VersionInfo\VersionInfo\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs</td><td>1</td><td/></row>
-		<row><td>temporarygeneratedfile_e7a71</td><td>ISX_DEFAULTCOMPONENT32</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_e7a711</td><td>ISX_DEFAULTCOMPONENT45</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_e7a712</td><td>ISX_DEFAULTCOMPONENT81</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\SimpleCSMA\SimpleCSMA\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</td><td>1</td><td/></row>
 		<row><td>temporarygeneratedfile_e7a713</td><td>ISX_DEFAULTCOMPONENT93</td><td>TEMPOR~1.CS|TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\BitConverter\BitConverter\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs</td><td>1</td><td/></row>
@@ -3539,7 +3496,6 @@
 		<row><td>testenhancedemotelcd.pe3</td><td>ISX_DEFAULTCOMPONENT47</td><td>TESTEN~1.PE|TestEnhancedeMoteLCD.pe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\le\TestEnhancedeMoteLCD.pe</td><td>1</td><td/></row>
 		<row><td>testenhancedemotelcd.resourc</td><td>ISX_DEFAULTCOMPONENT45</td><td>TESTEN~1.RES|TestEnhancedeMoteLCD.Resources.resources</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\TestEnhancedeMoteLCD.Resources.resources</td><td>1</td><td/></row>
 		<row><td>testenhancedemotelcd.resourc1</td><td>ISX_DEFAULTCOMPONENT45</td><td>TESTEN~1.TIN|TestEnhancedeMoteLCD.Resources.tinyresources</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\TestEnhancedeMoteLCD.Resources.tinyresources</td><td>1</td><td/></row>
-		<row><td>tinyclr_debugreferences.cach</td><td>ISX_DEFAULTCOMPONENT32</td><td>TINYCL~1.CAC|TinyCLR_DebugReferences.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\TinyCLR_DebugReferences.cache</td><td>1</td><td/></row>
 		<row><td>tinyclr_debugreferences.cach1</td><td>ISX_DEFAULTCOMPONENT45</td><td>TINYCL~1.CAC|TinyCLR_DebugReferences.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\TestEnhancedEmoteLCD\obj\Debug\TinyCLR_DebugReferences.cache</td><td>1</td><td/></row>
 		<row><td>tinyclr_debugreferences.cach2</td><td>ISX_DEFAULTCOMPONENT81</td><td>TINYCL~1.CAC|TinyCLR_DebugReferences.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\SimpleCSMA\SimpleCSMA\obj\Debug\TinyCLR_DebugReferences.cache</td><td>1</td><td/></row>
 		<row><td>tinyclr_debugreferences.cach3</td><td>ISX_DEFAULTCOMPONENT93</td><td>TINYCL~1.CAC|TinyCLR_DebugReferences.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\BitConverter\BitConverter\obj\Debug\TinyCLR_DebugReferences.cache</td><td>1</td><td/></row>
@@ -4769,8 +4725,6 @@
 		<row><td>uitabsarrow.png</td><td>ISX_DEFAULTCOMPONENT51</td><td>UITABS~1.PNG|uiTabsArrow.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW Help Viewer\dotnetimages\uiTabsArrow.png</td><td>1</td><td/></row>
 		<row><td>uitabsarrow.png1</td><td>ISX_DEFAULTCOMPONENT59</td><td>UITABS~1.PNG|uiTabsArrow.png</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\eMote Documentation\eMote .NOW HTML\dotnetimages\uiTabsArrow.png</td><td>1</td><td/></row>
 		<row><td>utility.csproj.filelistabsol</td><td>ISX_DEFAULTCOMPONENT93</td><td>UTILIT~1.TXT|Utility.csproj.FileListAbsolute.txt</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\General\BitConverter\BitConverter\obj\Debug\Utility.csproj.FileListAbsolute.txt</td><td>1</td><td/></row>
-		<row><td>utility.enhancedemotelcd.csp</td><td>ISX_DEFAULTCOMPONENT32</td><td>UTILIT~1.TXT|Utility.EnhancedEmoteLCD.csproj.FileListAbsolute.txt</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\Utility.EnhancedEmoteLCD.csproj.FileListAbsolute.txt</td><td>1</td><td/></row>
-		<row><td>utility.enhancedemotelcd.csp1</td><td>ISX_DEFAULTCOMPONENT32</td><td>UTILIT~1.CAC|Utility.EnhancedEmoteLCD.csprojResolveAssemblyReference.cache</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\obj\Debug\Utility.EnhancedEmoteLCD.csprojResolveAssemblyReference.cache</td><td>1</td><td/></row>
 		<row><td>utility.enhancedemotelcd.csp2</td><td>ISX_DEFAULTCOMPONENT30</td><td>UTILIT~1.CSP|Utility.EnhancedEmoteLCD.csproj</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\Utility.EnhancedEmoteLCD.csproj</td><td>1</td><td/></row>
 		<row><td>utility.enhancedemotelcd.csp3</td><td>ISX_DEFAULTCOMPONENT30</td><td>UTILIT~1.USE|Utility.EnhancedEmoteLCD.csproj.user</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\EnhancedEmoteLCD\EnhancedEmoteLCD\Utility.EnhancedEmoteLCD.csproj.user</td><td>1</td><td/></row>
 		<row><td>utility.simplecsma.csproj</td><td>ISX_DEFAULTCOMPONENT74</td><td>UTILIT~1.CSP|Utility.SimpleCSMA.csproj</td><td>0</td><td/><td/><td/><td>1</td><td>C:\SamGit\AppNotes\Setup\Utilities\DotNow\SimpleCSMA\SimpleCSMA\Utility.SimpleCSMA.csproj</td><td>1</td><td/></row>
@@ -5015,11 +4969,6 @@
 		<row><td>ISX_DEFAULTCOMPONENT29</td><td/><td/><td>_F468AAD9_BF98_4FD6_A584_20A97E41B7A7_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT3</td><td/><td/><td>_ABD5975C_3347_4C6D_9459_B0B56C88C3B0_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT30</td><td/><td/><td>_27D07BA9_61B0_4E33_9860_D910151B41CE_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT31</td><td/><td/><td>_04CDDD92_7F21_46D7_851C_6524019E8199_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT32</td><td/><td/><td>_6F77597A_9E97_422F_B18C_C249442CB1A2_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT33</td><td/><td/><td>_CBE4FD13_F5D5_4BE6_BD98_660BFE638D17_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT34</td><td/><td/><td>_03215A26_EAD1_4F1F_B141_02F32F2ADD68_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>ISX_DEFAULTCOMPONENT35</td><td/><td/><td>_80DD1042_3B4C_45E9_8C8E_5F176A737778_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT36</td><td/><td/><td>_52F92DC1_348A_4216_9818_68E3CA2127E7_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT37</td><td/><td/><td>_C9FC28E7_6FB1_4E85_A236_CA0214F1A988_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>ISX_DEFAULTCOMPONENT38</td><td/><td/><td>_9D40372C_B40F_4BE0_9AA2_85335240C1A6_FILTER</td><td/><td/><td/><td/></row>
@@ -5097,7 +5046,6 @@
 		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</td><td/><td/><td>_EB2DBF0B_4109_4DC6_8FA2_EA366B592C1A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll1</td><td/><td/><td>_36F1CE9A_014C_4E23_9E51_8952F28A44D1_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll2</td><td/><td/><td>_75045FC8_D712_47F5_8DB1_94E6CD2C50DB_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll3</td><td/><td/><td>_E439F9EE_9605_4A4D_B15C_D3DE0CE4A7D7_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll4</td><td/><td/><td>_09B08F2F_8AC4_4E54_9C40_CD0C61BACE7A_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Samraksh.AppNote.Utility.SerialComm.dll</td><td/><td/><td>_2AF342D6_7B1A_48B9_B8D6_34E7A24AD0EB_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Samraksh.AppNote.Utility.SerialComm.dll1</td><td/><td/><td>_FE81482F_F8AF_480D_8753_1BD4C266A2E4_FILTER</td><td/><td/><td/><td/></row>
@@ -6991,10 +6939,8 @@
 		<row><td>TestEnhancedeMoteL_48DE1A63110349509712CCFD3CD8AD05.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>TestEnhancedeMoteL_49DB091CD9854F6B9F2CB96C3B90037C.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>TestEnhancedeMoteL_548A013E6B874F04827BCB90F1A05B2F.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
-		<row><td>TestEnhancedeMoteL_561DA15E02854FB9B73F0E4B38DFF28C.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>TestEnhancedeMoteL_5EFFC7996DD7456F872C8D1C32466EC3.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>TestEnhancedeMoteL_692433E1D9EE42479267A3820265048D.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
-		<row><td>TestEnhancedeMoteL_6CBECC1AB4A84275BFA543A34EBEC401.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>TestEnhancedeMoteL_72BEE73F1A9F42F1A97ADB8E8446F3F3.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>TestEnhancedeMoteL_991A1BC4E85940C7AA994930DE135726.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
 		<row><td>TestEnhancedeMoteL_AD00A03330904E9F8FD0AE6C0256BD75.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
@@ -7588,8 +7534,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
 		<row><td>TestEnhancedeMoteLCD.exe</td><td>TestEnhancedeMoteLCD.exe</td><td/><td>emote</td><td>2</td></row>
-		<row><td>TestEnhancedeMoteLCD.exe1</td><td>TestEnhancedeMoteLCD.exe1</td><td/><td>emote</td><td>2</td></row>
-		<row><td>TestEnhancedeMoteLCD.exe2</td><td>TestEnhancedeMoteLCD.exe2</td><td/><td>emote</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -7676,8 +7620,6 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
 		<row><td>TestEnhancedeMoteLCD.exe</td><td>emote</td><td>##IDS_SHORTCUT_DISPLAY_NAME22##</td><td>TestEnhancedeMoteLCD.exe</td><td>AlwaysInstall</td><td/><td/><td/><td>TestEnhancedeMoteL_48DE1A63110349509712CCFD3CD8AD05.exe</td><td>0</td><td>1</td><td>BE9</td><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>TestEnhancedeMoteLCD.exe1</td><td>emote</td><td>##IDS_SHORTCUT_DISPLAY_NAME23##</td><td>TestEnhancedeMoteLCD.exe1</td><td>AlwaysInstall</td><td/><td/><td/><td>TestEnhancedeMoteL_561DA15E02854FB9B73F0E4B38DFF28C.exe</td><td>0</td><td>1</td><td>LE9</td><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>TestEnhancedeMoteLCD.exe2</td><td>emote</td><td>##IDS_SHORTCUT_DISPLAY_NAME24##</td><td>TestEnhancedeMoteLCD.exe2</td><td>AlwaysInstall</td><td/><td/><td/><td>TestEnhancedeMoteL_6CBECC1AB4A84275BFA543A34EBEC401.exe</td><td>0</td><td>1</td><td>DEBUG1</td><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
