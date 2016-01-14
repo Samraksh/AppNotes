@@ -15,14 +15,18 @@ using BitConverter = Samraksh.AppNote.Utility.BitConverter;
 
 
 /*=====================================================
- * Configuration
- * Jumper .NOW J12/1 (GPIO output) to J12/6 (reset)
+ *			NOTES
+ *	This app note is capable of resetting the .NOW so as to restart the program.
+ *	
+ *	When J12/6 (reset) is brought low, the .NOW resets.
+ *	This is accomplished in the program via GPIO J12/1.
+ *	Hence, you must jumper .NOW J12/1 (GPIO output) to J12/6 (reset).
  ====================================================*/
 
 namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 {
 	/// <summary>
-	/// ###
+	/// CSMA ping pong, instrumented with a health monitor
 	/// </summary>
 	public static class Program
 	{
@@ -61,13 +65,15 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 			var simpleCSMA = new SimpleCSMA(RadioName.RF231RADIO, SimpleCSMA.Default.CCASenseTime, SimpleCSMA.Default.TxPowerValue, Common.Channel);
 			_simpleCSMAStream = new SimpleCSMAStream(simpleCSMA);
 
-			// Set up health monitor
-			HealthMonitor.Initialize(_simpleCSMAStream, Lcd, ResetPort);
-
-			// Set up app stream
+			// Define the stream callback
 			var appStreamCallback = new StreamCallback(Common.AppStreamId, AppCallback);
+			// Subscribe the callback to the stream
 			_simpleCSMAStream.Subscribe(appStreamCallback);
 
+			// Set up the health monitor
+			HealthMonitor.Initialize(_simpleCSMAStream, Lcd, ResetPort);
+
+			// *********************************************************************
 			// Begin the logic of the program
 
 			// Display a welcome message
@@ -86,7 +92,7 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 			//	When it fires, it sends the current value again
 			NoResponseDelayTimer.Start();
 
-			// Everything is set up. Go to sleep forever, pending events
+			// Everything is set up. Go to sleep forever, pending events.
 			Thread.Sleep(Timeout.Infinite);
 		}
 
@@ -97,7 +103,6 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 		/// <param name="obj">Ignored</param>
 		private static void Reply_Timeout(object obj)
 		{
-			//Debug.Print("Sending response message " + _currVal);
 			SendAppMessage(_currVal);
 		}
 
@@ -120,7 +125,7 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 
 		//===================================================================================================
 		/// <summary>
-		/// Send an app message via Netstream
+		/// Send an app message via the stream
 		/// </summary>
 		/// <param name="value"></param>
 		private static void SendAppMessage(int value)
@@ -133,7 +138,7 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 
 		//===================================================================================================
 		/// <summary>
-		/// Netstream callback for the app
+		/// Handle stream message from another app node
 		/// </summary>
 		/// <param name="rcvMsg"></param>
 		/// <param name="rcvMsgBytes"></param>
@@ -144,6 +149,9 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 				Debug.Print("*** Network: zero length message received");
 				return;
 			}
+
+			// Print info about what we've received.
+			//	This is optional
 			Debug.Print("\nApp Received " + (rcvMsg.Unicast ? "Unicast" : "Broadcast")
 						+ ", message from src: " + rcvMsg.Src
 						+ ", msg size: " + rcvMsgBytes.Length
@@ -162,6 +170,8 @@ namespace Samraksh.AppNote.CSMAPingPongWithHealthMonitor
 				Debug.Print("*** Network: message received too short: " + rcvMsgBytes.Length + " bytes; should be at least " + sizeof(int));
 				return;
 			}
+
+			// Get the message as an integer
 			var receivedValue = BitConverter.ToInt32(rcvMsgBytes, 0);
 
 			// Stabilize to max and increment

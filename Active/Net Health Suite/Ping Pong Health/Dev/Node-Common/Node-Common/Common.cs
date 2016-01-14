@@ -31,7 +31,7 @@ namespace Samraksh.AppNote.HealthMonitor
 		/// <summary>
 		/// App node messages
 		/// </summary>
-		public enum NodeMessage : byte
+		public enum AppNodeMessage : byte
 		{
 			/// <summary>
 			/// Reply with pong
