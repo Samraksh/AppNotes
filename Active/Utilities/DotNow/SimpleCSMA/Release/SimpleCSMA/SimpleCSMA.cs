@@ -17,6 +17,7 @@
  *********************************************************/
 
 using System;
+using Microsoft.SPOT;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.Net.Radio;
@@ -78,7 +79,7 @@ namespace Samraksh.AppNote.Utility
 		/// <summary>
 		/// MAC configuration object
 		/// </summary>
-		private readonly MacConfiguration _macConfig;
+		private MacConfiguration _macConfig;
 
 		/// <summary>
 		/// Radio states
@@ -99,15 +100,13 @@ namespace Samraksh.AppNote.Utility
 		{
 			try
 			{
-				_macConfig = new MacConfiguration();
-
 				_neighborLivenessDelay = Default.NeighborLivenessDelay;
 				_ccaSenseTime = Default.CCASenseTime;
 				_txPowerValue = Default.TxPowerValue;
 				_channel = Default.Channel;
 				_radioName = radioName;
 
-				EnactMACConfig();
+				EnactCSMAConfig();
 			}
 			catch (MacNotConfiguredException e)
 			{
@@ -130,6 +129,7 @@ namespace Samraksh.AppNote.Utility
 		{
 			try
 			{
+				Debug.Print("*** 2");
 				_macConfig = new MacConfiguration();
 
 				_neighborLivenessDelay = Default.NeighborLivenessDelay;
@@ -138,7 +138,9 @@ namespace Samraksh.AppNote.Utility
 				_channel = channel;
 				_radioName = radioName;
 
-				EnactMACConfig();
+				Debug.Print("*** 3");
+
+				EnactCSMAConfig();
 			}
 			catch (MacNotConfiguredException e)
 			{
@@ -168,10 +170,19 @@ namespace Samraksh.AppNote.Utility
 			}
 		}
 
-		private void EnactMACConfig()
+		private void EnactCSMAConfig()
 		{
-			var retVal = MACBase.Configure(_macConfig, ReceiveHandler, NeighborChangeHandler);
-			// Set up CSMA with the MAC configuration, receive callback and neighbor change callback (which does nothing)
+			Debug.Print("*** 4 "+ _neighborLivenessDelay+ " "+_ccaSenseTime+" "+_txPowerValue);
+			_macConfig = new MacConfiguration
+			{
+				NeighborLivenessDelay = _neighborLivenessDelay,
+				CCASenseTime = _ccaSenseTime,
+			};
+			_macConfig.radioConfig.SetTxPower(_txPowerValue);
+
+			//var retVal = MACBase.Configure(_macConfig, ReceiveHandler, NeighborChangeHandler);
+			var retVal = MACBase.(_macConfig, ReceiveHandler, NeighborChangeHandler);
+			// Set up CSMA with the MAC configuration, receive callback and neighbor change callback
 			if (retVal != DeviceStatus.Success)
 			{
 				throw new CSMAException("MACBase.Configure not successful");

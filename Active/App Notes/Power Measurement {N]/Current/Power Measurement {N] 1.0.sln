@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Power Measurement {N]", "Power Measurement {N]\Power Measurement {N].csproj", "{E343BF95-FE64-4185-8016-8D4CA0EDD08F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{20725AB1-0174-49AE-8000-72554DFEE544}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility.SimpleCSMA", "..\..\..\Utilities\DotNow\SimpleCSMA\Release\SimpleCSMA\Utility.SimpleCSMA.csproj", "{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +19,10 @@ Global
 		{E343BF95-FE64-4185-8016-8D4CA0EDD08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E343BF95-FE64-4185-8016-8D4CA0EDD08F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E343BF95-FE64-4185-8016-8D4CA0EDD08F}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{20725AB1-0174-49AE-8000-72554DFEE544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20725AB1-0174-49AE-8000-72554DFEE544}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20725AB1-0174-49AE-8000-72554DFEE544}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{20725AB1-0174-49AE-8000-72554DFEE544}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20725AB1-0174-49AE-8000-72554DFEE544}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20725AB1-0174-49AE-8000-72554DFEE544}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -40,7 +40,7 @@ namespace Samraksh.AppNote.Utility
 			{
 				_ccaSenseTime = value;
 				_macConfig.CCASenseTime = value;
-				EnactMACConfig();
+				EnactCSMAConfig();
 			}
 		}
 		private byte _ccaSenseTime;
@@ -53,7 +53,7 @@ namespace Samraksh.AppNote.Utility
 			{
 				_neighborLivenessDelay = value;
 				_macConfig.NeighborLivenessDelay = value;
-				EnactMACConfig();
+				EnactCSMAConfig();
 			}
 		}
 		private uint _neighborLivenessDelay;
@@ -69,7 +69,7 @@ namespace Samraksh.AppNote.Utility
 			{
 				_txPowerValue = value;
 				_macConfig.radioConfig.SetTxPower(value);
-				EnactMACConfig();
+				EnactCSMAConfig();
 			}
 		}
 		private TxPowerValue _txPowerValue;
@@ -85,7 +85,7 @@ namespace Samraksh.AppNote.Utility
 			{
 				_channel = value;
 				_macConfig.radioConfig.SetChannel(value);
-				EnactMACConfig();
+				EnactCSMAConfig();
 			}
 		}
 		private Channels _channel;
@@ -101,7 +101,7 @@ namespace Samraksh.AppNote.Utility
 			{
 				_radioName = value;
 				_macConfig.radioConfig.SetRadioName(value);
-				EnactMACConfig();
+				EnactCSMAConfig();
 			}
 		}
 		private RadioName _radioName;
