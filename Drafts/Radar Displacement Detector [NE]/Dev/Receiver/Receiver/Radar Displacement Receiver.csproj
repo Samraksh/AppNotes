@@ -44,11 +44,22 @@
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_eMote_DotNow">
-      <HintPath>..\..\eMote\eMote .NOW Release 4.3_1.0.12A\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+    <Reference Include="Samraksh.AppNote.Utility.EnhancedEmoteLCD">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote\Utilities\DotNow\EnhancedEmoteLCD\bin\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_eMote_Net">
-      <HintPath>..\..\eMote\eMote .NOW Release 4.3_1.0.12A\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote\Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote\Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -57,11 +68,5 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Utility\Utility.csproj">
-      <Project>{8E306BD1-B6AA-4B35-8D86-A8723E8078BA}</Project>
-      <Name>Utility</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -12,13 +12,10 @@ namespace Receiver
 	public static class RadioUpdates
 	{
 		/// <summary>Radio object</summary>
-		public static SimpleCsmaRadio Radio;
+		public static SimpleCSMA Radio;
 
 		/// <summary>Radio channel to use</summary>
 		public const Channels Channel = Channels.Channel_11;
-
-		/// <summary>Whether or not to send radio updates</summary>
-		public static bool EnableRadioUpdates = false;
 
 		/// <summary>Prepended to each packet to identify the app</summary>
 		public static char AppIdentifierHdr = 'D';
@@ -78,7 +75,7 @@ namespace Receiver
 			Lcd.WriteN(lcdIsConfPos, isConf ? 'C'.ToLcd() : ' '.ToLcd());
 			_toggle = !_toggle;
 		}
-		private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
+		private static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
 		private static bool _toggle = true;
 	}
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+using Samraksh.Appnote.Utility;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
 using Samraksh.eMote.Net.Mac;
@@ -10,17 +11,28 @@ using Samraksh.eMote.NonVolatileMemory;
 #if !(DotNow || Sam_Emulator)
 #error Conditional build symbol missing
 #endif
+#if (DotNow && Sam_Emulator)
+#error Cannot define both
+#endif
 
 namespace Samraksh.AppNote.DotNow.Radar
 {
 	/// <summary>
 	/// Global values and parameters
 	/// </summary>
-	public class Globals {
+	public class Globals
+	{
+
+		private const ushort SdBufferSize = 512 / 2;	// Same as Exfiltrator buffer size
+		/// <summary>End of file byte</summary>
+		public const byte Eof = 0xF0;	// Same as Exfiltrator EOF
+		/// <summary>SD Buffered Write object</summary>
+		public static SDBufferedWrite SDBufferedWrite = new SDBufferedWrite(SdBufferSize, Eof);
+		
 
 #if DotNow
 		/// <summary>Lcd</summary>
-		public static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
+		public static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
 #endif
 		private static readonly object WriteLock = new object();
 
@@ -30,9 +42,11 @@ namespace Samraksh.AppNote.DotNow.Radar
 		/// <param name="buffer"></param>
 		public static void WriteDataRefAndUpdateCrc(byte[] buffer)
 		{
-			try {
+			try
+			{
 				// Prevent attempt to write from separate threads
-				lock (WriteLock) {
+				lock (WriteLock)
+				{
 					DataStoreReference = new DataReference(
 						OutputItems.DStore,
 						buffer.Length,
@@ -49,8 +63,9 @@ namespace Samraksh.AppNote.DotNow.Radar
 						CrcWritten);
 				}
 			}
-			catch (Exception ex) {
-				Debug.Print("Error "+ ex);
+			catch (Exception ex)
+			{
+				Debug.Print("Error " + ex);
 				Lcd.Write("Err");
 			}
 		}
@@ -120,7 +135,7 @@ namespace Samraksh.AppNote.DotNow.Radar
 
 		/// <summary>Crc for reading</summary>
 		public static uint CrcRead;
-		
+
 		/// <summary>Allocations written</summary>
 		public static int AllocationsWritten = 0;
 
@@ -131,7 +146,7 @@ namespace Samraksh.AppNote.DotNow.Radar
 		public static class RadioUpdates
 		{
 			/// <summary>Radio object</summary>
-			public static SimpleCsmaRadio Radio;
+			public static SimpleCSMA Radio;
 
 			/// <summary>Radio channel to use</summary>
 			public const Channels Channel = Channels.Channel_11;
@@ -167,16 +182,16 @@ namespace Samraksh.AppNote.DotNow.Radar
 			/// <param name="isConf"></param>
 			public static void SnippetUpdate(bool isDisplacement, bool isConf)
 			{
-				InsertValueIntoArray.Insert(BufferDef.Buffer, BufferDef.AppIdentifier, AppIdentifierHdr);
-				InsertValueIntoArray.Insert(BufferDef.Buffer, BufferDef.IsDisplacement, isDisplacement);
-				InsertValueIntoArray.Insert(BufferDef.Buffer, BufferDef.IsConf, isConf);
-				Radio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+				Utility.BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.AppIdentifier, AppIdentifierHdr);
+				Utility.BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.IsDisplacement, isDisplacement);
+				Utility.BitConverter.InsertValueIntoArray(BufferDef.Buffer, BufferDef.IsConf, isConf);
+				Radio.SetRadioState(SimpleCSMA.RadioStates.On);
 				Radio.Send(Addresses.BROADCAST, BufferDef.Buffer);
-				Radio.SetRadioState(SimpleCsmaRadio.RadioStates.Off);
+				Radio.SetRadioState(SimpleCSMA.RadioStates.Off);
 			}
 		}
 
-	
+
 		/// <summary>
 		/// Define GPIO ports
 		/// </summary>

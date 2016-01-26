@@ -1,8 +1,8 @@
 using System;
 using Microsoft.SPOT;
 using Samraksh.Appnote.Utility;
-using Samraksh.AppNote.Utility;
 using Samraksh.eMote.NonVolatileMemory;
+using BitConverter = Samraksh.AppNote.Utility.BitConverter;
 
 namespace Samraksh.AppNote.DotNow.Radar
 {
@@ -74,10 +74,8 @@ namespace Samraksh.AppNote.DotNow.Radar
 			/// </summary>
 			public static void Sync_OnButtonPress(uint data1, uint data2, DateTime time)
 			{
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
-					RecordPrefix.Header0, Prefix[0]);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
-					RecordPrefix.Header1, Prefix[1]);
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer, RecordPrefix.Header0, Prefix[0]);
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer, RecordPrefix.Header1, Prefix[1]);
 
 				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
 			}
@@ -155,13 +153,13 @@ namespace Samraksh.AppNote.DotNow.Radar
 			/// <param name="rawSample"></param>
 			public static void Log(Globals.Sample rawSample)
 			{
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.RawI, (ushort)rawSample.I);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.RawQ, (ushort)rawSample.Q);
 
 				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
@@ -175,7 +173,7 @@ namespace Samraksh.AppNote.DotNow.Radar
 			public static void WriteToSd(byte[] buffer, int refsRead)
 			{
 				// Write raw sample to SD
-				SdBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
+				Globals.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
 
 				// Print
 				if (!PrintAfterRawLogging || refsRead >= 10)
@@ -297,29 +295,29 @@ namespace Samraksh.AppNote.DotNow.Radar
 			/// <param name="isConfirmed"></param>
 			public static void Log(int sampleNum, Globals.Sample sumVals, Globals.Sample rawSample, Globals.Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
 			{
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.SampleNum, sampleNum);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.SumI, sumVals.I);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.SumQ, sumVals.Q);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.RawI, (ushort)rawSample.I);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.RawQ, (ushort)rawSample.Q);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.SampleI, (short)compSample.I);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.SampleQ, (short)compSample.Q);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.IsCut, (short)isCut);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.IsDisplacement, isDisplacement);
-				InsertValueIntoArray.Insert(BufferDef.Buffer,
+				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 					BufferDef.IsConf, isConfirmed);
 
 				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
@@ -330,9 +328,10 @@ namespace Samraksh.AppNote.DotNow.Radar
 			/// </summary>
 			/// <param name="buffer"></param>
 			/// <param name="refsRead"></param>
-			public static void WriteToSd(byte[] buffer, int refsRead) {
+			public static void WriteToSd(byte[] buffer, int refsRead)
+			{
 				// Write everything of interest to SD
-				SdBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
+				Globals.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
 
 				// Print
 				if (!PrintAfterRawLogging || refsRead >= 10)
@@ -453,17 +452,17 @@ namespace Samraksh.AppNote.DotNow.Radar
 			/// <param name="isCut"></param>
 			public static void Log(int sampleNum, Globals.Sample sample, int isCut)
 			{
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					(int)BuffDef.SampleNum, sampleNum);
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					(int)BuffDef.SampleI, (short)sample.I);
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					(int)BuffDef.SampleQ, (short)sample.Q);
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.IsCut, (short)isCut);
 
 				Globals.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
@@ -582,25 +581,25 @@ namespace Samraksh.AppNote.DotNow.Radar
 			/// </summary>
 			public static void Log(int sampleNum, int cumCuts, bool isDisplacement, bool isConfirmed)
 			{
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.SampleNum, sampleNum);
 
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.CumCuts, cumCuts);
 
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.IsDisp, isDisplacement);
-				InsertValueIntoArray.Insert(BuffDef.Buffer,
+				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.IsConfirmed, isConfirmed);
 
 				Globals.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
 			}
 		}
 
-		
+
 	}
 }

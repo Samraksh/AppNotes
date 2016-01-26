@@ -14,18 +14,15 @@ using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis;
-//using Samraksh.AppNote.Samraksh.AppNote.DotNow.Radar;
-using Samraksh.AppNote.Utility;
 
 #if !(DotNow || Sam_Emulator)
 #error Conditional build symbol missing
 #endif
-using Samraksh.Appnote.Utility;
-using Samraksh.AppNote.DotNow.Radar;
-using Samraksh.eMote.DotNow;
-using Samraksh.eMote.Net.Radio;
-using Samraksh.eMote.NonVolatileMemory;
-using Math = System.Math;
+
+#if (DotNow && Sam_Emulator)
+#error Cannot define both
+#endif
+
 #if DotNow
 using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
 #endif
@@ -33,6 +30,13 @@ using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
 #if Sam_Emulator
 using AnalogInput = Samraksh.eMote.Emulator.AnalogInput;
 #endif
+
+using Samraksh.AppNote.DotNow.Radar;
+using Samraksh.AppNote.Utility;
+using Samraksh.eMote.DotNow;
+using Samraksh.eMote.Net.Radio;
+using Samraksh.eMote.NonVolatileMemory;
+using Math = System.Math;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 {
@@ -48,10 +52,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 		private static readonly ushort[] Ibuffer = new ushort[DetectorParameters.BufferSize];
 		private static readonly ushort[] Qbuffer = new ushort[DetectorParameters.BufferSize];
 
-		private const ushort SdBufferSize = 512 / 2;	// Same as Exfiltrator buffer size
-		private const byte Eof = 0xF0;	// Same as Exfiltrator EOF
-
-
+		
 		/// <summary>
 		/// Get things started
 		/// </summary>
@@ -71,9 +72,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				Globals.RadioUpdates.EnableRadioUpdates = true;
 				if (Globals.RadioUpdates.EnableRadioUpdates)
 				{
-					Globals.RadioUpdates.Radio = new SimpleCsmaRadio(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm,
-						_ => { }, // Ignore incoming stuff
-						Globals.RadioUpdates.Channel);
+					Globals.RadioUpdates.Radio = new SimpleCSMA(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm, Globals.RadioUpdates.Channel);
 				}
 
 				// Define output options
@@ -166,7 +165,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					);
 					dataStoreReference.Write(buffer);
 					Debug.Print("\t\t... write successful");
-					
+
 					Debug.Print("\tInitializing SD");
 
 					// ReSharper disable once ObjectCreationAsStatement
@@ -217,9 +216,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				// Initialize displacement analysis
 				AnalyzeDisplacement.Initialize(DisplacementCallback, MofNConfirmationCallback);
 
-				// Initialize SD buffering
-				SdBufferedWrite.Init(SdBufferSize, Eof);
-
 				// Start ADC sampling
 				AnalogInput.InitializeADC();
 				AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (uint)Ibuffer.Length,
@@ -227,7 +223,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 #if DotNow
 				Globals.Lcd.Write("cccc");
 #endif
-
 				// Sleep until we're finished sampling
 				//Globals.DoneSampling.WaitOne();
 				processSampleBufferThread.Join();

@@ -12,7 +12,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementReceiver
 	/// </summary>
 	public class Program
 	{
-		private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
+		private static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
 
 		/// <summary>
 		/// Main
@@ -24,10 +24,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementReceiver
 			Thread.Sleep(1000);
 
 			VersionInfo.Init(Assembly.GetExecutingAssembly());
-			Debug.Print("Radar Displacement Receiver" + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
+			Debug.Print("Radar Displacement Receiver " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
 
-			RadioUpdates.Radio = new SimpleCsmaRadio(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm, RadioUpdates.ReceiveUpdate, RadioUpdates.Channel);
-			RadioUpdates.Radio.SetRadioState(SimpleCsmaRadio.RadioStates.On);
+			RadioUpdates.Radio = new SimpleCSMA(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm, RadioUpdates.Channel);
+			RadioUpdates.Radio.OnReceive += RadioUpdates.ReceiveUpdate;
+			RadioUpdates.Radio.SetRadioState(SimpleCSMA.RadioStates.On);
 
 			Thread.Sleep(Timeout.Infinite);
 		}

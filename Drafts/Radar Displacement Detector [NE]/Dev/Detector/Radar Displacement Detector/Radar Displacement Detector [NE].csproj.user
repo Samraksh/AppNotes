@@ -10,6 +10,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DotNow|AnyCPU'">
     <DeployTransport>Serial</DeployTransport>
-    <DeployDevice>COM10</DeployDevice>
+    <DeployDevice>COM9</DeployDevice>
   </PropertyGroup>
 </Project>

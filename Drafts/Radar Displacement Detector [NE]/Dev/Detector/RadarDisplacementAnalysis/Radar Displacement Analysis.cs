@@ -1,12 +1,10 @@
-using System;
-using System.Text;
-using Microsoft.SPOT;
 #if !(DotNow || Sam_Emulator)
 #error Conditional build symbol missing
 #endif
+#if (DotNow && Sam_Emulator)
+#error Cannot define both
+#endif
 
-using Samraksh.AppNote.Utility;
-using Samraksh.eMote.NonVolatileMemory;
 
 namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 {
@@ -43,7 +41,6 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			// Initialize analysis classes
 			CutAnalysis.Initialize();
 			MofNConfirmation.Initialize();
-
 		}
 
 		/// <summary>

@@ -2,7 +2,6 @@ using System;
 using Microsoft.SPOT;
 using Samraksh.Appnote.Utility;
 using Samraksh.AppNote.DotNow.Radar;
-using Samraksh.eMote.DotNow;
 using Samraksh.eMote.NonVolatileMemory;
 using Math = System.Math;
 
@@ -131,12 +130,12 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			// Done reading from DataStore; if outputting to SD, put out eof
 			if (OutputItems.LoggingRequired)
 			{
-				buffer[0] = Eof;
+				buffer[0] = Globals.Eof;
 				for (var i = 0; i < 100; i++)
 				{
-					SdBufferedWrite.Write(buffer, 0, 1);
+					Globals.SDBufferedWrite.Write(buffer, 0, 1);
 				}
-				SdBufferedWrite.Flush();
+				Globals.SDBufferedWrite.Flush();
 			}
 
 			Debug.Print("\n* DataStore CRC check:\t" + (Globals.CrcWritten == Globals.CrcRead ? "YES" : "NO") + "\n\tWrite CRC:\t" + Globals.CrcWritten + "\n\tRead CRC:\t" + Globals.CrcRead);

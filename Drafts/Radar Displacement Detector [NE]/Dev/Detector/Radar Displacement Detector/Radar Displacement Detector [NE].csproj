@@ -78,17 +78,26 @@
     <Reference Include="Microsoft.SPOT.Native">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.EnhancedEmoteLCD">
+      <HintPath>..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\EnhancedEmoteLCD\bin\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA">
+      <HintPath>..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
+    </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
+      <HintPath>..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+    </Reference>
     <Reference Include="Samraksh_eMote, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\eMote .NOW Release 4.3.0.14\Samraksh_eMote\Samraksh_eMote.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote\Samraksh_eMote.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
