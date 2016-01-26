@@ -18,12 +18,12 @@
   </PropertyDefinitionValues>
   <Title />
   <ContentFiles>
-    <ContentFile FileName="Samraksh_eMote.dxc" Moniker="..\Samraksh_eMote\Samraksh_eMote.dll" DocType="DX.NET" />
-    <ContentFile FileName="Samraksh_eMote_DotNow.dxc" Moniker="..\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll" DocType="DX.NET" />
-    <ContentFile FileName="Samraksh_eMote_DSP.dxc" Moniker="..\Samraksh_eMote_DSP\Samraksh_eMote_DSP.dll" DocType="DX.NET" />
-    <ContentFile FileName="Samraksh_eMote_Kiwi.dxc" Moniker="..\Samraksh_eMote_Kiwi\Samraksh_eMote_Kiwi.dll" DocType="DX.NET" />
-    <ContentFile FileName="Samraksh_eMote_RealTime.dxc" Moniker="..\Samraksh_eMote_RealTime\Samraksh_eMote_RealTime.dll" DocType="DX.NET" />
-    <ContentFile FileName="Samraksh_eMote_Net.dxc" Moniker="..\Samraksh_eMote_Net\Samraksh_eMote_Net.dll" DocType="DX.NET" />
+    <ContentFile FileName="Samraksh_eMote.dxc" Moniker="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote\Samraksh_eMote.dll" DocType="DX.NET" />
+    <ContentFile FileName="Samraksh_eMote_DSP.dxc" Moniker="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_DSP\Samraksh_eMote_DSP.dll" DocType="DX.NET" />
+    <ContentFile FileName="Samraksh_eMote_DotNow.dxc" Moniker="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll" DocType="DX.NET" />
+    <ContentFile FileName="Samraksh_eMote_Kiwi.dxc" Moniker="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_Kiwi\Samraksh_eMote_Kiwi.dll" DocType="DX.NET" />
+    <ContentFile FileName="Samraksh_eMote_RealTime.dxc" Moniker="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_RealTime\Samraksh_eMote_RealTime.dll" DocType="DX.NET" />
+    <ContentFile FileName="Samraksh_eMote_Net.dxc" Moniker="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_Net\Samraksh_eMote_Net.dll" DocType="DX.NET" />
   </ContentFiles>
   <AutoDocFiles />
   <ContentFromProjectPlugin />
@@ -44,12 +44,12 @@
     <ReferencePaths>
       <ReferencePath Id="4c457ec3-5f62-440f-962b-b316c6d80f1e" Name="Microsoft.SPOT.Hardware" Directory="..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Assemblies\be" />
     </ReferencePaths>
-    <Assembly FileName="..\Samraksh_eMote\Samraksh_eMote.dll" RootTypeName="" />
-    <Assembly FileName="..\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll" RootTypeName="" />
-    <Assembly FileName="..\Samraksh_eMote_DSP\Samraksh_eMote_DSP.dll" RootTypeName="" />
-    <Assembly FileName="..\Samraksh_eMote_Kiwi\Samraksh_eMote_Kiwi.dll" RootTypeName="" />
-    <Assembly FileName="..\Samraksh_eMote_RealTime\Samraksh_eMote_RealTime.dll" RootTypeName="" />
-    <Assembly FileName="..\Samraksh_eMote_Net\Samraksh_eMote_Net.dll" RootTypeName="" />
+    <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote\Samraksh_eMote.dll" RootTypeName="" />
+    <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll" RootTypeName="" />
+    <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_DSP\Samraksh_eMote_DSP.dll" RootTypeName="" />
+    <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_Kiwi\Samraksh_eMote_Kiwi.dll" RootTypeName="" />
+    <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_RealTime\Samraksh_eMote_RealTime.dll" RootTypeName="" />
+    <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_Net\Samraksh_eMote_Net.dll" RootTypeName="" />
   </DotNetAssemblies>
   <DatabaseProjectPlugin>
     <Databases />
@@ -512,7 +512,7 @@
         </CustomHtmlHelpWindowSettings>
         <IsWebOutputRootPageLinkEnabled>false</IsWebOutputRootPageLinkEnabled>
         <Help3RedirectRelativePath>../</Help3RedirectRelativePath>
-        <HelpFileName>build\eMote .NOW Help Viewer\eMote _NOW Help Viewer.mshc</HelpFileName>
+        <HelpFileName>..\Setup Files\eMote Documentation\eMote .NOW Help Viewer\eMote _NOW Help Viewer.mshc</HelpFileName>
       </HelpCompiler>
       <RuleEngine>
         <Rules Caption="" IsReadOnly="false" MatchType="All" Id="root">
@@ -561,7 +561,7 @@
         <OtherHeadContent></OtherHeadContent>
       </OtherFiles>
       <Publishing />
-      <OutputDirectory></OutputDirectory>
+      <OutputDirectory>Help Temp2</OutputDirectory>
     </ProjectProfile>
     <ProjectProfile Id="a5fc17b2-b2a3-4035-ae2f-9f731eb113a8" Name="eMote .NOW HTML">
       <DefaultItemQualifiedName></DefaultItemQualifiedName>
@@ -1000,7 +1000,7 @@
         <OtherHeadContent></OtherHeadContent>
       </OtherFiles>
       <Publishing />
-      <OutputDirectory></OutputDirectory>
+      <OutputDirectory>..\Setup Files\eMote Documentation\eMote .NOW HTML</OutputDirectory>
     </ProjectProfile>
     <ProjectProfile Id="d5fab87f-3ca9-47f5-9e86-74acfd6c5483" Name="eMote .NOW Help Viewer CHM">
       <DefaultItemQualifiedName></DefaultItemQualifiedName>
@@ -1393,7 +1393,7 @@
         </CustomHtmlHelpWindowSettings>
         <IsWebOutputRootPageLinkEnabled>false</IsWebOutputRootPageLinkEnabled>
         <Help3RedirectRelativePath>../</Help3RedirectRelativePath>
-        <HelpFileName>build\eMote .NOW Help Viewer CHM\eMote .NOW Help Viewer.chm</HelpFileName>
+        <HelpFileName>..\Setup Files\eMote Documentation\eMote .NOW Help Viewer CHM\eMote .NOW Help Viewer.chm</HelpFileName>
       </HelpCompiler>
       <RuleEngine>
         <Rules Caption="" IsReadOnly="false" MatchType="All" Id="root">
@@ -1442,7 +1442,7 @@
         <OtherHeadContent></OtherHeadContent>
       </OtherFiles>
       <Publishing />
-      <OutputDirectory></OutputDirectory>
+      <OutputDirectory>Help Temp1</OutputDirectory>
     </ProjectProfile>
   </ProjectProfiles>
   <BuildConfigurations>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentFile Version="2010" Moniker="..\Samraksh_eMote_DSP\Samraksh_eMote_DSP.dll" DocType="DX.NET" IsLocalizationDisabled="false">
+<ContentFile Version="2010" Moniker="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_DSP\Samraksh_eMote_DSP.dll" DocType="DX.NET" IsLocalizationDisabled="false">
   <RelatedProject>eMote .NOW.dxp</RelatedProject>
   <State>
     <Attributes>
