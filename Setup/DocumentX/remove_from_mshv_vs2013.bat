@@ -1,1 +1,0 @@
- "%ProgramFiles(x86)%\Microsoft Help Viewer\v2.1\hlpctntmgr" /silent /operation uninstall /catalogName "VisualStudio12" /locale en-US /vendor "Samraksh" /productName "eMote" /sourceUri "%CD%\helpcontentsetup.msha"
