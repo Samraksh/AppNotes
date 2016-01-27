@@ -66,9 +66,8 @@
     <Reference Include="Microsoft.SPOT.Native">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+    <Reference Include="Samraksh_eMote_DotNow">
+      <HintPath>..\..\..\..\..\..\..\Users\William\Documents\Samraksh\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
