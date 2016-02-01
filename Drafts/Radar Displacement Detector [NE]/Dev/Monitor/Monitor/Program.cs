@@ -19,12 +19,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementReceiver
 		/// </summary>
 		public static void Main()
 		{
+			
+			Debug.Print("Radar Displacement Receiver " + VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 			Lcd.Clear();
 			Lcd.Write("rcvr");
 			Thread.Sleep(1000);
-
-			VersionInfo.Init(Assembly.GetExecutingAssembly());
-			Debug.Print("Radar Displacement Receiver " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
 
 			RadioUpdates.Radio = new SimpleCSMA(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm, RadioUpdates.Channel);
 			RadioUpdates.Radio.OnReceive += RadioUpdates.ReceiveUpdate;

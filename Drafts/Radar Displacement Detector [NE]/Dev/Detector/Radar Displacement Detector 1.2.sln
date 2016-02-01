@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radar Displacement Detector [NE]", "Radar Displacement Detector\Radar Displacement Detector [NE].csproj", "{6B3A5756-1A5B-4975-AC1B-37FA4831E489}"
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Radar Displacement Detector", "Radar Displacement Detector\Radar Displacement Detector.csproj", "{6B3A5756-1A5B-4975-AC1B-37FA4831E489}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}"
 EndProject

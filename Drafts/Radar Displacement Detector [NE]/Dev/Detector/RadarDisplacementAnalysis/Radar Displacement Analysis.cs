@@ -1,3 +1,6 @@
+using System;
+using Samraksh.AppNote.DotNow.RadarDisplacementDetector;
+
 #if !(DotNow || Sam_Emulator)
 #error Conditional build symbol missing
 #endif
@@ -95,9 +98,9 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 
 
 			// Log raw everything if required
-			if (OutputItems.RawEverything.Opt.Logging)
+			if (OutputItems.Sample.RawAndAnalysis.Opt.Logging)
 			{
-				OutputItems.RawEverything.Log(SampleData.SampleNum, SampleData.SampleSum, rawSample, SampleData.CompSample, isCut, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
+				OutputItems.Sample.RawAndAnalysis.Log(SampleData.SampleNum, SampleData.SampleSum, rawSample, SampleData.CompSample, isCut, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			//if (SampleData.SampleNum < 100) {
@@ -112,22 +115,35 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 
 		private static void DoSampleLogging(Globals.Sample rawSample, int isCut)
 		{
-			// Log raw sample if required
-			if (OutputItems.RawSample.Opt.Logging)
+			switch (OutputItems.Sample.CollectionType)
 			{
-				OutputItems.RawSample.Log(rawSample);
+				case OutputItems.Sample.CollectionOptions.RawSampleOnly:
+					OutputItems.Sample.RawSample.Log(rawSample);
+					break;
+				case OutputItems.Sample.CollectionOptions.RawSampleAndAnalysis:
+					OutputItems.SampleAndAnalysis.Log(SampleData.SampleNum, SampleData.CompSample, isCut);
+					OutputItems.SampleAndAnalysis.PrintVals(SampleData.CompSample, isCut);
+					break;
+				case OutputItems.Sample.CollectionOptions.None:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+
+			// Log raw sample if required
+			if (OutputItems.Sample.Opt.Logging)
+			{
 			}
 
 			// Print sample and cut if required
-			if (OutputItems.SampleAndCut.Opt.Print)
+			if (OutputItems.SampleAndAnalysis.Opt.Print)
 			{
-				OutputItems.SampleAndCut.PrintVals(SampleData.CompSample, isCut);
 			}
 
 			// Log sample and cut if required
-			if (OutputItems.SampleAndCut.Opt.LogToDebug || OutputItems.SampleAndCut.Opt.LogToSD)
+			if (OutputItems.SampleAndAnalysis.Opt.LogToDebug || OutputItems.SampleAndAnalysis.Opt.LogToSD)
 			{
-				OutputItems.SampleAndCut.Log(SampleData.SampleNum, SampleData.CompSample, isCut);
+
 			}
 		}
 
@@ -135,7 +151,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 		/// <summary>
 		/// Check whether displacement and/or confirmation (MofN) has occurred
 		/// </summary>
-		/// <param name="rawSample">Raw sample (used forlogging)</param>
+		/// <param name="rawSample">Sample sample (used forlogging)</param>
 		/// <param name="isCut">Is cut? (used for logging)</param>
 		private static void CheckDisplacementAndConfirmation(Globals.Sample rawSample, int isCut)
 		{
@@ -161,9 +177,8 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 				//Debug.Print("\n-------------------------MofN confirmation started");
 			}
 
-				// Displacement event ended
-			else if (MofNConfirmation.PrevConf &&
-					 !MofNConfirmation.IsConfirmed)
+			// Displacement event ended
+			else if (MofNConfirmation.PrevConf && !MofNConfirmation.IsConfirmed)
 			{
 				ClassParameters.MofNConfirmationCallback(false);
 				//Debug.Print("\n-------------------------MofN confirmation ended");
@@ -190,10 +205,6 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 				OutputItems.SnippetDispAndConf.PrintVals(CutAnalysis.SnippetNum, CutAnalysis.CumCuts, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 		}
-
-
-
-
 
 
 		/// <summary>
@@ -286,7 +297,6 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 		/// </remarks>
 		public static class MofNConfirmation
 		{
-
 			//private static readonly int M = ClassParameters.M; // Syntactic sugar
 			//private static readonly int N = ClassParameters.N;
 
@@ -333,5 +343,4 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			}
 		}
 	}
-
 }

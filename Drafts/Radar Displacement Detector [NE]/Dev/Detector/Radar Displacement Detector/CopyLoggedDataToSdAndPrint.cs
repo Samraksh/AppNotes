@@ -23,19 +23,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			var allocationsRead = 0;
 
 			// Print raw sample header
-			if (OutputItems.PrintAfterRawLogging)
-				if (OutputItems.RawSample.Opt.LogRawSampleToSD)
+			if (OutputItems.Sample.Opt.PrintAfterLogging)
+				if (OutputItems.Sample.Opt.LogToSD)
 				{
-					OutputItems.RawSample.PrintHeader();
+					OutputItems.Sample.RawSample.PrintHeader();
 				}
-				else if (OutputItems.RawEverything.Opt.LogRawEverythingToSD)
+				else if (OutputItems.Sample.RawAndAnalysis.Opt.LogRawEverythingToSD)
 				{
-					OutputItems.RawEverything.PrintHeader();
+					OutputItems.Sample.RawAndAnalysis.PrintHeader();
 				}
 			// Print sample and cut header
-			if (OutputItems.SampleAndCut.Opt.LogToDebug)
+			if (OutputItems.SampleAndAnalysis.Opt.LogToDebug)
 			{
-				OutputItems.SampleAndCut.PrintHeader();
+				OutputItems.SampleAndAnalysis.PrintHeader();
 			}
 
 			// Print snippet displacement and confirmation header
@@ -61,16 +61,16 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			var buffSize = 0;
 			buffSize = Math.Max(
 				buffSize,
-				OutputItems.RawSample.BufferDef.BuffSize);
+				OutputItems.Sample.RawSample.BufferDef.BuffSize);
 			buffSize = Math.Max(
 				buffSize,
-				OutputItems.RawEverything.BufferDef.BuffSize);
+				OutputItems.Sample.RawAndAnalysis.BufferDef.BuffSize);
 			buffSize = Math.Max(
 				buffSize,
 				OutputItems.SnippetDispAndConf.BuffDef.BuffSize);
 			buffSize = Math.Max(
 				buffSize,
-				OutputItems.SampleAndCut.BuffDef.BuffSize);
+				OutputItems.SampleAndAnalysis.BuffDef.BuffSize);
 			var buffer = new byte[buffSize];
 
 			var refsRead = 0;
@@ -96,15 +96,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				allocationsRead++;
 				refsRead++;
 
-				if (OutputItems.SampleAndCut.Opt.Logging)
-				{
-					OutputItems.SampleAndCut.PrintVals(buffer);
-				}
-
-				if (OutputItems.SnippetDispAndConf.Opt.LogToDebug)
-				{
-					OutputItems.SnippetDispAndConf.PrintVals(buffer);
-				}
+				OutputItems.SampleAndAnalysis.PrintVals(buffer);
+				OutputItems.SnippetDispAndConf.PrintVals(buffer);
 
 				if (allocationsRead % DetectorParameters.SamplesPerSecond == 1)
 				{
@@ -114,15 +107,30 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					Globals.Lcd.Write("t" + (snippetNo % 1000));
 #endif
 				}
+#error output buffer unconditionally if (OutputItems.OutputToSDRequired). Need to use the data reference size
 
-				if (OutputItems.RawSample.Opt.Logging)
+				if (OutputItems.OutputToSDRequired)
 				{
-					OutputItems.RawSample.WriteToSd(buffer, refsRead);
+					// Write raw sample to SD
+					Globals.SDBufferedWrite.Write(buffer, 0, (ushort)theDRef.Size);
+
+					// Print
+					if (!PrintAfterRawLogging || refsRead >= 10)
+					{
+						return;
+					}
+					PrintVals(buffer);
+
 				}
 
-				if (OutputItems.RawEverything.Opt.Logging)
+				if (OutputItems.Sample.Opt.Logging)
 				{
-					OutputItems.RawEverything.WriteToSd(buffer, refsRead);
+					OutputItems.Sample.RawSample.WriteToSd(buffer, refsRead);
+				}
+
+				if (OutputItems.Sample.RawAndAnalysis.Opt.Logging)
+				{
+					OutputItems.Sample.RawAndAnalysis.WriteToSd(buffer, refsRead);
 				}
 
 			}

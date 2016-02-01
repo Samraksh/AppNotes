@@ -52,12 +52,33 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 		private static readonly ushort[] Ibuffer = new ushort[DetectorParameters.BufferSize];
 		private static readonly ushort[] Qbuffer = new ushort[DetectorParameters.BufferSize];
 
-		
+
 		/// <summary>
 		/// Get things started
 		/// </summary>
 		public static void Main()
 		{
+			// **************************************************************************************************** 
+			//	Output options
+			// **************************************************************************************************** 
+
+			OutputItems.Sample.CollectionType = OutputItems.Sample.CollectionOptions.RawSampleAndAnalysis;
+			OutputItems.Sample.Opt.PrintImmediate = true;
+			OutputItems.Sample.Opt.LogToDebug = true;
+			OutputItems.Sample.Opt.LogToSD = true;
+
+			OutputItems.SampleAndAnalysis.CollectionType = OutputItems.SampleAndAnalysis.CollectionOptions.SampleAndAnalysis;
+			OutputItems.SampleAndAnalysis.Opt.PrintImmediate = true;
+			OutputItems.SampleAndAnalysis.Opt.LogToDebug = true;
+			OutputItems.SampleAndAnalysis.Opt.LogToSD = true;
+
+			OutputItems.SnippetDispAndConf.CollectionType = OutputItems.SnippetDispAndConf.CollectionOptions.SnippetDisplacementAndConfirmation;
+			OutputItems.SnippetDispAndConf.Opt.PrintImmediate = true;
+			OutputItems.SnippetDispAndConf.Opt.LogToDebug = true;
+			OutputItems.SnippetDispAndConf.Opt.LogToSD = true;
+			
+			// **************************************************************************************************** 
+
 			try
 			{
 				// Basic setup
@@ -74,36 +95,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				{
 					Globals.RadioUpdates.Radio = new SimpleCSMA(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm, Globals.RadioUpdates.Channel);
 				}
-
-				// Define output options
-				OutputItems.RawSample.Opt.LogRawSampleToSD = false;
-
-				OutputItems.RawEverything.Opt.LogRawEverythingToSD = true;
-
-				OutputItems.PrintAfterRawLogging = true;
-
-				OutputItems.SampleAndCut.Opt.LogToDebug = false;
-				OutputItems.SampleAndCut.Opt.LogToSD = false;
-				OutputItems.SampleAndCut.Opt.Print = false;
-
-				OutputItems.SnippetDispAndConf.Opt.LogToDebug = false;
-				OutputItems.SnippetDispAndConf.Opt.LogToSD = false;
-				OutputItems.SnippetDispAndConf.Opt.Print = true;
-
-				// Finish setting output options
-
-				OutputItems.RawSample.Opt.Logging = OutputItems.RawSample.Opt.LogRawSampleToSD;
-				OutputItems.RawEverything.Opt.Logging = OutputItems.RawEverything.Opt.LogRawEverythingToSD;
-				OutputItems.SampleAndCut.Opt.Logging = OutputItems.SampleAndCut.Opt.LogToDebug ||
-													   OutputItems.SampleAndCut.Opt.LogToSD;
-				OutputItems.SnippetDispAndConf.Opt.Logging = OutputItems.SnippetDispAndConf.Opt.LogToDebug ||
-															 OutputItems.SnippetDispAndConf.Opt.LogToSD;
-				OutputItems.LoggingRequired =
-					OutputItems.RawSample.Opt.Logging ||
-					OutputItems.RawEverything.Opt.Logging ||
-					OutputItems.SampleAndCut.Opt.Logging ||
-					OutputItems.SnippetDispAndConf.Opt.Logging;
-
+				
 				PowerState.ChangePowerLevel(PowerLevel.High);
 				Debug.Print("Power Level: " + PowerState.CurrentPowerLevel + " (16=High, 32=Med, 48=Low");
 
@@ -140,9 +132,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 
 				if (OutputItems.LoggingRequired)
 				{
-					//if (OutputItems.RawSample.Opt.Logging || OutputItems.RawEverything.Opt.Logging) {
+					//if (OutputItems.RawSample.Opt.Logging || OutputItems.RawAndAnalysis.Opt.Logging) {
 					Debug.Print("* Log to SD via DataStore");
-					if (OutputItems.PrintAfterRawLogging)
+					if (OutputItems.Sample.Opt.PrintAfterLogging)
 					{
 						Debug.Print("\tand print");
 					}
@@ -165,9 +157,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					);
 					dataStoreReference.Write(buffer);
 					Debug.Print("\t\t... write successful");
+				}
 
-					Debug.Print("\tInitializing SD");
-
+				if (OutputItems.OutputToSDRequired)
+				{
 					// ReSharper disable once ObjectCreationAsStatement
 					new SD(status => { });
 					// Even though this seems to be a do-nothing method call, it's still necessary before initializing the SD card
@@ -178,19 +171,20 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 #endif
 						throw new ApplicationException("*** Error: Cannot initialize microSD");
 					}
-
-					Debug.Print("\t...done");
+					Debug.Print("\tInitializing SD");
 				}
+				Debug.Print("\t...done");
+
 #if DotNow
 				Globals.Lcd.Write("IIII");
 #endif
 
-				if (OutputItems.SampleAndCut.Opt.LogToDebug)
+				if (OutputItems.SampleAndAnalysis.Opt.LogToDebug)
 				{
 					Debug.Print("* Log samples and detects to Debug");
 				}
 
-				if (OutputItems.SampleAndCut.Opt.Print)
+				if (OutputItems.SampleAndAnalysis.Opt.Print)
 				{
 					Debug.Print("* Immediate output samples and detects to Debug not supported");
 				}

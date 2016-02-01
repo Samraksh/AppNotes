@@ -1,4 +1,4 @@
-namespace Samraksh.AppNote.DotNow.Radar
+namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 {
 	/// <summary>
 	/// Displacement detection parameters

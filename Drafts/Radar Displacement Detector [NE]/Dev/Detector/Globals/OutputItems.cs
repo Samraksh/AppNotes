@@ -4,7 +4,7 @@ using Samraksh.Appnote.Utility;
 using Samraksh.eMote.NonVolatileMemory;
 using BitConverter = Samraksh.AppNote.Utility.BitConverter;
 
-namespace Samraksh.AppNote.DotNow.Radar
+namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 {
 	/// <summary>
 	/// Output items
@@ -16,15 +16,14 @@ namespace Samraksh.AppNote.DotNow.Radar
 		/// </summary>
 		public static readonly DataStore DStore = DataStore.Instance(StorageType.NOR, true);
 
-		/// <summary>Options true iff logging</summary>
-		public static bool LoggingRequired;
+		///// <summary>Options true iff logging</summary>
+		//public static bool LoggingRequired;
 
-		/// <summary>Print after logging</summary>
-		public static bool PrintAfterRawLogging;
+		///// <summary>True iff output to SD required</summary>
+		//public static bool OutputToSDRequired;
 
 		/// <summary>Field names header</summary>
 		public static char[] FieldNamesHeader = { '#', 'a' };
-
 
 		/// <summary>
 		/// Record prefix
@@ -81,291 +80,331 @@ namespace Samraksh.AppNote.DotNow.Radar
 			}
 		}
 
-		//********************************************************************************************************
-		//		Raw sample
-		//********************************************************************************************************
-
-		/// <summary>
-		/// Raw sample
-		/// </summary>
-		public static class RawSample
+		public static class Sample
 		{
-			/// <summary>Sample values and cut detection (Prefix, Raw.I, Raw.Q)</summary>
-			private static readonly char[] Prefix = { '#', 'r' };
+			/// <summary>
+			/// Logging options
+			/// </summary>
+			public enum CollectionOptions
+			{
+				/// <summary>No logging</summary>
+				None, 
+				/// <summary>Log sample only</summary>
+				RawSampleOnly, 
+				/// <summary>Log sample and analysis</summary>
+				RawSampleAndAnalysis,
+			}
 
-			/// <summary>Output options for raw sample</summary>
+			/// <summary>Output options for sample</summary>
 			public static class Opt
 			{
+				public static bool PrintImmediate;
 				/// <summary>Log to DataStore and output later to SD</summary>
-				public static bool LogRawSampleToSD;
-				///// <summary>Log to DataStore and output later to SD and print</summary>
-				//public static bool LogRawSampleToSDAndPrint;
-				/// <summary>Logging is required</summary>
-				public static bool Logging;
+				public static bool LogToSD;
+				/// <summary>Log to DataStore and output later to SD and print</summary>
+				public static bool LogToDebug;
 			}
 
-			/// <summary>
-			/// Raw sample buffer
-			/// </summary>
-			/// <remarks>Items stored: prefix, raw I value, raw Q value</remarks>
-			public class BufferDef
-			{
-				/// <summary>The buffer</summary>
-				public static byte[] Buffer = new byte[BuffSize];
 
-				/// <summary>Raw I position</summary>
-				public const int RawI = RecordPrefix.Header1 + sizeof(char);
-				/// <summary>Raw Q position</summary>
-				public const int RawQ = RawI + sizeof(ushort);
+			/// <summary>User's log-to choice for sample</summary>
+			public static CollectionOptions CollectionType = CollectionOptions.None;
 
-				/// <summary>Buffer size</summary>
-				public const int BuffSize = RawQ + sizeof(ushort);
-			}
+			//********************************************************************************************************
+			//		Raw sample
+			//********************************************************************************************************
 
 			/// <summary>
-			/// Print header
+			/// Raw sample
 			/// </summary>
-			public static void PrintHeader()
+			public static class RawSample
 			{
-				Debug.Print("Raw Sample buffer size is " + BufferDef.BuffSize + " bytes");
-				Debug.Print(new string(FieldNamesHeader) + "\tRawI\tRawQ");
-			}
+				/// <summary>Sample values and cut detection (Prefix, Raw.I, Sample.Q)</summary>
+				private static readonly char[] Prefix = { '#', 'r' };
 
-			/// <summary>
-			/// Print vals after logging
-			/// </summary>
-			/// <param name="buffer"></param>
-			private static void PrintVals(byte[] buffer)
-			{
-				var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
-				var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
-				var rawI = BitConverter.ToUInt16(buffer, BufferDef.RawI);
-				var rawQ = BitConverter.ToUInt16(buffer, BufferDef.RawQ);
-				// Explicitly convert header0 to string else will sum header0 and header1 to int and then convert the number to string
-				Debug.Print(header0.ToString() + header1
-					+ "\t" + rawI
-					+ "\t" + rawQ);
-			}
-
-			/// <summary>
-			/// Log raw sample
-			/// </summary>
-			/// <param name="rawSample"></param>
-			public static void Log(Globals.Sample rawSample)
-			{
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					RecordPrefix.Header1, Prefix[1]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.RawI, (ushort)rawSample.I);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.RawQ, (ushort)rawSample.Q);
-
-				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
-			}
-
-			/// <summary>
-			/// Write to SD card
-			/// </summary>
-			/// <param name="buffer"></param>
-			/// <param name="refsRead"></param>
-			public static void WriteToSd(byte[] buffer, int refsRead)
-			{
-				// Write raw sample to SD
-				Globals.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
-
-				// Print
-				if (!PrintAfterRawLogging || refsRead >= 10)
+				/// <summary>
+				/// Raw sample buffer
+				/// </summary>
+				/// <remarks>Items stored: prefix, raw I value, raw Q value</remarks>
+				public class BufferDef
 				{
-					return;
+					/// <summary>The buffer</summary>
+					public static byte[] Buffer = new byte[BuffSize];
+
+					/// <summary>Raw I position</summary>
+					public const int RawI = RecordPrefix.Header1 + sizeof(char);
+					/// <summary>Raw Q position</summary>
+					public const int RawQ = RawI + sizeof(ushort);
+
+					/// <summary>Buffer size</summary>
+					public const int BuffSize = RawQ + sizeof(ushort);
 				}
-				PrintVals(buffer);
-			}
 
-		}
-
-		//********************************************************************************************************
-		//		Raw everything
-		//********************************************************************************************************
-
-		/// <summary>
-		/// Raw everything buffer
-		/// </summary>
-		/// <remarks>Items stored: SampleNum (int), RawI, RawQ (both short), SampleI, SampleQ (both int), IsCut, IsDisplacement, IsConf (all bool)</remarks>
-		public static class RawEverything
-		{
-			/// <summary>Sample values and cut detection (Prefix, Raw.I, Raw.Q)</summary>
-			private static readonly char[] Prefix = { '#', 'e' };
-
-			/// <summary>Output options for raw everything</summary>
-			public static class Opt
-			{
-				/// <summary>Log to DataStore and output later to SD</summary>
-				public static bool LogRawEverythingToSD;
-				///// <summary>Log to DataStore and output later to SD and print</summary>
-				//public static bool LogRawEverythingToSDAndPrint;
-				/// <summary>Logging is required</summary>
-				public static bool Logging;
-			}
-			/// <summary>
-			/// Raw everything buffer
-			/// </summary>
-			public static class BufferDef
-			{
-				/// <summary>The buffer</summary>
-				public static byte[] Buffer = new byte[BuffSize];
-
-				/// <summary>Buffer position</summary>
-				public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
-				/// <summary>Buffer position</summary>
-				public const int SumI = SampleNum + sizeof(int);
-				/// <summary>Buffer position</summary>
-				public const int SumQ = SumI + sizeof(long);
-				/// <summary>Buffer position</summary>
-				public const int RawI = SumQ + sizeof(long);	// Last position + size of last item
-				/// <summary>Buffer position</summary>
-				public const int RawQ = RawI + sizeof(ushort);
-				/// <summary>Buffer position</summary>
-				public const int SampleI = RawQ + sizeof(ushort);
-				/// <summary>Buffer position</summary>
-				public const int SampleQ = SampleI + sizeof(short);
-				/// <summary>Buffer position</summary>
-				public const int IsCut = SampleQ + sizeof(short);
-				/// <summary>Buffer position</summary>
-				public const int IsDisplacement = IsCut + sizeof(short);
-				/// <summary>Buffer position</summary>
-				public const int IsConf = IsDisplacement + sizeof(bool);
-
-				/// <summary>Buffer size</summary>
-				public const int BuffSize = IsConf + sizeof(bool);
-			}
-
-			/// <summary>
-			/// Print header
-			/// </summary>
-			public static void PrintHeader()
-			{
-				Debug.Print("Raw Everything buffer size is " + BufferDef.BuffSize + " bytes");
-				Debug.Print(new string(FieldNamesHeader) + "\tSampleNum\tSumI\tSumQ\tRawI\tRawQ\tSampleI\tSampleQ\tIsCut\tIsDisplacement\tIsConf");
-			}
-
-			/// <summary>
-			/// Print raw everything after logging
-			/// </summary>
-			/// <param name="buffer"></param>
-			private static void PrintVals(byte[] buffer)
-			{
-				var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
-				var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
-				var sampleNum = BitConverter.ToInt32(buffer, BufferDef.SampleNum);
-				var sumI = BitConverter.ToInt64(buffer, BufferDef.SumI);
-				var sumQ = BitConverter.ToInt64(buffer, BufferDef.SumQ);
-				var rawI = BitConverter.ToUInt16(buffer, BufferDef.RawI);
-				var rawQ = BitConverter.ToUInt16(buffer, BufferDef.RawQ);
-				var sampleI = BitConverter.ToInt16(buffer, BufferDef.SampleI);
-				var sampleQ = BitConverter.ToInt16(buffer, BufferDef.SampleQ);
-				var isCut = BitConverter.ToInt16(buffer, BufferDef.IsCut);
-				var isDisplacement = BitConverter.ToBoolean(buffer, BufferDef.IsDisplacement);
-				var isConf = BitConverter.ToBoolean(buffer, BufferDef.IsConf);
-
-				// Explicitly convert header0 to string else will sum header0 and header1 to int and then convert the number to string
-				Debug.Print(header0.ToString() + header1
-					+ "\t" + sampleNum
-					+ "\t" + sumI
-					+ "\t" + sumQ
-					+ "\t" + rawI
-					+ "\t" + rawQ
-					+ "\t" + sampleI
-					+ "\t" + sampleQ
-					+ "\t" + isCut
-					+ "\t" + isDisplacement
-					+ "\t" + isConf);
-			}
-
-			/// <summary>
-			/// Log Raw Everything
-			/// </summary>
-			/// <param name="sampleNum"></param>
-			/// <param name="sumVals"></param>
-			/// <param name="rawSample"></param>
-			/// <param name="compSample"></param>
-			/// <param name="isCut"></param>
-			/// <param name="isDisplacement"></param>
-			/// <param name="isConfirmed"></param>
-			public static void Log(int sampleNum, Globals.Sample sumVals, Globals.Sample rawSample, Globals.Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
-			{
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					RecordPrefix.Header1, Prefix[1]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.SampleNum, sampleNum);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.SumI, sumVals.I);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.SumQ, sumVals.Q);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.RawI, (ushort)rawSample.I);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.RawQ, (ushort)rawSample.Q);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.SampleI, (short)compSample.I);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.SampleQ, (short)compSample.Q);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.IsCut, (short)isCut);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.IsDisplacement, isDisplacement);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-					BufferDef.IsConf, isConfirmed);
-
-				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
-			}
-
-			/// <summary>
-			/// Write to SD card
-			/// </summary>
-			/// <param name="buffer"></param>
-			/// <param name="refsRead"></param>
-			public static void WriteToSd(byte[] buffer, int refsRead)
-			{
-				// Write everything of interest to SD
-				Globals.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
-
-				// Print
-				if (!PrintAfterRawLogging || refsRead >= 10)
+				/// <summary>
+				/// Print header
+				/// </summary>
+				public static void PrintHeader()
 				{
-					return;
+					Debug.Print("Raw Sample buffer size is " + BufferDef.BuffSize + " bytes");
+					Debug.Print(new string(FieldNamesHeader) + "\tRawI\tRawQ");
 				}
-				PrintVals(buffer);
+
+				/// <summary>
+				/// Print vals after logging
+				/// </summary>
+				/// <param name="buffer"></param>
+				private static void PrintVals(byte[] buffer)
+				{
+					var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
+					var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+					var rawI = BitConverter.ToUInt16(buffer, BufferDef.RawI);
+					var rawQ = BitConverter.ToUInt16(buffer, BufferDef.RawQ);
+					// Explicitly convert header0 to string else will sum header0 and header1 to int and then convert the number to string
+					Debug.Print(header0.ToString() + header1
+					            + "\t" + rawI
+					            + "\t" + rawQ);
+				}
+
+				/// <summary>
+				/// Log raw sample
+				/// </summary>
+				/// <param name="rawSample"></param>
+				public static void Log(Globals.Sample rawSample)
+				{
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header0, Prefix[0]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header1, Prefix[1]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.RawI, (ushort)rawSample.I);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.RawQ, (ushort)rawSample.Q);
+
+					Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+				}
+
+				///// <summary>
+				///// Write to SD card
+				///// </summary>
+				///// <param name="buffer"></param>
+				///// <param name="refsRead"></param>
+				//public static void WriteToSd(byte[] buffer, int refsRead)
+				//{
+				//	var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
+				//	var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+
+				//	if (header0 != Prefix[0] ||
+				//		header1 != Prefix[1])
+				//	{
+				//		return;
+				//	}
+
+				//	// Write raw sample to SD
+				//	Globals.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
+
+				//	// Print
+				//	if (!PrintAfterLogging || refsRead >= 10)
+				//	{
+				//		return;
+				//	}
+				//	PrintVals(buffer);
+				//}
 			}
 
-		}
+			//********************************************************************************************************
+			//		Raw sample and analysis
+			//********************************************************************************************************
 
+			/// <summary>
+			/// Log raw + analysis
+			/// </summary>
+			/// <remarks>Items stored: SampleNum (int), RawI, RawQ (both short), SampleI, SampleQ (both int), IsCut, IsDisplacement, IsConf (all bool)</remarks>
+			public static class RawAndAnalysis
+			{
+				/// <summary>Sample values and cut detection (Prefix, Raw.I, Sample.Q)</summary>
+				private static readonly char[] Prefix = { '#', 'e' };
+
+				/// <summary>Output options for raw everything</summary>
+				public static class Opt
+				{
+					public static bool PrintImmediate;
+					/// <summary>Log to DataStore and output later to SD</summary>
+					public static bool LogRawEverythingToSD;
+
+					/// <summary>Log to DataStore and output later to SD and print</summary>
+					public static bool LogRawEverythingToDebug;
+				}
+
+				/// <summary>
+				/// Raw everything buffer
+				/// </summary>
+				public static class BufferDef
+				{
+					/// <summary>The buffer</summary>
+					public static byte[] Buffer = new byte[BuffSize];
+
+					/// <summary>Buffer position</summary>
+					public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
+					/// <summary>Buffer position</summary>
+					public const int SumI = SampleNum + sizeof(int);
+					/// <summary>Buffer position</summary>
+					public const int SumQ = SumI + sizeof(long);
+					/// <summary>Buffer position</summary>
+					public const int RawI = SumQ + sizeof(long);	// Last position + size of last item
+					/// <summary>Buffer position</summary>
+					public const int RawQ = RawI + sizeof(ushort);
+					/// <summary>Buffer position</summary>
+					public const int SampleI = RawQ + sizeof(ushort);
+					/// <summary>Buffer position</summary>
+					public const int SampleQ = SampleI + sizeof(short);
+					/// <summary>Buffer position</summary>
+					public const int IsCut = SampleQ + sizeof(short);
+					/// <summary>Buffer position</summary>
+					public const int IsDisplacement = IsCut + sizeof(short);
+					/// <summary>Buffer position</summary>
+					public const int IsConf = IsDisplacement + sizeof(bool);
+
+					/// <summary>Buffer size</summary>
+					public const int BuffSize = IsConf + sizeof(bool);
+				}
+
+				/// <summary>
+				/// Print header
+				/// </summary>
+				public static void PrintHeader()
+				{
+					Debug.Print("Raw Everything buffer size is " + BufferDef.BuffSize + " bytes");
+					Debug.Print(new string(FieldNamesHeader) + "\tSampleNum\tSumI\tSumQ\tRawI\tRawQ\tSampleI\tSampleQ\tIsCut\tIsDisplacement\tIsConf");
+				}
+
+				/// <summary>
+				/// Print raw everything after logging
+				/// </summary>
+				/// <param name="buffer"></param>
+				private static void PrintVals(byte[] buffer)
+				{
+					var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
+					var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+					var sampleNum = BitConverter.ToInt32(buffer, BufferDef.SampleNum);
+					var sumI = BitConverter.ToInt64(buffer, BufferDef.SumI);
+					var sumQ = BitConverter.ToInt64(buffer, BufferDef.SumQ);
+					var rawI = BitConverter.ToUInt16(buffer, BufferDef.RawI);
+					var rawQ = BitConverter.ToUInt16(buffer, BufferDef.RawQ);
+					var sampleI = BitConverter.ToInt16(buffer, BufferDef.SampleI);
+					var sampleQ = BitConverter.ToInt16(buffer, BufferDef.SampleQ);
+					var isCut = BitConverter.ToInt16(buffer, BufferDef.IsCut);
+					var isDisplacement = BitConverter.ToBoolean(buffer, BufferDef.IsDisplacement);
+					var isConf = BitConverter.ToBoolean(buffer, BufferDef.IsConf);
+
+					// Explicitly convert header0 to string else will sum header0 and header1 to int and then convert the number to string
+					Debug.Print(header0.ToString() + header1
+					            + "\t" + sampleNum
+					            + "\t" + sumI
+					            + "\t" + sumQ
+					            + "\t" + rawI
+					            + "\t" + rawQ
+					            + "\t" + sampleI
+					            + "\t" + sampleQ
+					            + "\t" + isCut
+					            + "\t" + isDisplacement
+					            + "\t" + isConf);
+				}
+
+				/// <summary>
+				/// Log Raw Everything
+				/// </summary>
+				/// <param name="sampleNum"></param>
+				/// <param name="sumVals"></param>
+				/// <param name="rawSample"></param>
+				/// <param name="compSample"></param>
+				/// <param name="isCut"></param>
+				/// <param name="isDisplacement"></param>
+				/// <param name="isConfirmed"></param>
+				public static void Log(int sampleNum, Globals.Sample sumVals, Globals.Sample rawSample, Globals.Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
+				{
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header0, Prefix[0]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						RecordPrefix.Header1, Prefix[1]);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.SampleNum, sampleNum);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.SumI, sumVals.I);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.SumQ, sumVals.Q);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.RawI, (ushort)rawSample.I);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.RawQ, (ushort)rawSample.Q);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.SampleI, (short)compSample.I);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.SampleQ, (short)compSample.Q);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.IsCut, (short)isCut);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.IsDisplacement, isDisplacement);
+					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
+						BufferDef.IsConf, isConfirmed);
+
+					Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+				}
+
+				///// <summary>
+				///// Write to SD card
+				///// </summary>
+				///// <param name="buffer"></param>
+				///// <param name="refsRead"></param>
+				//public static void WriteToSd(byte[] buffer, int refsRead)
+				//{
+				//	// Write everything of interest to SD
+				//	Globals.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
+
+				//	// Print
+				//	if (!PrintAfterLogging || refsRead >= 10)
+				//	{
+				//		return;
+				//	}
+				//	PrintVals(buffer);
+				//}
+
+			}
+		}
+		
+
+		
 		//********************************************************************************************************
-		//		SampleAndCut
+		//		SampleAndAnalysis
 		//********************************************************************************************************
 
 		/// <summary>
 		/// ASCII Sample and cut
 		/// </summary>
-		public static class SampleAndCut
+		public static class SampleAndAnalysis
 		{
 			/// <summary>Sample values and cut detection (SampleNum, Sample.I, Sample.Q, IsCut)</summary>
 			public static char[] Prefix = { '#', 'b' };
+
+			/// <summary>Collection options</summary>
+			public enum CollectionOptions
+			{
+				/// <summary>Sample and analysis</summary>
+				SampleAndAnalysis,
+				/// <summary>None</summary>
+				None,
+			}
+
+			/// <summary>Collection type</summary>
+			public static CollectionOptions CollectionType = CollectionOptions.None;
 
 			/// <summary>Options for sample-level</summary>
 			public static class Opt
 			{
 				/// <summary>Print immediately to Debug</summary>
-				public static bool Print;
+				public static bool PrintImmediate;
 				/// <summary>Log to DataStore and output later to Debug</summary>
 				public static bool LogToDebug;
 				/// <summary>Log to DataStore and output later to SD</summary>
 				public static bool LogToSD;
-				/// <summary>Logging is required</summary>
-				public static bool Logging;
 			}
 
 			/// <summary>
@@ -426,7 +465,7 @@ namespace Samraksh.AppNote.DotNow.Radar
 				{
 					return;
 				}
-				if (!Opt.Logging)
+				if (!Sample.Opt.Logging)
 				{
 					return;
 				}
@@ -481,17 +520,29 @@ namespace Samraksh.AppNote.DotNow.Radar
 			/// <summary>Snippet detections (sample num, IsDisplacement, IsConf) chars</summary>
 			private static readonly char[] Prefix = { '#', 'd' };
 
+			/// <summary>Collection options</summary>
+			public enum CollectionOptions
+			{
+				/// <summary>Sample and analysis</summary>
+				SnippetDisplacementAndConfirmation,
+				/// <summary>None</summary>
+				None,
+			}
+
+			/// <summary>Collection type</summary>
+			public static CollectionOptions CollectionType = CollectionOptions.None;
+
+
+
 			/// <summary>Options for snippet-level</summary>
 			public static class Opt
 			{
 				/// <summary>Print immediately to Debug</summary>
-				public static bool Print;
+				public static bool PrintImmediate;
 				/// <summary>Log to DataStore and output later to Debug</summary>
 				public static bool LogToDebug;
 				/// <summary>Log to DataStore and output later to SD</summary>
 				public static bool LogToSD;
-				/// <summary>Logging is required</summary>
-				public static bool Logging;
 			}
 
 			/// <summary>
@@ -558,7 +609,7 @@ namespace Samraksh.AppNote.DotNow.Radar
 				{
 					return;
 				}
-				if (!Opt.LogToDebug)
+				if (!Sample.Opt.LogToDebug)
 				{
 					return;
 				}
@@ -599,7 +650,5 @@ namespace Samraksh.AppNote.DotNow.Radar
 				Globals.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
 			}
 		}
-
-
 	}
 }

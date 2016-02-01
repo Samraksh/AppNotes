@@ -15,7 +15,7 @@ using Samraksh.eMote.NonVolatileMemory;
 #error Cannot define both
 #endif
 
-namespace Samraksh.AppNote.DotNow.Radar
+namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 {
 	/// <summary>
 	/// Global values and parameters

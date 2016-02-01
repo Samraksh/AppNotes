@@ -1,3 +1,5 @@
+using Samraksh.AppNote.DotNow.RadarDisplacementDetector;
+
 namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 {
 	public static partial class AnalyzeDisplacement
