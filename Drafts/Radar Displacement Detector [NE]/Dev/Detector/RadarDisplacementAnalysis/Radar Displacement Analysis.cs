@@ -9,7 +9,7 @@ using Samraksh.AppNote.DotNow.RadarDisplacementDetector;
 #endif
 
 
-namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
+namespace Samraksh.AppNote.DotNow.DisplacementAnalysis
 {
 	/// <summary>
 	/// Analyze displacement for a pair of samples
@@ -59,30 +59,30 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 		/// </remarks>
 		public static void Analyze(Globals.Sample rawSample)
 		{
-			SampleData.SampleNum++;
+			AnalyzeDisplacement.SampleData.SampleNum++;
 
-			SampleData.SampleSum.I += rawSample.I;
-			SampleData.SampleSum.Q += rawSample.Q;
+			AnalyzeDisplacement.SampleData.SampleSum.I += rawSample.I;
+			AnalyzeDisplacement.SampleData.SampleSum.Q += rawSample.Q;
 
 			// Adjust current sample by the current mean 
-			SampleData.CompSample.I = rawSample.I - (SampleData.SampleSum.I / SampleData.SampleNum);
-			SampleData.CompSample.Q = rawSample.Q - (SampleData.SampleSum.Q / SampleData.SampleNum);
+			AnalyzeDisplacement.SampleData.CompSample.I = rawSample.I - (AnalyzeDisplacement.SampleData.SampleSum.I / AnalyzeDisplacement.SampleData.SampleNum);
+			AnalyzeDisplacement.SampleData.CompSample.Q = rawSample.Q - (AnalyzeDisplacement.SampleData.SampleSum.Q / AnalyzeDisplacement.SampleData.SampleNum);
 
 			// Check for a cut
 			var isCut = 0;
 			// Skip samples below the noise rejection threshold
-			if (System.Math.Abs(SampleData.CompSample.I) >= DetectorParameters.NoiseRejectionThreshold ||
-				System.Math.Abs(SampleData.CompSample.Q) >= DetectorParameters.NoiseRejectionThreshold)
+			if (System.Math.Abs(AnalyzeDisplacement.SampleData.CompSample.I) >= DetectorParameters.NoiseRejectionThreshold ||
+				System.Math.Abs(AnalyzeDisplacement.SampleData.CompSample.Q) >= DetectorParameters.NoiseRejectionThreshold)
 			{
-				isCut = CutAnalysis.CheckForCut(SampleData.CompSample);
+				isCut = CutAnalysis.CheckForCut(AnalyzeDisplacement.SampleData.CompSample);
 			}
 
 			// Record mins and maxes
-			SampleData.MinComp.I = Globals.LongMin(SampleData.MinComp.I, SampleData.CompSample.I);
-			SampleData.MinComp.Q = Globals.LongMin(SampleData.MinComp.Q, SampleData.CompSample.Q);
+			AnalyzeDisplacement.SampleData.MinComp.I = Globals.LongMin(AnalyzeDisplacement.SampleData.MinComp.I, AnalyzeDisplacement.SampleData.CompSample.I);
+			AnalyzeDisplacement.SampleData.MinComp.Q = Globals.LongMin(AnalyzeDisplacement.SampleData.MinComp.Q, AnalyzeDisplacement.SampleData.CompSample.Q);
 
-			SampleData.MaxComp.I = Globals.LongMax(SampleData.MaxComp.I, SampleData.CompSample.I);
-			SampleData.MaxComp.Q = Globals.LongMax(SampleData.MaxComp.Q, SampleData.CompSample.Q);
+			AnalyzeDisplacement.SampleData.MaxComp.I = Globals.LongMax(AnalyzeDisplacement.SampleData.MaxComp.I, AnalyzeDisplacement.SampleData.CompSample.I);
+			AnalyzeDisplacement.SampleData.MaxComp.Q = Globals.LongMax(AnalyzeDisplacement.SampleData.MaxComp.Q, AnalyzeDisplacement.SampleData.CompSample.Q);
 
 			// Update snippet counter and see if we've reached a snippet boundary (one second)
 			CutAnalysis.SnippetCntr++;
@@ -96,11 +96,10 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 				CheckDisplacementAndConfirmation(rawSample, isCut);
 			}
 
-
-			// Log raw everything if required
-			if (OutputItems.Sample.RawAndAnalysis.Opt.Logging)
+			// Log raw sample and analysis if specified
+			if (OutputItems.RawSample.CollectionType == OutputItems.RawSample.CollectionOptions.RawSampleAndAnalysis)
 			{
-				OutputItems.Sample.RawAndAnalysis.Log(SampleData.SampleNum, SampleData.SampleSum, rawSample, SampleData.CompSample, isCut, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
+				OutputItems.RawSample.RawSampleAndAnalysis.Log(AnalyzeDisplacement.SampleData.SampleNum, AnalyzeDisplacement.SampleData.SampleSum, rawSample, AnalyzeDisplacement.SampleData.CompSample, isCut, AnalyzeDisplacement.SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			//if (SampleData.SampleNum < 100) {
@@ -115,38 +114,40 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 
 		private static void DoSampleLogging(Globals.Sample rawSample, int isCut)
 		{
-			switch (OutputItems.Sample.CollectionType)
+			switch (OutputItems.RawSample.CollectionType)
 			{
-				case OutputItems.Sample.CollectionOptions.RawSampleOnly:
-					OutputItems.Sample.RawSample.Log(rawSample);
+				case OutputItems.RawSample.CollectionOptions.RawSampleOnly:
+					OutputItems.RawSample.RawSampleOnly.Log(rawSample);
 					break;
-				case OutputItems.Sample.CollectionOptions.RawSampleAndAnalysis:
-					OutputItems.SampleAndAnalysis.Log(SampleData.SampleNum, SampleData.CompSample, isCut);
-					OutputItems.SampleAndAnalysis.PrintVals(SampleData.CompSample, isCut);
+				case OutputItems.RawSample.CollectionOptions.RawSampleAndAnalysis:
 					break;
-				case OutputItems.Sample.CollectionOptions.None:
+				case OutputItems.RawSample.CollectionOptions.None:
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
 
-			// Log raw sample if required
-			if (OutputItems.Sample.Opt.Logging)
+			switch (OutputItems.AsciiSampleAndCut.CollectionType)
 			{
+				case OutputItems.AsciiSampleAndCut.CollectionOptions.SampleAndAnalysis:
+					// Log ASCII sample and cut if specified
+					if (OutputItems.AsciiSampleAndCut.OutOpt.LogToDebug || OutputItems.AsciiSampleAndCut.OutOpt.LogToSD)
+					{
+						OutputItems.AsciiSampleAndCut.Log(AnalyzeDisplacement.SampleData.SampleNum, rawSample, isCut);
+					}
+					// Print immediately if specified
+					if (OutputItems.AsciiSampleAndCut.OutOpt.PrintImmediate)
+					{
+						OutputItems.AsciiSampleAndCut.PrintVals(AnalyzeDisplacement.SampleData.CompSample, isCut);
+					}
+					break;
+				case OutputItems.AsciiSampleAndCut.CollectionOptions.None:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 
-			// Print sample and cut if required
-			if (OutputItems.SampleAndAnalysis.Opt.Print)
-			{
-			}
-
-			// Log sample and cut if required
-			if (OutputItems.SampleAndAnalysis.Opt.LogToDebug || OutputItems.SampleAndAnalysis.Opt.LogToSD)
-			{
-
-			}
 		}
-
 
 		/// <summary>
 		/// Check whether displacement and/or confirmation (MofN) has occurred
@@ -157,11 +158,11 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 		{
 			// We've collected cumulative cut data for a snippet. See if snippet displacement has occurred
 			//  Displacement occurs only if there are more than MinCumCuts in the snippet
-			SampleData.IsDisplacement = (System.Math.Abs(CutAnalysis.CumCuts) >= DetectorParameters.MinCumCuts);
-			ClassParameters.DisplacementCallback(SampleData.IsDisplacement);
+			AnalyzeDisplacement.SampleData.IsDisplacement = (System.Math.Abs(CutAnalysis.CumCuts) >= DetectorParameters.MinCumCuts);
+			ClassParameters.DisplacementCallback(AnalyzeDisplacement.SampleData.IsDisplacement);
 
 			// See if we've had displacement in N of the last M snippets
-			MofNConfirmation.UpdateConfirmationState(CutAnalysis.SnippetNum, SampleData.IsDisplacement);
+			MofNConfirmation.UpdateConfirmationState(CutAnalysis.SnippetNum, AnalyzeDisplacement.SampleData.IsDisplacement);
 
 			// Do any required snippet logging
 			DoSnippetLogging(rawSample, isCut);
@@ -190,19 +191,19 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			// Send radio update, if enabled
 			if (Globals.RadioUpdates.EnableRadioUpdates)
 			{
-				Globals.RadioUpdates.SnippetUpdate(SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
+				Globals.RadioUpdates.SnippetUpdate(AnalyzeDisplacement.SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			// Log snippet displacement and confirmation if required
-			if (OutputItems.SnippetDispAndConf.Opt.LogToDebug || OutputItems.SnippetDispAndConf.Opt.LogToSD)
+			if (OutputItems.AsciiSnippetDispAndConf.OutOpt.LogToDebug || OutputItems.AsciiSnippetDispAndConf.OutOpt.LogToSD)
 			{
-				OutputItems.SnippetDispAndConf.Log(SampleData.SampleNum, CutAnalysis.CumCuts, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
+				OutputItems.AsciiSnippetDispAndConf.Log(AnalyzeDisplacement.SampleData.SampleNum, CutAnalysis.CumCuts, AnalyzeDisplacement.SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			// Print snippet displacement & confirmation if required
-			if (OutputItems.SnippetDispAndConf.Opt.Print)
+			if (OutputItems.AsciiSnippetDispAndConf.OutOpt.PrintImmediate)
 			{
-				OutputItems.SnippetDispAndConf.PrintVals(CutAnalysis.SnippetNum, CutAnalysis.CumCuts, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
+				OutputItems.AsciiSnippetDispAndConf.PrintVals(CutAnalysis.SnippetNum, CutAnalysis.CumCuts, AnalyzeDisplacement.SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 		}
 
@@ -250,7 +251,7 @@ namespace Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis
 			public static int CheckForCut(Globals.Sample currSample)
 			{
 				var isCut = 0;
-				if (SampleData.SampleNum > 1)
+				if (AnalyzeDisplacement.SampleData.SampleNum > 1)
 				{
 #if DotNow
 					// Signal the beginning

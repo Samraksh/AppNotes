@@ -129,7 +129,7 @@ namespace Samraksh.AppNote.Utility
 		{
 			try
 			{
-				Debug.Print("*** 2");
+				//Debug.Print("*** 2");
 				_macConfig = new MacConfiguration();
 
 				_neighborLivenessDelay = Default.NeighborLivenessDelay;
@@ -138,7 +138,7 @@ namespace Samraksh.AppNote.Utility
 				_channel = channel;
 				_radioName = radioName;
 
-				Debug.Print("*** 3");
+				//Debug.Print("*** 3");
 
 				EnactCSMAConfig();
 			}
@@ -172,7 +172,7 @@ namespace Samraksh.AppNote.Utility
 
 		private void EnactCSMAConfig()
 		{
-			Debug.Print("*** 4 "+ _neighborLivenessDelay+ " "+_ccaSenseTime+" "+_txPowerValue);
+			//Debug.Print("*** 4 "+ _neighborLivenessDelay+ " "+_ccaSenseTime+" "+_txPowerValue);
 			_macConfig = new MacConfiguration
 			{
 				NeighborLivenessDelay = _neighborLivenessDelay,
@@ -180,8 +180,7 @@ namespace Samraksh.AppNote.Utility
 			};
 			_macConfig.radioConfig.SetTxPower(_txPowerValue);
 
-			//var retVal = MACBase.Configure(_macConfig, ReceiveHandler, NeighborChangeHandler);
-			var retVal = MACBase.(_macConfig, ReceiveHandler, NeighborChangeHandler);
+			var retVal = MACBase.Configure(_macConfig, ReceiveHandler, NeighborChangeHandler);
 			// Set up CSMA with the MAC configuration, receive callback and neighbor change callback
 			if (retVal != DeviceStatus.Success)
 			{

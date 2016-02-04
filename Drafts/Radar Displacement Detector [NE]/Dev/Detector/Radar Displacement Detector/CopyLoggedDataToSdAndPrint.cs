@@ -1,7 +1,6 @@
 using System;
 using Microsoft.SPOT;
 using Samraksh.Appnote.Utility;
-using Samraksh.AppNote.DotNow.Radar;
 using Samraksh.eMote.NonVolatileMemory;
 using Math = System.Math;
 
@@ -14,8 +13,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 		/// </summary>
 		private static void CopyLoggedDataToSdAndPrint()
 		{
+
 			// If not logging, just return
-			if (!OutputItems.LoggingRequired)
+			if (!OutputItems.LoggingRequired.Required)
 			{
 				return;
 			}
@@ -23,29 +23,37 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			var allocationsRead = 0;
 
 			// Print raw sample header
-			if (OutputItems.Sample.Opt.PrintAfterLogging)
-				if (OutputItems.Sample.Opt.LogToSD)
-				{
-					OutputItems.Sample.RawSample.PrintHeader();
-				}
-				else if (OutputItems.Sample.RawAndAnalysis.Opt.LogRawEverythingToSD)
-				{
-					OutputItems.Sample.RawAndAnalysis.PrintHeader();
-				}
-			// Print sample and cut header
-			if (OutputItems.SampleAndAnalysis.Opt.LogToDebug)
+			if (OutputItems.RawSample.OutOpt.LogToDebug)
 			{
-				OutputItems.SampleAndAnalysis.PrintHeader();
+				switch (OutputItems.RawSample.CollectionType)
+				{
+					case OutputItems.RawSample.CollectionOptions.RawSampleOnly:
+						OutputItems.RawSample.RawSampleOnly.PrintHeader();
+						break;
+					case OutputItems.RawSample.CollectionOptions.RawSampleAndAnalysis:
+						OutputItems.RawSample.RawSampleAndAnalysis.PrintHeader();
+						break;
+					case OutputItems.RawSample.CollectionOptions.None:
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
+
+			// Print sample and cut header
+			if (OutputItems.AsciiSampleAndCut.OutOpt.LogToDebug)
+			{
+				OutputItems.AsciiSampleAndCut.PrintHeader();
 			}
 
 			// Print snippet displacement and confirmation header
-			if (OutputItems.SnippetDispAndConf.Opt.LogToDebug)
+			if (OutputItems.AsciiSnippetDispAndConf.OutOpt.LogToDebug)
 			{
-				OutputItems.SnippetDispAndConf.PrintHeader();
+				OutputItems.AsciiSnippetDispAndConf.PrintHeader();
 			}
 
 			// Let the user know that copying to SD card is happening
-			if (OutputItems.LoggingRequired)
+			if (OutputItems.LoggingRequired.ToSDRequired)
 			{
 				Debug.Print("Copying logged data to microSD card");
 			}
@@ -59,18 +67,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 
 			// Set up a buffer that's big enough
 			var buffSize = 0;
-			buffSize = Math.Max(
-				buffSize,
-				OutputItems.Sample.RawSample.BufferDef.BuffSize);
-			buffSize = Math.Max(
-				buffSize,
-				OutputItems.Sample.RawAndAnalysis.BufferDef.BuffSize);
-			buffSize = Math.Max(
-				buffSize,
-				OutputItems.SnippetDispAndConf.BuffDef.BuffSize);
-			buffSize = Math.Max(
-				buffSize,
-				OutputItems.SampleAndAnalysis.BuffDef.BuffSize);
+			buffSize = Math.Max(buffSize, OutputItems.RawSample.RawSampleOnly.BufferDef.BuffSize);
+			buffSize = Math.Max(buffSize, OutputItems.RawSample.RawSampleAndAnalysis.BufferDef.BuffSize);
+			buffSize = Math.Max(buffSize, OutputItems.AsciiSnippetDispAndConf.BuffDef.BuffSize);
+			buffSize = Math.Max(buffSize, OutputItems.AsciiSampleAndCut.BuffDef.BuffSize);
 			var buffer = new byte[buffSize];
 
 			var refsRead = 0;
@@ -96,8 +96,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				allocationsRead++;
 				refsRead++;
 
-				OutputItems.SampleAndAnalysis.PrintVals(buffer);
-				OutputItems.SnippetDispAndConf.PrintVals(buffer);
+				OutputItems.AsciiSampleAndCut.PrintVals(buffer);
+				OutputItems.AsciiSnippetDispAndConf.PrintVals(buffer);
 
 				if (allocationsRead % DetectorParameters.SamplesPerSecond == 1)
 				{
@@ -107,36 +107,46 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					Globals.Lcd.Write("t" + (snippetNo % 1000));
 #endif
 				}
-#error output buffer unconditionally if (OutputItems.OutputToSDRequired). Need to use the data reference size
 
-				if (OutputItems.OutputToSDRequired)
+				// If logging to SD, copy DataStore buffer to SD
+
+				if (OutputItems.LoggingRequired.ToSDRequired)
 				{
-					// Write raw sample to SD
 					Globals.SDBufferedWrite.Write(buffer, 0, (ushort)theDRef.Size);
+				}
 
-					// Print
-					if (!PrintAfterRawLogging || refsRead >= 10)
+				// If logging to Debug, do so according to collection type
+
+				if (OutputItems.RawSample.OutOpt.LogToDebug)
+				{
+					switch (OutputItems.RawSample.CollectionType)
 					{
-						return;
+						case OutputItems.RawSample.CollectionOptions.RawSampleOnly:
+							OutputItems.RawSample.RawSampleOnly.PrintVals(buffer);
+							break;
+						case OutputItems.RawSample.CollectionOptions.RawSampleAndAnalysis:
+							OutputItems.RawSample.RawSampleAndAnalysis.PrintVals(buffer);
+							break;
+						case OutputItems.RawSample.CollectionOptions.None:
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
 					}
-					PrintVals(buffer);
-
 				}
 
-				if (OutputItems.Sample.Opt.Logging)
+				if (OutputItems.AsciiSampleAndCut.OutOpt.LogToDebug)
 				{
-					OutputItems.Sample.RawSample.WriteToSd(buffer, refsRead);
+					OutputItems.AsciiSampleAndCut.PrintVals(buffer);
 				}
 
-				if (OutputItems.Sample.RawAndAnalysis.Opt.Logging)
+				if (OutputItems.AsciiSnippetDispAndConf.OutOpt.LogToDebug)
 				{
-					OutputItems.Sample.RawAndAnalysis.WriteToSd(buffer, refsRead);
+					OutputItems.AsciiSnippetDispAndConf.PrintVals(buffer);
 				}
-
 			}
 
 			// Done reading from DataStore; if outputting to SD, put out eof
-			if (OutputItems.LoggingRequired)
+			if (OutputItems.LoggingRequired.ToSDRequired)
 			{
 				buffer[0] = Globals.Eof;
 				for (var i = 0; i < 100; i++)
@@ -154,7 +164,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			//	arrayVals.Append(theVal + ",");
 			//}
 			//Debug.Print(arrayVals.ToString());
-
 		}
 	}
 }

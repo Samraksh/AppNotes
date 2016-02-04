@@ -1,6 +1,5 @@
 using Microsoft.SPOT;
-using Samraksh.AppNote.DotNow.Radar;
-using Samraksh.AppNote.DotNow.Radar.DisplacementAnalysis;
+using Samraksh.AppNote.DotNow.DisplacementAnalysis;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
@@ -52,7 +51,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 				//var started = DateTime.Now;
 				//Debug.Print("Started  " + started.Minute + ":" + started.Second + "." + started.Millisecond);
 
-				if (!OutputItems.SnippetDispAndConf.Opt.Print) {
+				if (!OutputItems.AsciiSnippetDispAndConf.OutOpt.PrintImmediate) {
 					Debug.Print("# " + (AnalyzeDisplacement.SampleData.SampleNum + 1));
 				}
 
