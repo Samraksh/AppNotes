@@ -3,7 +3,7 @@ using Microsoft.SPOT;
 using Samraksh.eMote.NonVolatileMemory;
 using BitConverter = Samraksh.AppNote.Utility.BitConverter;
 
-namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
+namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 {
 	/// <summary>
 	/// Output items
@@ -84,7 +84,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				BitConverter.InsertValueIntoArray(BufferDef.Buffer, RecordPrefix.Header0, Prefix[0]);
 				BitConverter.InsertValueIntoArray(BufferDef.Buffer, RecordPrefix.Header1, Prefix[1]);
 
-				Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+				GlobalItems.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
 			}
 		}
 
@@ -113,13 +113,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			public static class OutOpt
 			{
 				/// <summary>Print immediately while sampling</summary>
-				public static bool PrintImmediate;
-				/// <summary>Max number of records to print</summary>
-				public static int MaxPrint = -1;
+				public static int SampleAndPrint = -1;
 				/// <summary>Log to DataStore and output later to SD</summary>
 				public static bool LogToSD;
-				/// <summary>Log to DataStore and output later to SD and print</summary>
-				public static bool LogToDebug;
+				/// <summary>Log to DataStore and output later to print</summary>
+				public static int LogToPrint = -1;
 			}
 
 			/// <summary>
@@ -136,10 +134,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				{
 					return;
 				}
-				Debug.Print("\tPrint Immediate: " + OutOpt.PrintImmediate);
-				Debug.Print("\tMax Records to Print: " + (OutOpt.MaxPrint >= 0 ? OutOpt.MaxPrint.ToString() : "all"));
+				Debug.Print("\tSample and print: " + OutOpt.SampleAndPrint);
 				Debug.Print("\tLog to SD: " + OutOpt.LogToSD);
-				Debug.Print("\tLog to Debug: " + OutOpt.LogToDebug);
+				Debug.Print("\tLog and print: " + OutOpt.LogToPrint);
 			}
 
 			//********************************************************************************************************
@@ -187,12 +184,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				/// <param name="buffer"></param>
 				public static void PrintVals(byte[] buffer)
 				{
-					if (OutOpt.MaxPrint >= 0 && _recordsPrinted1 >= OutOpt.MaxPrint)
+					if (!(OutOpt.LogToPrint < 0 || _recordsPrinted1 < OutOpt.LogToPrint))
 					{
 						return;
 					}
 					var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
 					var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+
+					if (header0 != Prefix[0] ||
+						header1 != Prefix[1])
+					{
+						return;
+					}
+
 					var rawI = BitConverter.ToUInt16(buffer, BufferDef.RawI);
 					var rawQ = BitConverter.ToUInt16(buffer, BufferDef.RawQ);
 					// Explicitly convert header0 to string else will sum header0 and header1 to int and then convert the number to string
@@ -207,9 +211,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				/// Log raw sample
 				/// </summary>
 				/// <param name="rawSample"></param>
-				public static void Log(Globals.Sample rawSample)
+				public static void Log(GlobalItems.Sample rawSample)
 				{
-					if (OutOpt.MaxPrint >= 0 && _recordsPrinted2 >= OutOpt.MaxPrint)
+					if (!(CollectionType == CollectionOptions.RawSampleOnly && (OutOpt.LogToPrint != 0 || SnippetDispAndConf.OutOpt.LogToSD)))
 					{
 						return;
 					}
@@ -222,9 +226,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 						BufferDef.RawQ, (ushort)rawSample.Q);
 
-					Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+					GlobalItems.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
 					_recordsPrinted2++;
 				}
+				// ReSharper disable once NotAccessedField.Local
 				private static int _recordsPrinted2;
 
 				///// <summary>
@@ -244,10 +249,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				//	}
 
 				//	// Write raw sample to SD
-				//	Globals.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
+				//	GlobalItems.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
 
 				//	// Print
-				//	if (!PrintAfterLogging || refsRead >= 10)
+				//	if (!LogToPrint || refsRead >= 10)
 				//	{
 				//		return;
 				//	}
@@ -316,8 +321,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				/// <param name="buffer"></param>
 				public static void PrintVals(byte[] buffer)
 				{
+					if (!(OutOpt.SampleAndPrint < 0 || _recordsPrinted1 < OutOpt.SampleAndPrint))
+					{
+						return;
+					}
 					var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
 					var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+
+					if (header0 != Prefix[0] ||
+						header1 != Prefix[1])
+					{
+						return;
+					}
+
 					var sampleNum = BitConverter.ToInt32(buffer, BufferDef.SampleNum);
 					var sumI = BitConverter.ToInt64(buffer, BufferDef.SumI);
 					var sumQ = BitConverter.ToInt64(buffer, BufferDef.SumQ);
@@ -341,7 +357,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 								+ "\t" + isCut
 								+ "\t" + isDisplacement
 								+ "\t" + isConf);
+					_recordsPrinted1++;
 				}
+
+				private static int _recordsPrinted1;
 
 				/// <summary>
 				/// Log Raw Everything
@@ -353,7 +372,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				/// <param name="isCut"></param>
 				/// <param name="isDisplacement"></param>
 				/// <param name="isConfirmed"></param>
-				public static void Log(int sampleNum, Globals.Sample sumVals, Globals.Sample rawSample, Globals.Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
+				public static void Log(int sampleNum, GlobalItems.Sample sumVals, GlobalItems.Sample rawSample, GlobalItems.Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
 				{
 					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 						RecordPrefix.Header0, Prefix[0]);
@@ -380,7 +399,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
 						BufferDef.IsConf, isConfirmed);
 
-					Globals.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+					GlobalItems.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
 				}
 
 				///// <summary>
@@ -391,10 +410,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				//public static void WriteToSd(byte[] buffer, int refsRead)
 				//{
 				//	// Write everything of interest to SD
-				//	Globals.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
+				//	GlobalItems.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
 
 				//	// Print
-				//	if (!PrintAfterLogging || refsRead >= 10)
+				//	if (!LogToPrint || refsRead >= 10)
 				//	{
 				//		return;
 				//	}
@@ -407,13 +426,13 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 
 
 		//********************************************************************************************************
-		//		ASCII sample and cut
+		//		Sample and cut
 		//********************************************************************************************************
 
 		/// <summary>
-		/// ASCII Sample and cut
+		/// Sample and cut
 		/// </summary>
-		public static class AsciiSampleAndCut
+		public static class SampleAndCut
 		{
 			/// <summary>Sample values and cut detection (SampleNum, Sample.I, Sample.Q, IsCut)</summary>
 			public static char[] Prefix = { '#', 'b' };
@@ -421,8 +440,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// <summary>Collection options</summary>
 			public enum CollectionOptions
 			{
-				/// <summary>Sample and analysis</summary>
-				SampleAndAnalysis,
+				/// <summary>Sample and cut</summary>
+				Sample,
 				/// <summary>None</summary>
 				None,
 			}
@@ -434,11 +453,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			public static class OutOpt
 			{
 				/// <summary>Print immediately to Debug</summary>
-				public static bool PrintImmediate;
-				/// <summary>Max number of records to print</summary>
-				public static int MaxPrint = -1;
+				public static int SampleAndPrint;
 				/// <summary>Log to DataStore and output later to Debug</summary>
-				public static bool LogToDebug;
+				public static int LogToPrint;
 				/// <summary>Log to DataStore and output later to SD</summary>
 				public static bool LogToSD;
 			}
@@ -448,23 +465,22 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// </summary>
 			public static void PrintOutputOptions()
 			{
-				Debug.Print("ASCII Sample and Analysis");
+				Debug.Print("Sample and Analysis");
 				Debug.Print("\tCollection Option: " +
 					(CollectionType == CollectionOptions.None ? "None" : "Sample and Analysis"));
 				if (CollectionType == CollectionOptions.None)
 				{
 					return;
 				}
-				Debug.Print("\tPrint Immediate: " + OutOpt.PrintImmediate);
-				Debug.Print("\tMax Records to Print: " + (OutOpt.MaxPrint >= 0 ? OutOpt.MaxPrint.ToString() : "all"));
+				Debug.Print("\tSample and print: " + OutOpt.SampleAndPrint);
 				Debug.Print("\tLog to SD: " + OutOpt.LogToSD);
-				Debug.Print("\tLog to Debug: " + OutOpt.LogToDebug);
+				Debug.Print("\tLog and print: " + OutOpt.LogToPrint);
 			}
 
 			/// <summary>
-			/// Byte array for ASCII samples and cuts
+			/// Byte array for samples and cuts
 			/// </summary>
-			/// <remarks>Items stored: Header (2 char), Sample Number, I value, Q value (all int), IsCut (bool)</remarks>
+			/// <remarks>Items stored: Header (2 char), Sample Number (int), I value (short), Q value (short), IsCut (short)</remarks>
 			public static class BuffDef
 			{
 				/// <summary>The buffer</summary>
@@ -495,21 +511,21 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// </summary>
 			/// <param name="sample"></param>
 			/// <param name="isCut"></param>
-			public static void PrintVals(Globals.Sample sample, int isCut)
+			public static void PrintVals(GlobalItems.Sample sample, int isCut)
 			{
-				if (OutOpt.MaxPrint >= 0 && _recordsPrinted1 >= OutOpt.MaxPrint)
+				if (!(OutOpt.SampleAndPrint < 0 || _recordsPrinted1 < OutOpt.SampleAndPrint))
 				{
 					return;
 				}
 
-				var statusStr = new String(Prefix) +
+				var statusStr = new string(Prefix) +
 								"\t" + sample.I +
 								"\t" + sample.Q +
 								"\t" + isCut;
 				Debug.Print(statusStr);
 				_recordsPrinted1++;
 			}
-			private static int _recordsPrinted1 = 0;
+			private static int _recordsPrinted1;
 
 			/// <summary>
 			/// Print sample and cut after logging
@@ -517,11 +533,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// <param name="buffer"></param>
 			public static void PrintVals(byte[] buffer)
 			{
-				if (OutOpt.MaxPrint >= 0 && _recordsPrinted2 >= OutOpt.MaxPrint)
-				{
-					return;
-				}
-				if (!RawSample.OutOpt.LogToDebug)
+				if (!(OutOpt.LogToPrint < 0 || _recordsPrinted2 < OutOpt.LogToPrint))
 				{
 					return;
 				}
@@ -548,7 +560,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					);
 				_recordsPrinted2++;
 			}
-			private static int _recordsPrinted2 = 0;
+			private static int _recordsPrinted2;
 
 			/// <summary>
 			/// Log sample and cut
@@ -556,33 +568,37 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// <param name="sampleNum"></param>
 			/// <param name="sample"></param>
 			/// <param name="isCut"></param>
-			public static void Log(int sampleNum, Globals.Sample sample, int isCut)
+			public static void Log(int sampleNum, GlobalItems.Sample sample, int isCut)
 			{
+				if (!(CollectionType == CollectionOptions.Sample && (OutOpt.LogToPrint != 0 || OutOpt.LogToSD)))
+				{
+					return;
+				}
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					RecordPrefix.Header0, Prefix[0]);
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					RecordPrefix.Header1, Prefix[1]);
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
-					(int)BuffDef.SampleNum, sampleNum);
+					BuffDef.SampleNum, sampleNum);
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
-					(int)BuffDef.SampleI, (short)sample.I);
+					BuffDef.SampleI, (short)sample.I);
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
-					(int)BuffDef.SampleQ, (short)sample.Q);
+					BuffDef.SampleQ, (short)sample.Q);
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.IsCut, (short)isCut);
 
-				Globals.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
+				GlobalItems.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
 			}
 		}
 
 		//********************************************************************************************************
-		//		ASCII snippet displacement and confirmation
+		//		Snippet displacement and confirmation
 		//********************************************************************************************************
 
 		/// <summary>
-		/// ASCII snippet displacement and confirmation
+		/// Snippet displacement and confirmation
 		/// </summary>
-		public static class AsciiSnippetDispAndConf
+		public static class SnippetDispAndConf
 		{
 			/// <summary>Snippet detections (sample num, IsDisplacement, IsConf) chars</summary>
 			private static readonly char[] Prefix = { '#', 'd' };
@@ -590,8 +606,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// <summary>Collection options</summary>
 			public enum CollectionOptions
 			{
-				/// <summary>Sample and analysis</summary>
-				SnippetDisplacementAndConfirmation,
+				/// <summary>Snippet displacement and confirmation</summary>
+				Snippet,
 				/// <summary>None</summary>
 				None,
 			}
@@ -603,11 +619,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			public static class OutOpt
 			{
 				/// <summary>Print immediately to Debug</summary>
-				public static bool PrintImmediate;
-				/// <summary>Max number of records to print</summary>
-				public static int MaxPrint = -1;
+				public static int SampleAndPrint;
 				/// <summary>Log to DataStore and output later to Debug</summary>
-				public static bool LogToDebug;
+				public static int LogToPrint;
 				/// <summary>Log to DataStore and output later to SD</summary>
 				public static bool LogToSD;
 			}
@@ -617,25 +631,24 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// </summary>
 			public static void PrintOutputOptions()
 			{
-				Debug.Print("ASCII Snippet Displacement and Confirmation");
+				Debug.Print("Snippet Displacement and Confirmation");
 				Debug.Print("\tCollection Option: " +
 					(CollectionType == CollectionOptions.None ? "None" : "Displacement and Confirmation"));
 				if (CollectionType == CollectionOptions.None)
 				{
 					return;
 				}
-				Debug.Print("\tPrint Immediate: " + OutOpt.PrintImmediate);
-				Debug.Print("\tMax Records to Print: " + (OutOpt.MaxPrint >= 0 ? OutOpt.MaxPrint.ToString() : "all"));
+				Debug.Print("\tSample and print: " + OutOpt.SampleAndPrint);
 				Debug.Print("\tLog to SD: " + OutOpt.LogToSD);
-				Debug.Print("\tLog to Debug: " + OutOpt.LogToDebug);
+				Debug.Print("\tLog and print: " + OutOpt.LogToPrint);
 			}
 
 
 			/// <summary>
-			/// Byte array for ASCII snippet
+			/// Byte array for snippet
 			/// </summary>
 			/// <remarks>
-			/// Items stored: Header (2 char), Sample Number, CumCuts (both int), IsDisp, IsConfirmed (both bool)
+			/// Items stored: Header (2 char), Sample Number (int), CumCuts (int), IsDisp (bool), IsConfirmed (bool)
 			/// </remarks>
 			public static class BuffDef
 			{
@@ -671,7 +684,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// <param name="isConfirmed"></param>
 			public static void PrintVals(int snippetNum, int cumCuts, bool isDisplacement, bool isConfirmed)
 			{
-				if (OutOpt.MaxPrint >= 0 && _recordsPrinted1 >= OutOpt.MaxPrint)
+				if (!(OutOpt.SampleAndPrint < 0 || _recordsPrinted1 < OutOpt.SampleAndPrint))
 				{
 					return;
 				}
@@ -685,7 +698,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				Debug.Print(statusStr);
 				_recordsPrinted1++;
 			}
-			private static int _recordsPrinted1 = 0;
+			private static int _recordsPrinted1;
 
 			/// <summary>
 			/// Print snippet displacement and confirmation after logging
@@ -693,11 +706,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			/// <param name="buffer"></param>
 			public static void PrintVals(byte[] buffer)
 			{
-				if (!RawSample.OutOpt.LogToDebug)
-				{
-					return;
-				}
-				if (OutOpt.MaxPrint >= 0 && _recordsPrinted2 >= OutOpt.MaxPrint)
+				if (!(OutOpt.LogToPrint < 0 || _recordsPrinted2 < OutOpt.LogToPrint))
 				{
 					return;
 				}
@@ -723,7 +732,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					);
 				_recordsPrinted2++;
 			}
-			private static int _recordsPrinted2 = 0;
+			private static int _recordsPrinted2;
 
 			/// <summary>
 			/// Log snippet displacement and confirmation
@@ -745,7 +754,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.IsConfirmed, isConfirmed);
 
-				Globals.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
+				GlobalItems.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
 			}
 		}
 	}

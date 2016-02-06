@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>Samraksh.AppNote.DotNow.DisplacementAnalysis</AssemblyName>
+    <AssemblyName>Samraksh.AppNote.DotNow.RadarDisplacement.Analysis</AssemblyName>
     <OutputType>Library</OutputType>
-    <RootNamespace>Samraksh.AppNote.DotNow.DisplacementAnalysis</RootNamespace>
+    <RootNamespace>Samraksh.AppNote.DotNow.RadarDisplacement.Analysis</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -19,7 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Samraksh.AppNote.DotNow.DisplacementAnalysis.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Samraksh.AppNote.DotNow.RadarDisplacement.Analysis.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -70,14 +70,18 @@
     </Reference>
     <Reference Include="Samraksh_eMote, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote .NOW\Samraksh_eMote\Samraksh_eMote.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote\Samraksh_eMote.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common\Common.csproj">
+      <Project>{E96329D6-D8EB-4E5F-81B4-B61C42556B84}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Globals\Globals.csproj">
       <Project>{899601D7-75E7-4213-8B91-D6F51D20DBA5}</Project>
       <Name>Globals</Name>

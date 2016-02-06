@@ -13,15 +13,18 @@ using System.Reflection;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using Samraksh.AppNote.DotNow.DisplacementAnalysis;
+using CommonItems = Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common.CommonItems;
+using Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
 using Samraksh.eMote.Net.Radio;
 using Samraksh.eMote.NonVolatileMemory;
+using AnalyzeDisplacement = Samraksh.AppNote.DotNow.RadarDisplacement.Analysis.AnalyzeDisplacement;
 using Math = System.Math;
-using RawSample = Samraksh.AppNote.DotNow.RadarDisplacementDetector.OutputItems.RawSample;
-using AsciiSampleAndCut = Samraksh.AppNote.DotNow.RadarDisplacementDetector.OutputItems.AsciiSampleAndCut;
-using AsciiSnippetDispAndConf = Samraksh.AppNote.DotNow.RadarDisplacementDetector.OutputItems.AsciiSnippetDispAndConf;
+
+using RawSample = Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals.OutputItems.RawSample;
+using SampleAndCut = Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals.OutputItems.SampleAndCut;
+using SnippetDispAndConf= Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals.OutputItems.SnippetDispAndConf;
 
 #if !(DotNow || Sam_Emulator)
 #error Conditional build symbol missing
@@ -39,8 +42,7 @@ using AnalogInput = Samraksh.eMote.DotNow.AnalogInput;
 using AnalogInput = Samraksh.eMote.Emulator.AnalogInput;
 #endif
 
-
-namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
+namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector
 {
 
 	/// <summary>
@@ -50,10 +52,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 	/// </summary>
 	public static partial class RadarDisplacementDetector
 	{
-
 		private static readonly ushort[] Ibuffer = new ushort[DetectorParameters.BufferSize];
 		private static readonly ushort[] Qbuffer = new ushort[DetectorParameters.BufferSize];
-
 
 		/// <summary>
 		/// Get things started
@@ -64,49 +64,27 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 			{
 				VersionInfo.Init(Assembly.GetExecutingAssembly());
 				Debug.Print("Radar Displacement Detection " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
-#if DotNow
-				Globals.Lcd.Write("radar");
-#endif
+				GlobalItems.Lcd.Write("radar");
 
-				// **************************************************************************************************** 
-				//	Output options
-				// **************************************************************************************************** 
+				SetOutputOptions();
 
-				RawSample.CollectionType = RawSample.CollectionOptions.None;
-				RawSample.OutOpt.PrintImmediate = true;
-				RawSample.OutOpt.MaxPrint = 10;
-				RawSample.OutOpt.LogToDebug = true;
-				RawSample.OutOpt.LogToSD = true;
+				OutputItems.LoggingRequired.ToDebugRequired = SnippetDispAndConf.OutOpt.LogToPrint != 0 ||
+					SampleAndCut.OutOpt.LogToPrint != 0 ||
+					SnippetDispAndConf.OutOpt.LogToPrint != 0;
 
-				AsciiSampleAndCut.CollectionType = AsciiSampleAndCut.CollectionOptions.SampleAndAnalysis;
-				AsciiSampleAndCut.OutOpt.PrintImmediate = true;
-				AsciiSampleAndCut.OutOpt.MaxPrint = 0;
-				AsciiSampleAndCut.OutOpt.LogToDebug = true;
-				AsciiSampleAndCut.OutOpt.LogToSD = true;
-
-				AsciiSnippetDispAndConf.CollectionType = AsciiSnippetDispAndConf.CollectionOptions.SnippetDisplacementAndConfirmation;
-				AsciiSnippetDispAndConf.OutOpt.PrintImmediate = true;
-				AsciiSnippetDispAndConf.OutOpt.LogToDebug = false;
-				AsciiSnippetDispAndConf.OutOpt.LogToSD = false;
-
-				// **************************************************************************************************** 
-
-				OutputItems.LoggingRequired.ToDebugRequired = AsciiSnippetDispAndConf.OutOpt.LogToDebug ||
-					AsciiSampleAndCut.OutOpt.LogToDebug ||
-					AsciiSnippetDispAndConf.OutOpt.LogToDebug;
-
-				OutputItems.LoggingRequired.ToSDRequired = AsciiSnippetDispAndConf.OutOpt.LogToSD ||
-					AsciiSampleAndCut.OutOpt.LogToSD ||
-					AsciiSnippetDispAndConf.OutOpt.LogToSD;
+				OutputItems.LoggingRequired.ToSDRequired = SnippetDispAndConf.OutOpt.LogToSD ||
+					SampleAndCut.OutOpt.LogToSD ||
+					SnippetDispAndConf.OutOpt.LogToSD;
 
 				OutputItems.LoggingRequired.Required = OutputItems.LoggingRequired.ToDebugRequired ||
 					OutputItems.LoggingRequired.ToSDRequired;
 
 				// Setup radio
-				Globals.RadioUpdates.EnableRadioUpdates = true;
-				if (Globals.RadioUpdates.EnableRadioUpdates)
+				GlobalItems.RadioDetectorUpdates.EnableRadioUpdates = true;
+				if (GlobalItems.RadioDetectorUpdates.EnableRadioUpdates)
 				{
-					Globals.RadioUpdates.Radio = new SimpleCSMA(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm, Globals.RadioUpdates.Channel);
+					CommonItems.RadioUpdates.Radio = new SimpleCSMA(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm, CommonItems.RadioUpdates.Channel);
+					Debug.Print("CSMA channel " + CommonItems.RadioUpdates.Radio.Channel);
 				}
 
 				PowerState.ChangePowerLevel(PowerLevel.High);
@@ -127,9 +105,9 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				Debug.Print("");
 
 				// Signal end of collect
-				Globals.GpioPorts.EndCollect.OnInterrupt += (d1, s2, t) =>
+				GlobalItems.GpioPorts.DotNow.EndCollect.OnInterrupt += (d1, s2, t) =>
 				{
-					if (Globals.LoggingFinished)
+					if (GlobalItems.LoggingFinished)
 					{
 						return;
 					}
@@ -137,17 +115,15 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					AnalogInput.StopSampling();
 					Debug.Print("Stopping the ADC");
 					// Note that we're finished
-					Globals.LoggingFinished = true;
+					GlobalItems.LoggingFinished = true;
 				};
 
 				// Signal sync button press
-				Globals.GpioPorts.Sync.OnInterrupt += OutputItems.Sync.Sync_OnButtonPress;
+				GlobalItems.GpioPorts.DotNow.Sync.OnInterrupt += OutputItems.Sync.Sync_OnButtonPress;
 
 				if (OutputItems.LoggingRequired.Required)
 				{
-#if DotNow
-					Globals.Lcd.Write("Init");
-#endif
+					GlobalItems.Lcd.Write("Init");
 					Debug.Print("\tInitializing DataStore");
 
 					DataStoreReturnStatus retVal;
@@ -173,27 +149,23 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 					new SD(status => { });	// Even though this seems to be a do-nothing method call, it's still necessary before initializing the SD card
 					if (!SD.Initialize())
 					{
-#if DotNow
-						Globals.Lcd.Write("Xsd");
-#endif
+						GlobalItems.Lcd.Write("Xsd");
 						throw new ApplicationException("*** Error: Cannot initialize microSD");
 					}
 				}
 
 				Debug.Print("Initialization done");
 
-#if DotNow
-				Globals.Lcd.Write("IIII");
-#endif
+				GlobalItems.Lcd.Write("IIII");
 				// Print output options
 				Debug.Print("");
 				RawSample.PrintOutputOptions();
-				AsciiSampleAndCut.PrintOutputOptions();
-				AsciiSnippetDispAndConf.PrintOutputOptions();
+				SampleAndCut.PrintOutputOptions();
+				SnippetDispAndConf.PrintOutputOptions();
 				Debug.Print("");
 
 				// Print header(s) for immediate print
-				if (RawSample.OutOpt.PrintImmediate)
+				if (RawSample.OutOpt.SampleAndPrint != 0)
 				{
 					switch (RawSample.CollectionType)
 					{
@@ -209,15 +181,15 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 							throw new ArgumentOutOfRangeException();
 					}
 				}
-				if (AsciiSampleAndCut.CollectionType == AsciiSampleAndCut.CollectionOptions.SampleAndAnalysis &&
-					AsciiSampleAndCut.OutOpt.PrintImmediate)
+				if (SampleAndCut.CollectionType ==  SampleAndCut.CollectionOptions.Sample &&
+					SampleAndCut.OutOpt.SampleAndPrint != 0)
 				{
-					AsciiSampleAndCut.PrintHeader();
+					SampleAndCut.PrintHeader();
 				}
-				if (AsciiSnippetDispAndConf.CollectionType == AsciiSnippetDispAndConf.CollectionOptions.SnippetDisplacementAndConfirmation &&
-					AsciiSnippetDispAndConf.OutOpt.PrintImmediate)
+				if (SnippetDispAndConf.CollectionType == SnippetDispAndConf.CollectionOptions.Snippet &&
+					SnippetDispAndConf.OutOpt.SampleAndPrint != 0)
 				{
-					AsciiSnippetDispAndConf.PrintHeader();
+					SnippetDispAndConf.PrintHeader();
 				}
 
 
@@ -234,29 +206,28 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector
 				// Start ADC sampling
 				AnalogInput.InitializeADC();
 				AnalogInput.ConfigureContinuousModeDualChannel(Ibuffer, Qbuffer, (uint)Ibuffer.Length, DetectorParameters.SamplingIntervalMicroSec, AdcBuffer_Callback);
-#if DotNow
-				Globals.Lcd.Write("cccc");
-#endif
+				GlobalItems.Lcd.Write("cccc");
+
 				// Sleep until we're finished sampling
-				//Globals.DoneSampling.WaitOne();
+				//GlobalItems.DoneSampling.WaitOne();
 				processSampleBufferThread.Join();
 				Debug.Print("*******\nFinished Sampling\n*****");
 
 				Debug.Print("* Min mean-adjusted I and Q values: " + AnalyzeDisplacement.SampleData.MinComp.I + "," + AnalyzeDisplacement.SampleData.MinComp.Q);
 				Debug.Print("* Max mean-adjusted I and Q values: " + AnalyzeDisplacement.SampleData.MaxComp.I + "," + AnalyzeDisplacement.SampleData.MaxComp.Q);
 
-				CopyLoggedDataToSdAndPrint();
+				ProcessDataStore();
 
 				Debug.Print("*******\nFinished Output\n*****");
 
-				Globals.Lcd.Write("0000");
+				GlobalItems.Lcd.Write("0000");
 
 				//Thread.Sleep(Timeout.Infinite);
 			}
 			catch (Exception ex)
 			{
 				Debug.Print("Exception " + ex);
-				Globals.Lcd.Write("Err");
+				GlobalItems.Lcd.Write("Err");
 			}
 		}
 

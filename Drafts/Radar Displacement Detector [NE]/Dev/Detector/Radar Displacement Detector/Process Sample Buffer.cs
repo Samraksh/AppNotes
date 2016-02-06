@@ -1,7 +1,8 @@
 using Microsoft.SPOT;
-using Samraksh.AppNote.DotNow.DisplacementAnalysis;
+using Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals;
+using AnalyzeDisplacement = Samraksh.AppNote.DotNow.RadarDisplacement.Analysis.AnalyzeDisplacement;
 
-namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
+namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector {
 
 	
 
@@ -9,20 +10,16 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 
 		private static void MofNConfirmationCallback(bool conf) {
 #if Sam_Emulator
-            Globals.GpioPorts.MofNConfirmationPort.Write(displacing);
+            GlobalItems.GpioPorts.SamrakshEmulator.DetectConf.Write(displacing);
 #endif
-#if DotNow
-			Globals.GpioPorts.DetectConf.Write(conf);
-#endif
+			GlobalItems.GpioPorts.DotNow.DetectConf.Write(conf);
 		}
 
 		private static void DisplacementCallback(bool displacing) {
 #if Sam_Emulator
-            Globals.GpioPorts.DisplacementPort.Write(displacing);
+            GlobalItems.GpioPorts.SamrakshEmulator.DetectDisplacement.Write(displacing);
 #endif
-#if DotNow
-			Globals.GpioPorts.DetectDisplacement.Write(displacing);
-#endif
+			GlobalItems.GpioPorts.DotNow.DetectDisplacement.Write(displacing);
 		}
 
 		//static int _totalTimeMs;
@@ -38,7 +35,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 				while (true) {
 					// Wait for callback to signal that a buffer is ready for processing
 					var processSampleBufferFlag = ProcessSampleBufferAutoResetEvent.WaitOne(DetectorParameters.CallbackIntervalMicroSec + DetectorParameters.CallbackIntervalMicroSec / 10, false);
-					if (Globals.LoggingFinished) {
+					if (GlobalItems.LoggingFinished)
+					{
 						return;
 					}
 					if (processSampleBufferFlag) {
@@ -51,14 +49,14 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector {
 				//var started = DateTime.Now;
 				//Debug.Print("Started  " + started.Minute + ":" + started.Second + "." + started.Millisecond);
 
-				if (!OutputItems.AsciiSnippetDispAndConf.OutOpt.PrintImmediate) {
+				if (OutputItems.SnippetDispAndConf.OutOpt.SampleAndPrint>0) {
 					Debug.Print("# " + (AnalyzeDisplacement.SampleData.SampleNum + 1));
 				}
 
 				// Process each sample
 				for (var i = 0; i < DetectorParameters.BufferSize; i++) {
 
-					AnalyzeDisplacement.Analyze(new Globals.Sample(Ibuffer[i], Qbuffer[i]));
+					AnalyzeDisplacement.Analyze(new GlobalItems.Sample(Ibuffer[i], Qbuffer[i]));
 				}
 
 				// Report on time to process buffer

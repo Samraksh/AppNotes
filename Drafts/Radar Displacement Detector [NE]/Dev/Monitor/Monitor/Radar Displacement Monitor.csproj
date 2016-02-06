@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>Samraksh.AppNote.DotNow.RadarDisplacementReceiver</AssemblyName>
+    <AssemblyName>Samraksh.AppNote.DotNow.RadarDisplacement.Receiver</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Samraksh.AppNote.DotNow.RadarDisplacementReceiver</RootNamespace>
+    <RootNamespace>Samraksh.AppNote.DotNow.RadarDisplacement.Receiver</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -19,7 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Samraksh.AppNote.DotNow.RadarDisplacementReceiver.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Samraksh.AppNote.DotNow.RadarDisplacement.Receiver.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,7 +33,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="RadioUpdates.cs" />
+    <Compile Include="RadioMonitorUpdates.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -46,23 +46,23 @@
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.EnhancedEmoteLCD, Version=1.0.5856.23434, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote Utilities\DotNow\EnhancedEmoteLCD\bin\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Samraksh\eMote Utilities\DotNow\EnhancedEmoteLCD\bin\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.SimpleCSMA, Version=1.6.5862.26351, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Samraksh\eMote Utilities\DotNow\SimpleCSMA\bin\Samraksh.AppNote.Utility.SimpleCSMA.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh.AppNote.Utility.VersionInfo, Version=1.0.5854.24977, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Samraksh\eMote Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
     <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\..\..\Documents\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -71,5 +71,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common\Common.csproj">
+      <Project>{E96329D6-D8EB-4E5F-81B4-B61C42556B84}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
