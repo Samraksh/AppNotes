@@ -22,7 +22,7 @@ namespace Samraksh.AppNote.Utility {
     /// Handle CSMA radio communication
     /// To keep it simple, we ignore neighborhood changes
     /// </summary>
-    public class SimpleCsmaRadio {
+    public class SimpleCSMA {
 
         /// <summary>
         /// Callback delegate for user method to handle incoming packets

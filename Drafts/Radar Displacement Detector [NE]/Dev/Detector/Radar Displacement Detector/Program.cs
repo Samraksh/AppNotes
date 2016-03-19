@@ -66,13 +66,21 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector
 				Debug.Print("Radar Displacement Detection " + VersionInfo.Version + " (" + VersionInfo.BuildDateTime + ")");
 				GlobalItems.Lcd.Write("radar");
 
+				// Initialize the prefixes: convert string to byte pair
+				RawSample.RawSampleOnly.InitPrefix();
+				RawSample.RawSampleAndAnalysis.InitPrefix();
+				SampleAndCut.InitPrefix();
+				SnippetDispAndConf.InitPrefix();
+
 				SetOutputOptions();
 
-				OutputItems.LoggingRequired.ToDebugRequired = SnippetDispAndConf.OutOpt.LogToPrint != 0 ||
+				OutputItems.LoggingRequired.ToDebugRequired = 
+					RawSample.OutOpt.LogToPrint != 0 ||
 					SampleAndCut.OutOpt.LogToPrint != 0 ||
 					SnippetDispAndConf.OutOpt.LogToPrint != 0;
 
-				OutputItems.LoggingRequired.ToSDRequired = SnippetDispAndConf.OutOpt.LogToSD ||
+				OutputItems.LoggingRequired.ToSDRequired = 
+					RawSample.OutOpt.LogToSD ||
 					SampleAndCut.OutOpt.LogToSD ||
 					SnippetDispAndConf.OutOpt.LogToSD;
 
@@ -213,6 +221,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector
 				processSampleBufferThread.Join();
 				Debug.Print("*******\nFinished Sampling\n*****");
 
+				Debug.Print("* Allocations written: " + GlobalItems.AllocationsWritten);
 				Debug.Print("* Min mean-adjusted I and Q values: " + AnalyzeDisplacement.SampleData.MinComp.I + "," + AnalyzeDisplacement.SampleData.MinComp.Q);
 				Debug.Print("* Max mean-adjusted I and Q values: " + AnalyzeDisplacement.SampleData.MaxComp.I + "," + AnalyzeDisplacement.SampleData.MaxComp.Q);
 

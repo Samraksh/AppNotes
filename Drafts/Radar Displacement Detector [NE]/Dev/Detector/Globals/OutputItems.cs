@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using Microsoft.SPOT;
 using Samraksh.eMote.NonVolatileMemory;
 using BitConverter = Samraksh.AppNote.Utility.BitConverter;
@@ -49,7 +50,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 			/// <summary>First header char</summary>
 			public const int Header0 = 0;
 			/// <summary>Second header char</summary>
-			public const int Header1 = Header0 + sizeof(char);
+			public const int Header1 = Header0 + sizeof(byte);
 		}
 
 		//********************************************************************************************************
@@ -62,18 +63,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 		public static class Sync
 		{
 			/// <summary>Sync prefix</summary>
-			private static readonly char[] Prefix = { '#', 's' };
+			//private static readonly char[] Prefix = { '#', 's' };
+			private static readonly byte[] Prefix = { 0x23, 0x73 };
 
 			/// <summary>
 			/// Buffer definition
 			/// </summary>
-			public static class BufferDef
+			public static class BuffDef
 			{
 				/// <summary>The buffer</summary>
 				public static byte[] Buffer = new byte[BuffSize];
 
 				/// <summary>Buffer size</summary>
-				public const int BuffSize = RecordPrefix.Header1 + sizeof(char);
+				public const int BuffSize = RecordPrefix.Header1 + sizeof(byte);
 			}
 
 			/// <summary>
@@ -81,10 +83,12 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 			/// </summary>
 			public static void Sync_OnButtonPress(uint data1, uint data2, DateTime time)
 			{
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer, RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BufferDef.Buffer, RecordPrefix.Header1, Prefix[1]);
+				//BitConverter.InsertValueIntoArray(BuffDef.Buffer, RecordPrefix.Header0, Prefix[0]);
+				//BitConverter.InsertValueIntoArray(BuffDef.Buffer, RecordPrefix.Header1, Prefix[1]);
+				BuffDef.Buffer[RecordPrefix.Header0] = Prefix[0];
+				BuffDef.Buffer[RecordPrefix.Header1] = Prefix[1];
 
-				GlobalItems.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+				GlobalItems.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
 			}
 		}
 
@@ -148,20 +152,29 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 			/// </summary>
 			public static class RawSampleOnly
 			{
-				/// <summary>Sample values and cut detection (Prefix, Raw.I, Sample.Q)</summary>
-				private static readonly char[] Prefix = { '#', 'r' };
+				private static byte[] _prefix;
+				private const string PrefixStr = "#r";
+
+				/// <summary>
+				/// Initialize the prefix
+				/// </summary>
+				public static void InitPrefix()
+				{
+					_prefix = Encoding.UTF8.GetBytes(PrefixStr);
+				}
+
 
 				/// <summary>
 				/// Raw sample buffer
 				/// </summary>
 				/// <remarks>Items stored: prefix, raw I value, raw Q value</remarks>
-				public class BufferDef
+				public class BuffDef
 				{
 					/// <summary>The buffer</summary>
 					public static byte[] Buffer = new byte[BuffSize];
 
 					/// <summary>Raw I position</summary>
-					public const int RawI = RecordPrefix.Header1 + sizeof(char);
+					public const int RawI = RecordPrefix.Header1 + sizeof(byte);
 					/// <summary>Raw Q position</summary>
 					public const int RawQ = RawI + sizeof(ushort);
 
@@ -174,7 +187,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				/// </summary>
 				public static void PrintHeader()
 				{
-					Debug.Print("Raw Sample buffer size is " + BufferDef.BuffSize + " bytes");
+					Debug.Print("Raw Sample buffer size is " + BuffDef.BuffSize + " bytes");
 					Debug.Print(new string(FieldNamesHeader) + "\tRawI\tRawQ");
 				}
 
@@ -188,19 +201,19 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 					{
 						return;
 					}
-					var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
-					var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+					//var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
+					//var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
 
-					if (header0 != Prefix[0] ||
-						header1 != Prefix[1])
+					if (buffer[RecordPrefix.Header0]!= _prefix[0] ||
+						buffer[RecordPrefix.Header1] != _prefix[1])
 					{
 						return;
 					}
 
-					var rawI = BitConverter.ToUInt16(buffer, BufferDef.RawI);
-					var rawQ = BitConverter.ToUInt16(buffer, BufferDef.RawQ);
-					// Explicitly convert header0 to string else will sum header0 and header1 to int and then convert the number to string
-					Debug.Print(header0.ToString() + header1
+					var rawI = BitConverter.ToUInt16(buffer, BuffDef.RawI);
+					var rawQ = BitConverter.ToUInt16(buffer, BuffDef.RawQ);
+
+					Debug.Print(PrefixStr
 								+ "\t" + rawI
 								+ "\t" + rawQ);
 					_recordsPrinted1++;
@@ -217,47 +230,23 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 					{
 						return;
 					}
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header0, Prefix[0]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header1, Prefix[1]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.RawI, (ushort)rawSample.I);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.RawQ, (ushort)rawSample.Q);
+					//BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+					//	RecordPrefix.Header0, _prefix[0]);
+					//BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+					//	RecordPrefix.Header1, _prefix[1]);
+					BuffDef.Buffer[RecordPrefix.Header0] = _prefix[0];
+					BuffDef.Buffer[RecordPrefix.Header1] = _prefix[1];
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.RawI, (ushort)rawSample.I);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.RawQ, (ushort)rawSample.Q);
 
-					GlobalItems.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+					GlobalItems.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
 					_recordsPrinted2++;
 				}
 				// ReSharper disable once NotAccessedField.Local
 				private static int _recordsPrinted2;
 
-				///// <summary>
-				///// Write to SD card
-				///// </summary>
-				///// <param name="buffer"></param>
-				///// <param name="refsRead"></param>
-				//public static void WriteToSd(byte[] buffer, int refsRead)
-				//{
-				//	var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
-				//	var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
-
-				//	if (header0 != Prefix[0] ||
-				//		header1 != Prefix[1])
-				//	{
-				//		return;
-				//	}
-
-				//	// Write raw sample to SD
-				//	GlobalItems.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
-
-				//	// Print
-				//	if (!LogToPrint || refsRead >= 10)
-				//	{
-				//		return;
-				//	}
-				//	PrintVals(buffer);
-				//}
 			}
 
 			//********************************************************************************************************
@@ -270,19 +259,27 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 			/// <remarks>Items stored: SampleNum (int), RawI, RawQ (both short), SampleI, SampleQ (both int), IsCut, IsDisplacement, IsConf (all bool)</remarks>
 			public static class RawSampleAndAnalysis
 			{
-				/// <summary>Sample values and cut detection (Prefix, Raw.I, Sample.Q)</summary>
-				private static readonly char[] Prefix = { '#', 'e' };
+				private static byte[] _prefix;
+				private const string PrefixStr = "#e";
+
+				/// <summary>
+				/// Initialize the prefix
+				/// </summary>
+				public static void InitPrefix()
+				{
+					_prefix = Encoding.UTF8.GetBytes(PrefixStr);
+				}
 
 				/// <summary>
 				/// Raw everything buffer
 				/// </summary>
-				public static class BufferDef
+				public static class BuffDef
 				{
 					/// <summary>The buffer</summary>
 					public static byte[] Buffer = new byte[BuffSize];
 
 					/// <summary>Buffer position</summary>
-					public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
+					public const int SampleNum = RecordPrefix.Header1 + sizeof(byte);
 					/// <summary>Buffer position</summary>
 					public const int SumI = SampleNum + sizeof(int);
 					/// <summary>Buffer position</summary>
@@ -311,7 +308,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				/// </summary>
 				public static void PrintHeader()
 				{
-					Debug.Print("Raw Everything buffer size is " + BufferDef.BuffSize + " bytes");
+					Debug.Print("Raw Everything buffer size is " + BuffDef.BuffSize + " bytes");
 					Debug.Print(new string(FieldNamesHeader) + "\tSampleNum\tSumI\tSumQ\tRawI\tRawQ\tSampleI\tSampleQ\tIsCut\tIsDisplacement\tIsConf");
 				}
 
@@ -325,28 +322,28 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 					{
 						return;
 					}
-					var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
-					var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+					//var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
+					//var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
 
-					if (header0 != Prefix[0] ||
-						header1 != Prefix[1])
+					if (buffer[RecordPrefix.Header0] != _prefix[0] ||
+						buffer[RecordPrefix.Header1] != _prefix[1])
 					{
 						return;
 					}
 
-					var sampleNum = BitConverter.ToInt32(buffer, BufferDef.SampleNum);
-					var sumI = BitConverter.ToInt64(buffer, BufferDef.SumI);
-					var sumQ = BitConverter.ToInt64(buffer, BufferDef.SumQ);
-					var rawI = BitConverter.ToUInt16(buffer, BufferDef.RawI);
-					var rawQ = BitConverter.ToUInt16(buffer, BufferDef.RawQ);
-					var sampleI = BitConverter.ToInt16(buffer, BufferDef.SampleI);
-					var sampleQ = BitConverter.ToInt16(buffer, BufferDef.SampleQ);
-					var isCut = BitConverter.ToInt16(buffer, BufferDef.IsCut);
-					var isDisplacement = BitConverter.ToBoolean(buffer, BufferDef.IsDisplacement);
-					var isConf = BitConverter.ToBoolean(buffer, BufferDef.IsConf);
+					var sampleNum = BitConverter.ToInt32(buffer, BuffDef.SampleNum);
+					var sumI = BitConverter.ToInt64(buffer, BuffDef.SumI);
+					var sumQ = BitConverter.ToInt64(buffer, BuffDef.SumQ);
+					var rawI = BitConverter.ToUInt16(buffer, BuffDef.RawI);
+					var rawQ = BitConverter.ToUInt16(buffer, BuffDef.RawQ);
+					var sampleI = BitConverter.ToInt16(buffer, BuffDef.SampleI);
+					var sampleQ = BitConverter.ToInt16(buffer, BuffDef.SampleQ);
+					var isCut = BitConverter.ToInt16(buffer, BuffDef.IsCut);
+					var isDisplacement = BitConverter.ToBoolean(buffer, BuffDef.IsDisplacement);
+					var isConf = BitConverter.ToBoolean(buffer, BuffDef.IsConf);
 
 					// Explicitly convert header0 to string else will sum header0 and header1 to int and then convert the number to string
-					Debug.Print(header0.ToString() + header1
+					Debug.Print(PrefixStr
 								+ "\t" + sampleNum
 								+ "\t" + sumI
 								+ "\t" + sumQ
@@ -374,52 +371,35 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				/// <param name="isConfirmed"></param>
 				public static void Log(int sampleNum, GlobalItems.Sample sumVals, GlobalItems.Sample rawSample, GlobalItems.Sample compSample, int isCut, bool isDisplacement, bool isConfirmed)
 				{
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header0, Prefix[0]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						RecordPrefix.Header1, Prefix[1]);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.SampleNum, sampleNum);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.SumI, sumVals.I);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.SumQ, sumVals.Q);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.RawI, (ushort)rawSample.I);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.RawQ, (ushort)rawSample.Q);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.SampleI, (short)compSample.I);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.SampleQ, (short)compSample.Q);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.IsCut, (short)isCut);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.IsDisplacement, isDisplacement);
-					BitConverter.InsertValueIntoArray(BufferDef.Buffer,
-						BufferDef.IsConf, isConfirmed);
+					//BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+					//	RecordPrefix.Header0, _prefix[0]);
+					//BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+					//	RecordPrefix.Header1, _prefix[1]);
+					BuffDef.Buffer[RecordPrefix.Header0] = _prefix[0];
+					BuffDef.Buffer[RecordPrefix.Header1] = _prefix[1];
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.SampleNum, sampleNum);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.SumI, sumVals.I);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.SumQ, sumVals.Q);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.RawI, (ushort)rawSample.I);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.RawQ, (ushort)rawSample.Q);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.SampleI, (short)compSample.I);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.SampleQ, (short)compSample.Q);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.IsCut, (short)isCut);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.IsDisplacement, isDisplacement);
+					BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+						BuffDef.IsConf, isConfirmed);
 
-					GlobalItems.WriteDataRefAndUpdateCrc(BufferDef.Buffer);
+					GlobalItems.WriteDataRefAndUpdateCrc(BuffDef.Buffer);
 				}
-
-				///// <summary>
-				///// Write to SD card
-				///// </summary>
-				///// <param name="buffer"></param>
-				///// <param name="refsRead"></param>
-				//public static void WriteToSd(byte[] buffer, int refsRead)
-				//{
-				//	// Write everything of interest to SD
-				//	GlobalItems.SDBufferedWrite.Write(buffer, 0, BufferDef.BuffSize);
-
-				//	// Print
-				//	if (!LogToPrint || refsRead >= 10)
-				//	{
-				//		return;
-				//	}
-				//	PrintVals(buffer);
-				//}
-
 			}
 		}
 
@@ -435,7 +415,21 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 		public static class SampleAndCut
 		{
 			/// <summary>Sample values and cut detection (SampleNum, Sample.I, Sample.Q, IsCut)</summary>
-			public static char[] Prefix = { '#', 'b' };
+			//public static char[] Prefix = { '#', 'b' };
+			//public static byte[] Prefix = { 0x23, 0x62 };
+
+			private static byte[] _prefix;
+			/// <summary>Sample values and cut detection (SampleNum, Sample.I, Sample.Q, IsCut)</summary>private static byte[] _prefix;
+			private const string PrefixStr = "#b";
+
+			/// <summary>
+			/// Initialize the prefix
+			/// </summary>
+			public static void InitPrefix()
+			{
+				_prefix = Encoding.UTF8.GetBytes(PrefixStr);
+			}
+
 
 			/// <summary>Collection options</summary>
 			public enum CollectionOptions
@@ -486,7 +480,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				/// <summary>The buffer</summary>
 				public static byte[] Buffer = new byte[BuffSize];
 				/// <summary>Buffer position</summary>
-				public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
+				public const int SampleNum = RecordPrefix.Header1 + sizeof(byte);
 				/// <summary>Buffer position</summary>
 				public const int SampleI = SampleNum + sizeof(int);
 				/// <summary>Buffer position</summary>
@@ -518,10 +512,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 					return;
 				}
 
-				var statusStr = new string(Prefix) +
-								"\t" + sample.I +
-								"\t" + sample.Q +
-								"\t" + isCut;
+				var statusStr = PrefixStr
+								+ "\t" + sample.I
+								+ "\t" + sample.Q
+								+ "\t" + isCut;
 				Debug.Print(statusStr);
 				_recordsPrinted1++;
 			}
@@ -538,11 +532,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 					return;
 				}
 
-				var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
-				var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+				//var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
+				//var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
 
-				if (header0 != Prefix[0] ||
-					header1 != Prefix[1])
+				if (buffer[RecordPrefix.Header0]!= _prefix[0] ||
+					buffer[RecordPrefix.Header1]!= _prefix[1])
 				{
 					return;
 				}
@@ -552,7 +546,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				var isCut = BitConverter.ToInt16(buffer, BuffDef.IsCut);
 
 				Debug.Print(
-					new string(Prefix)
+					PrefixStr
 					+ "\t" + sampleNum
 					+ "\t" + sampleI
 					+ "\t" + sampleQ
@@ -574,10 +568,12 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				{
 					return;
 				}
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
-					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
-					RecordPrefix.Header1, Prefix[1]);
+				//BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				//	RecordPrefix.Header0, _prefix[0]);
+				//BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				//	RecordPrefix.Header1, _prefix[1]);
+				BuffDef.Buffer[RecordPrefix.Header0] = _prefix[0];
+				BuffDef.Buffer[RecordPrefix.Header1] = _prefix[1];
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.SampleNum, sampleNum);
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
@@ -600,8 +596,16 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 		/// </summary>
 		public static class SnippetDispAndConf
 		{
-			/// <summary>Snippet detections (sample num, IsDisplacement, IsConf) chars</summary>
-			private static readonly char[] Prefix = { '#', 'd' };
+			private static byte[] _prefix;
+			private const string PrefixStr = "#d";
+
+			/// <summary>
+			/// Initialize the prefix
+			/// </summary>
+			public static void InitPrefix()
+			{
+				_prefix = Encoding.UTF8.GetBytes(PrefixStr);
+			}
 
 			/// <summary>Collection options</summary>
 			public enum CollectionOptions
@@ -655,7 +659,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				/// <summary>The Buffer</summary>
 				public static byte[] Buffer = new byte[BuffSize];
 				/// <summary>Buffer position</summary>
-				public const int SampleNum = RecordPrefix.Header1 + sizeof(char);
+				public const int SampleNum = RecordPrefix.Header1 + sizeof(byte);
 				/// <summary>Buffer position</summary>
 				public const int CumCuts = SampleNum + sizeof(int);
 				/// <summary>Buffer position</summary>
@@ -672,7 +676,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 			/// </summary>
 			public static void PrintHeader()
 			{
-				Debug.Print(new string(FieldNamesHeader) + "\tSampleNum\tCumCuts\tIsDisp\tIsConf");
+				Debug.Print(new string(FieldNamesHeader) + "\tSnippet\tCumCuts\tIsDisp\tIsConf");
 			}
 
 			/// <summary>
@@ -689,7 +693,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 					return;
 				}
 				var statusStr =
-					new string(Prefix)
+					new string(Encoding.UTF8.GetChars(_prefix))
 					+ "\t" + snippetNum
 					+ "\t" + cumCuts
 					+ "\t" + isDisplacement
@@ -710,11 +714,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				{
 					return;
 				}
-				var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
-				var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
+				//var header0 = BitConverter.ToChar(buffer, RecordPrefix.Header0);
+				//var header1 = BitConverter.ToChar(buffer, RecordPrefix.Header1);
 
-				if (header0 != Prefix[0] ||
-					header1 != Prefix[1])
+				if (buffer[RecordPrefix.Header0] != _prefix[0] ||
+					buffer[RecordPrefix.Header1] != _prefix[1])
 				{
 					return;
 				}
@@ -724,7 +728,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				var isConfirmed = BitConverter.ToBoolean(buffer, BuffDef.IsConfirmed);
 
 				Debug.Print(
-					new string(Prefix)
+					new string(Encoding.UTF8.GetChars(_prefix))
 					+ "\t" + sampleNum
 					+ "\t" + cumCuts
 					+ "\t" + isDisp
@@ -739,10 +743,12 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 			/// </summary>
 			public static void Log(int sampleNum, int cumCuts, bool isDisplacement, bool isConfirmed)
 			{
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
-					RecordPrefix.Header0, Prefix[0]);
-				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
-					RecordPrefix.Header1, Prefix[1]);
+				//BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				//	RecordPrefix.Header0, _prefix[0]);
+				//BitConverter.InsertValueIntoArray(BuffDef.Buffer,
+				//	RecordPrefix.Header1, _prefix[1]);
+				BuffDef.Buffer[RecordPrefix.Header0] = _prefix[0];
+				BuffDef.Buffer[RecordPrefix.Header1] = _prefix[1];
 				BitConverter.InsertValueIntoArray(BuffDef.Buffer,
 					BuffDef.SampleNum, sampleNum);
 

@@ -37,6 +37,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Tools\Microsoft.SPOT.Debugger.dll</HintPath>
     </Reference>
+    <Reference Include="Samraksh.AppNote.Utility.VersionInfo">
+      <HintPath>..\..\..\..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Samraksh\eMote Utilities\General\VersionInfo\bin\Samraksh.AppNote.Utility.VersionInfo.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,12 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Utility\Utility.csproj">
-      <Project>{02ac9ac0-6a55-4659-818b-14d73cd18c8e}</Project>
-      <Name>Utility</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

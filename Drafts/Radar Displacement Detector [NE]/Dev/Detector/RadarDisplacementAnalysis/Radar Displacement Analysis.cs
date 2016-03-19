@@ -1,5 +1,6 @@
-using System;
+using Microsoft.SPOT;
 using Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals;
+using Math = System.Math;
 using RawSample = Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals.OutputItems.RawSample;
 using SampleAndCut = Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals.OutputItems.SampleAndCut;
 using SnippetDispAndConf = Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals.OutputItems.SnippetDispAndConf;

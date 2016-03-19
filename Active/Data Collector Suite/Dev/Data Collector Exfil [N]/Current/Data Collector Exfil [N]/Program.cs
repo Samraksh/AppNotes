@@ -24,9 +24,8 @@ using Microsoft.SPOT;
 using System.IO.Ports;
 using System.Threading;
 
-using Samraksh.eMote.DotNow;
-
 using Samraksh.AppNote.Utility;
+using Samraksh.eMote.DotNow;
 
 namespace Samraksh.AppNote.DataCollector.Exfiltrator
 {
@@ -50,7 +49,7 @@ namespace Samraksh.AppNote.DataCollector.Exfiltrator
 		private static int _byteCntr;
 
 		// Misc definitions
-		private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
+		private static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
 
 		/// <summary>
 		/// The main program
@@ -108,7 +107,8 @@ namespace Samraksh.AppNote.DataCollector.Exfiltrator
 
 
 				// Read from the SD card and write to the serial port till done
-				while (true) {
+				while (true)
+				{
 
 					// read a buffer's worth of data
 					if (!SD.Read(serialBuffer, 0, (ushort)serialBuffer.Length))
@@ -123,7 +123,7 @@ namespace Samraksh.AppNote.DataCollector.Exfiltrator
 					//	str.Append(" " + serialBuffer[i]);
 					//}
 					//Debug.Print(str.ToString());
-		
+
 					//Debug.Print("\n" + rdCnt + " first: " + BitConverter.ToInt16(serialBuffer, 0) + ", " +
 					//            BitConverter.ToInt16(serialBuffer, 2)
 					//            + " / last: " + BitConverter.ToInt16(serialBuffer, serialBuffer.Length - 4) + ", " +

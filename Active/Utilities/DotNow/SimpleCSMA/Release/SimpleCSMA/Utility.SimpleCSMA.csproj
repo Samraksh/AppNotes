@@ -39,7 +39,7 @@
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>%systemdrive%\users\william\Documents\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
