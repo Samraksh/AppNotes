@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using Microsoft.SPOT;
+using Samraksh.AppNote.Utility;
 
 namespace ManagerApp
 {
@@ -31,6 +33,31 @@ namespace ManagerApp
 			Debug.Print("Manager App");
 			Debug.Print("\n------------------------\n");
 
+			var sharedMembers = SharedMembers.Get(AppDomain.CurrentDomain, "SharedVars");
+
+			foreach (DictionaryEntry theEntry in sharedMembers)
+			{
+				var theMember = (SharedMembers.Info)theEntry.Value;
+				Debug.Print(theEntry.Key + ": " + theMember);
+			}
+
+			Debug.Print("Second's value is " + sharedMembers["Second"]);
+
+			const string notPresent = "notpresent";
+			var tryMember = sharedMembers[notPresent];
+			if (tryMember == null)
+			{
+				Debug.Print(notPresent + " is null");
+			}
+			else
+			{
+				Debug.Print(notPresent + ",s valus is" + tryMember);
+			}
+
+			Thread.Sleep(Timeout.Infinite);
+
+
+			//-------------------------------------------------------------------------------
 			var domainAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 			foreach (var theAssembly in domainAssemblies)
 			{
@@ -38,8 +65,20 @@ namespace ManagerApp
 				var assemblyTypes = theAssembly.GetTypes();
 				foreach (var theType in assemblyTypes)
 				{
-					Debug.Print("\t" + theType.FullName);
-					if (theType.FullName == "UserApp.UserApp+SharedVars")
+					Debug.Print("\tType: " + theType.FullName + " " + theType.Name + " IsClass: " + theType.IsClass);
+
+					var theTypeTree = theType.FullName.Split('+');
+					//var found = false;
+					//foreach (var treeElement in theTypeTree)
+					//{
+					//	if (treeElement.Trim().ToUpper() == "SharedVars".ToUpper())
+					//	{
+					//		found = true;
+					//	}
+					//}
+					var treeTail = theTypeTree[theTypeTree.Length - 1].Trim();
+					Debug.Print("\t\tTree tail: " + treeTail);
+					if (treeTail == "SharedVars")
 					{
 						var theFields = theType.GetFields();
 						foreach (var theField in theFields)
@@ -58,8 +97,6 @@ namespace ManagerApp
 								Debug.Print("\t\t\t * " + theArrayType);
 								if (theArrayType == typeof(byte[]))
 								{
-									var x = theField.FieldType;
-									var x2 = x.ToString();
 									_sharedVars[theField.Name] = new SharedVarInfo(false, theArrayType.ToString(), theField);
 									foreach (var theArrayVal in theArray)
 									{
