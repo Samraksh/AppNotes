@@ -16,14 +16,17 @@
 
 using System;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using Microsoft.SPOT;
 
 using Samraksh.AppNote.Utility;
-using Samraksh.eMote.Net.Mac;
+using Samraksh.eMote.Net;
+using Samraksh.eMote.Net.MAC;
 using Samraksh.eMote.Net.Radio;
 
-namespace Samraksh.AppNote.DotNow.PingPong {
+namespace Samraksh.AppNote.DotNow.PingPong
+{
 
     /// <summary>
     /// Set up two motes to send and receive messages between each other.
@@ -35,37 +38,40 @@ namespace Samraksh.AppNote.DotNow.PingPong {
     /// If a mote does not hear from the other, then after a (longer) delay, it resends its current value.
     /// It does this repeatedly, at the longer interval.
     /// </summary>
-    public class Program {
+    public class Program
+    {
 
-		// This is used as a header for the packet payload to identify the app
-	    private const string Header = "PingPong";
+        // This is used as a header for the packet payload to identify the app
+        private const string Header = "PingPong";
 
         // The current value
         static int _currVal;
 
         // LCD and Radio objects
         static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
-        static SimpleCsmaRadio _csmaRadio;
 
         // Reply timer. Slows down interaction by not sending reply messages until the timer expires
-	    private const int SendInterval = 4000; // Time to wait before sending reply
+        private const int SendInterval = 4000; // Time to wait before sending reply
         static Timer _replyTimer;
-        static readonly TimerCallback ReplyTimerCallback = reply_Timeout;
+        static readonly TimerCallback ReplyTimerCallback = Reply_Timeout;
 
         // No response timer. If no message received, send current value again
         //  Timer is reset whenever a message is received
-	    private const int NoResponseInterval = SendInterval * 4; // Time to wait before re-sending; must be larger than send interval
+        private const int NoResponseInterval = SendInterval * 4; // Time to wait before re-sending; must be larger than send interval
         private static Timer _noResponseDelayTimer;
-	    private static readonly TimerCallback NoResponseDelayTimerCallback = noResponseDelay_Timeout;
+        private static readonly TimerCallback NoResponseDelayTimerCallback = noResponseDelay_Timeout;
+
+        private static MACBase _macBase;
 
         /// <summary>
         /// Main program. Set things up and then go to sleep forever.
         /// </summary>
-        public static void Main() {
+        public static void Main()
+        {
 
             Debug.EnableGCMessages(false);  // We don't want to see garbage collector messages in the Output window
 
-			Debug.Print(VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
+            Debug.Print(VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 
             // Display a welcome message
             Lcd.Write("Hola");
@@ -75,10 +81,19 @@ namespace Samraksh.AppNote.DotNow.PingPong {
             _currVal = (new Random()).Next(99);  // We're choosing a fairly small value to avoid runover on the LCD display (since it only has 4 positions)
             Lcd.Write(_currVal);
 
-            // Set up the radio for CSMA interaction
-            //  The first two arguments are fairly standard but you're free to try changing them
-            //  The last argument is the method to call when a message is received
-            _csmaRadio = new SimpleCsmaRadio(140, TxPowerValue.Power_0Point7dBm, RadioReceive);
+            _macBase = RadioConfiguration.GetMAC();
+            _macBase.OnReceive += RadioReceive;
+            _macBase.OnNeighborChange += _macBase_OnNeighborChange;
+
+            Debug.Print("=======================================");
+            var info = "MAC Type: " + _macBase.GetType()
+                + ", Channel: " + _macBase.MACRadioObj.Channel
+                + ", Power: " + _macBase.MACRadioObj.TxPower
+                + ", Radio Address: " + _macBase.MACRadioObj.RadioAddress
+                + ", Radio Type: " + _macBase.MACRadioObj.RadioName
+                + ", Neighbor Liveness Delay: " + _macBase.NeighborLivenessDelay;
+            Debug.Print(info);
+            Debug.Print("=======================================");
 
             // Send the current value now
             RadioSend(_currVal.ToString().Trim());
@@ -86,42 +101,77 @@ namespace Samraksh.AppNote.DotNow.PingPong {
             // Start a one-shot timer that resets itself whenever it expires
             StartOneshotTimer(ref _noResponseDelayTimer, NoResponseDelayTimerCallback, NoResponseInterval);
 
+            var neighborList = MACBase.NeighborListArray();
+            while (true)
+            {
+                _macBase.NeighborList(neighborList);
+                PrintNeighborList("Neighbor list for Node [" + _macBase.MACRadioObj.RadioAddress + "]: ", neighborList);
+                Thread.Sleep(30 * 1000);
+            }
+
             // Everything is set up. Go to sleep forever, pending events
             Thread.Sleep(Timeout.Infinite);
         }
 
+        static void _macBase_OnNeighborChange(IMAC macInstance, DateTime time)
+        {
+            var neighborList = MACBase.NeighborListArray();
+            macInstance.NeighborList(neighborList);
+            PrintNeighborList("Neighbor list CHANGE for Node [" + _macBase.MACRadioObj.RadioAddress + "]: ", neighborList);
+        }
+
+
+        /// <summary>
+        /// Print the neighbor list for a given list of neighbors
+        /// </summary>
+        private static void PrintNeighborList(string prefix, ushort[] neighborList)
+        {
+            PrintNumericVals(prefix, neighborList);
+        }
+
+        /// <summary>
+        /// Print ushort values
+        /// </summary>
+        /// <param name="prefix"></param>
+        /// <param name="messageEx"></param>
+        public static void PrintNumericVals(string prefix, ushort[] messageEx)
+        {
+            var msgBldr = new StringBuilder(prefix);
+            foreach (var val in messageEx)
+            {
+                msgBldr.Append(val + " ");
+            }
+            Debug.Print(msgBldr.ToString());
+        }
+
+
         /// <summary>
         /// Handle a received message
         /// </summary>
-        /// <param name="csma">A CSMA object that has the message info</param>
-        private static void RadioReceive(CSMA csma) {
-            //
-            // Check to be sure it's a message we're interested in
-            //
+        /// <param name="macBase"></param>
+        /// <param name="receiveDateTime"></param>
+        /// <param name="packet"></param>
+        private static void RadioReceive(IMAC macBase, DateTime receiveDateTime, Packet packet)
+        {
+            Debug.Print("Received " + packet.Payload.Length + " bytes from " + packet.Src);
 
-            // Check if there's at least one packet
-            if (csma.GetPendingPacketCount() < 1) {
-                return;
-            }
-            // Check to be sure there's something in the packet
-            var packet = csma.GetNextPacket();
-            if (packet == null) {
-                return;
-            }
             // Check if message is for us
-            var msgByte = packet.GetMessage();
-            var msgChar = System.Text.Encoding.UTF8.GetChars(msgByte);
+            var msgByte = packet.Payload;
+            var msgChar = Encoding.UTF8.GetChars(msgByte);
             var msgStr = new string(msgChar);
-            if (msgStr.Substring(0, Header.Length) != Header) {
+            if (msgStr.Substring(0, Header.Length) != Header)
+            {
                 return;
             }
             // Get payload and check if it is in the correct format (an integer)
             string payload = msgStr.Substring(Header.Length);
             int recVal;
-            try {
+            try
+            {
                 recVal = int.Parse(payload);
             }
-            catch {
+            catch
+            {
                 return;
             }
 
@@ -148,16 +198,28 @@ namespace Samraksh.AppNote.DotNow.PingPong {
         /// </summary>
         /// <remarks>It will be preceded by the HEADER</remarks>
         /// <param name="toSend">String to be sent</param>
-        static void RadioSend(string toSend) {
-            var toSendByte = System.Text.Encoding.UTF8.GetBytes(Header + toSend);
-            _csmaRadio.Send(Addresses.BROADCAST, toSendByte);
+        private static void RadioSend(string toSend)
+        {
+            var toSendByte = Encoding.UTF8.GetBytes(Header + toSend);
+            var neighborList = MACBase.NeighborListArray();
+            _macBase.NeighborList(neighborList);
+            foreach (var theNeighbor in neighborList)
+            {
+                if (theNeighbor == 0)
+                {
+                    break;
+                }
+                Debug.Print("Sending message \"" + toSend + "\" to " + theNeighbor);
+                _macBase.Send(theNeighbor, toSendByte, 0, (ushort)toSendByte.Length);
+            }
         }
 
         /// <summary>
         /// Send the current value when the reply timer expires
         /// </summary>
         /// <param name="obj">Ignored</param>
-        static void reply_Timeout(object obj) {
+        private static void Reply_Timeout(object obj)
+        {
             RadioSend(_currVal.ToString().Trim());
             Debug.Print("Sending message " + _currVal);
         }
@@ -166,7 +228,8 @@ namespace Samraksh.AppNote.DotNow.PingPong {
         /// Resend the current value when the no-response timer expires
         /// </summary>
         /// <param name="obj">Ignored</param>
-        static void noResponseDelay_Timeout(object obj) {
+        static void noResponseDelay_Timeout(object obj)
+        {
             RadioSend(_currVal.ToString().Trim());
             // Give a short interruption to show that we've received no response
             Lcd.Write("aaaa");
@@ -184,11 +247,14 @@ namespace Samraksh.AppNote.DotNow.PingPong {
         /// <param name="timer">The timer</param>
         /// <param name="callBack">The timer's callback</param>
         /// <param name="interval">The interval</param>
-        static void StartOneshotTimer(ref Timer timer, TimerCallback callBack, int interval) {
-            if (timer == null) {
+        static void StartOneshotTimer(ref Timer timer, TimerCallback callBack, int interval)
+        {
+            if (timer == null)
+            {
                 timer = new Timer(callBack, null, interval, Timeout.Infinite);
             }
-            else {
+            else
+            {
                 timer.Change(interval, Timeout.Infinite);
             }
         }

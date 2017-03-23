@@ -34,6 +34,7 @@
       <ExcludedItem>Samraksh_SPOT_Hardware_SensorBoard~Samraksh.SPOT.Hardware.SensorBoard.TemperatureSensor+DS18B20Commands</ExcludedItem>
       <ExcludedItem>Samraksh_eMote_Kiwi~Samraksh.eMote.SensorBoard.Accelerometer+RegisterMap</ExcludedItem>
       <ExcludedItem>Samraksh_eMote_Kiwi~Samraksh.eMote.SensorBoard.TemperatureSensor+DS18B20Commands</ExcludedItem>
+      <ExcludedItem>Samraksh_eMote_ProgramManager~Samraksh.eMote.ProgramManager.UpdaterInternal</ExcludedItem>
     </ExcludedItems>
   </Filters>
   <JavascriptProjectPlugin />
