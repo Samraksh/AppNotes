@@ -54,7 +54,7 @@ namespace Samraksh.AppNote.Utility {
         /// <param name="txPowerValue">Power level</param>
         /// <param name="radioReceivedData">Method to call when data received. Can be null if user does not want to be notified of received messages</param>
         /// <param name="channel">The channel to use</param>
-        public SimpleCsmaRadio(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData, Channels channel = Channels.Channel_26) {
+        public SimpleCSMA(RadioName radioName, byte ccaSensetime, TxPowerValue txPowerValue, RadioReceivedData radioReceivedData, Channels channel = Channels.Channel_26) {
             var macConfig = new MacConfiguration { NeighborLivenessDelay = 100, CCASenseTime = ccaSensetime };
             macConfig.radioConfig.SetTxPower(txPowerValue);
             macConfig.radioConfig.SetRadioName(radioName);

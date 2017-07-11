@@ -32,7 +32,7 @@ namespace Samraksh.AppNote.DotNow.SignalMeter {
 
         const Channels RadioChannel = Channels.Channel_11;
 
-        static SimpleCsmaRadio _csmaRadio;
+        static SimpleCSMA _csmaRadio;
         static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
         static int _sendCounter;
         const string Header = "SignalMeter";
@@ -65,7 +65,7 @@ namespace Samraksh.AppNote.DotNow.SignalMeter {
             //  The fourth argument is the method to call when a message is received
             //  The last argument is an optional radio channel
             try {
-                _csmaRadio = new SimpleCsmaRadio(TheRadioName, 140, TxPowerValue.Power_0Point7dBm, RadioReceive, RadioChannel);
+                _csmaRadio = new SimpleCSMA(TheRadioName, 140, TxPowerValue.Power_0Point7dBm, RadioReceive, RadioChannel);
             }
             catch {
                 Lcd.Write("Err");

@@ -81,12 +81,10 @@
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Samraksh_eMote_DotNow">
       <HintPath>..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Samraksh_eMote_Net">
       <HintPath>..\eMote .NOW Release 4.3.0.14\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
