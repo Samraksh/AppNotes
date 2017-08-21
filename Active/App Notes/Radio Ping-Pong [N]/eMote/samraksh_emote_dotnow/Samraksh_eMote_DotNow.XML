@@ -58,6 +58,17 @@
             <param name="channel">Channel</param>
             <returns>Value read</returns>
         </member>
+        <member name="M:Samraksh.eMote.DotNow.AnalogInput.ConfigureADCSlaveDualChannel(System.UInt16[],System.UInt16[],System.UInt32,System.UInt32,Samraksh.eMote.DotNow.AdcCallBack)">
+            <summary>
+            Configure ADC slave mode with two channels
+            </summary>
+            <param name="sampleBuff1">Sample buffer 1</param>
+            <param name="sampleBuff2">Sample buffer 2</param>
+            <param name="numSamples">Number of samples to read before callback</param>
+            <param name="samplingTime">Sampling time interval in microseconds</param>
+            <param name="callback">Method to call when numSamples collected</param>
+            <returns>True iff operation success</returns>
+        </member>
         <member name="M:Samraksh.eMote.DotNow.AnalogInput.ConfigureBatchModeWithThresholding(System.UInt16[],Microsoft.SPOT.Hardware.Cpu.AnalogChannel,System.UInt32,System.UInt32,System.UInt32,Samraksh.eMote.DotNow.AdcCallBack)">
             <summary>
             Configure ADC batch mode with threshold

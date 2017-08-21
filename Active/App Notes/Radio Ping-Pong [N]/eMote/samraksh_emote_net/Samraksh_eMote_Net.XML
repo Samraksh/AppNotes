@@ -379,6 +379,59 @@
             <param name="size">Size of payload</param>
             <returns>Result status</returns>
         </member>
+        <member name="M:Samraksh.eMote.Net.MACBase.GetMsgWithMsgID(System.Byte[]@,System.UInt16)">
+            <summary></summary>
+            <param name="nativeBuffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACBase.DeleteMsgWithMsgID(System.UInt16)">
+            <summary></summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACBase.DeletePacketWithIndexInternal(System.UInt16)">
+            <summary></summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACBase.GetPacketWithIndex(System.Byte[],System.Byte,System.UInt16)">
+            <summary></summary>
+            <param name="nativeBuffer"></param>
+            <param name="size"></param>
+            <param name="index"></param>
+            <returns>Result status</returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACBase.GetPacketSizeWithIndex(System.Byte@,System.UInt16)">
+            <summary></summary>
+            <param name="nativeBuffer"></param>
+            <param name="size"></param>
+            <param name="index"></param>
+            <returns>Result status</returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACBase.IsMsgIDValid(System.UInt16)">
+            <summary>IsPacketIDValid</summary>
+            <param name="address">Address of recipient</param>
+            <param name="payload">Payload (in byte array) to send</param>
+            <param name="offset">Offset into array</param>
+            <param name="size">Size of payload</param>
+            <returns>Result status</returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACBase.EnqueueToSend(System.UInt16,Samraksh.eMote.Net.PayloadType,System.Byte[],System.UInt16,System.UInt16)">
+            <summary>Send packet</summary>
+            <param name="address">Address of recipient</param>
+            <param name="payload">Payload (in byte array) to send</param>
+            <param name="offset">Offset into array</param>
+            <param name="size">Size of payload</param>
+            <returns>Result status</returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACBase.EnqueueToSend(System.UInt16,Samraksh.eMote.Net.PayloadType,System.Byte[],System.UInt16,System.UInt16,System.DateTime)">
+            <summary>Send packet</summary>
+            <param name="address">Address of recipient</param>
+            <param name="payload">Payload (in byte array) to send</param>
+            <param name="offset">Offset into array</param>
+            <param name="size">Size of payload</param>
+            <returns>Result status</returns>
+        </member>
         <member name="M:Samraksh.eMote.Net.MACBase.Send(System.UInt16,System.Byte[],System.UInt16,System.UInt16,System.DateTime)">
             <summary>Send a _packet</summary>
             <param name="address">The address of the receiver. Use <code>Addresses.BROADCAST</code> for broadcast</param>
@@ -590,16 +643,31 @@
             </summary>
         </member>
         <member name="F:Samraksh.eMote.Net.MAC.Link.AverageRSSI">
-            <summary>Average Received Signal Strength Indication, RSSI </summary>
+            <summary> Average Received Signal Strength Indication, RSSI.   </summary>
+            <remarks> 
+            Exponentially smoothed (with lambda of 0.2) average of   SINR code as reported by the radio.
+                    For RF231 has conversion (-91 + AvgRSSI) provides the true value.
+            		For SI radio the conversion is already done at the driver and is cast into uint.
+              	  Hence the conversion to get signed value is -1*( (0xFF - AvgRSSI)+1 ).
+            </remarks>
         </member>
         <member name="F:Samraksh.eMote.Net.MAC.Link.LinkQuality">
-            <summary>Link quality</summary>
+            <summary>Link quality</summary>             
+            <remarks> 
+            As reported by the radio.
+            For RF231, represent a measure of the BER for the corresponding SINR.
+            For SI radio, not available. Hence a value of 0 is reported.
+            Exponentially smoothed with lambda of 0.2.
+            </remarks>
         </member>
         <member name="F:Samraksh.eMote.Net.MAC.Link.AverageDelay">
             <summary>Average delay</summary>
+            <remarks> 
+            Has units of 65.535 (=10^3/(2^19/2^8)) ms. Exponentially smoothed
+            </remarks>
         </member>
         <member name="M:Samraksh.eMote.Net.MAC.Link.#ctor">
-            <summary></summary>
+            <summary> Charecteristics of a link. </summary>
         </member>
         <member name="T:Samraksh.eMote.Net.MAC.NeighborStatus">
             <summary>
@@ -624,9 +692,8 @@
             <summary>MAC address of neighbor</summary>
         </member>
         <member name="F:Samraksh.eMote.Net.MAC.Neighbor.SendLink">
-            <summary>Send (formerly forward) link details between current and neighbor node. Provides link details 
-            of transmissions to a certain neighbor. Since a sender will not have the link details when sending a packet, the receiver 
-            has to send back the details (such as RSSI, LQI) to the sender (by piggybacking on a data packet for instance). </summary>
+            Since a sender will not have the link details when sending a packet, the receiver
+            has to send back the details (such as RSSI, LQI) to the sender (by piggybacking on a data packet for instance).
         </member>
         <member name="F:Samraksh.eMote.Net.MAC.Neighbor.ReceiveLink">
             <summary>Receive (formerly reverse) link details between current and neighbor node. Provides link details 
@@ -654,7 +721,7 @@
             <summary>Frame length of neighbor</summary>
         </member>
         <member name="M:Samraksh.eMote.Net.MAC.Neighbor.#ctor">
-            <summary></summary>
+            <summary> Constructs a dummy neighbor object </summary>
         </member>
         <member name="T:Samraksh.eMote.Net.Radio.RadioUser">
             <summary>
@@ -1415,6 +1482,11 @@
             The subscribed payload type for the this pipe
             </summary>
         </member>
+        <member name="M:Samraksh.eMote.Net.MACPipe.IsMsgIDValid(System.UInt16)">
+            <summary>IsPacketIDValid</summary>
+            <param name="msgid">msgid</param>
+            <returns>bool</returns>
+        </member>
         <member name="M:Samraksh.eMote.Net.MACPipe.#ctor(Samraksh.eMote.Net.MACBase,Samraksh.eMote.Net.PayloadType)">
             <summary>
             Register callback functions for CSHARP payload types. 
@@ -1440,6 +1512,23 @@
             <param name="size">Size of packet</param>
             <param name="eventTime">Time value to add to packet</param>
             <returns>Result status</returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACPipe.EnqueueToSend(System.UInt16,System.Byte[],System.UInt16,System.UInt16)">
+            <summary>Enqueue a message to be sent</summary>
+            <param name="address">Address of recipient</param>
+            <param name="payload">Payload (in byte array) to send</param>
+            <param name="offset">Offset into array</param>
+            <param name="size">Size of payload</param>
+            <returns>MsgID</returns>
+        </member>
+        <member name="M:Samraksh.eMote.Net.MACPipe.EnqueueToSend(System.UInt16,System.Byte[],System.UInt16,System.UInt16,System.DateTime)">
+            <summary>Enqueue a message to be sent</summary>
+            <param name="address">Address of recipient</param>
+            <param name="payload">Payload (in byte array) to send</param>
+            <param name="offset">Offset into array</param>
+            <param name="size">Size of payload</param>
+            <param name="eventTime">Packet time. Used for calculating the time it spends at the buffer on the sending side. </param>
+            <returns>MsgID</returns>
         </member>
         <member name="M:Samraksh.eMote.Net.MACPipe.NeighborList(System.UInt16[])">
             <summary>

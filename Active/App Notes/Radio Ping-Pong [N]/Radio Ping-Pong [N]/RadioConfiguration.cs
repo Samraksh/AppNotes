@@ -6,7 +6,6 @@
 #define RF231
 //#define SI4468
 
-using System;
 using Microsoft.SPOT;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.MAC;

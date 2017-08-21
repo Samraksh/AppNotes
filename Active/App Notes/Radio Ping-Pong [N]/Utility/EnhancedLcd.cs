@@ -18,14 +18,6 @@ namespace Samraksh.AppNote.Utility {
 	/// <remarks>Includes LCD initialization as part of constructor</remarks>
 	public class EnhancedEmoteLcd : EmoteLCD {
 		/// <summary>
-		/// Initialize the LCD
-		/// </summary>
-		public EnhancedEmoteLcd() {
-			// Initialize the display
-			Initialize();
-		}
-
-		/// <summary>
 		/// Display an integer. If more than 4 decimal digits, display first 4 only
 		/// </summary>
 		/// <param name="num">The number to be displayed</param>
@@ -77,9 +69,8 @@ namespace Samraksh.AppNote.Utility {
 		/// <returns>The corresponding LCD value</returns>
 		public static LCD ToLcd(this char charArg) {
 			switch (charArg) {
-				case ' ':
+				case ' ': 
 					return LCD.CHAR_NULL;
-
 				case 'A':
 					return LCD.CHAR_A;
 				case 'B':

@@ -45,12 +45,12 @@
     <ReferencePaths>
       <ReferencePath Id="4c457ec3-5f62-440f-962b-b316c6d80f1e" Name="Microsoft.SPOT.Hardware" Directory="..\..\..\..\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Assemblies\be" />
     </ReferencePaths>
-    <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote\Samraksh_eMote.dll" RootTypeName="" />
     <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll" RootTypeName="" />
     <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_DSP\Samraksh_eMote_DSP.dll" RootTypeName="" />
     <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_Kiwi\Samraksh_eMote_Kiwi.dll" RootTypeName="" />
     <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_RealTime\Samraksh_eMote_RealTime.dll" RootTypeName="" />
     <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote_Net\Samraksh_eMote_Net.dll" RootTypeName="" />
+    <Assembly FileName="..\..\eMote\eMote .NOW Current Release\Samraksh_eMote\Samraksh_eMote.dll" RootTypeName="" />
   </DotNetAssemblies>
   <DatabaseProjectPlugin>
     <Databases />
