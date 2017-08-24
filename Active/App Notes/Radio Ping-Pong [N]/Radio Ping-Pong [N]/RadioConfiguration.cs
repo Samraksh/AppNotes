@@ -3,14 +3,21 @@
 //#define OMAC
 #define CSMA
 
-#define RF231
-//#define SI4468
+#if (OMAC && CSMA) || !(OMAC || CSMA)
+#error Exactly one radio must be defined
+#endif
+
+#define RF231	// .NOW on-board radio
+//#define SI4468	// WLN on-board radio
+
+#if (RF231 && SI4468) || !(RF231 || SI4468)
+#error Exactly one radio must be defined
+#endif
 
 using Microsoft.SPOT;
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.MAC;
 using Samraksh.eMote.Net.Radio;
-
 
 namespace Samraksh.AppNote.DotNow.PingPong
 {
@@ -81,7 +88,6 @@ namespace Samraksh.AppNote.DotNow.PingPong
 
             /// <summary>Radio channel</summary>
             public const SI4468Channel RadioChannel = SI4468Channel.Channel_00;
-            //public const SI4468Channel RadioChannel = SI4468Channel.Channel_02;
         }
 #endif
 

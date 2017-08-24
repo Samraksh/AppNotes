@@ -1,125 +1,111 @@
 ﻿/*--------------------------------------------------------------------
  * Radio Signal Meter: app note for the eMote .NOW
  * (c) 2013 The Samraksh Company
- * 
- * Version history
- *      1.0:	- Initial release
- *      1.1:	- Corrected an issue with reporting on the length of the message
- *      1.2:	- Added build profiles for on-board and long-range radios
- *      1.3:	- Added option to choose the radio channel
- *				- Upgraded to latest eMote namespace
- *      1.4:    - Updated for eMote release 13 (Sep 17, 2015)
- *      
+
  *  Remarks
- *      Choose "Long Range" or "On Board" solution configuration depending on which radio you're using.
+ *      In RadioConfiguration.cs, specify the protocol and radio
 ---------------------------------------------------------------------*/
 
+using System;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using Microsoft.SPOT;
+using Samraksh.Appnote.Utility;
 using Samraksh.AppNote.Utility;
-using Samraksh.eMote.Net.Mac;
-using Samraksh.eMote.Net.Radio;
+using Samraksh.eMote.Net;
+using Samraksh.eMote.Net.MAC;
 
-namespace Samraksh.AppNote.DotNow.SignalMeter {
+namespace Samraksh.AppNote.DotNow.SignalMeter
+{
 
-    /// <summary>
-    /// This program listens for radio packets and prints information about identity, signal strength, etc.
-    /// It also periodically sends radio packets that another mote can listen to.
-    /// It can help you debug another program by "sniffing" what's coming over the radio.
-    /// </summary>
-    public class Program {
+	/// <summary>
+	/// This program listens for radio packets and prints information about identity, signal strength, etc.
+	/// It also periodically sends radio packets that another mote can listen to.
+	/// It can help you debug another program by "sniffing" what's coming over the radio.
+	/// </summary>
+	public class Program
+	{
+		private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
+		private static MACBase _macBase;
 
-        const Channels RadioChannel = Channels.Channel_11;
+		private static int _sendCounter;
+		private const string Header = "SignalMeter";
+		private const int SendDelay = 1000; // ms
 
-        static SimpleCSMA _csmaRadio;
-        static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
-        static int _sendCounter;
-        const string Header = "SignalMeter";
-        const int SendDelay = 1000; // ms
+		/// <summary>
+		/// Set up the radio to listen and to send
+		/// </summary>
+		public static void Main()
+		{
 
-#if LONG_RANGE_RADIO
-        const RadioName TheRadioName = RadioName.RF231RADIOLR;
-#elif  ON_BOARD_RADIO
-        const RadioName TheRadioName = RadioName.RF231RADIO;
-#else
-#error Incorrect Solution Configuration. Please choose Long-Range or On-Board Radio
-#endif
+			//Debug.EnableGCMessages(false); // We don't want to see garbage collector messages in the Output window
 
-        /// <summary>
-        /// Set up the radio to listen and to send
-        /// </summary>
-        public static void Main() {
+			// Print out the program name and version
+			Debug.Print(VersionInfo.VersionBuild(Assembly.GetExecutingAssembly()));
 
-            //Debug.EnableGCMessages(false); // We don't want to see garbage collector messages in the Output window
+			// Set up LCD and display a welcome message
+			Lcd.Write("Strt");
+			Thread.Sleep(4000);
 
-            // Print out the program name and version
-            Debug.Print(VersionInfo.VersionBuild());
+			_macBase = RadioConfiguration.GetMAC();
+			_macBase.OnReceive += RadioReceive;
+			_macBase.OnNeighborChange += MacBase_OnNeighborChange;
 
-            // Set up LCD and display a welcome message
-            Lcd.Write("Strt");
+			RadioUtilities.PrintMacInfo(_macBase);
 
-            // Set up the radio for CSMA interaction
-            //  The first argument specifies the radio
-            //  The next two arguments are fairly standard but you're free to try changing them
-            //  The fourth argument is the method to call when a message is received
-            //  The last argument is an optional radio channel
-            try {
-                _csmaRadio = new SimpleCSMA(TheRadioName, 140, TxPowerValue.Power_0Point7dBm, RadioReceive, RadioChannel);
-            }
-            catch {
-                Lcd.Write("Err");
-                Thread.Sleep(Timeout.Infinite);
-            }
 
-            // Show that we've initialized and are running
-            Lcd.Write("Run");
+			// Show that we've initialized and are running
+			Lcd.Write("Run");
 
-            while (true) {
-                try {
-                    // Send a probe
-                    var toSendByte = Encoding.UTF8.GetBytes(Header + " " + _sendCounter++);
-                    _csmaRadio.Send(Addresses.BROADCAST, toSendByte);
-                    Thread.Sleep(SendDelay);
-                }
-                catch {
-                    Lcd.Write("8888");
-                    Thread.Sleep(Timeout.Infinite);
-                }
-            }
-            // ReSharper disable once FunctionNeverReturns
-        }
+			while (true)
+			{
+				try
+				{
+					// Send a probe
+					RadioUtilities.SendToAllNeighbors(_macBase, Header + " " + _sendCounter++);
+					Thread.Sleep(SendDelay);
+				}
+				catch
+				{
+					Lcd.Write("Errr");
+					Thread.Sleep(Timeout.Infinite);
+				}
+			}
+			// ReSharper disable once FunctionNeverReturns
+		}
 
-        /// <summary>
-        /// Handle a received message
-        /// </summary>
-        /// <param name="csma">A CSMA object that has the message info</param>
-        static void RadioReceive(CSMA csma) {
-            var rcvMsg = csma.GetNextPacket();
-            var rcvPayloadBytes = rcvMsg.GetMessage();
-            Debug.Print("\nReceived " + (rcvMsg.Unicast ? "Unicast" : "Broadcast") + " message from src: " + rcvMsg.Src + ", size: " + rcvMsg.Size + ", rssi: " + rcvMsg.RSSI + ", lqi: " + rcvMsg.LQI);
-            //try {
-            //    var rcvPayloadChar = Encoding.UTF8.GetChars(rcvPayloadBytes);
-            //    Debug.Print("   " + new string(rcvPayloadChar));
-            //}
-            //// Catch and ignore any exceptions. This can happen when payloads contain binary data.
-            //// ReSharper disable once EmptyGeneralCatchClause
-            //catch (Exception ex) {
-            //    Debug.Print("Except");
-            //}
-            var rcvPayloadStrBldr = new StringBuilder();
-            foreach (var theByte in rcvPayloadBytes) {
-                rcvPayloadStrBldr.Append(theByte.ToString());
-                rcvPayloadStrBldr.Append(" ");
-            }
-            Debug.Print("   " + rcvPayloadStrBldr);
+		/// <summary>
+		/// Handle a received message
+		/// </summary>
+		/// <param name="imac"></param>
+		/// <param name="dateTime"></param>
+		/// <param name="packet"></param>
+		private static void RadioReceive(IMAC imac, DateTime dateTime, Packet packet)
+		{
+			var rcvPayloadBytes = packet.Payload;
+			Debug.Print("\nReceived " + " message # " + _rcvCntr + " from src: " + packet.Src + ", size: " + packet.Size + ", rssi: " + packet.RSSI + ", lqi: " + packet.LQI);
+			var rcvPayloadStrBldr = new StringBuilder();
+			foreach (var theByte in rcvPayloadBytes)
+			{
+				rcvPayloadStrBldr.Append(theByte.ToString());
+				rcvPayloadStrBldr.Append(" ");
+			}
+			Debug.Print("   " + rcvPayloadStrBldr);
+			Lcd.Write(_rcvCntr++);
+		}
 
-            Lcd.Write(_rcvCntr++);
-        }
+		private static int _rcvCntr;
 
-        private static int _rcvCntr;
+		static void MacBase_OnNeighborChange(IMAC imac, DateTime dateTime)
+		{
+			var neighborList = MACBase.NeighborListArray();
+			imac.NeighborList(neighborList);
+			RadioUtilities.PrintNeighborList("\nNeighbor list CHANGE for Node [" + _macBase.MACRadioObj.RadioAddress + "]: ", neighborList);
+		}
 
-    }
+
+	}
 }
 
 

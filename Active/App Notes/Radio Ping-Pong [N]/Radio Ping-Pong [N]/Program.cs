@@ -47,8 +47,7 @@ namespace Samraksh.AppNote.DotNow.PingPong
         // The current value
         static int _currVal;
 
-        // LCD and Radio objects
-        static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
+	    private static readonly EnhancedEmoteLcd Lcd = new EnhancedEmoteLcd();
 
         // Reply timer. Slows down interaction by not sending reply messages until the timer expires
         private const int SendInterval = 4000; // Time to wait before sending reply
@@ -83,7 +82,7 @@ namespace Samraksh.AppNote.DotNow.PingPong
 
             _macBase = RadioConfiguration.GetMAC();
             _macBase.OnReceive += RadioReceive;
-            _macBase.OnNeighborChange += _macBase_OnNeighborChange;
+            _macBase.OnNeighborChange += MacBase_OnNeighborChange;
 
             Debug.Print("=======================================");
             var info = "MAC Type: " + _macBase.GetType()
@@ -113,7 +112,7 @@ namespace Samraksh.AppNote.DotNow.PingPong
             Thread.Sleep(Timeout.Infinite);
         }
 
-        static void _macBase_OnNeighborChange(IMAC macInstance, DateTime time)
+        static void MacBase_OnNeighborChange(IMAC macInstance, DateTime time)
         {
             var neighborList = MACBase.NeighborListArray();
             macInstance.NeighborList(neighborList);
@@ -122,7 +121,7 @@ namespace Samraksh.AppNote.DotNow.PingPong
 
 
         /// <summary>
-        /// Print the neighbor list for a given list of neighbors
+        /// Print the neighbor list 
         /// </summary>
         private static void PrintNeighborList(string prefix, ushort[] neighborList)
         {
@@ -237,7 +236,7 @@ namespace Samraksh.AppNote.DotNow.PingPong
             Lcd.Write(_currVal);
             // Restart the no-response timer & display a message
             StartOneshotTimer(ref _noResponseDelayTimer, NoResponseDelayTimerCallback, NoResponseInterval);
-            Debug.Print("No message received ... broadcasting again");
+            Debug.Print("No message received ...");
         }
 
         /// <summary>
