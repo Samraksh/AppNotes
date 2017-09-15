@@ -2,12 +2,12 @@
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Samraksh.Appnote.Utility;
+using Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common;
 using Samraksh.AppNote.Utility;
 using Samraksh.eMote.DotNow;
-using Samraksh.eMote.Net.Mac;
 using Samraksh.eMote.NonVolatileMemory;
 
-using RadioUpdates=Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common.CommonItems.RadioUpdates;
+using RadioUpdates = Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common.CommonItems.RadioUpdates;
 
 #if !(DotNow || Sam_Emulator)
 #error Conditional build symbol missing
@@ -28,7 +28,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 		public const byte Eof = 0xF0;	// Same as Exfiltrator EOF
 		/// <summary>SD Buffered Write object</summary>
 		public static SDBufferedWrite SDBufferedWrite = new SDBufferedWrite(SdBufferSize, Eof);
-		
+
 
 		/// <summary>Lcd</summary>
 		public static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
@@ -143,7 +143,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 		/// </summary>
 		public static class RadioDetectorUpdates
 		{
-
 			/// <summary>
 			/// Send update message
 			/// </summary>
@@ -154,9 +153,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 				Utility.BitConverter.InsertValueIntoArray(RadioUpdates.BufferDef.Buffer, RadioUpdates.BufferDef.AppIdentifier, RadioUpdates.AppIdentifierHdr);
 				Utility.BitConverter.InsertValueIntoArray(RadioUpdates.BufferDef.Buffer, RadioUpdates.BufferDef.IsDisplacement, isDisplacement);
 				Utility.BitConverter.InsertValueIntoArray(RadioUpdates.BufferDef.Buffer, RadioUpdates.BufferDef.IsConf, isConf);
-				RadioUpdates.Radio.SetRadioState(SimpleCSMA.RadioStates.On);
-				RadioUpdates.Radio.Send(Addresses.BROADCAST, RadioUpdates.BufferDef.Buffer);
-				RadioUpdates.Radio.SetRadioState(SimpleCSMA.RadioStates.Off);
+
+				RadioUtilities.SendToAllNeighbors(CommonItems.RadioUpdates.MAC, RadioUpdates.BufferDef.Buffer, true);
 			}
 
 			/// <summary>

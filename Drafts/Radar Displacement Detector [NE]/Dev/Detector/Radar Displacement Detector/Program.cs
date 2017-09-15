@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+using Samraksh.Appnote.Utility;
 using CommonItems = Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common.CommonItems;
 using Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals;
 using Samraksh.AppNote.Utility;
@@ -91,8 +92,13 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector
 				GlobalItems.RadioDetectorUpdates.EnableRadioUpdates = true;
 				if (GlobalItems.RadioDetectorUpdates.EnableRadioUpdates)
 				{
-					CommonItems.RadioUpdates.Radio = new SimpleCSMA(RadioName.RF231RADIO, 140, TxPowerValue.Power_0Point7dBm, CommonItems.RadioUpdates.Channel);
-					Debug.Print("CSMA channel " + CommonItems.RadioUpdates.Radio.Channel);
+					CommonItems.RadioUpdates.MAC = RadioUtilities.GetMAC();
+					CommonItems.RadioUpdates.MAC.OnNeighborChange += (o, e) =>
+					{
+						RadioUtilities.PrintNeighborChange(CommonItems.RadioUpdates.MAC);
+					};
+					RadioUtilities.PrintRadioConfig(CommonItems.RadioUpdates.MAC);
+					RadioUtilities.PrintNeighborsPeriodically(CommonItems.RadioUpdates.MAC);
 				}
 
 				PowerState.ChangePowerLevel(PowerLevel.High);

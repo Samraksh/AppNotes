@@ -104,7 +104,7 @@ namespace Samraksh.AppNote.DotNow.PingPong
             while (true)
             {
                 _macBase.NeighborList(neighborList);
-                PrintNeighborList("Neighbor list for Node [" + _macBase.MACRadioObj.RadioAddress + "]: ", neighborList);
+                PrintNeighborList("\nNeighbor list for Node [" + _macBase.MACRadioObj.RadioAddress + "]: ", neighborList);
                 Thread.Sleep(30 * 1000);
             }
 
@@ -163,7 +163,7 @@ namespace Samraksh.AppNote.DotNow.PingPong
                 return;
             }
             // Get payload and check if it is in the correct format (an integer)
-            string payload = msgStr.Substring(Header.Length);
+            var payload = msgStr.Substring(Header.Length);
             int recVal;
             try
             {
@@ -182,7 +182,7 @@ namespace Samraksh.AppNote.DotNow.PingPong
             StartOneshotTimer(ref _noResponseDelayTimer, NoResponseDelayTimerCallback, NoResponseInterval);
 
             // Update the current value
-            int origVal = _currVal;
+            var origVal = _currVal;
             _currVal = System.Math.Max(_currVal, recVal);
             _currVal++;
             Lcd.Write(_currVal);

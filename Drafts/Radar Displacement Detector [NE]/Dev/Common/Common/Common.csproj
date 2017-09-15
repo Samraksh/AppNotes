@@ -34,16 +34,12 @@
     <Compile Include="CommonItems.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="Samraksh_eMote_Net">
-      <HintPath>..\..\..\..\..\..\..\..\..\..\..\..\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.11, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\eMote\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Active\Utilities\DotNow\SimpleCSMA\Release\SimpleCSMA\Utility.SimpleCSMA.csproj">
-      <Project>{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}</Project>
-      <Name>Utility.SimpleCSMA</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <Import Condition="!EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

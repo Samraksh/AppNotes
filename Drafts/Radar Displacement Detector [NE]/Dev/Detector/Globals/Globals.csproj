@@ -59,32 +59,20 @@
     <Reference Include="Microsoft.SPOT.Native">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Samraksh.AppNote.Utility.BitConverter, Version=1.0.5854.25801, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Samraksh_eMote, Version=4.3.2.12, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Samraksh\eMote Utilities\General\BitConverter\bin\Samraksh.AppNote.Utility.BitConverter.dll</HintPath>
+      <HintPath>..\..\eMote\Samraksh_eMote\Samraksh_eMote.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh.AppNote.Utility.EnhancedEmoteLCD, Version=1.0.5856.23434, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Samraksh\eMote Utilities\DotNow\EnhancedEmoteLCD\bin\Samraksh.AppNote.Utility.EnhancedEmoteLCD.dll</HintPath>
+      <HintPath>..\..\eMote\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_eMote, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.11, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote\Samraksh_eMote.dll</HintPath>
-    </Reference>
-    <Reference Include="Samraksh_eMote_DotNow, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote_DotNow\Samraksh_eMote_DotNow.dll</HintPath>
-    </Reference>
-    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>..\..\eMote\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Active\Utilities\DotNow\SimpleCSMA\Release\SimpleCSMA\Utility.SimpleCSMA.csproj">
-      <Project>{D0D3791A-3AE1-4B94-BC8B-35C71DFBFE49}</Project>
-      <Name>Utility.SimpleCSMA</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common\Common.csproj">
       <Project>{E96329D6-D8EB-4E5F-81B4-B61C42556B84}</Project>
       <Name>Common</Name>

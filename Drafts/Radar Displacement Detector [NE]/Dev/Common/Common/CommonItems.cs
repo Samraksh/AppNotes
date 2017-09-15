@@ -1,4 +1,4 @@
-using Samraksh.AppNote.Utility;
+using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Radio;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common
@@ -14,10 +14,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common
 		public static class RadioUpdates
 		{
 			/// <summary>Radio object</summary>
-			public static SimpleCSMA Radio;
-
-			/// <summary>Radio channel to use</summary>
-			public const Channels Channel = Channels.Channel_11;
+			public static MACBase MAC;
 
 			/// <summary>Prepended to each packet to identify the app</summary>
 			public static char AppIdentifierHdr = 'D';

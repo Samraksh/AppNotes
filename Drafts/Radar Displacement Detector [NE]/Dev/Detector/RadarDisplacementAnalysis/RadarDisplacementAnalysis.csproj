@@ -68,13 +68,13 @@
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
-    <Reference Include="Samraksh_eMote, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Samraksh_eMote, Version=4.3.2.12, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote\Samraksh_eMote.dll</HintPath>
+      <HintPath>..\..\eMote\Samraksh_eMote\Samraksh_eMote.dll</HintPath>
     </Reference>
-    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Samraksh_eMote_Net, Version=4.3.2.11, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Samraksh\eMote .NOW\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
+      <HintPath>..\..\eMote\Samraksh_eMote_Net\Samraksh_eMote_Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
