@@ -1,7 +1,7 @@
 // Specify protocol & radio
 
-#define OMAC
-//#define CSMA
+//#define OMAC
+#define CSMA
 
 #if (OMAC && CSMA) || !(OMAC || CSMA)
 #error Exactly one radio must be defined
