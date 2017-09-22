@@ -97,7 +97,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Analysis
 			// Check for displacement and confirmation and do any required logging
 			if (CutAnalysis.SnippetCntr == DetectorParameters.SamplesPerSecond)
 			{
-				CheckDisplacementAndConfirmation(rawSample, isCut);
+				CheckDisplacementAndConfirmation();
 			}
 
 			// Log raw sample and analysis if specified
@@ -129,9 +129,8 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Analysis
 		/// <summary>
 		/// Check whether displacement and/or confirmation (MofN) has occurred
 		/// </summary>
-		/// <param name="rawSample">Sample sample (used forlogging)</param>
-		/// <param name="isCut">Is cut? (used for logging)</param>
-		private static void CheckDisplacementAndConfirmation(GlobalItems.Sample rawSample, int isCut)
+		/// <param name="seqNum"></param>
+		private static void CheckDisplacementAndConfirmation()
 		{
 			// We've collected cumulative cut data for a snippet. See if snippet displacement has occurred
 			//  Displacement occurs only if there are more than MinCumCuts in the snippet
@@ -142,7 +141,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Analysis
 			MofNConfirmation.UpdateConfirmationState(CutAnalysis.SnippetNum, SampleData.IsDisplacement);
 
 			// Do any required snippet logging
-			DoSnippetLogging(rawSample, isCut);
+			DoSnippetLogging();
 
 			// Update snippet info and reset cumulative cuts values
 			CutAnalysis.SnippetNum++;
@@ -163,12 +162,12 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Analysis
 			}
 		}
 
-		private static void DoSnippetLogging(GlobalItems.Sample rawSample, int isCut)
+		private static void DoSnippetLogging()
 		{
 			// Send radio update, if enabled
 			if (GlobalItems.RadioDetectorUpdates.EnableRadioUpdates)
 			{
-				GlobalItems.RadioDetectorUpdates.SnippetUpdate(SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
+				GlobalItems.RadioDetectorUpdates.SnippetUpdate(CutAnalysis.SnippetNum, SampleData.IsDisplacement, MofNConfirmation.IsConfirmed);
 			}
 
 			// Log snippet displacement and confirmation if required

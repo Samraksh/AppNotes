@@ -15,10 +15,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector
 		/// </summary>
 		public static void SetOutputOptions()
 		{
-			RawSample.CollectionType = RawSample.CollectionOptions.RawSampleAndAnalysis;
+			RawSample.CollectionType = RawSample.CollectionOptions.None;
 			RawSample.OutOpt.SampleAndPrint = 0;
 			RawSample.OutOpt.LogToPrint = 0;
-			RawSample.OutOpt.LogToSD = true;
+			RawSample.OutOpt.LogToSD = false;
 
 			SampleAndCut.CollectionType = SampleAndCut.CollectionOptions.None;
 			SampleAndCut.OutOpt.SampleAndPrint = 0;

@@ -30,8 +30,11 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common
 				/// <summary>Message type position</summary>
 				public const int AppIdentifier = 0;
 
+				/// <summary>Sequence Number</summary>
+				public const int SeqNum = AppIdentifier + sizeof(char);
+
 				/// <summary>Is Displacement? position</summary>
-				public const int IsDisplacement = AppIdentifier + sizeof (char);
+				public const int IsDisplacement = SeqNum + sizeof (int);
 
 				/// <summary>Is Confirmed? position</summary>
 				public const int IsConf = IsDisplacement + sizeof (bool);

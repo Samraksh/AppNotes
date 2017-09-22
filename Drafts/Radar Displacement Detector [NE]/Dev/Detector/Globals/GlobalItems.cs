@@ -146,11 +146,13 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Detector.Globals
 			/// <summary>
 			/// Send update message
 			/// </summary>
+			/// <param name="seqNum"></param>
 			/// <param name="isDisplacement"></param>
 			/// <param name="isConf"></param>
-			public static void SnippetUpdate(bool isDisplacement, bool isConf)
+			public static void SnippetUpdate(int seqNum, bool isDisplacement, bool isConf)
 			{
 				Utility.BitConverter.InsertValueIntoArray(RadioUpdates.BufferDef.Buffer, RadioUpdates.BufferDef.AppIdentifier, RadioUpdates.AppIdentifierHdr);
+				Utility.BitConverter.InsertValueIntoArray(RadioUpdates.BufferDef.Buffer, RadioUpdates.BufferDef.SeqNum, seqNum);
 				Utility.BitConverter.InsertValueIntoArray(RadioUpdates.BufferDef.Buffer, RadioUpdates.BufferDef.IsDisplacement, isDisplacement);
 				Utility.BitConverter.InsertValueIntoArray(RadioUpdates.BufferDef.Buffer, RadioUpdates.BufferDef.IsConf, isConf);
 

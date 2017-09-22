@@ -32,7 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.SPOT.Debugger, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2670f5f21e7f4192, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SPOT.Debugger - Orig">
+      <HintPath>C:\Program Files (x86)\Microsoft .NET Micro Framework\v4.3\Tools\Microsoft.SPOT.Debugger - Orig.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

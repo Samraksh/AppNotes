@@ -1,9 +1,10 @@
 using System;
 using Microsoft.SPOT;
 using Samraksh.AppNote.Utility;
-using Samraksh.eMote.Net.Mac;
-
-using CommonItems=Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common.CommonItems;
+using Samraksh.eMote.Net;
+using Samraksh.eMote.Net.MAC;
+using BitConverter = Samraksh.AppNote.Utility.BitConverter;
+using CommonItems = Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common.CommonItems;
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacement.Receiver
 {
@@ -12,45 +13,40 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Receiver
 	/// </summary>
 	public static class RadioMonitorUpdates
 	{
-	
+
 		/// <summary>
 		/// Receive and handle an update message
 		/// </summary>
-		public static void ReceiveUpdate(CSMA csma)
+		public static void ReceiveUpdate(IMAC mac, DateTime dateTime, Packet packet)
 		{
 			const int lcdTogglePos = 5 - 1;
 			const int lcdIsDisplacementPos = 5 - 3;
 			const int lcdIsConfPos = 5 - 4;
 
 			Debug.Print("Received update");
-			if (csma == null)
+			var rcvMsg = packet.Payload;
+			if (rcvMsg.Length < CommonItems.RadioUpdates.BufferDef.BuffSize)
 			{
-				Debug.Print("\tNull");
+				Debug.Print("\tBad length: " + rcvMsg.Length);
 				return;
 			}
-			var rcvMsg = csma.GetNextPacket();
-			var rcvPayloadBytes = rcvMsg.GetMessage();
-			if (rcvPayloadBytes.Length < CommonItems.RadioUpdates.BufferDef.BuffSize)
-			{
-				Debug.Print("\tBad length: " + rcvPayloadBytes.Length);
-				return;
-			}
-			var appIdentifier = BitConverter.ToChar(rcvPayloadBytes, CommonItems.RadioUpdates.BufferDef.AppIdentifier);
+			var appIdentifier = BitConverter.ToChar(rcvMsg, CommonItems.RadioUpdates.BufferDef.AppIdentifier);
 			if (appIdentifier != CommonItems.RadioUpdates.AppIdentifierHdr)
 			{
 				Debug.Print("\tBad app identifier: " + appIdentifier);
 				return;
 			}
-			var isDisplacement = BitConverter.ToBoolean(rcvPayloadBytes, CommonItems.RadioUpdates.BufferDef.IsDisplacement);
-			var isConf = BitConverter.ToBoolean(rcvPayloadBytes, CommonItems.RadioUpdates.BufferDef.IsConf);
-			Debug.Print("\t" + isDisplacement + "\t" + isConf);
-			Lcd.Clear();
-			Lcd.WriteN(lcdTogglePos, _toggle ? 'X'.ToLcd() : ' '.ToLcd());
-			Lcd.WriteN(lcdIsDisplacementPos, isDisplacement ? 'd'.ToLcd() : ' '.ToLcd());
-			Lcd.WriteN(lcdIsConfPos, isConf ? 'C'.ToLcd() : ' '.ToLcd());
+			var seqNum = BitConverter.ToInt32(rcvMsg, CommonItems.RadioUpdates.BufferDef.SeqNum);
+			var isDisplacement = BitConverter.ToBoolean(rcvMsg, CommonItems.RadioUpdates.BufferDef.IsDisplacement);
+			var isConf = BitConverter.ToBoolean(rcvMsg, CommonItems.RadioUpdates.BufferDef.IsConf);
+			Debug.Print("*\t" + seqNum + "\t" + isDisplacement + "\t" + isConf);
+			Global.Lcd.Clear();
+			Global.Lcd.WriteN(lcdTogglePos, _toggle ? 'X'.ToLcd() : ' '.ToLcd());
+			Global.Lcd.WriteN(lcdIsDisplacementPos, isDisplacement ? 'd'.ToLcd() : ' '.ToLcd());
+			Global.Lcd.WriteN(lcdIsConfPos, isConf ? 'C'.ToLcd() : ' '.ToLcd());
 			_toggle = !_toggle;
 		}
-		private static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
+		//private static readonly EnhancedEmoteLCD Lcd = new EnhancedEmoteLCD();
 		private static bool _toggle = true;
 	}
 

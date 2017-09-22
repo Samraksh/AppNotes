@@ -1,7 +1,7 @@
 // Specify protocol & radio
 
-#define OMAC
-//#define CSMA
+//#define OMAC
+#define CSMA
 
 #if (OMAC && CSMA) || !(OMAC || CSMA)
 #error Exactly one radio must be defined
@@ -133,15 +133,18 @@ namespace Samraksh.Appnote.Utility
 		}
 
 		private static readonly ushort[] PrintNeighborsList = MACBase.NeighborListArray();
-		public static Thread PrintNeighborsPeriodically(MACBase macBase, int periodMs = 1000)
+		public static Thread PrintNeighborsPeriodically(MACBase macBase, int periodMs = 10*1000)
 		{
 			var t = new Thread(() =>
 			{
-				macBase.NeighborList(PrintNeighborsList);
-				var s = new StringBuilder("Neighbor list for " + macBase.MACRadioObj.RadioAddress + ": ");
-				NumberListToString(s,PrintNeighborsList);
-				Debug.Print(s.ToString());
-				Thread.Sleep(periodMs);
+				while (true)
+				{
+					macBase.NeighborList(PrintNeighborsList);
+					var s = new StringBuilder("Neighbor list for " + macBase.MACRadioObj.RadioAddress + ": ");
+					NumberListToString(s, PrintNeighborsList);
+					Debug.Print(s.ToString());
+					Thread.Sleep(periodMs);
+				}
 			});
 			t.Start();
 			return t;
@@ -154,12 +157,12 @@ namespace Samraksh.Appnote.Utility
 		/// <param name="macBase"></param>
 		public static void PrintNeighborChange(MACBase macBase)
 		{
-			var s = new StringBuilder("\nOld neighbor list for "+macBase.MACRadioObj.RadioAddress+": ");
-			NumberListToString(s,PrintNeighborChangeList);
+			var s = new StringBuilder("\nOld neighbor list for " + macBase.MACRadioObj.RadioAddress + ": ");
+			NumberListToString(s, PrintNeighborChangeList);
 			Debug.Print(s.ToString());
 
 			macBase.NeighborList(PrintNeighborChangeList);
-			s=new StringBuilder("New neighbor list: ");
+			s = new StringBuilder("New neighbor list: ");
 			Debug.Print(s.ToString());
 		}
 
