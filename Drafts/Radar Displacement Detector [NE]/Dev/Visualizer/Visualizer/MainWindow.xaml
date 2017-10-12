@@ -1,0 +1,32 @@
+﻿<Window x:Class="Visualizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Visualizer"
+        mc:Ignorable="d"
+		Loaded="{local:MethodBinding Loaded}"
+		
+        Title="MainWindow" Height="177.924" Width="260.203">
+
+	<Window.DataContext>
+		<local:MainWindowViewModel/>
+	</Window.DataContext>	
+	<Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="20"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0">
+			<TextBlock Text="Serial Port" HorizontalAlignment="Center"/>
+			<ComboBox ItemsSource="{Binding Path=PortSource}" SelectedItem="{Binding SelectedPort, UpdateSourceTrigger=PropertyChanged}"
+		          HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" />
+		</StackPanel>
+		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+			<TextBox Text="Detection" Opacity="{Binding DetOpacity, UpdateSourceTrigger=PropertyChanged}" Background="Aqua" FontSize="20" Margin="0,0,15,0"/>
+			<TextBox Text="Displacement" Opacity="{Binding DispOpacity, UpdateSourceTrigger=PropertyChanged}" Background="Aqua" FontSize="20"/>
+		</StackPanel>
+
+	</Grid>
+</Window>

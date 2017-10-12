@@ -65,7 +65,7 @@
       <Project>{E96329D6-D8EB-4E5F-81B4-B61C42556B84}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Detector\Utility\Utility.csproj">
+    <ProjectReference Include="..\..\Utility\Utility.csproj">
       <Project>{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}</Project>
       <Name>Utility</Name>
     </ProjectReference>

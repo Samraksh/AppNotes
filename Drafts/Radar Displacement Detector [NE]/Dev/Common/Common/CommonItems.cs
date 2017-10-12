@@ -1,5 +1,7 @@
+#if !PC
 using Samraksh.eMote.Net;
 using Samraksh.eMote.Net.Radio;
+#endif
 
 namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common
 {
@@ -13,6 +15,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common
 		/// </summary>
 		public static class RadioUpdates
 		{
+#if !PC
 			/// <summary>Radio object</summary>
 			public static MACBase MAC;
 
@@ -42,6 +45,17 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacementDetector.Common
 				/// <summary>Buffer size</summary>
 				public const int BuffSize = IsConf + sizeof (bool);
 			}
+#endif
+		}
+
+		public static class MonitorDelimiter
+		{
+			public const char Start1 = '#';
+			public const char Start2 = '$';
+			public const char Start3 = '%';
+
+			public const char End1 = '!';
+
 		}
 	}
 }

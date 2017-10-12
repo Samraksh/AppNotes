@@ -104,6 +104,10 @@
       <Project>{E96329D6-D8EB-4E5F-81B4-B61C42556B84}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Utility\Utility.csproj">
+      <Project>{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Globals\Globals.csproj">
       <Project>{899601D7-75E7-4213-8B91-D6F51D20DBA5}</Project>
       <Name>Globals</Name>
@@ -111,10 +115,6 @@
     <ProjectReference Include="..\RadarDisplacementAnalysis\RadarDisplacementAnalysis.csproj">
       <Project>{7E4FFB50-C913-4DF1-8C84-8F94264262C4}</Project>
       <Name>RadarDisplacementAnalysis</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Utility\Utility.csproj">
-      <Project>{8DF8174A-6014-4C24-A4E9-0FAC321C7A48}</Project>
-      <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

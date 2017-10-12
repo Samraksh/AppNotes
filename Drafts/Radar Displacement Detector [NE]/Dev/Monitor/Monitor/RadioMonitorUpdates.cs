@@ -19,6 +19,7 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Receiver
 		/// </summary>
 		public static void ReceiveUpdate(IMAC mac, DateTime dateTime, Packet packet)
 		{
+			// Show results in LCD positions 1, 3 and 4 (from left)
 			const int lcdTogglePos = 5 - 1;
 			const int lcdIsDisplacementPos = 5 - 3;
 			const int lcdIsConfPos = 5 - 4;
@@ -39,7 +40,10 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Receiver
 			var seqNum = BitConverter.ToInt32(rcvMsg, CommonItems.RadioUpdates.BufferDef.SeqNum);
 			var isDisplacement = BitConverter.ToBoolean(rcvMsg, CommonItems.RadioUpdates.BufferDef.IsDisplacement);
 			var isConf = BitConverter.ToBoolean(rcvMsg, CommonItems.RadioUpdates.BufferDef.IsConf);
-			Debug.Print("*\t" + seqNum + "\t" + isDisplacement + "\t" + isConf);
+			Debug.Print(string.Empty + 
+				CommonItems.MonitorDelimiter.Start1 + CommonItems.MonitorDelimiter.Start2 + CommonItems.MonitorDelimiter.Start3 +
+				"\t" + seqNum + "\t" + isDisplacement + "\t" + isConf
+				+ CommonItems.MonitorDelimiter.End1);
 			Global.Lcd.Clear();
 			Global.Lcd.WriteN(lcdTogglePos, _toggle ? 'X'.ToLcd() : ' '.ToLcd());
 			Global.Lcd.WriteN(lcdIsDisplacementPos, isDisplacement ? 'd'.ToLcd() : ' '.ToLcd());

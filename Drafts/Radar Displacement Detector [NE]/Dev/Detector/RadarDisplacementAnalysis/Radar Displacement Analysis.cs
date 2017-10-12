@@ -129,7 +129,6 @@ namespace Samraksh.AppNote.DotNow.RadarDisplacement.Analysis
 		/// <summary>
 		/// Check whether displacement and/or confirmation (MofN) has occurred
 		/// </summary>
-		/// <param name="seqNum"></param>
 		private static void CheckDisplacementAndConfirmation()
 		{
 			// We've collected cumulative cut data for a snippet. See if snippet displacement has occurred
